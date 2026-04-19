@@ -196,6 +196,20 @@ Episode    Success Rate    Avg Agitation@End    Technique Usage
 
 ### Hostage-Taker — 5 Personality Archetypes
 
+**Two operating modes:**
+
+| Mode | Use Case | How It Works |
+|------|----------|-------------|
+| `template` (default) | Training (fast, deterministic) | Rule-based state machine with 35+ response templates per agitation band × personality |
+| `llm` | Demo / self-play | Second LLM instance with hidden-state system prompt, lying instructions, personality-specific behavior rules |
+
+In LLM mode, the HT agent receives a system prompt containing its hidden agitation, trust, personality, deception flags, and demand priorities. It generates responses conditioned on this hidden state — creating a realistic adversary that adapts, lies, and escalates based on the negotiator's technique quality.
+
+```python
+# LLM mode activation:
+env = CrisisNegotiatorEnvironment(ht_mode="llm")
+```
+
 | Archetype | Agitation Response | Trust Response | Behavior |
 |-----------|-------------------|----------------|----------|
 | **Desperate** | 1.2× (responsive) | 1.3× (builds fast) | Responds quickly to empathy |
