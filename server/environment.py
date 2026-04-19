@@ -17,7 +17,7 @@ from server.supervisor import evaluate_turn, should_terminate
 from server.commander import get_patience_level, get_commander_message, should_override, handle_pushback
 from server.hostage_taker import generate_ht_response, generate_hostage_whisper, build_ht_llm_prompt
 from server.scenario_generator import generate_scenario
-from grader import compute_reward, compute_step_reward
+from grader import compute_reward, compute_step_reward, compute_tom_reward
 
 SCENARIOS_DIR = Path(__file__).parent.parent / "scenarios"
 ALL_ACTIONS = [
@@ -201,6 +201,21 @@ class CrisisNegotiatorEnvironment(Environment):
             supervisor_flags=self._supervisor_flags,
             is_repeat=is_repeat,
         )
+
+        # Theory of Mind reward (if agent provided belief predictions)
+        tom_reward = 0.0
+        if act.belief_agitation is not None:
+            top_demand = h.demands[0].text if h.demands else ""
+            actually_lying = h.is_lying_about_hostages or h.is_lying_about_weapon
+            tom_reward = compute_tom_reward(
+                predicted_agitation=act.belief_agitation,
+                actual_agitation=h.agitation,
+                predicted_demand=act.belief_demand or "",
+                actual_top_demand=top_demand,
+                predicted_lying=act.belief_lying or False,
+                actually_lying=actually_lying,
+            )
+        step_reward += tom_reward
         # Also accumulate for terminal grading
         shaping = technique_shaping_reward(techniques, act.reasoning)
         self._shaping_total += shaping

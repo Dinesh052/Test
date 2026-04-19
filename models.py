@@ -30,6 +30,10 @@ class NegotiatorAction(Action):
     target: Literal["hostage_taker", "commander"] = Field(
         default="hostage_taker", description="Who this message is directed at"
     )
+    # Theory of Mind: explicit belief prediction (rewarded for accuracy)
+    belief_agitation: Optional[float] = Field(default=None, description="Agent's estimate of HT agitation 0-10")
+    belief_demand: Optional[str] = Field(default=None, description="Agent's estimate of HT's top demand")
+    belief_lying: Optional[bool] = Field(default=None, description="Agent's estimate: is HT lying?")
 
     @field_validator("content", mode="before")
     @classmethod
