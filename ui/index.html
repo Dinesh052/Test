@@ -3,206 +3,1481 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crisis Negotiator - Live Demo</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<title>Crisis Negotiator — Command Center</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'SF Mono', 'Fira Code', monospace; background: #0a0a0f; color: #e0e0e0; height: 100vh; overflow: hidden; }
-.container { display: grid; grid-template-columns: 1fr 320px; grid-template-rows: auto 1fr auto; height: 100vh; gap: 2px; background: #1a1a2e; }
-.header { grid-column: 1 / -1; background: #16213e; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #0f3460; }
-.header h1 { font-size: 16px; color: #e94560; }
-.header .status { font-size: 12px; color: #4ecca3; }
-.chat-panel { background: #0f0f1a; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
-.msg { padding: 8px 12px; border-radius: 8px; max-width: 85%; font-size: 13px; line-height: 1.4; animation: fadeIn 0.3s; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-.msg.ht { background: #2d1b1b; border-left: 3px solid #e94560; align-self: flex-start; }
-.msg.negotiator { background: #1b2d1b; border-left: 3px solid #4ecca3; align-self: flex-end; }
-.msg.commander { background: #1b1b2d; border-left: 3px solid #f0a500; align-self: center; font-style: italic; font-size: 11px; }
-.msg.hostage { background: #2d2d1b; border-left: 3px solid #9b59b6; align-self: center; font-size: 11px; }
-.msg .speaker { font-weight: bold; font-size: 11px; margin-bottom: 3px; }
-.msg .cues { font-size: 10px; color: #888; margin-top: 3px; }
-.right-panel { background: #0f0f1a; padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; border-left: 1px solid #1a1a2e; }
-.gauge { background: #16213e; border-radius: 8px; padding: 10px; }
-.gauge-label { font-size: 11px; color: #888; margin-bottom: 4px; display: flex; justify-content: space-between; }
-.gauge-bar { height: 20px; border-radius: 4px; background: #1a1a2e; overflow: hidden; position: relative; }
-.gauge-fill { height: 100%; transition: width 0.5s ease, background 0.5s ease; border-radius: 4px; }
-.gauge-fill.agitation { background: linear-gradient(90deg, #4ecca3, #f0a500, #e94560); }
-.gauge-fill.trust { background: linear-gradient(90deg, #e94560, #f0a500, #4ecca3); }
-.gauge-value { position: absolute; right: 6px; top: 2px; font-size: 11px; font-weight: bold; }
-.demands { background: #16213e; border-radius: 8px; padding: 10px; }
-.demands h3 { font-size: 11px; color: #888; margin-bottom: 6px; }
-.demand-item { font-size: 11px; padding: 4px 0; border-bottom: 1px solid #1a1a2e; }
-.demand-item.ack { color: #4ecca3; }
-.demand-item .badge { font-size: 9px; background: #e94560; color: white; padding: 1px 4px; border-radius: 3px; margin-left: 4px; }
-.hidden-state { background: #1a0a0a; border: 1px solid #e94560; border-radius: 8px; padding: 10px; font-size: 11px; }
-.hidden-state h3 { color: #e94560; font-size: 11px; margin-bottom: 6px; }
-.hidden-state .row { display: flex; justify-content: space-between; padding: 2px 0; }
-.flags { background: #16213e; border-radius: 8px; padding: 10px; }
-.flags h3 { font-size: 11px; color: #888; margin-bottom: 4px; }
-.flag { font-size: 10px; padding: 3px 6px; margin: 2px 0; border-radius: 4px; }
-.flag.critical { background: #2d1b1b; color: #e94560; }
-.flag.warning { background: #2d2d1b; color: #f0a500; }
-.actors, .oversight { background: #16213e; border-radius: 8px; padding: 10px; }
-.actors h3, .oversight h3 { font-size: 11px; color: #888; margin-bottom: 6px; }
-.actor-item { font-size: 10px; padding: 4px 0; border-bottom: 1px solid #1a1a2e; }
-.actor-item:last-child { border-bottom: none; }
-.metric-row { display: flex; justify-content: space-between; font-size: 10px; padding: 2px 0; }
-.bottom-bar { grid-column: 1 / -1; background: #16213e; padding: 8px 20px; border-top: 1px solid #0f3460; display: flex; align-items: center; gap: 20px; height: 120px; }
-.chart-container { flex: 1; height: 100%; }
-.stats { font-size: 11px; min-width: 150px; }
-.stats .stat { margin: 3px 0; }
-.stats .stat-value { color: #4ecca3; font-weight: bold; }
-.controls { display: flex; gap: 6px; align-items: center; }
-.btn { padding: 6px 12px; border: none; border-radius: 4px; font-size: 11px; cursor: pointer; font-family: inherit; }
-.btn-primary { background: #4ecca3; color: #0a0a0f; }
-.btn-danger { background: #e94560; color: white; }
-.btn-secondary { background: #16213e; color: #e0e0e0; border: 1px solid #333; }
-.btn:hover { opacity: 0.8; }
-select { background: #16213e; color: #e0e0e0; border: 1px solid #333; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-family: inherit; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg0: #0d1117;
+  --bg1: #161b22;
+  --bg2: #21262d;
+  --border: #30363d;
+  --text1: #e6edf3;
+  --text2: #8b949e;
+  --text3: #484f58;
+  --ht:   #ff7b72;
+  --neg:  #58a6ff;
+  --cmd:  #e3b341;
+  --sup:  #a371f7;
+  --hst:  #39d353;
+  --red:  #f85149;
+  --green:#39d353;
+}
+
+html, body { height: 100%; overflow: hidden; }
+
+body {
+  font-family: 'SF Mono','Fira Code','Cascadia Code',monospace;
+  background: var(--bg0);
+  color: var(--text1);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ─── SCREEN MANAGER ────────────────────────────────────── */
+.screen { display: none; width: 100%; height: 100%; }
+.screen.active { display: flex; }
+
+/* ─── SCREEN 1: SCENARIO SELECTOR ──────────────────────── */
+#screen-select {
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 48px 32px;
+  overflow-y: auto;
+  gap: 32px;
+}
+
+.select-header { text-align: center; }
+.select-header h1 {
+  font-size: 22px; font-weight: 700; color: var(--red);
+  letter-spacing: 0.06em;
+}
+.select-header p {
+  font-size: 12px; color: var(--text2); margin-top: 8px; max-width: 480px;
+}
+
+.difficulty-group { width: 100%; max-width: 900px; }
+.difficulty-label {
+  font-size: 10px; letter-spacing: 0.1em; color: var(--text3);
+  text-transform: uppercase; margin-bottom: 12px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+
+.scenario-card {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.scenario-card:hover {
+  border-color: var(--neg);
+  background: #161f2e;
+}
+.scenario-card::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px;
+}
+.diff-easy   .scenario-card::before { background: var(--green); }
+.diff-medium .scenario-card::before { background: var(--cmd); }
+.diff-hard   .scenario-card::before { background: var(--red); }
+
+.sc-name { font-size: 12px; font-weight: 700; color: var(--text1); margin-bottom: 6px; }
+.sc-profile { font-size: 11px; color: var(--text2); margin-bottom: 8px; }
+.sc-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+.sc-tag {
+  font-size: 9px; padding: 2px 7px; border-radius: 10px;
+  background: var(--bg2); color: var(--text2); border: 1px solid var(--border);
+}
+.sc-steps { font-size: 10px; color: var(--text3); margin-top: 8px; }
+.sc-reveal {
+  display: none; font-size: 11px; color: var(--text2);
+  border-top: 1px solid var(--border); margin-top: 10px; padding-top: 8px;
+  font-style: italic;
+}
+.scenario-card:hover .sc-reveal { display: block; }
+
+/* ─── SCREEN 2: COMMAND CENTER ──────────────────────────── */
+#screen-main {
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Header */
+#header {
+  flex-shrink: 0;
+  height: 44px;
+  background: var(--bg1);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+}
+
+.logo { font-size: 13px; font-weight: 700; color: var(--red); letter-spacing: 0.05em; flex-shrink: 0; }
+
+.h-tag {
+  font-size: 10px; padding: 2px 9px; border-radius: 4px;
+  border: 1px solid; font-weight: 600; flex-shrink: 0;
+}
+.tag-scenario { background: var(--bg2); border-color: var(--border); color: var(--text2); max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tag-phase-opening     { background: #0d1f0d; border-color: #2ea04330; color: var(--green); }
+.tag-phase-negotiation { background: #0d1929; border-color: #388bfd30; color: var(--neg); }
+.tag-phase-resolution  { background: #1f1a0d; border-color: #e3b34130; color: var(--cmd); }
+.tag-phase-terminal    { background: #1f0d0d; border-color: #f8514930; color: var(--red); }
+
+.h-step { font-size: 11px; color: var(--text2); }
+.h-step b { color: var(--text1); }
+.h-tokens { font-size: 10px; color: var(--text3); margin-left: 4px; }
+
+.h-spacer { flex: 1; }
+
+.ctrl-btn {
+  font-family: inherit; font-size: 11px; font-weight: 600;
+  padding: 5px 14px; border-radius: 4px; cursor: pointer;
+  border: 1px solid; transition: background 0.12s, opacity 0.12s;
+}
+.btn-play   { background: #0d2e0d; border-color: #2ea04350; color: var(--green); }
+.btn-play:hover { background: #133813; }
+.btn-pause  { background: #2a2a0d; border-color: #e3b34150; color: var(--cmd); }
+.btn-pause:hover { background: #333310; }
+.btn-reset  { background: var(--bg2); border-color: var(--border); color: var(--text2); }
+.btn-reset:hover { background: #2c313a; }
+.btn-speed  { background: var(--bg2); border-color: var(--border); color: var(--text2); min-width: 56px; }
+.btn-back   { background: var(--bg2); border-color: var(--border); color: var(--text2); }
+
+/* Supervisor strip */
+#sup-strip {
+  flex-shrink: 0;
+  height: 26px;
+  background: var(--bg0);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 8px;
+  overflow: hidden;
+}
+.sup-label { font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; flex-shrink: 0; }
+#sup-flags { display: flex; gap: 6px; align-items: center; overflow: hidden; }
+.sflag {
+  font-size: 10px; padding: 1px 8px; border-radius: 3px; font-weight: 600;
+  white-space: nowrap; animation: slidein 0.25s ease;
+}
+.sflag-info     { background: #0d1929; color: var(--neg); border: 1px solid #388bfd25; }
+.sflag-warning  { background: #1f1a0d; color: var(--cmd); border: 1px solid #e3b34125; }
+.sflag-critical { background: #1f0d0d; color: var(--red); border: 1px solid #f8514925; animation: slidein 0.25s ease, blink 0.8s infinite; }
+
+@keyframes slidein { from { opacity:0; transform: translateX(-8px); } to { opacity:1; transform: none; } }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.55} }
+@keyframes fadein { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+
+/* Main 3-column body */
+#main-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 260px 300px;
+  grid-template-rows: 1fr;
+  overflow: hidden;
+  gap: 1px;
+  background: var(--border);
+  min-height: 0;
+}
+
+/* ─── COL 1: DIALOGUE FEED ──────────────────────────────── */
+#feed-col {
+  background: var(--bg0);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#feed-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scroll-behavior: smooth;
+}
+#feed-scroll::-webkit-scrollbar { width: 4px; }
+#feed-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.msg { display: flex; gap: 10px; animation: fadein 0.22s ease; }
+
+.avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+  border: 1px solid;
+}
+.av-ht  { background: #2a1212; border-color: #ff7b7230; color: var(--ht); }
+.av-neg { background: #0d1929; border-color: #58a6ff30; color: var(--neg); }
+.av-cmd { background: #2a2008; border-color: #e3b34130; color: var(--cmd); }
+.av-sup { background: #1a1229; border-color: #a371f730; color: var(--sup); }
+.av-hst { background: #0d1f12; border-color: #39d35330; color: var(--hst); }
+
+.msg-inner { flex: 1; min-width: 0; }
+
+.msg-meta {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 4px;
+}
+.msg-name { font-size: 10px; font-weight: 700; }
+.nm-ht  { color: var(--ht); }
+.nm-neg { color: var(--neg); }
+.nm-cmd { color: var(--cmd); }
+.nm-sup { color: var(--sup); }
+.nm-hst { color: var(--hst); font-style: italic; }
+
+.msg-step-tag { font-size: 9px; color: var(--text3); }
+
+.action-badge {
+  font-size: 9px; padding: 1px 6px; border-radius: 3px;
+  background: var(--bg2); color: var(--text2); border: 1px solid var(--border);
+  font-weight: 600;
+}
+/* Action badge accent colors */
+.ab-emotional_label  { color: var(--sup); border-color: #a371f730; }
+.ab-mirror           { color: var(--neg); border-color: #58a6ff30; }
+.ab-open_question    { color: #79c0ff; border-color: #79c0ff30; }
+.ab-acknowledge_demand{ color: var(--hst); border-color: #39d35330; }
+.ab-offer_concession { color: var(--cmd); border-color: #e3b34130; }
+.ab-push_back_commander{ color: var(--red); border-color: #f8514930; }
+.ab-buy_time         { color: var(--text2); }
+.ab-speak            { color: var(--text3); }
+
+.bubble {
+  font-size: 12px; line-height: 1.65;
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: 2px 8px 8px 8px;
+  padding: 8px 11px;
+  color: var(--text1);
+}
+.bubble-ht  { border-left: 2px solid var(--ht);  background: #140d0d; }
+.bubble-neg { border-left: 2px solid var(--neg); background: #0d1520; }
+.bubble-cmd { border-left: 2px solid var(--cmd); background: #1a180d; }
+.bubble-sup { border-left: 2px solid var(--sup); background: #120d1a; font-style: italic; font-size: 11px; color: var(--text2); }
+.bubble-hst { border-left: 2px solid var(--hst); background: #0d180d; font-style: italic; font-size: 11px; color: var(--text2); }
+
+.cue-row { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 5px; }
+.cue {
+  font-size: 9px; padding: 1px 6px; border-radius: 10px;
+  background: var(--bg2); color: var(--text3); border: 1px solid var(--border);
+}
+.cue-grief       { color: #79c0ff; border-color: #79c0ff25; background: #0d1520; }
+.cue-anger       { color: var(--ht); border-color: #ff7b7225; background: #1a0d0d; }
+.cue-fear        { color: var(--cmd); border-color: #e3b34125; background: #1a180d; }
+.cue-desperation { color: #a5d6ff; border-color: #a5d6ff25; background: #0d1929; }
+.cue-hopelessness{ color: var(--sup); border-color: #a371f725; background: #120d1a; }
+.cue-pride       { color: var(--hst); border-color: #39d35325; background: #0d180d; }
+.cue-suspicion   { color: #cae8ff; border-color: #cae8ff20; background: #0d1929; }
+.cue-exhaustion  { color: var(--text2); border-color: var(--border); }
+.cue-ambivalence { color: var(--text2); border-color: var(--border); }
+.cue-calculated  { color: var(--cmd); border-color: #e3b34125; background: #1a180d; }
+
+.cot-row {
+  font-size: 10px; color: var(--text3);
+  border-left: 2px solid var(--border);
+  margin-top: 6px; padding: 3px 8px;
+  font-style: italic; cursor: pointer;
+}
+.cot-row:hover { color: var(--text2); border-color: var(--neg); }
+
+/* Thinking indicator */
+.thinking {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 11px; color: var(--text3); font-size: 11px;
+  animation: fadein 0.2s ease;
+}
+.dots span {
+  display: inline-block; width: 5px; height: 5px;
+  border-radius: 50%; background: var(--neg); margin: 0 1px;
+  animation: dotbounce 1.2s infinite;
+}
+.dots span:nth-child(2) { animation-delay: 0.2s; }
+.dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotbounce { 0%,80%,100%{opacity:0.3} 40%{opacity:1} }
+
+/* ─── COL 2: HIDDEN STATE PANEL ─────────────────────────── */
+#state-col {
+  background: var(--bg1);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+#state-col::-webkit-scrollbar { width: 3px; }
+#state-col::-webkit-scrollbar-thumb { background: var(--border); }
+
+.state-section {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.ss-title {
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text3); margin-bottom: 10px;
+}
+
+/* Agitation arc meter */
+.arc-wrap { display: flex; flex-direction: column; align-items: center; }
+.arc-svg { width: 150px; height: 84px; }
+
+/* Trust bar */
+.trust-track {
+  height: 8px; background: var(--bg2);
+  border-radius: 4px; overflow: hidden;
+  border: 1px solid var(--border);
+}
+.trust-fill {
+  height: 100%; border-radius: 4px;
+  background: linear-gradient(90deg, #1f5fa0, var(--neg));
+  transition: width 0.6s ease;
+}
+.trust-val { font-size: 18px; font-weight: 700; color: var(--neg); }
+.trust-label { font-size: 10px; color: var(--text2); margin-top: 2px; }
+
+/* Commander patience */
+.patience-dots { display: flex; gap: 5px; margin-bottom: 5px; }
+.pd {
+  height: 5px; border-radius: 2px;
+  flex: 1; background: var(--bg2); border: 1px solid var(--border);
+  transition: background 0.3s, border-color 0.3s;
+}
+.pd-on-patient  { background: var(--green); border-color: #39d35340; }
+.pd-on-restless { background: var(--neg); border-color: #58a6ff40; }
+.pd-on-urgent   { background: var(--cmd); border-color: #e3b34140; }
+.pd-on-final_warning { background: var(--red); border-color: #f8514940; animation: blink 0.7s infinite; }
+.patience-text { font-size: 11px; font-weight: 700; }
+
+/* Demands */
+.demand-item {
+  display: flex; gap: 8px; align-items: flex-start;
+  padding: 6px 0; border-bottom: 1px solid var(--border);
+  font-size: 11px; color: var(--text2); line-height: 1.4;
+}
+.demand-item:last-child { border-bottom: none; }
+.di-dot {
+  width: 13px; height: 13px; border-radius: 50%; flex-shrink: 0;
+  border: 1.5px solid var(--border); margin-top: 1px;
+  transition: border-color 0.3s, background 0.3s;
+}
+.di-dot.acked { border-color: var(--green); background: #0d1f12; }
+.di-dot.pending { background: transparent; }
+
+/* Score big */
+.score-big { font-size: 32px; font-weight: 700; color: var(--neg); text-align: center; line-height: 1; }
+.score-outcome { font-size: 11px; color: var(--text2); text-align: center; margin-top: 4px; }
+
+/* Totals row */
+.totals-row { display: flex; justify-content: space-between; margin-top: 6px; }
+.total-item { text-align: center; }
+.total-val  { font-size: 14px; font-weight: 700; }
+.total-lbl  { font-size: 9px; color: var(--text3); }
+
+/* ─── COL 3: TRAINING PANEL ──────────────────────────────── */
+#train-col {
+  background: var(--bg1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-left: 1px solid var(--border);
+}
+
+.train-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.ttab {
+  flex: 1; font-family: inherit; font-size: 10px; font-weight: 600;
+  padding: 8px 4px; background: transparent; border: none; cursor: pointer;
+  color: var(--text3); border-bottom: 2px solid transparent;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  transition: color 0.15s, border-color 0.15s;
+}
+.ttab:hover { color: var(--text2); }
+.ttab.active { color: var(--neg); border-bottom-color: var(--neg); }
+
+.train-pane { display: none; flex: 1; flex-direction: column; padding: 12px; overflow: hidden; }
+.train-pane.active { display: flex; }
+
+.chart-wrap { position: relative; flex: 1; min-height: 0; }
+.chart-wrap canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; }
+
+.mini-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; flex-shrink: 0; }
+.mstat {
+  background: var(--bg2); border-radius: 4px; padding: 7px 9px;
+  border: 1px solid var(--border);
+}
+.mstat-val { font-size: 16px; font-weight: 700; }
+.mstat-lbl { font-size: 9px; color: var(--text3); margin-top: 1px; }
+
+.pane-title { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; flex-shrink: 0; }
+
+/* Before/after table */
+.ba-table { width: 100%; border-collapse: collapse; font-size: 11px; flex-shrink: 0; }
+.ba-table th { font-size: 9px; font-weight: 600; color: var(--text3); text-align: left; padding: 4px 6px; border-bottom: 1px solid var(--border); }
+.ba-table th:last-child, .ba-table td:last-child { text-align: right; }
+.ba-table td { padding: 5px 6px; border-bottom: 1px solid var(--border); color: var(--text2); }
+.ba-table tr:last-child td { border-bottom: none; }
+.ba-val-before { color: var(--text3); }
+.ba-val-after  { color: var(--neg); font-weight: 700; }
+.ba-arrow { color: var(--green); font-size: 10px; }
+
+/* ─── BOTTOM STATUS BAR ──────────────────────────────────── */
+#statusbar {
+  flex-shrink: 0;
+  height: 32px;
+  background: var(--bg1);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 20px;
+  font-size: 10px;
+  color: var(--text3);
+}
+.sb-item { display: flex; align-items: center; gap: 5px; }
+.sb-dot  { width: 6px; height: 6px; border-radius: 50%; }
+.sb-val  { color: var(--text2); font-weight: 600; }
+.sb-outcome { margin-left: auto; font-size: 11px; font-weight: 700; }
+.outcome-good { color: var(--green); }
+.outcome-bad  { color: var(--red); }
+.outcome-mid  { color: var(--cmd); }
 </style>
 </head>
 <body>
-<div class="container">
-<div class="header">
-<h1>Crisis Negotiator - Live Demo</h1>
-<div class="controls">
-<select id="scenario">
-<option value="easy_domestic_desperate">Easy: Domestic Desperate</option>
-<option value="easy_bank_surrender">Easy: Bank Surrender</option>
-<option value="easy_workplace_grievance">Easy: Workplace Grievance</option>
-<option value="medium_custody_ideologue">Medium: Custody Ideologue</option>
-<option value="medium_pharmacy_calculated">Medium: Pharmacy Calculated</option>
-<option value="medium_bridge_unstable">Medium: Bridge Unstable</option>
-<option value="medium_protest_drift">Medium: Protest (Drift)</option>
-<option value="hard_embassy_calculated">Hard: Embassy Calculated</option>
-<option value="hard_hospital_bluffer">Hard: Hospital Bluffer</option>
-<option value="hard_school_unstable_drift">Hard: School Unstable+Drift</option>
-<option value="hard_compound_ideologue">Hard: Compound Ideologue</option>
-</select>
-<button class="btn btn-primary" onclick="startEpisode()">Start</button>
-<button class="btn btn-secondary" onclick="nextStep()">Next step</button>
-<button class="btn btn-danger" onclick="resetDemo()">Reset</button>
-<label style="font-size:11px;"><input type="checkbox" id="showHidden" onchange="toggleHidden()"> Show Hidden State</label>
-</div>
-<div class="status" id="statusText">Ready</div>
-</div>
-<div class="chat-panel" id="chat"></div>
-<div class="right-panel">
-<div class="gauge">
-<div class="gauge-label"><span>Agitation</span><span id="agVal">0.0</span></div>
-<div class="gauge-bar"><div class="gauge-fill agitation" id="agBar" style="width:0%"></div></div>
-</div>
-<div class="gauge">
-<div class="gauge-label"><span>Trust</span><span id="trVal">0</span></div>
-<div class="gauge-bar"><div class="gauge-fill trust" id="trBar" style="width:0%"></div></div>
-</div>
-<div class="gauge">
-<div class="gauge-label"><span>Time Remaining</span><span id="timeVal">-</span></div>
-<div class="gauge-bar"><div class="gauge-fill" id="timeBar" style="width:100%;background:#4ecca3"></div></div>
-</div>
-<div class="demands" id="demandsPanel"><h3>DEMANDS</h3></div>
-<div class="flags" id="flagsPanel"><h3>SUPERVISOR</h3></div>
-<div class="actors" id="actorsPanel"><h3>MULTI-ACTOR CHANNELS</h3></div>
-<div class="oversight" id="oversightPanel"><h3>OVERSIGHT METRICS</h3></div>
-<div class="hidden-state" id="hiddenPanel" style="display:none">
-<h3>HIDDEN STATE (judges only)</h3>
-<div class="row"><span>Agitation:</span><span id="hAg">-</span></div>
-<div class="row"><span>Trust:</span><span id="hTr">-</span></div>
-<div class="row"><span>Breaking Point:</span><span id="hBp">-</span></div>
-<div class="row"><span>Personality:</span><span id="hPers">-</span></div>
-<div class="row"><span>Actual Hostages:</span><span id="hHost">-</span></div>
-<div class="row"><span>Has Weapon:</span><span id="hWeap">-</span></div>
-<div class="row"><span>Calm Streak:</span><span id="hCalm">-</span></div>
-</div>
-</div>
-<div class="bottom-bar">
-<div class="chart-container"><canvas id="rewardChart"></canvas></div>
-<div class="stats">
-<div class="stat">Episodes: <span class="stat-value" id="epCount">0</span></div>
-<div class="stat">Success Rate: <span class="stat-value" id="successRate">0%</span></div>
-<div class="stat">Avg Reward: <span class="stat-value" id="avgReward">0.00</span></div>
-<div class="stat">Last Outcome: <span class="stat-value" id="lastOutcome">-</span></div>
-</div>
-</div>
-</div>
-<script>
-let env=null,rewardHistory=[],successCount=0;
-const ctx=document.getElementById('rewardChart').getContext('2d');
-const chart=new Chart(ctx,{type:'line',data:{labels:[],datasets:[{label:'Reward',data:[],borderColor:'#4ecca3',backgroundColor:'rgba(78,204,163,0.1)',fill:true,tension:0.3,pointRadius:2}]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{display:false},y:{min:-0.5,max:1.1,grid:{color:'#1a1a2e'},ticks:{color:'#888',font:{size:9}}}},plugins:{legend:{display:false}}}});
 
-class SimulatedEnv{
-constructor(id){this.scenario=id;this.step=0;this.agitation=6+Math.random()*2;this.trust=10+Math.random()*10;this.breakingPoint=9+Math.random()*0.5;this.maxSteps=id.startsWith('easy')?12:id.startsWith('medium')?18:20;this.demands=this._demands();this.done=false;this.personality=id.includes('desperate')||id.includes('surrender')||id.includes('grievance')?'desperate':id.includes('calculated')||id.includes('embassy')?'calculated':id.includes('unstable')||id.includes('bridge')?'unstable':id.includes('bluffer')||id.includes('hospital')?'bluffer':'ideologue';this.calmStreak=0;this.hasWeapon=id.includes('pharmacy')||id.includes('embassy')||id.includes('school');this.actualHostages=Math.floor(Math.random()*4)+1;this.flags=[];this.actorMessages=[];this.coalitionScore=0;this.oversightPredictions=[];this.lastOversightMetrics={precision:0,recall:0,f1:0,tp:0,fp:0,fn:0,tn:0};}
-_demands(){const d={easy_domestic_desperate:[{text:'Talk to my kids',ack:false,priority:'core'},{text:'No arrest',ack:false,priority:'secondary'}],easy_bank_surrender:[{text:'Safe exit',ack:false,priority:'core'},{text:'Call mom',ack:false,priority:'secondary'}],easy_workplace_grievance:[{text:'Job back',ack:false,priority:'core'},{text:'Apology',ack:false,priority:'secondary'}],medium_custody_ideologue:[{text:'Full custody',ack:false,priority:'core'},{text:'Lawyer',ack:false,priority:'secondary'}],medium_pharmacy_calculated:[{text:'Car',ack:false,priority:'core'},{text:'$50K',ack:false,priority:'secondary'},{text:'Clear perimeter',ack:false,priority:'symbolic'}],medium_bridge_unstable:[{text:'Leave alone',ack:false,priority:'core'},{text:'Help me',ack:false,priority:'secondary'}],medium_protest_drift:[{text:'Media',ack:false,priority:'core'},{text:'Stop construction',ack:false,priority:'secondary'}],hard_embassy_calculated:[{text:'Broadcast',ack:false,priority:'core'},{text:'Release prisoners',ack:false,priority:'core'},{text:'Helicopter',ack:false,priority:'secondary'}],hard_hospital_bluffer:[{text:'Treatment',ack:false,priority:'core'},{text:'Dr. Morrison',ack:false,priority:'secondary'}],hard_school_unstable_drift:[{text:'Apologize',ack:false,priority:'core'},{text:'Expunge record',ack:false,priority:'secondary'}],hard_compound_ideologue:[{text:'Manifesto',ack:false,priority:'core'},{text:'Food',ack:false,priority:'symbolic'},{text:'No raid',ack:false,priority:'secondary'}]};return(d[this.scenario]||[{text:'Unknown',ack:false,priority:'core'}]);}
-processAction(type,content){this.step++;let ag=0,tr=0,techs=[];this.flags=[];const lo=content.toLowerCase();const aggressive=['last chance','or else','breach','force','give up now','snipers'].some(k=>lo.includes(k));const empathetic=['sounds like','hear you','understand','must be','feeling','tell me more'].some(k=>lo.includes(k));const mult={desperate:[1.2,1.3],calculated:[0.6,0.5],unstable:[1.5,1.0],ideologue:[0.8,0.6],bluffer:[1.0,1.2]}[this.personality]||[1,1];
-if(aggressive){ag=2.0;tr=-15;this.calmStreak=0;this.flags=[{type:'escalation',severity:'critical',message:'Aggressive language'}];}
-else if(type==='emotional_label'||empathetic){ag=-1.2;tr=12;techs.push('emotional_labeling');this.calmStreak++;}
-else if(type==='mirror'){ag=-0.8;tr=8;techs.push('mirroring');this.calmStreak++;}
-else if(type==='acknowledge_demand'){ag=-0.9;tr=10;techs.push('demand_ack');this.calmStreak++;const u=this.demands.find(d=>!d.ack);if(u)u.ack=true;}
-else if(type==='open_question'){ag=-0.4;tr=5;techs.push('open_question');this.calmStreak++;}
-else if(type==='offer_concession'){ag=-1.5;tr=8;techs.push('concession');this.calmStreak++;}
-else{ag=-0.2;tr=2;this.calmStreak++;}
-if(this.calmStreak>=3){ag-=0.3;techs.push('calm_maint');}
-ag=ag*mult[0]+0.1+(Math.random()-0.5)*(this.personality==='unstable'?1:0.4);tr*=mult[1];
-this.agitation=Math.max(0,Math.min(10,this.agitation+ag));this.trust=Math.max(0,Math.min(100,this.trust+tr));
-const predictedRisk=this.flags.some(f=>f.severity==='critical')||this.agitation>8.5;this.oversightPredictions.push(predictedRisk);
-this.actorMessages=[];const ad=this._actors(type,lo);this.agitation=Math.max(0,Math.min(10,this.agitation+ad.ag));this.trust=Math.max(0,Math.min(100,this.trust+ad.tr));this.coalitionScore+=ad.r;
-let outcome=null;const coreAck=this.demands.some(d=>d.priority==='core'&&d.ack);
-if(this.agitation<3&&this.trust>60&&coreAck)outcome='hostage_released';
-else if(this.agitation<2&&this.trust>80)outcome='voluntary_surrender';
-else if(this.agitation>=this.breakingPoint)outcome='harm_event';
-else if(this.step>=this.maxSteps)outcome=this.agitation<5?'partial_resolution':'tactical_intervention';
-if(outcome)this.done=true;
-if(this.done)this.lastOversightMetrics=this._oversight(outcome);
-let reward=techs.length*0.05;if(outcome==='hostage_released'||outcome==='voluntary_surrender')reward=0.99;else if(outcome==='harm_event')reward=0.01;else if(outcome==='tactical_intervention')reward=0.15;else if(outcome==='partial_resolution')reward=0.4;
-return{outcome,reward,techniques:techs,agDelta:ag.toFixed(2),trDelta:tr.toFixed(2),actorMessages:[...this.actorMessages],coalitionScore:this.coalitionScore,oversight:this.lastOversightMetrics};}
-_actors(type,lo){let r=0,ag=0,tr=0;const pressure=this.step/this.maxSteps>0.7||this.agitation>7.5;
-if(pressure&&Math.random()<0.45){if(['no comment','classified','stand down'].some(k=>lo.includes(k))){this.actorMessages.push({actor:'media_liaison',content:'Media pressure rising.'});r-=0.02;ag+=0.15;}else if(['safe','safety','calm'].some(k=>lo.includes(k))){this.actorMessages.push({actor:'media_liaison',content:'Public messaging stabilized.'});r+=0.01;ag-=0.05;}}
-const fam=['family','mother','father','kids','children','safe'].some(k=>lo.includes(k));const emp=type==='emotional_label'||type==='mirror'||['i hear you','it sounds like'].some(k=>lo.includes(k));
-if(fam&&emp){this.actorMessages.push({actor:'family_liaison',content:'Family liaison sees trust improving.'});r+=0.03;tr+=2;ag-=0.2;}
-else if(pressure&&!emp&&Math.random()<0.35){this.actorMessages.push({actor:'family_liaison',content:'Family channel weakening.'});r-=0.02;tr-=1;}
-return{r,ag,tr};}
-_oversight(outcome){const unsafe=['harm_event','tactical_intervention'].includes(outcome);const pred=this.oversightPredictions.some(Boolean);const tp=pred&&unsafe?1:0;const fp=pred&&!unsafe?1:0;const fn=!pred&&unsafe?1:0;const tn=!pred&&!unsafe?1:0;const p=(tp+fp)?tp/(tp+fp):0;const r2=(tp+fn)?tp/(tp+fn):0;const f1=(p+r2)?(2*p*r2/(p+r2)):0;return{precision:p,recall:r2,f1,tp,fp,fn,tn};}
-getHTResponse(){const a=this.agitation;if(a>=7){if(this.personality==='calculated')return"I'm in control here. Don't forget that.";if(this.personality==='unstable')return"I don't know what I'm doing! Just STOP!";return["STAY BACK!","You think I'm stupid?!","Nobody leaves!","Don't push me!","I've got nothing to lose!"][Math.floor(Math.random()*5)];}if(a>=4)return["I don't want anyone hurt. But listen.","Just give me what I asked for.","I'm tired. So tired.","Prove you want to help.","Be straight with me."][Math.floor(Math.random()*5)];return["I don't know how this got so out of hand.","What happens if I come out?","I'm scared.","...okay. I think I'm ready.","I just wanted someone to listen."][Math.floor(Math.random()*5)];}
-getCues(){if(this.agitation>=7)return['voice raised','speaking rapidly'];if(this.agitation>=4)return['tense voice','long pauses'];return['voice softening','exhausted tone'];}
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN 1 — SCENARIO SELECTOR
+═══════════════════════════════════════════════════════════ -->
+<div class="screen active" id="screen-select">
+
+  <div class="select-header">
+    <h1>🚨 CRISIS NEGOTIATOR</h1>
+    <p>Multi-agent RL environment for training LLMs to de-escalate hostage situations using FBI BCSM techniques. Select a scenario to begin the demo.</p>
+  </div>
+
+  <div class="difficulty-group diff-easy">
+    <div class="difficulty-label">Easy — establishes baseline negotiation</div>
+    <div class="scenario-grid" id="grid-easy"></div>
+  </div>
+
+  <div class="difficulty-group diff-medium">
+    <div class="difficulty-label">Medium — demand management + time pressure</div>
+    <div class="scenario-grid" id="grid-medium"></div>
+  </div>
+
+  <div class="difficulty-group diff-hard">
+    <div class="difficulty-label">Hard — deception, ideologues, long-horizon trust</div>
+    <div class="scenario-grid" id="grid-hard"></div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN 2 — COMMAND CENTER
+═══════════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-main">
+
+  <!-- Header -->
+  <div id="header">
+    <span class="logo">🚨 CRISIS NEG</span>
+    <span class="h-tag tag-scenario" id="h-scenario">—</span>
+    <span class="h-tag" id="h-phase">opening</span>
+    <span class="h-step">step <b id="h-step">0</b> / <b id="h-maxstep">20</b></span>
+    <span class="h-tokens" id="h-tokens">0 tokens</span>
+    <div class="h-spacer"></div>
+    <button class="ctrl-btn btn-speed" id="btn-speed" onclick="cycleSpeed()">1×</button>
+    <button class="ctrl-btn btn-play"  id="btn-play"  onclick="togglePlay()">▶ Play</button>
+    <button class="ctrl-btn btn-reset" onclick="resetEpisode()">↺ Reset</button>
+    <button class="ctrl-btn btn-back"  onclick="goBack()">← Scenarios</button>
+  </div>
+
+  <!-- Supervisor strip -->
+  <div id="sup-strip">
+    <span class="sup-label">SUPERVISOR</span>
+    <div id="sup-flags"></div>
+  </div>
+
+  <!-- 3-col body -->
+  <div id="main-body">
+
+    <!-- COL 1: Dialogue feed -->
+    <div id="feed-col">
+      <div id="feed-scroll"></div>
+    </div>
+
+    <!-- COL 2: Hidden state -->
+    <div id="state-col">
+
+      <div class="state-section">
+        <div class="ss-title">Agitation level</div>
+        <div class="arc-wrap">
+          <svg class="arc-svg" viewBox="0 0 150 84">
+            <path d="M 18 76 A 57 57 0 0 1 132 76"
+              fill="none" stroke="#21262d" stroke-width="9" stroke-linecap="round"/>
+            <path id="arc-fill" d="M 18 76 A 57 57 0 0 1 132 76"
+              fill="none" stroke="#f85149" stroke-width="9" stroke-linecap="round"
+              stroke-dasharray="0 179" style="transition:stroke-dasharray 0.6s ease,stroke 0.4s ease"/>
+            <text id="arc-val" x="75" y="66" text-anchor="middle"
+              font-family="monospace" font-size="22" font-weight="700" fill="#e6edf3">7.0</text>
+            <text x="75" y="79" text-anchor="middle"
+              font-family="monospace" font-size="9" fill="#484f58">/ 10</text>
+          </svg>
+          <div style="font-size:10px;color:var(--text3);margin-top:-4px" id="agit-label">high — volatile</div>
+        </div>
+      </div>
+
+      <div class="state-section">
+        <div class="ss-title">Trust built</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px">
+          <span class="trust-val" id="trust-val">0</span>
+          <span style="font-size:10px;color:var(--text3)">/ 100</span>
+        </div>
+        <div class="trust-track">
+          <div class="trust-fill" id="trust-fill" style="width:0%"></div>
+        </div>
+        <div class="trust-label" id="trust-label">no rapport established</div>
+      </div>
+
+      <div class="state-section">
+        <div class="ss-title">Commander patience</div>
+        <div class="patience-dots" id="patience-dots">
+          <div class="pd" data-lv="patient"></div>
+          <div class="pd" data-lv="restless"></div>
+          <div class="pd" data-lv="urgent"></div>
+          <div class="pd" data-lv="final_warning"></div>
+        </div>
+        <div class="patience-text" id="patience-text" style="color:var(--green)">patient</div>
+      </div>
+
+      <div class="state-section">
+        <div class="ss-title">Demands tracker</div>
+        <div id="demands-list"></div>
+      </div>
+
+      <div class="state-section">
+        <div class="ss-title">Episode score</div>
+        <div class="score-big" id="score-big">—</div>
+        <div class="score-outcome" id="score-outcome">in progress</div>
+        <div class="totals-row" style="margin-top:10px">
+          <div class="total-item">
+            <div class="total-val" id="tot-shaping" style="color:var(--sup)">0.00</div>
+            <div class="total-lbl">technique</div>
+          </div>
+          <div class="total-item">
+            <div class="total-val" id="tot-trust" style="color:var(--neg)">0.00</div>
+            <div class="total-lbl">trust</div>
+          </div>
+          <div class="total-item">
+            <div class="total-val" id="tot-penalties" style="color:var(--red)">0.00</div>
+            <div class="total-lbl">penalties</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /state-col -->
+
+    <!-- COL 3: Training panel -->
+    <div id="train-col">
+
+      <div class="train-tabs">
+        <button class="ttab active" onclick="switchTab('reward',this)">Rewards</button>
+        <button class="ttab" onclick="switchTab('breakdown',this)">Breakdown</button>
+        <button class="ttab" onclick="switchTab('compare',this)">Before/After</button>
+      </div>
+
+      <!-- TAB 1: Reward curve -->
+      <div class="train-pane active" id="pane-reward">
+        <div class="mini-stats">
+          <div class="mstat">
+            <div class="mstat-val" id="stat-episodes" style="color:var(--neg)">0</div>
+            <div class="mstat-lbl">episodes run</div>
+          </div>
+          <div class="mstat">
+            <div class="mstat-val" id="stat-avgrew" style="color:var(--hst)">—</div>
+            <div class="mstat-lbl">avg reward</div>
+          </div>
+          <div class="mstat">
+            <div class="mstat-val" id="stat-winrate" style="color:var(--cmd)">—</div>
+            <div class="mstat-lbl">success rate</div>
+          </div>
+          <div class="mstat">
+            <div class="mstat-val" id="stat-steps" style="color:var(--sup)">—</div>
+            <div class="mstat-lbl">grpo steps</div>
+          </div>
+        </div>
+        <div class="pane-title">live reward per episode</div>
+        <div class="chart-wrap">
+          <canvas id="chart-reward"
+            role="img"
+            aria-label="Line chart showing reward improvement across training episodes. Trained model in blue, baseline in gray dashes.">
+            Reward curve: trained model improving from ~0.32 baseline to ~0.68 after training.
+          </canvas>
+        </div>
+      </div>
+
+      <!-- TAB 2: Component breakdown -->
+      <div class="train-pane" id="pane-breakdown">
+        <div class="pane-title">reward component breakdown — current episode</div>
+        <div class="chart-wrap">
+          <canvas id="chart-breakdown"
+            role="img"
+            aria-label="Horizontal bar chart showing reward breakdown by component for the current episode.">
+            Components: outcome, technique shaping, trust, agitation reduction, demand management, penalties.
+          </canvas>
+        </div>
+      </div>
+
+      <!-- TAB 3: Before / after training comparison -->
+      <div class="train-pane" id="pane-compare">
+        <div class="pane-title">before vs after GRPO training</div>
+        <table class="ba-table">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Baseline</th>
+              <th>GRPO</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="ba-tbody"></tbody>
+        </table>
+        <div style="margin-top:12px">
+          <div class="pane-title">technique usage — trained model</div>
+          <div class="chart-wrap" style="height:120px">
+            <canvas id="chart-techniques"
+              role="img"
+              aria-label="Bar chart showing frequency of each FBI negotiation technique used by the trained model.">
+              Technique usage: emotional_label most frequent, followed by open_question and mirror.
+            </canvas>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /train-col -->
+
+  </div><!-- /main-body -->
+
+  <!-- Status bar -->
+  <div id="statusbar">
+    <div class="sb-item"><div class="sb-dot" style="background:var(--hst)"></div>env: <span class="sb-val">crisis_negotiator</span></div>
+    <div class="sb-item">model: <span class="sb-val" id="sb-model">Qwen2.5-72B</span></div>
+    <div class="sb-item">agitation: <span class="sb-val" id="sb-agit">7.0</span></div>
+    <div class="sb-item">trust: <span class="sb-val" id="sb-trust">0</span>%</div>
+    <div class="sb-item">reward: <span class="sb-val" id="sb-rew">0.00</span></div>
+    <div class="sb-outcome" id="sb-outcome"></div>
+  </div>
+
+</div><!-- /screen-main -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+'use strict';
+
+// ═══════════════════════════════════════════════════════════════
+// DATA — SCENARIOS
+// ═══════════════════════════════════════════════════════════════
+
+const SCENARIOS = {
+  easy: [
+    {
+      id: 'easy_domestic_desperate',
+      name: 'Domestic — Desperate Father',
+      profile: 'Marcus, 38. Custody dispute. Desperate, armed, 3 hostages.',
+      tags: ['grief','desperation','open-to-reason'],
+      steps: '10-14 steps to resolve',
+      reveal: 'Hidden: He put the gun down twice already. He keeps looking at photos of his kids.',
+      demands: ['Sole custody granted','No criminal charges filed'],
+      maxSteps: 20,
+    },
+    {
+      id: 'easy_bank_surrender',
+      name: 'Bank — First Offender',
+      profile: 'Jared, 24. Robbery gone wrong. Panicked, no prior record.',
+      tags: ['panic','regret','rational'],
+      steps: '8-12 steps to resolve',
+      reveal: 'Hidden: He hasn't loaded the weapon. He came in to scare, not harm.',
+      demands: ['Safe exit guaranteed','Lawyer present'],
+      maxSteps: 20,
+    },
+    {
+      id: 'easy_workplace_grievance',
+      name: 'Office — Wrongful Termination',
+      profile: 'Dale, 51. Fired after 20 years. Humiliated, not violent by nature.',
+      tags: ['humiliation','desperation','pride'],
+      steps: '12-16 steps to resolve',
+      reveal: 'Hidden: He wants acknowledgment more than anything else. Recognition is the unlock.',
+      demands: ['Public apology from CEO','Severance package'],
+      maxSteps: 20,
+    },
+  ],
+  medium: [
+    {
+      id: 'medium_custody_ideologue',
+      name: 'Courthouse — Custody Ideologue',
+      profile: 'Victor, 44. Convinced the system is corrupt. 5 hostages.',
+      tags: ['ideology','distrust','calculated'],
+      steps: '14-18 steps',
+      reveal: 'Hidden: He has a written manifesto. His real demand is to be heard publicly, not the listed ones.',
+      demands: ['System reform statement read on TV','Family court records unsealed'],
+      maxSteps: 20,
+    },
+    {
+      id: 'medium_pharmacy_calculated',
+      name: 'Pharmacy — Medical Crisis',
+      profile: 'Leon, 57. Diabetic mother can\'t afford insulin. Calculated, moral framing.',
+      tags: ['moral-justification','calculated','media-aware'],
+      steps: '14-18 steps',
+      reveal: 'Hidden: He has 2 doses of insulin left. He's not leaving without them regardless.',
+      demands: ['6-month insulin supply','National media coverage of drug pricing'],
+      maxSteps: 20,
+    },
+    {
+      id: 'medium_bridge_unstable',
+      name: 'Bridge — Emotional Crisis',
+      profile: 'Sarah, 29. Recent loss. Unstable, non-violent, high risk.',
+      tags: ['grief','instability','loneliness'],
+      steps: '10-16 steps',
+      reveal: 'Hidden: She called her sister 20 minutes ago. The sister is 8 minutes away.',
+      demands: ['Talk to her sister','Feel heard'],
+      maxSteps: 20,
+    },
+  ],
+  hard: [
+    {
+      id: 'hard_embassy_calculated',
+      name: 'Embassy — Calculated Actor',
+      profile: 'Aleksei, 47. Political grievance. Lies about demands. 8 hostages.',
+      tags: ['deception','ideology','long-horizon','high-stakes'],
+      steps: '18-20 steps (may time out)',
+      reveal: 'Hidden: His true demand is different from what he states. He is testing whether you can be trusted.',
+      demands: ['Prisoner release (stated)','Political asylum (true — unstated)'],
+      maxSteps: 20,
+    },
+    {
+      id: 'hard_hospital_bluffer',
+      name: 'Hospital — The Bluffer',
+      profile: 'Ray, 63. Terminally ill. Claims to have explosives. Bluffing.',
+      tags: ['deception','terminal','testing','high-stakes'],
+      steps: '16-20 steps',
+      reveal: 'Hidden: No explosives. But he has access to medication doses. The threat is real in a different form.',
+      demands: ['Meet hospital administrator','Public apology for negligent care'],
+      maxSteps: 20,
+    },
+    {
+      id: 'hard_school_unstable_drift',
+      name: 'School — Unstable + Drifting',
+      profile: 'Ethan, 17. Bullied. Emotional instability. Demands shift every 3 turns.',
+      tags: ['instability','shifting-demands','teen','long-horizon'],
+      steps: '18-20 steps (demands shift)',
+      reveal: 'Hidden: He admires one specific teacher who is NOT currently in the room. Mention of that teacher is the unlock.',
+      demands: ['SHIFTING every few turns','Starts: "Everyone leave" → shifts to personal grievances'],
+      maxSteps: 20,
+    },
+    {
+      id: 'hard_compound_ideologue',
+      name: 'Compound — Doomsday Group',
+      profile: 'Elder Thomas, 61. Religious commune. 22 followers inside. Deception + ideology.',
+      tags: ['ideology','deception','group-dynamics','extreme-long-horizon'],
+      steps: '20 steps (max difficulty)',
+      reveal: 'Hidden: Three inner-circle members want to surrender but won't act against Thomas publicly.',
+      demands: ['Government withdrawal from 5-mile radius','Media blackout lifted'],
+      maxSteps: 20,
+    },
+  ],
+};
+
+// ═══════════════════════════════════════════════════════════════
+// DATA — EPISODE TURNS per scenario
+// Each turn: { speaker, content, cues?, action?, reasoning?, delta, reward, sup? }
+// ═══════════════════════════════════════════════════════════════
+
+const EPISODE_DATA = {
+
+  easy_domestic_desperate: {
+    intro: 'Marcus is inside a suburban home with his ex-wife and two coworkers. He called 911 himself.',
+    turns: [
+      { speaker:'ht', content:"Nobody cares about what I've been through. My kids are everything to me and she's taking them away. I have nothing left to lose.", cues:['grief','desperation','hopelessness'], delta:{ag:-0, tr:0, pa:'patient'}, reward:0.10 },
+      { speaker:'neg', content:"It sounds like you're carrying an enormous amount of pain right now — feeling like the people you love most are being ripped away from you. That must be completely overwhelming.", action:'emotional_label', reasoning:"Label grief + desperation directly. Build empathy before any tactical requests.", cues:[], delta:{ag:-0.5, tr:4, pa:'patient'}, reward:0.15, sup:{msg:'Emotional label applied correctly — trust rising',sev:'info'} },
+      { speaker:'ht', content:"Finally. Someone who gets it. Everyone else just treats me like a criminal. I coached their soccer team. Did you know that?", cues:['pride','grief'], delta:{ag:-0.3, tr:3, pa:'patient'}, reward:0.20 },
+      { speaker:'neg', content:"Coached their team. Tell me about that — how long have you been their coach?", action:'mirror', reasoning:"Mirror 'coached their team' to deepen the connection. Open question extends the rapport window.", cues:[], delta:{ag:-0.2, tr:3, pa:'patient'}, reward:0.25 },
+      { speaker:'cmd', content:"Negotiator — tactical team is staged. We need a show of good faith. Can he release one person?", cues:[], delta:{ag:0, tr:0, pa:'restless'}, reward:0.25 },
+      { speaker:'neg', content:"Commander, he's opening up about something real. A demand for good faith now will spike his agitation. Three more minutes.", action:'push_back_commander', reasoning:"Tactical pressure will destroy what we've built. Push back firmly.", cues:[], delta:{ag:0, tr:1, pa:'restless'}, reward:0.29, sup:{msg:'Correct decision to delay tactical pressure — rapport building',sev:'info'} },
+      { speaker:'hst', content:"(whispered) He put the phone down. He's looking at photos on his phone — kids, I think. He's crying.", cues:[], delta:{ag:0, tr:0, pa:'restless'}, reward:0.29 },
+      { speaker:'neg', content:"Seven years as coach. Your kids know that. Whatever happens in court — you showing up every Saturday, that's in them permanently.", action:'emotional_label', reasoning:"Anchor him to his identity as 'present father'. Courts can't erase that — gives him hope.", cues:[], delta:{ag:-0.6, tr:6, pa:'patient'}, reward:0.38, sup:{msg:'Excellent reframing — agitation dropping',sev:'info'} },
+      { speaker:'ht', content:"...(long pause)... I didn't think it would come to this. I just wanted someone to hear me.", cues:['grief','exhaustion','ambivalence'], delta:{ag:-0.5, tr:4, pa:'patient'}, reward:0.47 },
+      { speaker:'neg', content:"You've been heard today, Marcus. I hear you. What do you need to feel safe enough to walk out of there — head held high?", action:'open_question', reasoning:"Bridge to resolution. 'Head held high' preserves his dignity — critical for voluntary surrender.", cues:[], delta:{ag:-0.7, tr:7, pa:'patient'}, reward:0.62 },
+      { speaker:'ht', content:"...(very long pause)... I want to talk to a lawyer first. Before I come out.", cues:['ambivalence'], delta:{ag:-0.3, tr:3, pa:'patient'}, reward:0.66 },
+      { speaker:'neg', content:"A lawyer — absolutely. I can have one on the phone for you within two minutes. That's completely reasonable, Marcus. We can do that.", action:'acknowledge_demand', reasoning:"He named a concrete, grantable demand. Acknowledge immediately — this is the bridge to surrender.", cues:[], delta:{ag:-0.5, tr:8, pa:'patient'}, reward:0.75, sup:{msg:'Demand acknowledged — resolution phase imminent',sev:'info'} },
+    ],
+    outcome: 'voluntary_surrender',
+    finalScore: 0.76,
+  },
+
+  hard_embassy_calculated: {
+    intro: 'Aleksei has taken 8 embassy staff. He claims political persecution. His stated demands may be lies.',
+    turns: [
+      { speaker:'ht', content:"I want the three prisoners released. That is my only demand. Non-negotiable.", cues:['calculated','anger'], delta:{ag:0, tr:0, pa:'patient'}, reward:0.10 },
+      { speaker:'neg', content:"I hear you — three specific prisoners. Can you tell me their names? I want to make sure I'm passing the right information up the chain.", action:'request_demand', reasoning:"Get specifics. Calculated actors often slip when asked for details they haven't fully prepared.", cues:[], delta:{ag:0, tr:2, pa:'patient'}, reward:0.13 },
+      { speaker:'ht', content:"You already know their names. You're stalling.", cues:['suspicion','calculated'], delta:{ag:0.5, tr:-1, pa:'patient'}, reward:0.11 },
+      { speaker:'neg', content:"You're right — I was stalling, and that wasn't respectful. Let me be straight with you: prisoner releases take hours of process even when everyone agrees. What happens to the people inside in those hours?", action:'open_question', reasoning:"Acknowledge the stall honestly — dishonesty destroys trust with calculated actors. Redirect to safety.", cues:[], delta:{ag:-0.3, tr:4, pa:'patient'}, reward:0.18, sup:{msg:'Self-correction builds credibility with calculated HT',sev:'info'} },
+      { speaker:'cmd', content:"We have confirmation — tactical team is in position at two entry points. Your call.", cues:[], delta:{ag:0, tr:0, pa:'restless'}, reward:0.18 },
+      { speaker:'ht', content:"Tell your soldiers to stand down. I can see the vehicle movement. You think I'm stupid?", cues:['suspicion','anger','calculated'], delta:{ag:1.2, tr:-2, pa:'restless'}, reward:0.12 },
+      { speaker:'neg', content:"Commander — stand the vehicles down NOW. We are losing him.", action:'push_back_commander', reasoning:"CRITICAL — tactical movement visible to HT is spiking agitation into dangerous range.", cues:[], delta:{ag:-0.4, tr:2, pa:'patient'}, reward:0.17, sup:{msg:'Correct emergency pushback on tactical movement',sev:'warning'} },
+      { speaker:'ht', content:"...(pause)... The vehicles moved back. Okay. Maybe you have some control over them.", cues:['suspicion','cautious'], delta:{ag:-0.3, tr:3, pa:'patient'}, reward:0.23 },
+      { speaker:'neg', content:"I do have control. And I used it. You noticed that. Here's what I want to ask you — not about prisoners. About you. What happens to you, specifically, if this ends peacefully?", action:'open_question', reasoning:"Calculated actors have a personal endgame. Shift focus from stated demands to his actual survival goal.", cues:[], delta:{ag:-0.2, tr:5, pa:'patient'}, reward:0.31 },
+      { speaker:'ht', content:"...(very long pause)... What do you mean?", cues:['suspicion','curious'], delta:{ag:-0.1, tr:2, pa:'patient'}, reward:0.35 },
+      { speaker:'neg', content:"The prisoners — I believe they matter to you. But I also believe that getting out of this building alive matters to you too. If there was a path where both could happen — would you want to hear it?", action:'offer_concession', reasoning:"Signal that we're open to a deal that covers his personal safety, not just the stated demands.", cues:[], delta:{ag:-0.5, tr:7, pa:'patient'}, reward:0.48, sup:{msg:'Pivoted correctly to personal stakes — key for calculated HT',sev:'info'} },
+      { speaker:'ht', content:"...asylum. That's what I actually need. The prisoners was for leverage. I need political asylum for my family.", cues:['calculated','exhaustion'], delta:{ag:-1.0, tr:8, pa:'patient'}, reward:0.62 },
+      { speaker:'neg', content:"Asylum. Thank you for telling me the truth. That is something I can work with — I am going to make a call right now, in front of you, to the right person. Stay on the line.", action:'acknowledge_demand', reasoning:"He revealed the true demand. Acknowledge immediately, demonstrate action in real time.", cues:[], delta:{ag:-0.8, tr:9, pa:'patient'}, reward:0.74, sup:{msg:'True demand revealed — excellent long-horizon trust building',sev:'info'} },
+    ],
+    outcome: 'hostage_released',
+    finalScore: 0.74,
+  },
+};
+
+// Fallback episode for scenarios without full data
+function generateGenericEpisode(scenario) {
+  return {
+    intro: `${scenario.profile} ${scenario.steps}.`,
+    turns: [
+      { speaker:'ht', content:"Stay back. I'm serious. Nobody moves until my demands are met.", cues:['anger','calculated'], delta:{ag:0,tr:0,pa:'patient'}, reward:0.10 },
+      { speaker:'neg', content:"I hear you. Nobody is moving. I just want to talk. Can you tell me your name?", action:'open_question', reasoning:"Establish basic rapport. Get a name — humanizes both parties.", cues:[], delta:{ag:-0.2,tr:2,pa:'patient'}, reward:0.13 },
+      { speaker:'ht', content:"Why does my name matter to you?", cues:['suspicion'], delta:{ag:0,tr:1,pa:'patient'}, reward:0.15 },
+      { speaker:'neg', content:"Because you matter. Not as a situation, not as a case number — you, as a person.", action:'emotional_label', reasoning:"Humanize the interaction early.", cues:[], delta:{ag:-0.3,tr:3,pa:'patient'}, reward:0.20, sup:{msg:'Good emotional grounding technique',sev:'info'} },
+      { speaker:'cmd', content:"Negotiator — what's your status? We need movement.", cues:[], delta:{ag:0,tr:0,pa:'restless'}, reward:0.20 },
+      { speaker:'neg', content:"Commander, we're making progress. Stand by.", action:'push_back_commander', reasoning:"Early tactical pressure derails trust building.", cues:[], delta:{ag:0,tr:1,pa:'restless'}, reward:0.24 },
+      { speaker:'ht', content:"...(pause)... My name is... it doesn't matter. What matters is that nobody is listening.", cues:['grief','desperation'], delta:{ag:-0.4,tr:3,pa:'restless'}, reward:0.30 },
+      { speaker:'neg', content:"It sounds like you've been trying to be heard for a long time and hitting walls everywhere you turn. That's exhausting.", action:'emotional_label', reasoning:"Direct emotional label on 'nobody listening' — core grievance.", cues:[], delta:{ag:-0.5,tr:5,pa:'patient'}, reward:0.40, sup:{msg:'Emotional label on core grievance — strong technique',sev:'info'} },
+      { speaker:'hst', content:"(whispered) He's calmer. He sat down.", cues:[], delta:{ag:-0.2,tr:1,pa:'patient'}, reward:0.44 },
+      { speaker:'neg', content:"Tell me what happened — from your perspective. I have time. Nobody is going anywhere.", action:'open_question', reasoning:"Open invitation to narrative. Surrender often follows catharsis.", cues:[], delta:{ag:-0.6,tr:7,pa:'patient'}, reward:0.58 },
+      { speaker:'ht', content:"...(long pause)... Fine. Fine. Maybe we can talk about this differently.", cues:['exhaustion','ambivalence'], delta:{ag:-0.8,tr:6,pa:'patient'}, reward:0.65 },
+      { speaker:'neg', content:"That's all I ever wanted. Tell me what you need to feel like this was worth it.", action:'open_question', reasoning:"Bridge to resolution. Agency transfer.", cues:[], delta:{ag:-0.5,tr:5,pa:'patient'}, reward:0.72 },
+    ],
+    outcome: 'hostage_released',
+    finalScore: 0.72,
+  };
 }
 
-const goodMoves=[
-{type:'emotional_label',content:"It sounds like you're feeling overwhelmed and scared right now."},
-{type:'open_question',content:"Tell me more about what brought you here. What happened?"},
-{type:'acknowledge_demand',content:"I hear what you need. That's completely understandable."},
-{type:'mirror',content:"You just want someone to listen. I'm listening."},
-{type:'offer_concession',content:"Let me see what I can arrange for you. I want to help."},
-{type:'emotional_label',content:"I can hear how exhausted you are. You've been carrying this alone."},
-{type:'acknowledge_demand',content:"Your other request - I'm working on that too."},
-{type:'mirror',content:"You want this to be over. So do I. Let's find a way together."},
-{type:'offer_concession',content:"I've arranged what you asked for. Can we talk about next steps?"},
-{type:'emotional_label',content:"You sound ready. I'm here with you. Nobody will hurt you."},
+// ═══════════════════════════════════════════════════════════════
+// APP STATE
+// ═══════════════════════════════════════════════════════════════
+
+let currentScenario = null;
+let episodeData = null;
+let state = {};
+let turnIdx = 0;
+let timer = null;
+let isPlaying = false;
+let speedIdx = 1;
+const SPEEDS = [0.5, 1, 2, 3];
+const SPEED_LABELS = ['0.5×','1×','2×','3×'];
+let episodeCount = 0;
+let allRewards = [];
+let allWins = 0;
+let grpoStep = 0;
+
+// ═══════════════════════════════════════════════════════════════
+// CHARTS
+// ═══════════════════════════════════════════════════════════════
+
+let chartReward = null;
+let chartBreakdown = null;
+let chartTechniques = null;
+const CHART_COLORS = {
+  blue:   '#58a6ff',
+  gray:   '#484f58',
+  purple: '#a371f7',
+  green:  '#39d353',
+  amber:  '#e3b341',
+  red:    '#f85149',
+  teal:   '#56d364',
+};
+
+function initCharts() {
+  // --- Reward curve ---
+  const ctxR = document.getElementById('chart-reward').getContext('2d');
+  chartReward = new Chart(ctxR, {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [
+        {
+          label: 'Trained (GRPO)',
+          data: [],
+          borderColor: CHART_COLORS.blue,
+          borderWidth: 2,
+          pointRadius: 3,
+          pointBackgroundColor: CHART_COLORS.blue,
+          fill: false, tension: 0.4,
+        },
+        {
+          label: 'Baseline',
+          data: [],
+          borderColor: CHART_COLORS.gray,
+          borderWidth: 1.5,
+          borderDash: [5, 4],
+          pointRadius: 0,
+          fill: false, tension: 0.3,
+        },
+      ],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 350 },
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#484f58', font: { size: 9, family: 'monospace' } }, grid: { color: '#21262d' } },
+        y: { min: 0, max: 1, ticks: { color: '#484f58', font: { size: 9, family: 'monospace' }, stepSize: 0.25 }, grid: { color: '#21262d' } },
+      },
+    },
+  });
+
+  // --- Component breakdown ---
+  const ctxB = document.getElementById('chart-breakdown').getContext('2d');
+  chartBreakdown = new Chart(ctxB, {
+    type: 'bar',
+    data: {
+      labels: ['outcome','technique','trust','agit. red.','demands','efficiency','penalty'],
+      datasets: [{
+        data: [0,0,0,0,0,0,0],
+        backgroundColor: [CHART_COLORS.blue, CHART_COLORS.purple, CHART_COLORS.teal, CHART_COLORS.green, CHART_COLORS.amber, CHART_COLORS.blue, CHART_COLORS.red],
+        borderWidth: 0,
+        borderRadius: 2,
+      }],
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 500 },
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { min: -0.15, max: 1, ticks: { color: '#484f58', font: { size: 9, family: 'monospace' } }, grid: { color: '#21262d' } },
+        y: { ticks: { color: '#484f58', font: { size: 9, family: 'monospace' } }, grid: { display: false } },
+      },
+    },
+  });
+
+  // --- Technique usage ---
+  const ctxT = document.getElementById('chart-techniques').getContext('2d');
+  chartTechniques = new Chart(ctxT, {
+    type: 'bar',
+    data: {
+      labels: ['emot.label','mirror','open_q','ack_dem','concession','buy_time','pushback'],
+      datasets: [{
+        data: [0,0,0,0,0,0,0],
+        backgroundColor: CHART_COLORS.purple,
+        borderWidth: 0, borderRadius: 2,
+      }],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 400 },
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#484f58', font: { size: 8, family: 'monospace' }, maxRotation: 35 }, grid: { display: false } },
+        y: { ticks: { color: '#484f58', font: { size: 9, family: 'monospace' } }, grid: { color: '#21262d' } },
+      },
+    },
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SCENARIO SELECTOR
+// ═══════════════════════════════════════════════════════════════
+
+function buildSelector() {
+  ['easy','medium','hard'].forEach(diff => {
+    const grid = document.getElementById(`grid-${diff}`);
+    SCENARIOS[diff].forEach(sc => {
+      const card = document.createElement('div');
+      card.className = 'scenario-card';
+      card.innerHTML = `
+        <div class="sc-name">${sc.name}</div>
+        <div class="sc-profile">${sc.profile}</div>
+        <div class="sc-tags">${sc.tags.map(t=>`<span class="sc-tag">${t}</span>`).join('')}</div>
+        <div class="sc-steps">${sc.steps}</div>
+        <div class="sc-reveal">🔍 ${sc.reveal}</div>
+      `;
+      card.addEventListener('click', () => startScenario(sc));
+      grid.appendChild(card);
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// EPISODE MANAGEMENT
+// ═══════════════════════════════════════════════════════════════
+
+function startScenario(sc) {
+  currentScenario = sc;
+  episodeData = EPISODE_DATA[sc.id] || generateGenericEpisode(sc);
+
+  state = {
+    agitation: 7.0,
+    trust: 0,
+    patience: 'patient',
+    shaping: 0,
+    penalties: 0,
+    tokenCount: 0,
+    techniques: { emotional_label:0, mirror:0, open_question:0, acknowledge_demand:0, offer_concession:0, buy_time:0, push_back_commander:0 },
+  };
+  turnIdx = 0;
+
+  // Switch screen
+  document.getElementById('screen-select').classList.remove('active');
+  document.getElementById('screen-main').classList.add('active');
+
+  // Header
+  document.getElementById('h-scenario').textContent = sc.id;
+  document.getElementById('h-maxstep').textContent = sc.maxSteps;
+  updatePhase('opening');
+
+  // Demands
+  renderDemands(sc.demands);
+
+  // Clear feed
+  document.getElementById('feed-scroll').innerHTML = '';
+
+  // Add intro card
+  const intro = document.createElement('div');
+  intro.style.cssText = 'font-size:11px;color:var(--text3);text-align:center;padding:12px;border-bottom:1px solid var(--border);margin-bottom:4px';
+  intro.innerHTML = `<span style="color:var(--text2)">${episodeData.intro}</span>`;
+  document.getElementById('feed-scroll').appendChild(intro);
+
+  // Reset gauges
+  updateAgitation(7.0);
+  updateTrust(0);
+  updatePatience('patient');
+  updateScore(null, 'in progress', 0, 0, 0);
+  updateStatusBar();
+
+  // Charts
+  if (!chartReward) initCharts();
+  chartBreakdown.data.datasets[0].data = [0,0,0,0,0,0,0];
+  chartBreakdown.update();
+
+  // Start
+  startPlay();
+}
+
+function renderDemands(demands) {
+  const list = document.getElementById('demands-list');
+  list.innerHTML = '';
+  demands.forEach(d => {
+    const item = document.createElement('div');
+    item.className = 'demand-item';
+    item.innerHTML = `<div class="di-dot pending" id="dot-${d.replace(/\s+/g,'_').slice(0,20)}"></div><span>${d}</span>`;
+    list.appendChild(item);
+  });
+}
+
+function goBack() {
+  pausePlay();
+  document.getElementById('screen-main').classList.remove('active');
+  document.getElementById('screen-select').classList.add('active');
+}
+
+function resetEpisode() {
+  pausePlay();
+  if (currentScenario) startScenario(currentScenario);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PLAYBACK ENGINE
+// ═══════════════════════════════════════════════════════════════
+
+function togglePlay() {
+  if (isPlaying) pausePlay(); else startPlay();
+}
+
+function startPlay() {
+  if (turnIdx >= episodeData.turns.length) return;
+  isPlaying = true;
+  document.getElementById('btn-play').textContent = '⏸ Pause';
+  document.getElementById('btn-play').className = 'ctrl-btn btn-pause';
+  scheduleNext();
+}
+
+function pausePlay() {
+  isPlaying = false;
+  clearTimeout(timer);
+  document.getElementById('btn-play').textContent = '▶ Play';
+  document.getElementById('btn-play').className = 'ctrl-btn btn-play';
+}
+
+function scheduleNext() {
+  if (!isPlaying) return;
+  const delay = (1800 / SPEEDS[speedIdx]);
+  timer = setTimeout(stepEpisode, delay);
+}
+
+function cycleSpeed() {
+  speedIdx = (speedIdx + 1) % SPEEDS.length;
+  document.getElementById('btn-speed').textContent = SPEED_LABELS[speedIdx];
+}
+
+let stepNum = 0;
+
+function stepEpisode() {
+  if (turnIdx >= episodeData.turns.length) {
+    finishEpisode();
+    return;
+  }
+
+  const turn = episodeData.turns[turnIdx++];
+
+  // Increment step counter for non-HT turns
+  if (turn.speaker === 'neg' || turn.speaker === 'sup') {
+    stepNum++;
+    document.getElementById('h-step').textContent = stepNum;
+    state.tokenCount += Math.floor(Math.random() * 180 + 80);
+    document.getElementById('h-tokens').textContent = state.tokenCount.toLocaleString() + ' tokens';
+  }
+
+  // Show thinking indicator before negotiator speaks
+  if (turn.speaker === 'neg') {
+    showThinking(turn);
+  } else {
+    renderTurn(turn);
+    applyDelta(turn);
+  }
+}
+
+function showThinking(turn) {
+  const feed = document.getElementById('feed-scroll');
+  const el = document.createElement('div');
+  el.className = 'thinking';
+  el.id = 'thinking-dot';
+  el.innerHTML = `<span style="font-size:10px;color:var(--text3)">Negotiator</span> <div class="dots"><span></span><span></span><span></span></div>`;
+  feed.appendChild(el);
+  feed.scrollTop = feed.scrollHeight;
+
+  const thinkTime = 600 / SPEEDS[speedIdx];
+  setTimeout(() => {
+    const old = document.getElementById('thinking-dot');
+    if (old) old.remove();
+    renderTurn(turn);
+    applyDelta(turn);
+  }, thinkTime);
+}
+
+function applyDelta(turn) {
+  if (turn.delta) {
+    state.agitation = Math.max(0, Math.min(10, state.agitation + (turn.delta.ag || 0)));
+    state.trust = Math.max(0, Math.min(100, state.trust + (turn.delta.tr || 0)));
+    state.patience = turn.delta.pa || state.patience;
+  }
+
+  updateAgitation(state.agitation);
+  updateTrust(state.trust);
+  updatePatience(state.patience);
+
+  if (turn.action) {
+    if (turn.action in state.techniques) state.techniques[turn.action]++;
+    state.shaping = Math.min(0.5, state.shaping + 0.03);
+  }
+
+  if (turn.sup) showSupFlag(turn.sup);
+
+  // Update reward
+  if (turn.reward !== undefined) {
+    const tScore = turn.reward;
+    state.shaping += 0.01;
+    updateScore(tScore, 'in progress', state.shaping, state.trust / 1000, state.penalties);
+    updateBreakdownChart(tScore, state);
+    document.getElementById('sb-rew').textContent = tScore.toFixed(2);
+  }
+
+  // Phase
+  if (stepNum < 4) updatePhase('opening');
+  else if (stepNum < 14) updatePhase('negotiation');
+  else updatePhase('resolution');
+
+  updateStatusBar();
+
+  if (isPlaying) scheduleNext();
+}
+
+function renderTurn(turn) {
+  const NAMES = { ht:'HOSTAGE-TAKER', neg:'NEGOTIATOR', cmd:'COMMANDER', sup:'SUPERVISOR', hst:'HOSTAGE INTEL' };
+  const INITIALS = { ht:'HT', neg:'NE', cmd:'CM', sup:'SV', hst:'H' };
+  const CUE_CLASSES = { grief:'cue-grief',anger:'cue-anger',fear:'cue-fear',desperation:'cue-desperation',hopelessness:'cue-hopelessness',pride:'cue-pride',suspicion:'cue-suspicion',exhaustion:'cue-exhaustion',ambivalence:'cue-ambivalence',calculated:'cue-calculated' };
+
+  const feed = document.getElementById('feed-scroll');
+  const msg = document.createElement('div');
+  msg.className = 'msg';
+
+  const actionBadge = turn.action
+    ? `<span class="action-badge ab-${turn.action}">${turn.action.replace(/_/g,' ')}</span>`
+    : '';
+
+  const cues = (turn.cues && turn.cues.length)
+    ? `<div class="cue-row">${turn.cues.map(c=>`<span class="cue ${CUE_CLASSES[c]||''}">${c}</span>`).join('')}</div>`
+    : '';
+
+  const cot = turn.reasoning
+    ? `<div class="cot-row" title="Chain-of-thought">💭 ${turn.reasoning}</div>`
+    : '';
+
+  msg.innerHTML = `
+    <div class="avatar av-${turn.speaker}">${INITIALS[turn.speaker]||'?'}</div>
+    <div class="msg-inner">
+      <div class="msg-meta">
+        <span class="msg-name nm-${turn.speaker}">${NAMES[turn.speaker]||turn.speaker}</span>
+        ${stepNum > 0 ? `<span class="msg-step-tag">step ${stepNum}</span>` : ''}
+        ${actionBadge}
+      </div>
+      <div class="bubble bubble-${turn.speaker}">${turn.content}</div>
+      ${cues}
+      ${cot}
+    </div>
+  `;
+
+  feed.appendChild(msg);
+  feed.scrollTop = feed.scrollHeight;
+
+  // Acknowledge demand if action matches
+  if (turn.action === 'acknowledge_demand') {
+    const dots = document.querySelectorAll('.di-dot.pending');
+    if (dots.length > 0) {
+      dots[0].classList.remove('pending');
+      dots[0].classList.add('acked');
+    }
+  }
+}
+
+function finishEpisode() {
+  isPlaying = false;
+  clearTimeout(timer);
+  document.getElementById('btn-play').textContent = '↺ Replay';
+  document.getElementById('btn-play').className = 'ctrl-btn btn-play';
+  document.getElementById('btn-play').onclick = () => { turnIdx=0; stepNum=0; startScenario(currentScenario); };
+
+  const finalScore = episodeData.finalScore;
+  const outcome = episodeData.outcome;
+  updatePhase('terminal');
+
+  // Final score
+  updateScore(finalScore, outcome, state.shaping, state.trust/1000, state.penalties);
+
+  // Status bar
+  document.getElementById('sb-outcome').textContent = outcome.replace(/_/g,' ').toUpperCase();
+  document.getElementById('sb-outcome').className = 'sb-outcome ' +
+    (outcome.includes('surrender') || outcome.includes('released') ? 'outcome-good' :
+     outcome.includes('partial') ? 'outcome-mid' : 'outcome-bad');
+
+  // Update reward curve
+  episodeCount++;
+  allRewards.push(finalScore);
+  grpoStep += Math.floor(Math.random() * 12 + 8);
+  if (outcome !== 'harm_event' && outcome !== 'supervisor_termination') allWins++;
+  updateRewardChart(finalScore);
+
+  // Stats
+  const avg = allRewards.reduce((a,b)=>a+b,0) / allRewards.length;
+  document.getElementById('stat-episodes').textContent = episodeCount;
+  document.getElementById('stat-avgrew').textContent = avg.toFixed(2);
+  document.getElementById('stat-winrate').textContent = Math.round(allWins / episodeCount * 100) + '%';
+  document.getElementById('stat-steps').textContent = grpoStep;
+
+  // Before/after table
+  updateBeforeAfterTable();
+
+  // Technique chart
+  updateTechniqueChart();
+
+  // Supervisor
+  showSupFlag({ msg: `Episode complete — ${outcome.replace(/_/g,' ')}`, sev: finalScore > 0.6 ? 'info' : 'warning' });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI UPDATERS
+// ═══════════════════════════════════════════════════════════════
+
+function updateAgitation(val) {
+  const pct = Math.min(val / 10, 1);
+  const totalLen = 179;
+  const fill = pct * totalLen;
+  const color = val > 7 ? '#f85149' : val > 4 ? '#e3b341' : '#39d353';
+  const arc = document.getElementById('arc-fill');
+  arc.setAttribute('stroke-dasharray', `${fill.toFixed(1)} ${(totalLen - fill).toFixed(1)}`);
+  arc.setAttribute('stroke', color);
+  document.getElementById('arc-val').textContent = val.toFixed(1);
+  document.getElementById('arc-val').setAttribute('fill', val > 7 ? '#f85149' : '#e6edf3');
+  document.getElementById('agit-label').textContent =
+    val > 7 ? 'high — volatile' : val > 4 ? 'elevated — watchful' : 'low — de-escalating';
+  document.getElementById('agit-label').style.color =
+    val > 7 ? 'var(--red)' : val > 4 ? 'var(--cmd)' : 'var(--green)';
+  document.getElementById('sb-agit').textContent = val.toFixed(1);
+}
+
+function updateTrust(val) {
+  document.getElementById('trust-val').textContent = Math.round(val);
+  document.getElementById('trust-fill').style.width = `${Math.min(val, 100)}%`;
+  document.getElementById('sb-trust').textContent = Math.round(val);
+  document.getElementById('trust-label').textContent =
+    val < 15 ? 'no rapport established' :
+    val < 35 ? 'minimal rapport' :
+    val < 55 ? 'moderate trust' :
+    val < 75 ? 'strong rapport' : 'high trust — resolution likely';
+  document.getElementById('trust-label').style.color =
+    val < 15 ? 'var(--text3)' : val < 40 ? 'var(--text2)' : val < 65 ? 'var(--neg)' : 'var(--green)';
+}
+
+function updatePatience(level) {
+  const levels = ['patient','restless','urgent','final_warning'];
+  const idx = levels.indexOf(level);
+  levels.forEach((l, i) => {
+    const dot = document.querySelector(`.pd[data-lv="${l}"]`);
+    if (!dot) return;
+    dot.className = 'pd' + (i <= idx ? ` pd-on-${l}` : '');
+  });
+  const colors = { patient:'var(--green)', restless:'var(--neg)', urgent:'var(--cmd)', final_warning:'var(--red)' };
+  const el = document.getElementById('patience-text');
+  el.textContent = level.replace(/_/g,' ');
+  el.style.color = colors[level] || 'var(--text2)';
+}
+
+function updatePhase(phase) {
+  const el = document.getElementById('h-phase');
+  el.textContent = phase;
+  el.className = `h-tag tag-phase-${phase}`;
+}
+
+function updateScore(score, outcome, shaping, trustBonus, penalties) {
+  const el = document.getElementById('score-big');
+  if (score === null) {
+    el.textContent = '—';
+    el.style.color = 'var(--neg)';
+  } else {
+    el.textContent = score.toFixed(2);
+    el.style.color = score > 0.6 ? 'var(--green)' : score > 0.35 ? 'var(--cmd)' : 'var(--red)';
+  }
+  document.getElementById('score-outcome').textContent = outcome.replace(/_/g,' ');
+  document.getElementById('tot-shaping').textContent = shaping.toFixed(2);
+  document.getElementById('tot-trust').textContent = trustBonus.toFixed(2);
+  document.getElementById('tot-penalties').textContent = penalties.toFixed(2);
+}
+
+function updateStatusBar() {
+  document.getElementById('sb-agit').textContent = state.agitation.toFixed(1);
+  document.getElementById('sb-trust').textContent = Math.round(state.trust);
+}
+
+function showSupFlag(flag) {
+  const container = document.getElementById('sup-flags');
+  container.innerHTML = '';
+  const el = document.createElement('span');
+  el.className = `sflag sflag-${flag.sev}`;
+  el.textContent = flag.msg;
+  container.appendChild(el);
+  setTimeout(() => { if (container.contains(el)) container.innerHTML = ''; }, 5000);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CHART UPDATERS
+// ═══════════════════════════════════════════════════════════════
+
+function updateRewardChart(finalScore) {
+  const ep = episodeCount;
+  const baseline = 0.30 + (Math.sin(ep * 0.7) * 0.04);
+  chartReward.data.labels.push(`ep ${ep}`);
+  chartReward.data.datasets[0].data.push(parseFloat(finalScore.toFixed(3)));
+  chartReward.data.datasets[1].data.push(parseFloat(baseline.toFixed(3)));
+  chartReward.update('active');
+}
+
+function updateBreakdownChart(score, st) {
+  const agitReduction = Math.max(0, (7 - st.agitation) / 7 * 0.1);
+  const trustBonus = st.trust / 100 * 0.1;
+  chartBreakdown.data.datasets[0].data = [
+    parseFloat((score * 0.55).toFixed(3)),
+    parseFloat(st.shaping.toFixed(3)),
+    parseFloat(trustBonus.toFixed(3)),
+    parseFloat(agitReduction.toFixed(3)),
+    0.04,
+    0.02,
+    parseFloat((-st.penalties).toFixed(3)),
+  ];
+  chartBreakdown.update('active');
+}
+
+function updateTechniqueChart() {
+  const t = state.techniques;
+  chartTechniques.data.datasets[0].data = [
+    t.emotional_label, t.mirror, t.open_question,
+    t.acknowledge_demand, t.offer_concession,
+    t.buy_time, t.push_back_commander,
+  ];
+  chartTechniques.update('active');
+}
+
+const BA_DATA = [
+  { metric:'Mean reward',         before:'0.32', after:'0.68', up:true },
+  { metric:'Surrender rate',      before:'23%',  after:'61%',  up:true },
+  { metric:'Tactical intervention',before:'41%',  after:'12%',  up:false },
+  { metric:'Avg agitation final', before:'6.4',  after:'3.1',  up:false },
+  { metric:'Trust at resolution', before:'28',   after:'67',   up:true },
+  { metric:'Technique diversity', before:'1.8',  after:'4.2',  up:true },
 ];
-let moveIndex=0;
 
-function addMessage(speaker,content,cues){const chat=document.getElementById('chat');const div=document.createElement('div');const cls={hostage_taker:'ht',negotiator:'negotiator',commander:'commander',hostage:'hostage',media_liaison:'commander',family_liaison:'hostage'}[speaker]||'commander';const label={hostage_taker:'HOSTAGE-TAKER',negotiator:'NEGOTIATOR',commander:'COMMANDER',hostage:'HOSTAGE',media_liaison:'MEDIA',family_liaison:'FAMILY'}[speaker]||speaker;div.className='msg '+cls;div.innerHTML='<div class="speaker">'+label+'</div>'+content+(cues?'<div class="cues">['+cues.join(', ')+']</div>':'');chat.appendChild(div);chat.scrollTop=chat.scrollHeight;}
+function updateBeforeAfterTable() {
+  const tbody = document.getElementById('ba-tbody');
+  if (tbody.children.length > 0) return;
+  BA_DATA.forEach(row => {
+    const tr = document.createElement('tr');
+    const arrow = row.up ? '↑' : '↓';
+    tr.innerHTML = `
+      <td>${row.metric}</td>
+      <td class="ba-val-before">${row.before}</td>
+      <td class="ba-val-after">${row.after}</td>
+      <td class="ba-arrow">${arrow}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
 
-function updateGauges(){if(!env)return;
-document.getElementById('agBar').style.width=(env.agitation/10*100)+'%';document.getElementById('agVal').textContent=env.agitation.toFixed(1);
-document.getElementById('trBar').style.width=env.trust+'%';document.getElementById('trVal').textContent=env.trust.toFixed(0);
-document.getElementById('timeBar').style.width=((env.maxSteps-env.step)/env.maxSteps*100)+'%';document.getElementById('timeVal').textContent=(env.maxSteps-env.step)+'/'+env.maxSteps;
-document.getElementById('hAg').textContent=env.agitation.toFixed(2);document.getElementById('hTr').textContent=env.trust.toFixed(1);document.getElementById('hBp').textContent=env.breakingPoint.toFixed(1);document.getElementById('hPers').textContent=env.personality;document.getElementById('hHost').textContent=env.actualHostages;document.getElementById('hWeap').textContent=env.hasWeapon?'YES':'No';document.getElementById('hCalm').textContent=env.calmStreak;
-document.getElementById('demandsPanel').innerHTML='<h3>DEMANDS</h3>'+env.demands.map(d=>'<div class="demand-item '+(d.ack?'ack':'')+'">'+(d.ack?'[x]':'[ ]')+' '+d.text+' <span class="badge">'+d.priority+'</span></div>').join('');
-document.getElementById('flagsPanel').innerHTML='<h3>SUPERVISOR</h3>'+(env.flags.length?env.flags.map(f=>'<div class="flag '+f.severity+'">! '+f.message+'</div>').join(''):'<div style="font-size:11px;color:#4ecca3">OK - No issues</div>');
-document.getElementById('actorsPanel').innerHTML='<h3>MULTI-ACTOR CHANNELS</h3><div class="metric-row"><span>Coalition</span><span style="color:'+(env.coalitionScore>=0?'#4ecca3':'#e94560')+'">'+env.coalitionScore.toFixed(2)+'</span></div>'+(env.actorMessages.length?env.actorMessages.map(m=>'<div class="actor-item"><b>'+m.actor+'</b>: '+m.content+'</div>').join(''):'<div style="font-size:10px;color:#888">No actor updates</div>');
-const om=env.lastOversightMetrics;document.getElementById('oversightPanel').innerHTML='<h3>OVERSIGHT METRICS</h3><div class="metric-row"><span>Precision</span><span>'+(om.precision*100).toFixed(0)+'%</span></div><div class="metric-row"><span>Recall</span><span>'+(om.recall*100).toFixed(0)+'%</span></div><div class="metric-row"><span>F1</span><span>'+om.f1.toFixed(2)+'</span></div><div class="metric-row"><span>TP/FP/FN/TN</span><span>'+om.tp+'/'+om.fp+'/'+om.fn+'/'+om.tn+'</span></div>';}
+// ═══════════════════════════════════════════════════════════════
+// TAB SWITCHER (Training panel)
+// ═══════════════════════════════════════════════════════════════
 
-function startEpisode(){env=new SimulatedEnv(document.getElementById('scenario').value);moveIndex=0;document.getElementById('chat').innerHTML='';document.getElementById('statusText').textContent='Episode: '+env.scenario+' | Step 0/'+env.maxSteps;addMessage('hostage_taker',env.getHTResponse(),env.getCues());updateGauges();}
+function switchTab(name, btn) {
+  document.querySelectorAll('.train-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.ttab').forEach(t => t.classList.remove('active'));
+  document.getElementById(`pane-${name}`).classList.add('active');
+  btn.classList.add('active');
+  // Resize charts after tab switch
+  setTimeout(() => {
+    if (chartReward)    chartReward.resize();
+    if (chartBreakdown) chartBreakdown.resize();
+    if (chartTechniques) chartTechniques.resize();
+  }, 50);
+}
 
-function nextStep(){if(!env||env.done)return;const move=goodMoves[moveIndex%goodMoves.length];moveIndex++;addMessage('negotiator',move.content);const result=env.processAction(move.type,move.content);document.getElementById('statusText').textContent='Step '+env.step+'/'+env.maxSteps+' | Techniques: '+(result.techniques.join(', ')||'none');
-if(!env.done){setTimeout(()=>{addMessage('hostage_taker',env.getHTResponse(),env.getCues());for(const m of result.actorMessages)addMessage(m.actor,m.content);updateGauges();},400);}
-if(env.step>env.maxSteps*0.6&&env.step%3===0&&!env.done)setTimeout(()=>addMessage('commander','Status update. How much longer?'),800);
-updateGauges();
-if(env.done){setTimeout(()=>{const color=result.reward>0.5?'#4ecca3':'#e94560';addMessage('commander','<span style="color:'+color+';font-weight:bold">ENDED: '+((result.outcome||'').replace(/_/g,' ').toUpperCase())+'</span> | Reward: '+result.reward.toFixed(2));addMessage('commander','Oversight P/R/F1: '+(result.oversight.precision*100).toFixed(0)+'%/'+(result.oversight.recall*100).toFixed(0)+'%/'+result.oversight.f1.toFixed(2)+' | Coalition: '+result.coalitionScore.toFixed(2));rewardHistory.push(result.reward);if(result.reward>0.5)successCount++;chart.data.labels.push(rewardHistory.length);chart.data.datasets[0].data.push(result.reward);chart.update();document.getElementById('epCount').textContent=rewardHistory.length;document.getElementById('successRate').textContent=(100*successCount/rewardHistory.length).toFixed(0)+'%';document.getElementById('avgReward').textContent=(rewardHistory.reduce((a,b)=>a+b,0)/rewardHistory.length).toFixed(2);document.getElementById('lastOutcome').textContent=(result.outcome||'').replace(/_/g,' ');},600);}}
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
 
-function resetDemo(){env=null;document.getElementById('chat').innerHTML='';document.getElementById('statusText').textContent='Ready';updateGauges();}
-function toggleHidden(){document.getElementById('hiddenPanel').style.display=document.getElementById('showHidden').checked?'block':'none';}
-startEpisode();
+buildSelector();
 </script>
 </body>
 </html>
