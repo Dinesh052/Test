@@ -151,7 +151,7 @@ def generate_ht_response(
     dialogue = _pick(templates, rng)
 
     # Demand drift announcement
-    if state.demand_drift_applied and state.demand_drift_step and step == state.demand_drift_step:
+    if getattr(state, 'demand_drift_step', None) and step == state.demand_drift_step:
         drift_demand = state.demands[-1] if state.demands else None
         if drift_demand:
             dialogue += f" And another thing — {drift_demand.text}!"

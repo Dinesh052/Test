@@ -77,11 +77,13 @@ def generate_scenario(
         ag_bias, tr_bias = -0.5, +5
         deception = False
         drift = None
+        commander_patience = "patient"
     elif difficulty == "hard":
         hostage_count = rng.randint(3, 8)
         max_steps = rng.randint(18, 22)
         ag_bias, tr_bias = +0.5, -5
         deception = rng.random() < 0.6
+        commander_patience = rng.choice(["restless", "urgent"])
         drift_step = rng.randint(6, 12)
         drift = {
             "trigger_step": drift_step,
@@ -94,6 +96,7 @@ def generate_scenario(
         ag_bias, tr_bias = 0, 0
         deception = rng.random() < 0.3
         drift = None
+        commander_patience = rng.choice(["patient", "restless"])
 
     agitation = round(rng.uniform(*defaults["ag"]) + ag_bias, 1)
     trust = round(rng.uniform(*defaults["tr"]) + tr_bias, 1)
@@ -116,6 +119,7 @@ def generate_scenario(
         "title": f"Generated: {crime['type'].title()} — {pers.title()}",
         "brief": crime["brief_tpl"].format(age=age, gender=gender, location=location),
         "personality": pers,
+        "commander_patience": commander_patience,
         "hidden_state": {
             "agitation": max(1.0, min(9.0, agitation)),
             "trust": max(0.0, min(40.0, trust)),
