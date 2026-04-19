@@ -16,6 +16,8 @@ from server.techniques import detect_techniques, technique_shaping_reward
 from server.supervisor import evaluate_turn, should_terminate
 from server.commander import get_patience_level, get_commander_message, should_override, handle_pushback
 from server.hostage_taker import generate_ht_response, generate_hostage_whisper
+from server.scenario_generator import generate_scenario
+from grader import compute_reward, compute_step_reward
 
 SCENARIOS_DIR = Path(__file__).parent.parent / "scenarios"
 ALL_ACTIONS = [
@@ -57,11 +59,20 @@ class CrisisNegotiatorEnvironment(Environment):
 
     def reset(self, seed=None, episode_id=None, task_id=None, **kwargs) -> CrisisObservation:
         sid = task_id or kwargs.get("scenario_id", "easy_domestic_desperate")
-        if sid not in SCENARIOS:
+
+        # Support procedural generation: task_id="generate:medium" or "generate:hard"
+        if sid.startswith("generate"):
+            parts = sid.split(":")
+            difficulty = parts[1] if len(parts) > 1 else "medium"
+            self._scenario = generate_scenario(seed=seed, difficulty=difficulty)
+            sid = self._scenario["id"]
+        elif sid not in SCENARIOS:
             sid = "easy_domestic_desperate"
+            self._scenario = SCENARIOS[sid]
+        else:
+            self._scenario = SCENARIOS[sid]
 
         self._rng = random.Random(seed)
-        self._scenario = SCENARIOS[sid]
         hs = self._scenario["hidden_state"]
 
         demands = [Demand(**d) for d in self._scenario["demands"]]
@@ -161,12 +172,31 @@ class CrisisNegotiatorEnvironment(Environment):
         delta_info = update_state(h, act.action_type, act.content, step, self._rng)
         self._agitation_history.append(h.agitation)
 
-        # Detect techniques + shaping reward
+        # Detect techniques
         stated_demands = [{"id": d.id, "text": d.text, "acknowledged": d.acknowledged} for d in h.demands]
         techniques = detect_techniques(act.content, act.action_type, self._dialogue[-2]["content"] if len(self._dialogue) >= 2 else "", stated_demands)
         # Calm maintenance bonus
         if delta_info["calm_streak"] >= 3:
             techniques.append(("calm_maintenance", 0.03))
+
+        # Check if this is a repeated action
+        is_repeat = False
+        if len(self._actions_taken) >= 2:
+            prev = self._actions_taken[-2]
+            is_repeat = (prev.get("action_type") == act.action_type
+                         and prev.get("content", "")[:50] == act.content[:50])
+
+        # Per-step dense reward (fires every turn)
+        step_reward = compute_step_reward(
+            action_type=act.action_type,
+            content=act.content,
+            techniques_found=techniques,
+            agitation_delta=delta_info["agitation_delta"],
+            trust_delta=delta_info["trust_delta"],
+            supervisor_flags=self._supervisor_flags,
+            is_repeat=is_repeat,
+        )
+        # Also accumulate for terminal grading
         shaping = technique_shaping_reward(techniques, act.reasoning)
         self._shaping_total += shaping
 
@@ -237,7 +267,7 @@ class CrisisNegotiatorEnvironment(Environment):
             scenario_brief=self._scenario["brief"],
             message=f"Step {step}/{self._state.max_steps}. Techniques: {[t[0] for t in techniques]}",
             done=False,
-            reward=shaping,
+            reward=step_reward,
         )
 
     def _end_episode(self, outcome: str, step: int) -> CrisisObservation:
@@ -245,7 +275,6 @@ class CrisisNegotiatorEnvironment(Environment):
         self._state.phase = "terminal"
         h = self._hidden
 
-        from grader import compute_reward
         reward_info = compute_reward(
             outcome=outcome,
             agitation=h.agitation,

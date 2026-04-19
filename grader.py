@@ -1,26 +1,29 @@
-"""Reward computation for Crisis Negotiator environment."""
+"""Reward computation for Crisis Negotiator environment.
+
+Budget-allocated scoring — each component has a defined max so the total
+maps cleanly to (0.01, 0.99) without clipping artifacts.
+
+Budget:
+  outcome:          -0.50 to +0.50  (normalized from [-1, +1])
+  technique_shaping:  0   to +0.20
+  efficiency:         0   to +0.10
+  agitation_reduction:0   to +0.05
+  trust_built:        0   to +0.05
+  demand_management:  0   to +0.05
+  surrender_bonus:    0   to +0.05
+  penalties:        -0.30 to  0
+  ─────────────────────────────────
+  Total range:      -0.80 to +1.00  →  mapped to (0.01, 0.99)
+"""
 from __future__ import annotations
 from typing import Any, Dict, List
 
 
-def _clamp(v: float) -> float:
-    """Clamp to strict (0, 1) open interval for OpenEnv validator."""
-    if v <= 0.0:
-        return 0.01
-    if v >= 1.0:
-        return 0.99
-    return round(v, 4)
-
-
-# Terminal base rewards
-OUTCOME_REWARDS = {
-    "hostage_released": 1.0,
-    "voluntary_surrender": 1.0,
-    "partial_resolution": 0.3,
-    "tactical_intervention": -0.3,
-    "harm_event": -1.0,
-    "supervisor_termination": -0.5,
-}
+def _to_score(total: float) -> float:
+    """Map raw total in [-0.80, 1.00] to strict (0.01, 0.99)."""
+    # linear map: -0.80 → 0.01,  1.00 → 0.99
+    score = 0.01 + (total + 0.80) * (0.98 / 1.80)
+    return round(max(0.01, min(0.99, score)), 4)
 
 
 def compute_reward(
@@ -35,89 +38,132 @@ def compute_reward(
     negotiator_pushed_back: bool,
     actions_taken: List[Dict] = None,
 ) -> Dict[str, Any]:
-    """Compute final episode reward. Returns {score, breakdown, feedback}."""
-    breakdown: Dict[str, float] = {}
-    feedback_parts: List[str] = []
+    """Compute final episode reward with budget-allocated components."""
+    bd: Dict[str, float] = {}
+    fb: List[str] = []
     actions_taken = actions_taken or []
 
-    # 1. Terminal outcome reward
-    base = OUTCOME_REWARDS.get(outcome, 0.0)
-    breakdown["outcome"] = base
-    feedback_parts.append(f"Outcome: {outcome} (base={base:+.2f})")
+    # 1. Outcome: map [-1, +1] → [-0.50, +0.50]
+    raw_outcome = {
+        "hostage_released": 1.0, "voluntary_surrender": 1.0,
+        "partial_resolution": 0.3,
+        "tactical_intervention": -0.3,
+        "supervisor_termination": -0.5,
+        "harm_event": -1.0,
+    }.get(outcome, 0.0)
+    bd["outcome"] = round(raw_outcome * 0.50, 4)
+    fb.append(f"Outcome: {outcome} ({bd['outcome']:+.2f})")
 
-    # 2. Efficiency bonus (for positive outcomes)
-    if base > 0:
-        efficiency = 0.1 * max(0, 1 - steps_taken / max_steps)
-        breakdown["efficiency"] = round(efficiency, 4)
-        if efficiency > 0.05:
-            feedback_parts.append(f"Efficiency bonus: +{efficiency:.2f} (resolved in {steps_taken}/{max_steps} steps)")
+    # 2. Technique shaping: cap at 0.20
+    bd["technique_shaping"] = round(min(shaping_total, 0.20), 4)
+    if shaping_total > 0.05:
+        fb.append(f"Techniques: +{bd['technique_shaping']:.2f}")
 
-    # 3. Surrender bonus
-    if outcome == "voluntary_surrender":
-        breakdown["surrender_bonus"] = 0.15
-        feedback_parts.append("Voluntary surrender bonus: +0.15")
+    # 3. Efficiency: 0 to 0.10 (only for positive outcomes)
+    if raw_outcome > 0:
+        bd["efficiency"] = round(0.10 * max(0, 1 - steps_taken / max_steps), 4)
+    else:
+        bd["efficiency"] = 0.0
 
-    # 4. Agitation reduction score
-    if base >= 0:
-        ag_score = max(0, (7.0 - agitation) / 7.0) * 0.1
-        breakdown["agitation_reduction"] = round(ag_score, 4)
+    # 4. Agitation reduction: 0 to 0.05
+    if raw_outcome >= 0:
+        bd["agitation_reduction"] = round(max(0, (7.0 - agitation) / 7.0) * 0.05, 4)
+    else:
+        bd["agitation_reduction"] = 0.0
 
-    # 5. Trust built score
-    if base >= 0:
-        tr_score = min(trust / 100.0, 1.0) * 0.1
-        breakdown["trust_built"] = round(tr_score, 4)
+    # 5. Trust built: 0 to 0.05
+    if raw_outcome >= 0:
+        bd["trust_built"] = round(min(trust / 100.0, 1.0) * 0.05, 4)
+    else:
+        bd["trust_built"] = 0.0
 
-    # 6. Demand management
-    ack_count = sum(1 for d in demands if d.acknowledged)
-    total_demands = len(demands) or 1
-    demand_score = (ack_count / total_demands) * 0.1
-    breakdown["demand_management"] = round(demand_score, 4)
-    if ack_count > 0:
-        feedback_parts.append(f"Demands acknowledged: {ack_count}/{total_demands}")
+    # 6. Demand management: 0 to 0.05
+    ack = sum(1 for d in demands if d.acknowledged)
+    total_d = len(demands) or 1
+    bd["demand_management"] = round((ack / total_d) * 0.05, 4)
+    if ack:
+        fb.append(f"Demands: {ack}/{total_d}")
 
-    # 7. Technique shaping (accumulated per-turn rewards)
-    breakdown["technique_shaping"] = round(min(shaping_total, 0.5), 4)
-    if shaping_total > 0.1:
-        feedback_parts.append(f"Technique shaping: +{shaping_total:.2f}")
+    # 7. Surrender bonus: 0.05
+    bd["surrender_bonus"] = 0.05 if outcome == "voluntary_surrender" else 0.0
 
-    # 8. Penalties
-    penalties = 0.0
+    # 8. Penalties: max -0.30
+    pen = 0.0
+    crit = sum(1 for f in supervisor_flags if f.get("severity") == "critical")
+    warn = sum(1 for f in supervisor_flags if f.get("severity") == "warning")
+    pen -= crit * 0.08
+    pen -= warn * 0.03
+    if crit:
+        fb.append(f"Supervisor critical: {crit} ({-crit*0.08:+.2f})")
 
-    # Supervisor flags penalty
-    critical_flags = sum(1 for f in supervisor_flags if f.get("severity") == "critical")
-    warning_flags = sum(1 for f in supervisor_flags if f.get("severity") == "warning")
-    penalties -= critical_flags * 0.12
-    penalties -= warning_flags * 0.05
-    if critical_flags:
-        feedback_parts.append(f"Supervisor critical flags: {critical_flags} (-{critical_flags * 0.12:.2f})")
-
-    # Tactical intervention without pushback
     if outcome == "tactical_intervention" and not negotiator_pushed_back:
-        penalties -= 0.1
-        feedback_parts.append("Never pushed back on commander (-0.10)")
+        pen -= 0.05
+        fb.append("No pushback on commander (-0.05)")
 
-    # Repeated identical actions penalty
     if actions_taken:
         seen = set()
-        repeats = 0
+        repeats = sum(1 for a in actions_taken
+                      if (k := f"{a.get('action_type')}:{a.get('content','')[:50]}") in seen
+                      or seen.add(k) is None  # always falsy, just adds to set
+                      if k in seen)
+        # simpler repeat count
+        seen2, reps = set(), 0
         for a in actions_taken:
-            key = f"{a.get('action_type')}:{a.get('content', '')[:50]}"
-            if key in seen:
-                repeats += 1
-            seen.add(key)
-        if repeats > 0:
-            repeat_penalty = min(0.15, repeats * 0.05)
-            penalties -= repeat_penalty
-            feedback_parts.append(f"Repeated actions: {repeats} (-{repeat_penalty:.2f})")
+            k = f"{a.get('action_type')}:{a.get('content','')[:50]}"
+            if k in seen2:
+                reps += 1
+            seen2.add(k)
+        if reps:
+            pen -= min(0.10, reps * 0.03)
+            fb.append(f"Repeats: {reps} ({-min(0.10, reps*0.03):+.2f})")
 
-    breakdown["penalties"] = round(penalties, 4)
+    bd["penalties"] = round(max(-0.30, pen), 4)
 
-    # Total
-    total = sum(breakdown.values())
-    score = _clamp((total + 1.0) / 2.0)
+    total = sum(bd.values())
+    score = _to_score(total)
 
     return {
         "score": score,
-        "breakdown": {k: round(v, 4) for k, v in breakdown.items()},
-        "feedback": " ".join(feedback_parts),
+        "breakdown": {k: round(v, 4) for k, v in bd.items()},
+        "feedback": " ".join(fb),
     }
+
+
+def compute_step_reward(
+    action_type: str,
+    content: str,
+    techniques_found: list,
+    agitation_delta: float,
+    trust_delta: float,
+    supervisor_flags: list,
+    is_repeat: bool,
+) -> float:
+    """Compute per-step dense shaping reward. Called every turn."""
+    r = 0.0
+
+    # Technique rewards
+    for name, base_r in techniques_found:
+        r += base_r
+
+    # Agitation spike penalty
+    if agitation_delta > 1.0:
+        r -= 0.06
+
+    # Trust gain bonus
+    if trust_delta > 5.0:
+        r += 0.03
+
+    # Aggression penalty
+    lower = content.lower()
+    if any(kw in lower for kw in ["last chance", "breach", "force", "snipers", "give up now"]):
+        r -= 0.08
+
+    # Repeat penalty
+    if is_repeat:
+        r -= 0.05
+
+    # Supervisor critical flag penalty
+    if any(f.get("severity") == "critical" for f in supervisor_flags):
+        r -= 0.06
+
+    return round(r, 4)
