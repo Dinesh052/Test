@@ -1077,7 +1077,15 @@ function startScenario(sc) {
   chartBreakdown.update();
 
   // Start
-  startPlay();
+  if (llmMode) {
+    llmDialogue = [{role:'ht', text: episodeData.turns[0]?.content || 'Stay back!'}];
+    isPlaying = true;
+    document.getElementById('btn-play').textContent = 'Pause';
+    document.getElementById('btn-play').className = 'ctrl-btn btn-pause';
+    runLLMStep();
+  } else {
+    startPlay();
+  }
 }
 
 function renderDemands(demands) {
@@ -1109,7 +1117,7 @@ function resetEpisode() {
 function togglePlay() {
   if (llmMode) {
     if (isPlaying) { isPlaying = false; document.getElementById('btn-play').textContent = 'Play'; document.getElementById('btn-play').className = 'ctrl-btn btn-play'; }
-    else { isPlaying = true; document.getElementById('btn-play').textContent = 'Pause'; document.getElementById('btn-play').className = 'ctrl-btn btn-pause'; llmDialogue=[{role:'ht',text:episodeData.turns[0]?.content||'Stay back!'}]; runLLMStep(); }
+    else { isPlaying = true; document.getElementById('btn-play').textContent = 'Pause'; document.getElementById('btn-play').className = 'ctrl-btn btn-pause'; if(!llmDialogue.length) llmDialogue=[{role:'ht',text:episodeData.turns[0]?.content||'Stay back!'}]; runLLMStep(); }
     return;
   }
   if (isPlaying) pausePlay(); else startPlay();
