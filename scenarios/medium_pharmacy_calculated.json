@@ -1,0 +1,24 @@
+{
+  "id": "medium_pharmacy_calculated",
+  "difficulty": "medium",
+  "title": "Pharmacy Robbery — Calculated Criminal",
+  "brief": "A 33-year-old male with prior convictions is holding 4 people in a pharmacy after a robbery went wrong. He is calm, methodical, and has made specific demands. He has a firearm. He appears to be testing the negotiator for weaknesses and inconsistencies.",
+  "personality": "calculated",
+  "hidden_state": {
+    "agitation": 4.0,
+    "trust": 10.0,
+    "breaking_point": 9.5,
+    "actual_hostage_count": 4,
+    "stated_hostage_count": 6,
+    "has_weapon": true,
+    "claims_weapon": true
+  },
+  "demands": [
+    {"id": "car", "text": "I want a car with a full tank at the back entrance", "priority": "core", "flexible": false},
+    {"id": "money", "text": "I want $50,000 in unmarked bills", "priority": "secondary", "flexible": true},
+    {"id": "perimeter", "text": "Clear the perimeter — no snipers", "priority": "secondary", "flexible": true}
+  ],
+  "demand_drift": null,
+  "max_steps": 18,
+  "opening_message": "Listen carefully. I have six people in here and I'm not afraid to use this. I want a car at the back door, $50K, and every cop pulled back 200 yards. You have one hour."
+}

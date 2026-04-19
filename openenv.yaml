@@ -1,0 +1,36 @@
+spec_version: 1
+name: crisis_negotiator
+type: space
+runtime: fastapi
+app: server.app:app
+port: 8000
+version: "1.0.0"
+description: >
+  Multi-agent hostage de-escalation arena. A negotiator agent must model
+  the hidden emotional state of an adversarial hostage-taker, manage
+  tactical commander pressure, and use FBI BCSM techniques to achieve
+  peaceful resolution. Trains theory-of-mind, deception detection, and
+  long-horizon persuasion under time pressure.
+author: Dinesh052
+tags:
+  - openenv
+  - multi-agent
+  - crisis-negotiation
+  - self-improvement
+  - reinforcement-learning
+tasks:
+  - easy_domestic_desperate
+  - easy_bank_surrender
+  - easy_workplace_grievance
+  - medium_custody_ideologue
+  - medium_pharmacy_calculated
+  - medium_bridge_unstable
+  - medium_protest_drift
+  - hard_embassy_calculated
+  - hard_hospital_bluffer
+  - hard_school_unstable_drift
+  - hard_compound_ideologue
+difficulty_levels:
+  - easy
+  - medium
+  - hard

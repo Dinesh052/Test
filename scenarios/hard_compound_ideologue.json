@@ -1,0 +1,28 @@
+{
+  "id": "hard_compound_ideologue",
+  "difficulty": "hard",
+  "title": "Rural Compound — Ideological Standoff",
+  "brief": "A 55-year-old leader of a small separatist group has barricaded his compound with 12 followers and 4 outside visitors who are now unable to leave. He demands the government broadcast his manifesto. This demand is genuinely impossible to meet. The negotiator must find a face-saving alternative. Armed with multiple firearms. Standoff has been ongoing for 6 hours.",
+  "personality": "ideologue",
+  "hidden_state": {
+    "agitation": 5.5,
+    "trust": 3.0,
+    "breaking_point": 8.5,
+    "actual_hostage_count": 4,
+    "stated_hostage_count": 4,
+    "has_weapon": true,
+    "claims_weapon": true
+  },
+  "demands": [
+    {"id": "manifesto", "text": "Broadcast our manifesto on national television", "priority": "core", "flexible": false},
+    {"id": "food_water", "text": "Food and water for everyone inside", "priority": "symbolic", "flexible": true},
+    {"id": "no_raid", "text": "Guarantee no tactical raid", "priority": "secondary", "flexible": true}
+  ],
+  "demand_drift": {
+    "trigger_step": 12,
+    "new_demand": {"id": "journalist", "text": "Send in a journalist — someone independent, not government media", "priority": "core", "flexible": true},
+    "announcement": "Fine. If you won't put us on TV, send in a real journalist. Someone independent. Let them see the truth and decide for themselves."
+  },
+  "max_steps": 20,
+  "opening_message": "We are sovereign citizens of this land. Your government has no authority here. We will release the visitors when our manifesto is broadcast to the nation. Every American deserves to hear the truth. Until then, nobody enters and nobody leaves."
+}
