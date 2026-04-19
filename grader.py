@@ -113,18 +113,12 @@ def compute_reward(
         fb.append("No pushback on commander (-0.05)")
 
     if actions_taken:
-        seen = set()
-        repeats = sum(1 for a in actions_taken
-                      if (k := f"{a.get('action_type')}:{a.get('content','')[:50]}") in seen
-                      or seen.add(k) is None  # always falsy, just adds to set
-                      if k in seen)
-        # simpler repeat count
-        seen2, reps = set(), 0
+        seen, reps = set(), 0
         for a in actions_taken:
             k = f"{a.get('action_type')}:{a.get('content','')[:50]}"
-            if k in seen2:
+            if k in seen:
                 reps += 1
-            seen2.add(k)
+            seen.add(k)
         if reps:
             pen -= min(0.10, reps * 0.03)
             fb.append(f"Repeats: {reps} ({-min(0.10, reps*0.03):+.2f})")
