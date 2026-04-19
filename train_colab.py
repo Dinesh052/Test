@@ -89,7 +89,7 @@ def parse_action(text: str) -> dict:
 def run_episode(model_output: str, scenario_seed: int) -> float:
     """Run one episode with the model's output as the first action. Returns reward."""
     scenario = curriculum.get_scenario(seed=scenario_seed)
-    obs = env.reset(task_id=scenario["id"] if scenario["id"] in env._state.__dict__ else "generate:" + scenario["difficulty"], seed=scenario_seed)
+    obs = env.reset(task_id="generate:" + scenario["difficulty"], seed=scenario_seed)
 
     action_dict = parse_action(model_output)
     try:
@@ -114,9 +114,10 @@ def run_episode(model_output: str, scenario_seed: int) -> float:
         obs = env.step(action)
         total_reward += obs.reward
 
-    # Record for curriculum
-    curriculum.record(scenario.get("difficulty", "medium"), obs.reward if obs.done else total_reward)
-    return obs.reward if obs.done else max(0.01, min(0.99, (total_reward + 1) / 2))
+    final_reward = obs.reward if obs.done else max(0.01, min(0.99, (total_reward + 1) / 2))
+    # Record for curriculum AFTER episode ends
+    curriculum.record(scenario.get("difficulty", "medium"), final_reward)
+    return final_reward
 
 
 # ── 5. GRPO Training ─────────────────────────────────────
