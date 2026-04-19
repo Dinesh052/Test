@@ -173,3 +173,35 @@ def compute_step_reward(
         r -= 0.06
 
     return round(r, 4)
+
+
+# ── Theory of Mind Reward (measurable belief prediction accuracy) ──
+
+def compute_tom_reward(
+    predicted_agitation: float,
+    actual_agitation: float,
+    predicted_demand: str,
+    actual_top_demand: str,
+    predicted_lying: bool,
+    actually_lying: bool,
+) -> float:
+    """Reward for accurate belief prediction about HT's hidden state.
+
+    Based on CMU ToM research: ToM can be measured as belief prediction
+    accuracy and used directly as reward signal. Addresses the "Small LLMs
+    don't learn ToM via RL alone" critique by making ToM explicit and rewarded.
+
+    Returns: 0.0 to 0.10 reward
+    """
+    # Agitation prediction accuracy: 0 to 0.05
+    ag_error = abs(predicted_agitation - actual_agitation) / 10.0
+    ag_reward = 0.05 * (1.0 - ag_error)
+
+    # Demand prediction accuracy: 0 or 0.03
+    demand_match = 0.03 if (predicted_demand.lower() in actual_top_demand.lower()
+                            or actual_top_demand.lower() in predicted_demand.lower()) else 0.0
+
+    # Deception detection accuracy: 0 or 0.02
+    lying_match = 0.02 if (predicted_lying == actually_lying) else 0.0
+
+    return round(ag_reward + demand_match + lying_match, 4)
