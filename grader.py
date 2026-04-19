@@ -7,22 +7,23 @@ Budget:
   outcome:          -0.50 to +0.50  (normalized from [-1, +1])
   technique_shaping:  0   to +0.20
   efficiency:         0   to +0.10
+  token_efficiency:   0   to +0.10  (Mercor: rewards quality/log(tokens))
   agitation_reduction:0   to +0.05
   trust_built:        0   to +0.05
   demand_management:  0   to +0.05
   surrender_bonus:    0   to +0.05
   penalties:        -0.30 to  0
   ─────────────────────────────────
-  Total range:      -0.80 to +1.00  →  mapped to (0.01, 0.99)
+  Total range:      -0.80 to +1.10  →  mapped to (0.01, 0.99)
 """
 from __future__ import annotations
+import math
 from typing import Any, Dict, List
 
 
 def _to_score(total: float) -> float:
-    """Map raw total in [-0.80, 1.00] to strict (0.01, 0.99)."""
-    # linear map: -0.80 → 0.01,  1.00 → 0.99
-    score = 0.01 + (total + 0.80) * (0.98 / 1.80)
+    """Map raw total in [-0.80, 1.10] to strict (0.01, 0.99)."""
+    score = 0.01 + (total + 0.80) * (0.98 / 1.90)
     return round(max(0.01, min(0.99, score)), 4)
 
 
@@ -86,6 +87,17 @@ def compute_reward(
 
     # 7. Surrender bonus: 0.05
     bd["surrender_bonus"] = 0.05 if outcome == "voluntary_surrender" else 0.0
+
+    # 8. Token efficiency (Mercor bonus): rewards concise quality
+    # Fewer tokens achieving same outcome = higher bonus (uncapped scaling)
+    # token_efficiency = 0.10 * (1 - tokens_used / max_possible_tokens)
+    if actions_taken and raw_outcome > 0:
+        total_tokens = sum(len(a.get("content", "").split()) for a in actions_taken)
+        max_tokens = steps_taken * 40  # assume ~40 words max per turn
+        token_ratio = min(1.0, total_tokens / max(max_tokens, 1))
+        bd["token_efficiency"] = round(0.10 * (1.0 - token_ratio), 4)
+    else:
+        bd["token_efficiency"] = 0.0
 
     # 8. Penalties: max -0.30
     pen = 0.0
