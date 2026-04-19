@@ -13,6 +13,7 @@ Usage:
   python run_local_llm.py
 """
 import os, sys, json, re
+sys.stdout.reconfigure(encoding='utf-8')
 sys.path.insert(0, '.')
 
 from openai import OpenAI
@@ -31,13 +32,13 @@ client = OpenAI(base_url=API_BASE_URL, api_key=HF_TOKEN)
 env = CrisisNegotiatorEnvironment(ht_mode="llm")
 obs = env.reset(task_id=SCENARIO, seed=42)
 
-print(f"\n{'='*60}")
-print(f"🚨 CRISIS NEGOTIATOR — LLM Self-Play Mode")
-print(f"Scenario: {SCENARIO}")
-print(f"Model: {MODEL_NAME}")
-print(f"{'='*60}\n")
-print(f"[HOSTAGE-TAKER]: {obs.last_ht_message}")
-print(f"  Demands: {[d['text'] for d in obs.stated_demands]}")
+print(f"\n{'='*60}", flush=True)
+print(f"CRISIS NEGOTIATOR - LLM Self-Play Mode", flush=True)
+print(f"Scenario: {SCENARIO}", flush=True)
+print(f"Model: {MODEL_NAME}", flush=True)
+print(f"{'='*60}\n", flush=True)
+print(f"[HOSTAGE-TAKER]: {obs.last_ht_message}", flush=True)
+print(f"  Demands: {[d['text'] for d in obs.stated_demands]}", flush=True)
 print()
 
 NEGOTIATOR_PROMPT = """You are an FBI-trained crisis negotiator. De-escalate using empathy.
@@ -99,9 +100,9 @@ for step in range(1, 21):
         belief_lying=belief.get("lying_about", "nothing") != "nothing",
     )
 
-    print(f"[NEGOTIATOR] ({action.action_type}): {action.content}")
+    print(f"[NEGOTIATOR] ({action.action_type}): {action.content}", flush=True)
     if belief["agitation"] != 5.0:
-        print(f"  <belief> ag={belief['agitation']}, demand='{belief['dominant_demand']}', lying={belief['lying_about']}")
+        print(f"  <belief> ag={belief['agitation']}, demand='{belief['dominant_demand']}', lying={belief['lying_about']}", flush=True)
 
     # ── Step environment ──
     obs = env.step(action)
@@ -114,23 +115,23 @@ for step in range(1, 21):
         )
         ht_text = ht_resp.choices[0].message.content.strip()
         # Override the template response with LLM response
-        print(f"[HOSTAGE-TAKER] (LLM): {ht_text}")
+        print(f"[HOSTAGE-TAKER] (LLM): {ht_text}", flush=True)
     else:
-        print(f"[HOSTAGE-TAKER]: {obs.last_ht_message}")
+        print(f"[HOSTAGE-TAKER]: {obs.last_ht_message}", flush=True)
 
-    print(f"  → reward={obs.reward:.3f} | trajectory={obs.agitation_trajectory}")
+    print(f"  > reward={obs.reward:.3f} | trajectory={obs.agitation_trajectory}", flush=True)
     if obs.supervisor_flags:
-        print(f"  ⚠️ Supervisor: {[f['type'] for f in obs.supervisor_flags]}")
+        print(f"  ⚠️ Supervisor: {[f['type'] for f in obs.supervisor_flags]}", flush=True)
     print()
 
 # ── Episode end ──
-print(f"{'='*60}")
+print(f"{'='*60}", flush=True)
 if obs.done:
-    print(f"EPISODE ENDED | reward={obs.reward:.3f}")
-    print(f"Message: {obs.message}")
+    print(f"EPISODE ENDED | reward={obs.reward:.3f}", flush=True)
+    print(f"Message: {obs.message}", flush=True)
     if obs.reward_breakdown:
-        print(f"Breakdown:")
+        print(f"Breakdown:", flush=True)
         for k, v in obs.reward_breakdown.items():
-            if v != 0: print(f"  {k}: {v}")
+            if v != 0: print(f"  {k}: {v}", flush=True)
 else:
     print("Episode did not terminate in 20 steps")
