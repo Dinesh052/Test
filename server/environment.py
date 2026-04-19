@@ -18,6 +18,7 @@ from server.commander import get_patience_level, get_commander_message, should_o
 from server.hostage_taker import generate_ht_response, generate_hostage_whisper, build_ht_llm_prompt
 from server.scenario_generator import generate_scenario
 from grader import compute_reward, compute_step_reward, compute_tom_reward
+from server.emotion_reward import compute_emotion_reward
 
 SCENARIOS_DIR = Path(__file__).parent.parent / "scenarios"
 ALL_ACTIONS = [
@@ -200,6 +201,7 @@ class CrisisNegotiatorEnvironment(Environment):
             trust_delta=delta_info["trust_delta"],
             supervisor_flags=self._supervisor_flags,
             is_repeat=is_repeat,
+            agitation_history=self._agitation_history,
         )
 
         # Theory of Mind reward (if agent provided belief predictions)
@@ -216,6 +218,11 @@ class CrisisNegotiatorEnvironment(Environment):
                 actually_lying=actually_lying,
             )
         step_reward += tom_reward
+
+        # Verifiable emotion reward (RLVER-inspired, sentence-transformer)
+        emo_reward = compute_emotion_reward(act.content)
+        if emo_reward is not None:
+            step_reward += emo_reward
         # Also accumulate for terminal grading
         shaping = technique_shaping_reward(techniques, act.reasoning)
         self._shaping_total += shaping
@@ -290,6 +297,7 @@ class CrisisNegotiatorEnvironment(Environment):
             commander_messages=self._commander_msgs.copy(),
             commander_patience=patience,
             hostage_whisper=whisper,
+            agitation_trajectory=[round(d, 2) for d in self._agitation_history[-5:]],
             supervisor_flags=[f for f in self._supervisor_flags],
             scenario_brief=self._scenario["brief"],
             message=f"Step {step}/{self._state.max_steps}. Techniques: {[t[0] for t in techniques]}",
