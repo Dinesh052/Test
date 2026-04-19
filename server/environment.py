@@ -141,7 +141,12 @@ class CrisisNegotiatorEnvironment(Environment):
         )
 
     def step(self, action, **kwargs) -> CrisisObservation:
-        act = action if isinstance(action, NegotiatorAction) else NegotiatorAction(**action.model_dump())
+        if isinstance(action, NegotiatorAction):
+            act = action
+        elif isinstance(action, dict):
+            act = NegotiatorAction(**action)
+        else:
+            act = NegotiatorAction(**action.model_dump())
 
         if self._done:
             return CrisisObservation(message="Episode already finished.", done=True, reward=0.0)
