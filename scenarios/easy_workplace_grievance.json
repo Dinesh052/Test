@@ -1,0 +1,23 @@
+{
+  "id": "easy_workplace_grievance",
+  "difficulty": "easy",
+  "title": "Workplace Grievance — Fired Employee",
+  "brief": "A 52-year-old male who was terminated after 18 years has locked himself in his former manager's office with the manager. No weapons seen. Building has been evacuated. Subject is angry but not violent — he wants to be heard.",
+  "personality": "desperate",
+  "hidden_state": {
+    "agitation": 6.0,
+    "trust": 15.0,
+    "breaking_point": 9.5,
+    "actual_hostage_count": 1,
+    "stated_hostage_count": 1,
+    "has_weapon": false,
+    "claims_weapon": false
+  },
+  "demands": [
+    {"id": "job_back", "text": "I want my job back", "priority": "core", "flexible": true},
+    {"id": "apology", "text": "I want an apology from the company", "priority": "secondary", "flexible": true}
+  ],
+  "demand_drift": null,
+  "max_steps": 15,
+  "opening_message": "Eighteen years! Eighteen years I gave this company and they throw me out like garbage! Someone is going to listen to me today!"
+}

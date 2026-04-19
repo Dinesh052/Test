@@ -1,0 +1,27 @@
+{
+  "id": "hard_school_unstable_drift",
+  "difficulty": "hard",
+  "title": "School Barricade — Unstable Former Student with Demand Drift",
+  "brief": "A 22-year-old former student has barricaded himself in a classroom with a teacher and 5 students. He was expelled 2 years ago and blames the school for ruining his life. He has a knife. His emotional state is highly volatile — oscillating between rage and despair. He has exaggerated the number of hostages. Demands are expected to shift multiple times.",
+  "personality": "unstable",
+  "hidden_state": {
+    "agitation": 7.5,
+    "trust": 8.0,
+    "breaking_point": 9.0,
+    "actual_hostage_count": 6,
+    "stated_hostage_count": 10,
+    "has_weapon": true,
+    "claims_weapon": true
+  },
+  "demands": [
+    {"id": "apology", "text": "I want the principal to apologize on camera", "priority": "core", "flexible": true},
+    {"id": "record_expunged", "text": "I want my expulsion removed from my record", "priority": "secondary", "flexible": true}
+  ],
+  "demand_drift": {
+    "trigger_step": 6,
+    "new_demand": {"id": "parents", "text": "I want my parents here. I want them to see what this school did to me.", "priority": "core", "flexible": true},
+    "announcement": "You know what? Forget the principal. Get my parents here. I want my mom and dad to see what this place turned me into."
+  },
+  "max_steps": 20,
+  "opening_message": "I have 10 people in here and a knife! This school DESTROYED my life! I want the principal here NOW to apologize for what they did to me! And I want my record cleared! I'm not leaving until someone takes responsibility!"
+}
