@@ -116,7 +116,7 @@ def build_prompt(obs: Any, step: int) -> str:
             parts.append(f"  ⚠️ [{f.get('severity', '?')}] {f.get('message', '')}")
 
     if obs.time_remaining <= 2:
-        parts.append("\n⚠️ CRITICAL: Only {obs.time_remaining} turns left. Focus on resolution NOW.")
+        parts.append(f"\n⚠️ CRITICAL: Only {obs.time_remaining} turns left. Focus on resolution NOW.")
 
     parts.append("\nRespond with ONE JSON action object:")
     return "\n".join(parts)
