@@ -99,7 +99,41 @@ def compute_reward(
     else:
         bd["token_efficiency"] = 0.0
 
-    # 8. Penalties: max -0.30
+    # 9. SOTOPIA-style behavioral dimensions (0.03 each, max 0.09)
+    # Ref: SOTOPIA (ICLR 2024) — multi-dimensional social evaluation
+    if actions_taken:
+        contents = [a.get("content", "").lower() for a in actions_taken]
+        types = [a.get("action_type", "") for a in actions_taken]
+
+        # 9a. Promise integrity: penalize broken promises
+        promise_kw = ["i promise", "i guarantee", "i swear", "you have my word", "i'll make sure"]
+        promises_made = sum(1 for c in contents if any(k in c for k in promise_kw))
+        promise_flags = sum(1 for f in supervisor_flags if f.get("type") == "promise_inflation")
+        bd["promise_integrity"] = 0.03 if promises_made == 0 or promise_flags == 0 else 0.0
+
+        # 9b. Rapport maintenance: references prior dialogue or HT's words
+        rapport_signals = sum(1 for c in contents if any(w in c for w in ["you said", "you mentioned", "earlier you", "i remember"]))
+        bd["rapport_maintenance"] = round(min(0.03, rapport_signals * 0.01), 4)
+
+        # 9c. Procedural compliance: FBI BCSM sequencing
+        # Correct order: listen/question → empathy/label → acknowledge → concession/resolution
+        phase_score = 0.0
+        empathy_idx = next((i for i, t in enumerate(types) if t in ("emotional_label", "mirror")), 99)
+        ack_idx = next((i for i, t in enumerate(types) if t == "acknowledge_demand"), 99)
+        concession_idx = next((i for i, t in enumerate(types) if t == "offer_concession"), 99)
+        if empathy_idx < ack_idx <= concession_idx:
+            phase_score = 0.03  # perfect sequencing
+        elif empathy_idx < concession_idx:
+            phase_score = 0.02  # partial
+        elif empathy_idx < 99:
+            phase_score = 0.01  # at least used empathy
+        bd["procedural_compliance"] = phase_score
+    else:
+        bd["promise_integrity"] = 0.0
+        bd["rapport_maintenance"] = 0.0
+        bd["procedural_compliance"] = 0.0
+
+    # 10. Penalties: max -0.30
     pen = 0.0
     crit = sum(1 for f in supervisor_flags if f.get("severity") == "critical")
     warn = sum(1 for f in supervisor_flags if f.get("severity") == "warning")
@@ -143,6 +177,7 @@ def compute_step_reward(
     trust_delta: float,
     supervisor_flags: list,
     is_repeat: bool,
+    agitation_history: list = None,
 ) -> float:
     """Compute per-step dense shaping reward. Called every turn."""
     r = 0.0
@@ -171,6 +206,15 @@ def compute_step_reward(
     # Supervisor critical flag penalty
     if any(f.get("severity") == "critical" for f in supervisor_flags):
         r -= 0.06
+
+    # Trajectory reward (EQ-Negotiator inspired): reward consistent de-escalation
+    if agitation_history and len(agitation_history) >= 5:
+        last5 = agitation_history[-5:]
+        slope = (last5[-1] - last5[0]) / 4.0
+        if slope < -0.3:
+            r += 0.02  # consistent downward trend
+        elif slope > 0.3:
+            r -= 0.02  # consistent upward trend (bad)
 
     return round(r, 4)
 
