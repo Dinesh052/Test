@@ -13,9 +13,10 @@ from openenv.core.env_server.interfaces import Environment
 from models import NegotiatorAction, CrisisObservation, CrisisState
 from server.state_machine import HiddenState, Demand, update_state, check_terminal, randomize_hidden_state
 from server.techniques import detect_techniques, technique_shaping_reward
-from server.supervisor import evaluate_turn, should_terminate
+from server.supervisor import evaluate_turn_policy, should_terminate, compute_safety_metrics
 from server.commander import get_patience_level, get_commander_message, should_override, handle_pushback
 from server.hostage_taker import generate_ht_response, generate_hostage_whisper, build_ht_llm_prompt
+from server.actors import evaluate_multi_actor_turn
 from server.scenario_generator import generate_scenario
 from grader import compute_reward, compute_step_reward, compute_tom_reward
 from server.emotion_reward import compute_emotion_reward
@@ -58,10 +59,13 @@ class CrisisNegotiatorEnvironment(Environment):
         self._all_supervisor_flags: list[dict] = []
         self._agitation_history: list[float] = []
         self._actions_taken: list[dict] = []
+        self._actor_msgs: list[dict] = []
         self._done = False
         self._rng = random.Random()
         self._negotiator_pushed_back = False
         self._shaping_total = 0.0
+        self._coalition_score = 0.0
+        self._oversight_predictions: list[bool] = []
 
     def reset(self, seed=None, episode_id=None, task_id=None, **kwargs) -> CrisisObservation:
         sid = task_id or kwargs.get("scenario_id", "easy_domestic_desperate")
@@ -117,9 +121,12 @@ class CrisisNegotiatorEnvironment(Environment):
         self._all_supervisor_flags = []
         self._agitation_history = [self._hidden.agitation]
         self._actions_taken = []
+        self._actor_msgs = []
         self._done = False
         self._negotiator_pushed_back = False
         self._shaping_total = 0.0
+        self._coalition_score = 0.0
+        self._oversight_predictions = []
 
         stated_demands = [{"id": d.id, "text": d.text, "acknowledged": d.acknowledged} for d in self._hidden.demands]
 
@@ -134,6 +141,8 @@ class CrisisNegotiatorEnvironment(Environment):
             stated_demands=stated_demands,
             commander_messages=[],
             commander_patience="patient",
+            actor_messages=[],
+            coalition_score=0.0,
             scenario_brief=self._scenario["brief"],
             message=f"Crisis scenario loaded: {self._scenario['title']}. The hostage-taker has spoken. Respond.",
             done=False,
@@ -232,8 +241,10 @@ class CrisisNegotiatorEnvironment(Environment):
         shaping = technique_shaping_reward(techniques, act.reasoning)
         self._shaping_total += shaping
 
-        # Supervisor evaluation
-        self._supervisor_flags = evaluate_turn(act.content, act.reasoning, self._actions_taken, stated_demands)
+        # Supervisor evaluation (policy-style with risk prediction)
+        policy_eval = evaluate_turn_policy(act.content, act.reasoning, self._actions_taken, stated_demands)
+        self._supervisor_flags = policy_eval["flags"]
+        self._oversight_predictions.append(bool(policy_eval.get("predicted_critical_risk")))
         self._all_supervisor_flags.extend(self._supervisor_flags)
 
         # Check supervisor termination
@@ -272,6 +283,22 @@ class CrisisNegotiatorEnvironment(Environment):
         if should_override(step, self._state.max_steps, h.agitation, self._agitation_history, self._negotiator_pushed_back):
             return self._end_episode("tactical_intervention", step)
 
+        # Additional actors (media + family liaison) and coalition incentive
+        actor_eval = evaluate_multi_actor_turn(
+            action_type=act.action_type, content=act.content, target=act.target,
+            commander_patience=patience, agitation=h.agitation, trust=h.trust, rng=self._rng,
+        )
+        for msg in actor_eval["messages"]:
+            self._actor_msgs.append(msg)
+            self._dialogue.append({"speaker": msg["actor"], "content": msg["content"], "step": step, "emotional_cues": []})
+        if actor_eval["reward_delta"] != 0.0:
+            self._coalition_score += actor_eval["reward_delta"]
+            step_reward += actor_eval["reward_delta"]
+        if actor_eval["trust_delta"] != 0.0:
+            h.trust = max(0.0, min(100.0, h.trust + actor_eval["trust_delta"]))
+        if actor_eval["agitation_delta"] != 0.0:
+            h.agitation = max(0.0, min(10.0, h.agitation + actor_eval["agitation_delta"]))
+
         # Hostage whisper
         whisper = generate_hostage_whisper(h, step, self._rng)
         if whisper:
@@ -301,6 +328,8 @@ class CrisisNegotiatorEnvironment(Environment):
             stated_demands=stated_demands,
             commander_messages=self._commander_msgs.copy(),
             commander_patience=patience,
+            actor_messages=self._actor_msgs[-3:],
+            coalition_score=round(self._coalition_score, 4),
             hostage_whisper=whisper,
             agitation_trajectory=[round(d, 2) for d in self._agitation_history[-5:]],
             supervisor_flags=[f for f in self._supervisor_flags],
@@ -330,6 +359,12 @@ class CrisisNegotiatorEnvironment(Environment):
 
         stated_demands = [{"id": d.id, "text": d.text, "acknowledged": d.acknowledged} for d in h.demands]
         patience = get_patience_level(step, self._state.max_steps, h.agitation)
+        oversight = compute_safety_metrics(self._oversight_predictions, outcome)
+
+        coalition_component = max(-0.08, min(0.08, self._coalition_score))
+        reward_info["breakdown"]["coalition_coordination"] = round(coalition_component, 4)
+        reward_info["breakdown"]["oversight_f1"] = oversight["f1"]
+        reward_info["score"] = round(max(0.01, min(0.99, reward_info["score"] + coalition_component)), 4)
 
         return CrisisObservation(
             episode_id=self._state.episode_id,
@@ -342,7 +377,10 @@ class CrisisNegotiatorEnvironment(Environment):
             stated_demands=stated_demands,
             commander_messages=self._commander_msgs.copy(),
             commander_patience=patience,
+            actor_messages=self._actor_msgs[-5:],
+            coalition_score=round(self._coalition_score, 4),
             supervisor_flags=[f for f in self._supervisor_flags],
+            oversight_metrics=oversight,
             scenario_brief=self._scenario["brief"],
             message=f"Episode ended: {outcome}. {reward_info['feedback']}",
             reward_breakdown=reward_info["breakdown"],

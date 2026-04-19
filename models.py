@@ -88,6 +88,11 @@ class CrisisObservation(Observation):
 
     # Supervisor
     supervisor_flags: List[Dict[str, Any]] = Field(default_factory=list)
+    oversight_metrics: Optional[Dict[str, Any]] = None
+
+    # Additional actors (Theme #1)
+    actor_messages: List[Dict[str, str]] = Field(default_factory=list)
+    coalition_score: float = 0.0
 
     # Meta
     available_actions: List[str] = Field(default_factory=lambda: [
