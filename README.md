@@ -248,7 +248,28 @@ env = CrisisNegotiatorEnvironment(ht_mode="llm")
 
 ## References
 
+### Research Framing
+
+RLVER (arXiv:2507.03112) showed general empathy can be trained with verifiable emotion rewards — Qwen2.5-7B improved from 13.3 → 79.2 on Sentient-Benchmark with PPO. **We apply the same principle to adversarial crisis negotiation — the hardest form of empathetic dialogue** — where the agent must simultaneously de-escalate, detect deception, and manage competing stakeholders under time pressure.
+
+### Addressing the "Small LLMs Don't Learn ToM" Critique
+
+The Jul 2025 finding that RL alone can't instill generalizable Theory of Mind in 7B models is the most important critique of our approach. We address it through:
+
+1. **Explicit belief prediction** — the agent outputs a `<belief>` block predicting HT agitation, dominant demand, and deception, rewarded with a measurable ToM accuracy signal (`compute_tom_reward`)
+2. **Partial observability by design** — the negotiator can only infer HT state from behavioral cues (emotional_cues, dialogue patterns), forcing genuine perspective-taking rather than pattern matching
+3. **Verifiable emotion reward** (RLVER-inspired) — sentence-transformer cosine similarity provides a continuous, learned signal rather than keyword heuristics
+
+### Key Citations
+
+- **RLVER** (arXiv:2507.03112) — Verifiable emotion rewards for empathetic agents
+- **ToMAP** (arXiv:2505.22961) — Theory of Mind for persuasion via stance prediction + RL
+- **DialogXpert** (arXiv:2505.17795) — Q-network + frozen LLM for emotion-aware dialogue
+- **SOTOPIA** (ICLR 2024) — Multi-dimensional social intelligence evaluation
+- **SPIRAL** (ICLR 2026, arXiv:2506.24119) — Self-play multi-turn RL for reasoning
+- **The Traitors** (NeurIPS 2025) — Deception & trust in multi-agent LLM simulations
+- **EQ-Negotiator** — HMM-based emotional trajectory modeling for credit dialogues
+- **Stanford CS224R** — RL fine-tuning for negotiation; self-play > fixed opponent
 - FBI Behavioral Change Stairway Model (BCSM)
-- Vecchi et al. (2005) "Crisis negotiation: current strategies in high-risk conflict resolution"
 - OpenEnv: https://github.com/meta-pytorch/OpenEnv
 - TRL GRPO: https://huggingface.co/docs/trl

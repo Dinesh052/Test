@@ -83,6 +83,9 @@ class CrisisObservation(Observation):
     # Hostage intel
     hostage_whisper: Optional[str] = None
 
+    # Emotional trajectory (EQ-Negotiator inspired — last 5 readings)
+    agitation_trajectory: List[float] = Field(default_factory=list, description="Last 5 agitation deltas (not absolute values)")
+
     # Supervisor
     supervisor_flags: List[Dict[str, Any]] = Field(default_factory=list)
 

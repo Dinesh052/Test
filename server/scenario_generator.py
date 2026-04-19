@@ -171,3 +171,69 @@ class AdaptiveCurriculum:
             "history_lengths": {k: len(v) for k, v in self.history.items()},
             "recent_avg": {k: round(sum(v[-self.window:]) / max(1, len(v[-self.window:])), 3) for k, v in self.history.items()},
         }
+
+
+class AdversarialSelfPlay:
+    """HT difficulty escalation loop (Snorkel AI bonus).
+
+    After every N negotiator training episodes, the HT gets harder:
+    - Reduce agitation multiplier for empathy (harder to calm)
+    - Increase deception rate
+    - Add demand drift to previously static scenarios
+
+    Reference: Stanford CS224R — self-play > fixed opponent.
+    Reference: The Traitors (NeurIPS 2025) — adversarial trust games.
+    """
+
+    def __init__(self, escalation_interval: int = 50):
+        self.interval = escalation_interval
+        self.episode_count = 0
+        self.ht_level = 0  # 0=baseline, 1=harder, 2=hardest
+        self.negotiator_rewards: list[float] = []
+        self.ht_win_rates: list[float] = []  # fraction where HT "wins" (harm/tactical)
+
+    def record_episode(self, reward: float, outcome: str):
+        self.episode_count += 1
+        self.negotiator_rewards.append(reward)
+        ht_win = outcome in ("harm_event", "tactical_intervention", "supervisor_termination")
+        self.ht_win_rates.append(1.0 if ht_win else 0.0)
+
+        if self.episode_count % self.interval == 0:
+            self._maybe_escalate()
+
+    def _maybe_escalate(self):
+        recent_avg = sum(self.negotiator_rewards[-self.interval:]) / self.interval
+        if recent_avg > 0.6 and self.ht_level < 2:
+            self.ht_level += 1
+
+    def get_ht_modifiers(self) -> dict:
+        """Return modifiers to apply to HT hidden state based on current level."""
+        if self.ht_level == 0:
+            return {}
+        elif self.ht_level == 1:
+            return {
+                "agitation_bias": +0.5,
+                "trust_bias": -5,
+                "deception_boost": True,  # force deception on
+                "empathy_resistance": 0.8,  # reduce empathy effectiveness
+            }
+        else:  # level 2
+            return {
+                "agitation_bias": +1.0,
+                "trust_bias": -10,
+                "deception_boost": True,
+                "empathy_resistance": 0.6,
+                "force_demand_drift": True,
+            }
+
+    @property
+    def stats(self) -> dict:
+        n = len(self.negotiator_rewards)
+        recent = self.negotiator_rewards[-self.interval:] if n >= self.interval else self.negotiator_rewards
+        ht_recent = self.ht_win_rates[-self.interval:] if n >= self.interval else self.ht_win_rates
+        return {
+            "ht_level": self.ht_level,
+            "episodes": self.episode_count,
+            "negotiator_avg": round(sum(recent) / max(len(recent), 1), 3),
+            "ht_win_rate": round(sum(ht_recent) / max(len(ht_recent), 1), 3),
+        }
