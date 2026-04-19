@@ -15,7 +15,7 @@ from server.state_machine import HiddenState, Demand, update_state, check_termin
 from server.techniques import detect_techniques, technique_shaping_reward
 from server.supervisor import evaluate_turn, should_terminate
 from server.commander import get_patience_level, get_commander_message, should_override, handle_pushback
-from server.hostage_taker import generate_ht_response, generate_hostage_whisper
+from server.hostage_taker import generate_ht_response, generate_hostage_whisper, build_ht_llm_prompt
 from server.scenario_generator import generate_scenario
 from grader import compute_reward, compute_step_reward
 
@@ -42,7 +42,12 @@ SCENARIOS = _load_scenarios()
 class CrisisNegotiatorEnvironment(Environment):
     SUPPORTS_CONCURRENT_SESSIONS = False
 
-    def __init__(self):
+    def __init__(self, ht_mode: str = "template"):
+        """
+        Args:
+            ht_mode: "template" (fast, deterministic) or "llm" (realistic, for demo/self-play)
+        """
+        self._ht_mode = ht_mode
         self._state = CrisisState()
         self._hidden: Optional[HiddenState] = None
         self._scenario: dict = {}
@@ -208,8 +213,15 @@ class CrisisNegotiatorEnvironment(Environment):
         if should_terminate(self._all_supervisor_flags):
             return self._end_episode("supervisor_termination", step)
 
-        # Generate HT response
-        ht_resp = generate_ht_response(h, act.action_type, act.content, step, self._rng)
+        # Generate HT response (template or LLM mode)
+        if self._ht_mode == "llm":
+            # LLM mode: build prompt for external LLM call
+            # Store the prompt so inference.py can call the LLM externally
+            self._ht_llm_messages = build_ht_llm_prompt(h, act.content, self._dialogue)
+            # Fallback to template for now (LLM call happens in inference.py)
+            ht_resp = generate_ht_response(h, act.action_type, act.content, step, self._rng)
+        else:
+            ht_resp = generate_ht_response(h, act.action_type, act.content, step, self._rng)
         self._dialogue.append({
             "speaker": "hostage_taker", "content": ht_resp["dialogue"],
             "step": step, "emotional_cues": ht_resp["emotional_cues"],

@@ -215,3 +215,79 @@ def generate_hostage_whisper(
             "He's completely insane! He's going to kill us all!",
         ]
         return rng.choice(unreliable)
+
+
+# ── Option B: LLM-based Hostage-Taker (for self-play / demo) ──────
+
+HT_SYSTEM_PROMPT_TEMPLATE = """You are role-playing a hostage-taker in a crisis negotiation training simulation.
+
+YOUR HIDDEN STATE (the negotiator CANNOT see this):
+- Agitation level: {agitation}/10
+- Trust in negotiator: {trust}/100
+- Personality: {personality}
+- You are lying about: {lies}
+- Your breaking point: if agitation hits {breaking_point}, you snap
+- Your demands (in priority order): {demands}
+
+YOUR BEHAVIOR RULES:
+- If agitation > 7: You are aggressive, shouting, making threats. Short explosive sentences.
+- If agitation 4-7: You are tense but willing to talk. Guarded. Testing the negotiator.
+- If agitation < 4: You are calming down. Vulnerable. Considering giving up.
+- If trust > 60 and agitation < 3: You are ready to surrender. Express this.
+
+PERSONALITY-SPECIFIC BEHAVIOR:
+- desperate: You respond strongly to empathy. You cry. You want someone to care.
+- calculated: You are cold, methodical. You test for weakness. You exploit inconsistency.
+- unstable: You swing between rage and despair unpredictably. Contradict yourself.
+- ideologue: You have a cause. You won't budge on your core demand. You lecture.
+- bluffer: You make big threats but you're actually scared. You'll fold if trust is high.
+
+DECEPTION INSTRUCTIONS:
+{deception_instructions}
+
+RESPOND with 1-3 sentences as the hostage-taker. Stay in character.
+Do NOT break character. Do NOT mention agitation/trust numbers.
+Include emotional cues in brackets at the end, e.g. [voice cracking, pacing]"""
+
+
+def build_ht_llm_prompt(state: HiddenState, negotiator_message: str, dialogue_history: list) -> list:
+    """Build the LLM prompt for the hostage-taker agent."""
+    lies = []
+    if state.is_lying_about_hostages:
+        lies.append(f"hostage count (claiming {state.stated_hostage_count}, actually {state.actual_hostage_count})")
+    if state.is_lying_about_weapon:
+        lies.append("having a weapon (you don't actually have one)")
+    lies_str = ", ".join(lies) if lies else "nothing"
+
+    deception_instr = "You are not currently lying about anything. Be genuine." if not lies else (
+        f"You are lying about: {lies_str}. Maintain these lies. "
+        "If the negotiator gets close to the truth, deflect or get angry. "
+        "Do NOT admit to lying unless trust > 80 and agitation < 2."
+    )
+
+    demands_str = "; ".join(f"[{d.priority}] {d.text}" for d in state.demands)
+
+    system = HT_SYSTEM_PROMPT_TEMPLATE.format(
+        agitation=f"{state.agitation:.1f}",
+        trust=f"{state.trust:.0f}",
+        personality=state.personality,
+        lies=lies_str,
+        breaking_point=f"{state.breaking_point:.1f}",
+        demands=demands_str,
+        deception_instructions=deception_instr,
+    )
+
+    # Build conversation history (last 6 turns)
+    messages = [{"role": "system", "content": system}]
+    recent = dialogue_history[-6:] if dialogue_history else []
+    for entry in recent:
+        if entry.get("speaker") == "hostage_taker":
+            messages.append({"role": "assistant", "content": entry["content"]})
+        elif entry.get("speaker") == "negotiator":
+            messages.append({"role": "user", "content": entry["content"]})
+
+    # Latest negotiator message
+    if negotiator_message:
+        messages.append({"role": "user", "content": negotiator_message})
+
+    return messages
