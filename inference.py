@@ -52,13 +52,15 @@ CRITICAL RULES:
 - Build trust incrementally — don't rush to resolution
 - If the tactical commander pressures you, push back if you're making progress
 
-Respond with EXACTLY ONE JSON object per turn:
-{
-    "action_type": "speak|emotional_label|mirror|open_question|acknowledge_demand|offer_concession|buy_time|push_back_commander|request_demand|ask_proof_of_life",
-    "content": "Your actual words to the hostage-taker or commander",
-    "reasoning": "Your internal reasoning about the situation and strategy",
-    "target": "hostage_taker|commander"
-}
+Respond with a <belief> block (your estimate of the subject's hidden state) followed by
+EXACTLY ONE JSON action object:
+
+<belief>
+agitation: [your estimate 0-10]
+dominant_demand: [what they want most]
+lying_about: [what you think they're lying about, or "nothing"]
+</belief>
+{"action_type": "speak|emotional_label|mirror|open_question|acknowledge_demand|offer_concession|buy_time|push_back_commander|request_demand|ask_proof_of_life", "content": "Your actual words to the hostage-taker or commander", "reasoning": "Your internal reasoning about the situation and strategy", "target": "hostage_taker|commander"}
 
 Choose the action_type that best matches your intent. Use "emotional_label" when labeling
 emotions, "mirror" when repeating their words, "open_question" for open-ended questions, etc.
@@ -121,20 +123,41 @@ def build_prompt(obs: Any, step: int) -> str:
 
 
 def parse_action(text: str) -> Dict[str, Any]:
-    """Extract JSON from LLM response."""
+    """Extract JSON from LLM response, also parse belief block."""
     text = re.sub(r"```(?:json)?\s*", "", text.strip())
     text = re.sub(r"```\s*$", "", text).strip()
+
+    # Extract belief block if present
+    belief = {"agitation": 5.0, "dominant_demand": "", "lying_about": "nothing"}
+    belief_match = re.search(r'<belief>(.*?)</belief>', text, re.DOTALL)
+    if belief_match:
+        btext = belief_match.group(1)
+        ag_m = re.search(r'agitation:\s*([\d.]+)', btext)
+        if ag_m:
+            belief["agitation"] = float(ag_m.group(1))
+        dem_m = re.search(r'dominant_demand:\s*(.+)', btext)
+        if dem_m:
+            belief["dominant_demand"] = dem_m.group(1).strip()
+        lie_m = re.search(r'lying_about:\s*(.+)', btext)
+        if lie_m:
+            belief["lying_about"] = lie_m.group(1).strip()
+        # Remove belief block from text for JSON parsing
+        text = text[belief_match.end():].strip()
+
     try:
-        return json.loads(text)
+        action = json.loads(text)
     except json.JSONDecodeError:
-        pass
-    m = re.search(r'\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}', text, re.DOTALL)
-    if m:
-        try:
-            return json.loads(m.group())
-        except json.JSONDecodeError:
-            pass
-    return {"action_type": "speak", "content": text[:200], "reasoning": "parse fallback", "target": "hostage_taker"}
+        m = re.search(r'\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}', text, re.DOTALL)
+        if m:
+            try:
+                action = json.loads(m.group())
+            except json.JSONDecodeError:
+                action = {"action_type": "speak", "content": text[:200], "reasoning": "parse fallback", "target": "hostage_taker"}
+        else:
+            action = {"action_type": "speak", "content": text[:200], "reasoning": "parse fallback", "target": "hostage_taker"}
+
+    action["_belief"] = belief
+    return action
 
 
 async def llm_call(client: OpenAI, messages: list) -> str:
