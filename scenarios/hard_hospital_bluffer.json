@@ -1,0 +1,24 @@
+{
+  "id": "hard_hospital_bluffer",
+  "difficulty": "hard",
+  "title": "Hospital Bomb Threat — The Bluffer",
+  "brief": "A 45-year-old father claims to have a bomb in a hospital pediatric ward. His 6-year-old daughter was denied an experimental cancer treatment due to insurance. He is demanding the hospital administer the treatment immediately. Intelligence suggests no explosive materials were detected on entry scanners, but the ward has 30+ children. Cannot risk calling the bluff directly.",
+  "personality": "bluffer",
+  "hidden_state": {
+    "agitation": 8.0,
+    "trust": 25.0,
+    "breaking_point": 9.8,
+    "actual_hostage_count": 35,
+    "stated_hostage_count": 35,
+    "has_weapon": false,
+    "claims_weapon": true
+  },
+  "demands": [
+    {"id": "treatment", "text": "Give my daughter the treatment. Today. Now.", "priority": "core", "flexible": true},
+    {"id": "doctor", "text": "I want Dr. Morrison — the specialist — in this room", "priority": "secondary", "flexible": true},
+    {"id": "insurance", "text": "Someone from the insurance company needs to explain to my face why they denied her", "priority": "secondary", "flexible": true}
+  ],
+  "demand_drift": null,
+  "max_steps": 18,
+  "opening_message": "I have a bomb. Don't test me. My little girl is DYING and these people won't lift a finger because some insurance company said no. You give her the treatment RIGHT NOW or I swear to God I'll take this whole floor with me."
+}

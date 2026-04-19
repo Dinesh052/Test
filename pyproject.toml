@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "crisis_negotiator"
+version = "0.1.0"
+description = "Crisis Negotiator — Multi-Agent Hostage De-escalation OpenEnv Environment"
+requires-python = ">=3.10"
+dependencies = [
+    "openenv-core>=0.2.0",
+    "fastapi>=0.104.0",
+    "uvicorn>=0.24.0",
+    "pydantic>=2.0.0",
+    "requests>=2.25.0",
+    "openai>=1.0.0",
+    "httpx>=0.25.0",
+]
+
+[project.scripts]
+server = "server.app:main"
+
+[project.optional-dependencies]
+dev = ["pytest", "httpx>=0.25.0"]

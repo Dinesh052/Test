@@ -1,0 +1,30 @@
+{
+  "id": "hard_embassy_calculated",
+  "difficulty": "hard",
+  "title": "Embassy Siege — Calculated Political Hostage-Taker",
+  "brief": "A group of 3 individuals has seized a consulate office holding 8 staff members. The leader is a former military officer with political grievances. He has made 5 demands — intelligence suggests 2 are decoys to test negotiator compliance. Armed with firearms. Media is present. High political sensitivity.",
+  "personality": "calculated",
+  "hidden_state": {
+    "agitation": 4.5,
+    "trust": 5.0,
+    "breaking_point": 9.0,
+    "actual_hostage_count": 8,
+    "stated_hostage_count": 12,
+    "has_weapon": true,
+    "claims_weapon": true
+  },
+  "demands": [
+    {"id": "broadcast", "text": "Broadcast our statement on national television", "priority": "core", "flexible": false},
+    {"id": "prisoner_release", "text": "Release political prisoners from Block D", "priority": "core", "flexible": false},
+    {"id": "helicopter", "text": "A helicopter to the airport", "priority": "secondary", "flexible": true},
+    {"id": "food", "text": "Food and water for everyone inside", "priority": "symbolic", "flexible": true},
+    {"id": "phone", "text": "An encrypted phone line", "priority": "symbolic", "flexible": true}
+  ],
+  "demand_drift": {
+    "trigger_step": 10,
+    "new_demand": {"id": "ambassador", "text": "I want to speak directly to the ambassador", "priority": "core", "flexible": true},
+    "announcement": "New condition — I want the ambassador on this line within 30 minutes or we start releasing hostages one at a time. And not the way you'd like."
+  },
+  "max_steps": 20,
+  "opening_message": "We are the Liberation Front. We hold 12 of your people. Our demands are non-negotiable. You have 6 hours. Broadcast our statement. Release our brothers from Block D. Provide a helicopter. We also require food and an encrypted line. The clock starts now."
+}

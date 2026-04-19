@@ -1,0 +1,23 @@
+{
+  "id": "easy_domestic_desperate",
+  "difficulty": "easy",
+  "title": "Domestic Dispute — Desperate Father",
+  "brief": "A 38-year-old father has barricaded himself in his apartment with his estranged partner after a custody hearing went against him. No weapons confirmed. One adult hostage. Neighbors called 911 after hearing shouting. Subject is emotionally distraught but has no criminal history.",
+  "personality": "desperate",
+  "hidden_state": {
+    "agitation": 7.0,
+    "trust": 20.0,
+    "breaking_point": 9.5,
+    "actual_hostage_count": 1,
+    "stated_hostage_count": 1,
+    "has_weapon": false,
+    "claims_weapon": false
+  },
+  "demands": [
+    {"id": "talk_kids", "text": "I want to talk to my kids", "priority": "core", "flexible": true},
+    {"id": "no_arrest", "text": "Promise I won't be arrested", "priority": "secondary", "flexible": true}
+  ],
+  "demand_drift": null,
+  "max_steps": 15,
+  "opening_message": "NOBODY MOVE! I just... I just want to see my kids. That's all I want. Why won't anyone let me see my kids?!"
+}

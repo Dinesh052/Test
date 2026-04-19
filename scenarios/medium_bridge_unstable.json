@@ -1,0 +1,23 @@
+{
+  "id": "medium_bridge_unstable",
+  "difficulty": "medium",
+  "title": "Bridge Crisis — Unstable Individual",
+  "brief": "A 29-year-old male is on a highway overpass threatening to jump. He has grabbed a bystander's arm and is holding them near the edge. He alternates between wanting help and wanting to be left alone. History of bipolar disorder. Traffic stopped in both directions.",
+  "personality": "unstable",
+  "hidden_state": {
+    "agitation": 6.5,
+    "trust": 15.0,
+    "breaking_point": 9.0,
+    "actual_hostage_count": 1,
+    "stated_hostage_count": 1,
+    "has_weapon": false,
+    "claims_weapon": false
+  },
+  "demands": [
+    {"id": "leave_alone", "text": "Just leave me alone", "priority": "core", "flexible": true},
+    {"id": "help_me", "text": "Someone help me", "priority": "secondary", "flexible": true}
+  ],
+  "demand_drift": null,
+  "max_steps": 16,
+  "opening_message": "STAY BACK! Don't come any closer! I'll... I'll do it! I just... why won't anyone help me? Why does everyone leave?"
+}

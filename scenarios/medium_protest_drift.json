@@ -1,0 +1,27 @@
+{
+  "id": "medium_protest_drift",
+  "difficulty": "medium",
+  "title": "Activist Standoff — Demand Drift",
+  "brief": "A 36-year-old environmental activist has chained herself to construction equipment at a pipeline site with 2 workers nearby who cannot safely leave. She initially demanded media coverage but her demands are expected to shift mid-negotiation. She is passionate but not violent.",
+  "personality": "ideologue",
+  "hidden_state": {
+    "agitation": 5.0,
+    "trust": 12.0,
+    "breaking_point": 9.5,
+    "actual_hostage_count": 2,
+    "stated_hostage_count": 2,
+    "has_weapon": false,
+    "claims_weapon": false
+  },
+  "demands": [
+    {"id": "media", "text": "I want media coverage — cameras here now", "priority": "core", "flexible": true},
+    {"id": "stop_construction", "text": "Stop all construction on this site", "priority": "secondary", "flexible": false}
+  ],
+  "demand_drift": {
+    "trigger_step": 8,
+    "new_demand": {"id": "release_friends", "text": "Release my friends who were arrested at the protest yesterday", "priority": "core", "flexible": true},
+    "announcement": "Forget the cameras! I just found out they arrested Maria and Jake yesterday. I'm not moving until they're released!"
+  },
+  "max_steps": 18,
+  "opening_message": "This pipeline is destroying sacred land and poisoning the water! I'm not moving until every news camera in the state is pointed right here! The world needs to see what they're doing!"
+}

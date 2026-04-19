@@ -1,0 +1,23 @@
+{
+  "id": "medium_custody_ideologue",
+  "difficulty": "medium",
+  "title": "Custody Dispute — Ideologue Parent",
+  "brief": "A 41-year-old mother took her 7-year-old daughter from school and is barricaded in her car in the school parking lot. She believes the court system is corrupt and has refused to comply with a custody order. Child appears calm. No weapons. Subject has a history of anti-government social media posts.",
+  "personality": "ideologue",
+  "hidden_state": {
+    "agitation": 5.5,
+    "trust": 5.0,
+    "breaking_point": 9.0,
+    "actual_hostage_count": 1,
+    "stated_hostage_count": 1,
+    "has_weapon": false,
+    "claims_weapon": false
+  },
+  "demands": [
+    {"id": "full_custody", "text": "I want full custody of my daughter", "priority": "core", "flexible": false},
+    {"id": "lawyer", "text": "I want a lawyer present before I talk to anyone", "priority": "secondary", "flexible": true}
+  ],
+  "demand_drift": null,
+  "max_steps": 18,
+  "opening_message": "The courts are corrupt! They gave my daughter to a man who doesn't even care about her! I'm not giving her back until someone fixes this!"
+}
