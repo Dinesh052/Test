@@ -198,14 +198,14 @@ async def run_scenario(client: OpenAI, env: CrisisNegotiatorEnv, scenario_id: st
 
             result = await env.step(action)
             obs = result.observation
-            rewards.append(result.reward or 0.0)
+            rewards.append(result.reward if result.reward is not None else 0.0)
             steps_taken = step
-            log_step(step, action_dict.get("action_type", "?"), result.reward or 0.0, result.done, None)
+            log_step(step, action_dict.get("action_type", "?"), result.reward if result.reward is not None else 0.0, result.done, None)
 
             if result.done:
                 break
 
-        score = max(0.01, min(0.99, max(rewards))) if rewards else 0.01
+        score = max(0.01, min(0.99, rewards[-1])) if rewards else 0.01
         log_end(success=score >= 0.5, steps=steps_taken, score=score, rewards=rewards)
         return score
 
