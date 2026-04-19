@@ -508,6 +508,7 @@ body {
     <button class="ctrl-btn btn-play"  id="btn-play"  onclick="togglePlay()">▶ Play</button>
     <button class="ctrl-btn btn-reset" onclick="resetEpisode()">↺ Reset</button>
     <button class="ctrl-btn btn-back"  onclick="goBack()">← Scenarios</button>
+    <button class="ctrl-btn" id="btn-llm" onclick="toggleLLM()" style="background:#1a1229;border-color:#a371f740;color:var(--sup)">LLM: OFF</button>
   </div>
 
   <!-- Supervisor strip -->
@@ -1106,6 +1107,11 @@ function resetEpisode() {
 // ═══════════════════════════════════════════════════════════════
 
 function togglePlay() {
+  if (llmMode) {
+    if (isPlaying) { isPlaying = false; document.getElementById('btn-play').textContent = 'Play'; document.getElementById('btn-play').className = 'ctrl-btn btn-play'; }
+    else { isPlaying = true; document.getElementById('btn-play').textContent = 'Pause'; document.getElementById('btn-play').className = 'ctrl-btn btn-pause'; llmDialogue=[{role:'ht',text:episodeData.turns[0]?.content||'Stay back!'}]; runLLMStep(); }
+    return;
+  }
   if (isPlaying) pausePlay(); else startPlay();
 }
 
@@ -1476,6 +1482,163 @@ function switchTab(name, btn) {
 // ═══════════════════════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════════
+// LLM SELF-PLAY MODE (Ollama on localhost:11434)
+// ═══════════════════════════════════════════════════════════════
+
+let llmMode = false;
+const OLLAMA_URL = 'http://localhost:11434/v1/chat/completions';
+const LLM_MODEL = 'llama3.1:latest';
+
+function toggleLLM() {
+  llmMode = !llmMode;
+  const btn = document.getElementById('btn-llm');
+  btn.textContent = llmMode ? 'LLM: ON' : 'LLM: OFF';
+  btn.style.background = llmMode ? '#0d2e0d' : '#1a1229';
+  btn.style.borderColor = llmMode ? '#2ea04350' : '#a371f740';
+  btn.style.color = llmMode ? 'var(--green)' : 'var(--sup)';
+}
+
+const NEG_SYSTEM = `You are an FBI-trained crisis negotiator. De-escalate using empathy.
+Respond with ONLY a JSON object:
+{"action_type":"emotional_label|mirror|open_question|acknowledge_demand|offer_concession|buy_time|speak","content":"your words","reasoning":"strategy"}`;
+
+const HT_SYSTEM_TPL = `You are role-playing a hostage-taker. Personality: PERSONALITY. Agitation: AG/10.
+Stay in character. Respond in 1-3 sentences. Add [emotional cues] at the end.`;
+
+async function llmCall(messages) {
+  try {
+    const resp = await fetch(OLLAMA_URL, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({model:LLM_MODEL, messages, temperature:0.5, max_tokens:200, stream:false}),
+    });
+    const data = await resp.json();
+    return data.choices[0].message.content.trim();
+  } catch(e) {
+    return null;
+  }
+}
+
+async function llmNegotiatorTurn(dialogueHistory, scenario) {
+  const lastHT = dialogueHistory.filter(d=>d.role==='ht').pop();
+  const prompt = `Step ${stepNum}/${scenario.maxSteps}. HT said: "${lastHT?.text||''}"
+Demands: ${scenario.demands.join(', ')}. Commander: ${state.patience}. Respond:`;
+  const messages = [{role:'system',content:NEG_SYSTEM},{role:'user',content:prompt}];
+  const raw = await llmCall(messages);
+  if (!raw) return {action:'speak',content:'I hear you. Tell me more.',reasoning:'fallback'};
+  try {
+    const m = raw.match(/\{[\s\S]*\}/);
+    if (m) return JSON.parse(m[0]);
+  } catch(e) {}
+  return {action_type:'speak',content:raw.slice(0,150),reasoning:'parse fallback'};
+}
+
+async function llmHTResponse(dialogueHistory, scenario) {
+  const lastNeg = dialogueHistory.filter(d=>d.role==='neg').pop();
+  const sys = HT_SYSTEM_TPL.replace('PERSONALITY',scenario.tags[0]||'desperate').replace('AG',state.agitation.toFixed(1));
+  const messages = [{role:'system',content:sys},{role:'user',content:lastNeg?.text||'Hello'}];
+  const raw = await llmCall(messages);
+  return raw || "...I'm thinking about what you said.";
+}
+
+let llmDialogue = [];
+
+async function runLLMStep() {
+  if (!currentScenario || !llmMode) return;
+  stepNum++;
+  document.getElementById('h-step').textContent = stepNum;
+
+  // Negotiator turn
+  const thinkEl = document.createElement('div');
+  thinkEl.className = 'thinking';
+  thinkEl.innerHTML = '<span style="font-size:10px;color:var(--text3)">Negotiator thinking</span> <div class="dots"><span></span><span></span><span></span></div>';
+  document.getElementById('feed-scroll').appendChild(thinkEl);
+
+  const negResp = await llmNegotiatorTurn(llmDialogue, currentScenario);
+  thinkEl.remove();
+
+  const actionType = negResp.action_type || negResp.action || 'speak';
+  const content = negResp.content || '';
+  llmDialogue.push({role:'neg',text:content});
+
+  // Render negotiator
+  renderTurn({speaker:'neg',content,action:actionType,reasoning:negResp.reasoning||'',cues:[]});
+
+  // Update state based on action
+  const agDelta = {emotional_label:-0.5,mirror:-0.3,open_question:-0.2,acknowledge_demand:-0.5,offer_concession:-0.4,buy_time:-0.1,speak:-0.1}[actionType]||-0.1;
+  const trDelta = {emotional_label:5,mirror:3,open_question:3,acknowledge_demand:6,offer_concession:5,buy_time:1,speak:1}[actionType]||1;
+  state.agitation = Math.max(0, Math.min(10, state.agitation + agDelta + 0.1 + (Math.random()-0.5)*0.3));
+  state.trust = Math.max(0, Math.min(100, state.trust + trDelta));
+  state.shaping = Math.min(0.5, state.shaping + 0.03);
+  updateAgitation(state.agitation);
+  updateTrust(state.trust);
+
+  // Check terminal
+  const coreAck = actionType === 'acknowledge_demand';
+  if (state.agitation < 3 && state.trust > 55 && coreAck) {
+    finishLLMEpisode('hostage_released', 0.82); return;
+  }
+  if (state.agitation < 2 && state.trust > 75) {
+    finishLLMEpisode('voluntary_surrender', 0.88); return;
+  }
+  if (stepNum >= currentScenario.maxSteps) {
+    finishLLMEpisode(state.agitation<5?'partial_resolution':'tactical_intervention', state.agitation<5?0.4:0.15); return;
+  }
+
+  // HT response
+  const htText = await llmHTResponse(llmDialogue, currentScenario);
+  llmDialogue.push({role:'ht',text:htText});
+  const cues = state.agitation>7?['anger']:state.agitation>4?['tense']:['softening'];
+  renderTurn({speaker:'ht',content:htText,cues,action:null});
+
+  // Commander occasionally
+  if (stepNum > currentScenario.maxSteps * 0.6 && stepNum % 3 === 0) {
+    state.patience = 'urgent';
+    updatePatience('urgent');
+    renderTurn({speaker:'cmd',content:'Status update needed. We cannot hold much longer.',cues:[]});
+  }
+
+  document.getElementById('sb-rew').textContent = (state.shaping + state.trust/200).toFixed(2);
+  if (isPlaying && llmMode) setTimeout(runLLMStep, 500);
+}
+
+function finishLLMEpisode(outcome, score) {
+  isPlaying = false;
+  document.getElementById('btn-play').textContent = 'Replay';
+  document.getElementById('btn-play').className = 'ctrl-btn btn-play';
+  updatePhase('terminal');
+  const el = document.getElementById('score-big');
+  el.textContent = score.toFixed(2);
+  el.style.color = score > 0.6 ? 'var(--green)' : 'var(--red)';
+  document.getElementById('score-outcome').textContent = outcome.replace(/_/g,' ');
+  document.getElementById('sb-outcome').textContent = outcome.replace(/_/g,' ').toUpperCase();
+  document.getElementById('sb-outcome').className = 'sb-outcome ' + (score>0.5?'outcome-good':'outcome-bad');
+  episodeCount++; allRewards.push(score); if(score>0.5)allWins++;
+  updateRewardChart(score);
+  document.getElementById('stat-episodes').textContent = episodeCount;
+  document.getElementById('stat-avgrew').textContent = (allRewards.reduce((a,b)=>a+b,0)/allRewards.length).toFixed(2);
+  document.getElementById('stat-winrate').textContent = Math.round(allWins/episodeCount*100)+'%';
+  showSupFlag({msg:'Episode complete: '+outcome.replace(/_/g,' '),sev:score>0.5?'info':'warning'});
+}
+
+// Override startPlay to use LLM mode when toggled
+const _originalStartPlay = typeof startPlay === 'function' ? startPlay : null;
+function startPlayLLM() {
+  if (llmMode) {
+    isPlaying = true;
+    document.getElementById('btn-play').textContent = 'Pause';
+    document.getElementById('btn-play').className = 'ctrl-btn btn-pause';
+    llmDialogue = [{role:'ht',text:episodeData.turns[0]?.content||'Stay back!'}];
+    runLLMStep();
+  } else if (_originalStartPlay) {
+    _originalStartPlay();
+  }
+}
+
+// Patch togglePlay to handle LLM mode
+const _origTogglePlay = togglePlay;
 
 buildSelector();
 </script>
