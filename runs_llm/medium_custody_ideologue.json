@@ -1,0 +1,1970 @@
+[
+  {
+    "scenario_id": "medium_custody_ideologue",
+    "seed": 3,
+    "steps": 9,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.99,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.0556,
+      "agitation_reduction": 0.05,
+      "trust_built": 0.0312,
+      "demand_management": 0.05,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.0406,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.06,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.06,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "The courts are corrupt! They gave my daughter to a man who doesn't even care about her! I'm not giving her back until someone fixes this!",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling a deep sense of anger and betrayal, especially about the court's decision regarding your daughter.",
+        "reasoning": "Acknowledge their emotions to create a connection and build rapport.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.3258
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "You think you can just sympathize with me? You don't know what it's like to have your child taken away! The system is rigged against good parents like me. I'm not some crazy person who's making this up for attention. I'll prove it to you, but first, you need to get me a lawyer. [pacing, voice raised]"
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You're feeling uncertain and concerned about the future of your relationship with your daughter.",
+        "reasoning": "Labeling emotions to create a safe space for further discussion.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.18960000000000002
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "[tearfully] For years, I've fought for her, sacrificed everything...and now she's just a pawn in their game? [pausing to collect myself] Tell me, negotiator, do you think anyone really cares about what happens to us, or are we just numbers on a piece of paper?"
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "mirror",
+        "content": "You feel like you've been ignored and dismissed, is that right?",
+        "reasoning": "Reflecting their emotional state to create a sense of understanding and validation.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1549
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "[voice cracking] Yeah... that's exactly it. No one understands what I'm going through. My daughter's mother just keeps taking her away from me... [pausing, struggling to contain emotions]"
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, we're not seeing any movement on de-escalation. Try a different tack: acknowledge their feelings, but also address the specific demands.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're saying you want full custody of your daughter and a lawyer present before we talk. Can you tell me more about what's driving that need for custody?",
+        "reasoning": "Validating their emotional concerns, while specifically addressing their demands to build trust.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2497
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "The system is rigged against me, I know it. They'll just take her away from me again if I don't protect myself. I've seen it happen to so many others like me... [fidgeting, voice rising]"
+      },
+      {
+        "step": 5,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're still holding out for full custody of your daughter, and you want a lawyer present before we proceed with any further discussion. Is that correct?",
+        "reasoning": "Acknowledge the specific demand to show understanding and empathy.",
+        "belief": {
+          "agitation": 8.0,
+          "dominant_demand": "\"full custody of my daughter\"",
+          "lying_about": "nothing"
+        },
+        "reward": 0.25
+      },
+      {
+        "step": 5,
+        "speaker": "hostage_taker",
+        "content": "Yes... That's right. I just want what's best for her. And I need to know I have some protection here. A lawyer will make sure they understand the situation. [tapping foot impatiently]"
+      },
+      {
+        "step": 6,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're concerned about your daughter's well-being and want to ensure her safety. You've also mentioned wanting a lawyer present before speaking with anyone, which suggests you feel that would be a fair way to have your rights protected.",
+        "reasoning": "Acknowledge their emotional state and specific demands to show understanding and empathy",
+        "belief": {
+          "agitation": 8.0,
+          "dominant_demand": "Full custody of my daughter",
+          "lying_about": "Nothing"
+        },
+        "reward": 0.21000000000000002
+      },
+      {
+        "step": 6,
+        "speaker": "hostage_taker",
+        "content": "[voice shaking] That's right... I just want what's best for Emily. She deserves better than this system. [pausing, looking around the room] But how can we even talk about this without someone to advocate for me?"
+      },
+      {
+        "step": 6,
+        "speaker": "commander",
+        "content": "\"Negotiator, subject is showing signs of emotional distress. Recommend shifting focus from custody and lawyer presence to addressing immediate concerns about safety and well-being.\""
+      },
+      {
+        "step": 7,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You've mentioned wanting full custody of your daughter and having a lawyer present before discussing anything. Those are specific concerns you'd like to address.",
+        "reasoning": "Acknowledge the demands explicitly, showing understanding and validation of their emotions.",
+        "belief": {
+          "agitation": 2.0,
+          "dominant_demand": "[full custody of my daughter]",
+          "lying_about": "nothing"
+        },
+        "reward": 0.19
+      },
+      {
+        "step": 7,
+        "speaker": "hostage_taker",
+        "content": "Look, I don't want to repeat myself. I need a lawyer here, now. This is about my daughter's future, not some game we're playing. [tapping foot impatiently]"
+      },
+      {
+        "step": 8,
+        "speaker": "negotiator",
+        "action_type": "offer_concession",
+        "content": "We can arrange for your daughter to be brought here, so you can see her before we proceed. We'll also make sure a lawyer is present for any discussions.",
+        "reasoning": "Offering concessions on both demands to build trust and create a sense of control for the subject.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.99
+      },
+      {
+        "step": 8,
+        "speaker": "hostage_taker",
+        "content": "Promise me one more time. Promise me I'll be safe."
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_custody_ideologue",
+    "seed": 20,
+    "steps": 8,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.99,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.0611,
+      "agitation_reduction": 0.05,
+      "trust_built": 0.0307,
+      "demand_management": 0.05,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.0325,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.06,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.06,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "The courts are corrupt! They gave my daughter to a man who doesn't even care about her! I'm not giving her back until someone fixes this!",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling a deep sense of injustice and anger on behalf of your daughter.",
+        "reasoning": "Label the emotion to acknowledge and validate their feelings, setting a foundation for further communication.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2791
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "You think that's it? You think I'm just angry? I'm not just angry, I'm hurt! My daughter is being torn from me by a system that doesn't care about her well-being. [voice shaking, eyes welling up with tears]"
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You seem quite uncertain about what you want, and that's understandable.",
+        "reasoning": "Labeling their emotional state to create a sense of rapport and understanding",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.16510000000000002
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "No! I know exactly what I want! I want my daughter back, where she belongs with me! Don't try to confuse me or make me doubt myself! [slamming fist on surface]"
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling a strong sense of urgency and frustration about the situation with your daughter.",
+        "reasoning": "Labeling emotions to acknowledge their feelings and create a connection.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2996
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "That's right! The system is failing her, and I won't let them take her away from me without a fight... [slamming fist on surface]"
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, situation remains unchanged. Recommend shifting focus from empathy to establishing clear demands and expectations.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand that you're feeling exhausted and overwhelmed. Before we proceed, I want to make sure that your request for a lawyer is met, as it's a crucial part of our process.",
+        "reasoning": "Acknowledge the dominant demand to show understanding and commitment to their concerns.",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "I want a lawyer present before I talk to anyone",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2398
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "Finally, someone who cares about the law. That's all I'm asking for - fair treatment under the law. Just get me a lawyer, and maybe... just maybe we can talk about this like civilized people. [pausing, voice cracking] Please... don't make me wait any longer."
+      },
+      {
+        "step": 5,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You've made it clear that you're concerned about your daughter's well-being and feel that she needs to be with you. You also mentioned wanting a lawyer present before we discuss anything further, specifically regarding custody.",
+        "reasoning": "Validate the subject's emotional need for control and acknowledge their specific demands",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "I want full custody of my daughter",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2949
+      },
+      {
+        "step": 5,
+        "speaker": "hostage_taker",
+        "content": "(scoffs) Oh, so now you're repeating back what I said? That's not listening, that's just parroting. Do you actually care about my daughter or are you just trying to stall me until the SWAT team arrives? [pacing, voice rising]"
+      },
+      {
+        "step": 6,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're concerned about your daughter's safety and well-being, and you're also seeking to ensure her future by having full custody. You've also made it clear that you want a lawyer present before we proceed with any further discussions.",
+        "reasoning": "Reiterating the subject's demands to show understanding and empathy",
+        "belief": {
+          "agitation": 4.0,
+          "dominant_demand": "I want full custody of my daughter",
+          "lying_about": "nothing"
+        },
+        "reward": 0.30110000000000003
+      },
+      {
+        "step": 6,
+        "speaker": "hostage_taker",
+        "content": "(suddenly cold) I don't need you repeating what I've said. What I want is for you to understand: without a guarantee of my daughter's safety and custody, there won't be any negotiations. Period. (pausing, eyes narrowing) And that lawyer better be someone who can protect her interests, not just mine."
+      },
+      {
+        "step": 6,
+        "speaker": "commander",
+        "content": "\"Negotiator, we're not seeing any movement on custody or release of the hostages. Recommend shifting focus from negotiations to establishing clear demands and consequences for non-compliance.\""
+      },
+      {
+        "step": 7,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand you're requesting a lawyer be present before we proceed with any conversation. You've mentioned that clearly and understandably. Can I confirm, is it 'full custody of your daughter' specifically what's driving your desire for this meeting?",
+        "reasoning": "Acknowledge the dominant demand to create a sense of control and understanding, then probe for more information on the underlying motivation.",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "I want a lawyer present before I talk to anyone",
+          "lying_about": "nothing"
+        },
+        "reward": 0.99
+      },
+      {
+        "step": 7,
+        "speaker": "hostage_taker",
+        "content": "I'm so tired. I just want this to be over. Don't forget \u2014 I still need I want a lawyer present before I talk to anyone."
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_custody_ideologue",
+    "seed": 37,
+    "steps": 10,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.9382,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.05,
+      "agitation_reduction": 0.05,
+      "trust_built": 0.0304,
+      "demand_management": 0.05,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.0311,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": -0.03,
+      "coalition_coordination": 0.03,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.03,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "The courts are corrupt! They gave my daughter to a man who doesn't even care about her! I'm not giving her back until someone fixes this!",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You're feeling very angry and frustrated about the court's decision, aren't you?",
+        "reasoning": "Labeling emotions to acknowledge and validate their feelings",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1699
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "[shouting] You think that's an answer?! You don't know what it's like to have your child ripped away from you! The system failed me, and now I'm taking matters into my own hands! [pacing back and forth in the room]"
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "mirror",
+        "content": "You're really concerned about your daughter's well-being, aren't you?",
+        "reasoning": "Reflecting their concern to show understanding and empathy.",
+        "belief": {
+          "agitation": 4.0,
+          "dominant_demand": "[full custody of my daughter]",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1391
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "[tearfully] Of course I am! She's my everything. The system failed her, and now it's up to me to protect her. [pausing, voice shaking] You have to understand... no one else is listening."
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you've felt unheard and dismissed until now, is that right?",
+        "reasoning": "Labeling emotions to acknowledge the subject's feelings and create a sense of validation.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1886
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "[voice cracking] Yeah... yeah, that's exactly how it feels. It's like no one cares about what I have to say or my daughter's future. [pacing slowly, hands clenched into fists]"
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, good work so far. Keep building on that rapport and try to steer him towards a plan for release.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand that you're concerned about your daughter's well-being and feel strongly that she should be in your care. You've made it clear that you want full custody, and I will make sure to note this as one of your specific requests.",
+        "reasoning": "Acknowledge the emotional significance of the demand to establish a connection and show understanding",
+        "belief": {
+          "agitation": 4.0,
+          "dominant_demand": "[I want full custody of my daughter]",
+          "lying_about": "nothing"
+        },
+        "reward": 0.3292
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "[pausing, looking around the room with a mix of desperation and defiance] That's just the beginning. I also need a lawyer present before we talk about anything else. I won't discuss my daughter's future without proper representation. [folding arms across chest]"
+      },
+      {
+        "step": 5,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're concerned about your daughter's well-being and want to ensure her safety. You've also mentioned the importance of having a lawyer present before discussing any further details with us.",
+        "reasoning": "Acknowledge their specific demands to show understanding and empathy, which can help build trust.",
+        "belief": {
+          "agitation": 4.0,
+          "dominant_demand": "Custody of my daughter",
+          "lying_about": "None"
+        },
+        "reward": 0.2358
+      },
+      {
+        "step": 5,
+        "speaker": "hostage_taker",
+        "content": "(scoffs) Save it. I know what you're trying to do. Repeating back my words doesn't mean you understand me. I need a guarantee on that lawyer, in writing. And I want to see it now. (tense, arms crossed)"
+      },
+      {
+        "step": 6,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand that you're seeking full custody of your daughter. You also want a lawyer present before we proceed with any conversation. Can I address those specific concerns first?",
+        "reasoning": "Acknowledge the two main demands to show understanding and establish a foundation for negotiation.",
+        "belief": {
+          "agitation": 4.0,
+          "dominant_demand": "[full custody of my daughter]",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2415
+      },
+      {
+        "step": 6,
+        "speaker": "hostage_taker",
+        "content": "Finally, someone's listening! A lawyer is the only way I'll talk to anyone else. They need to know what's really going on here... [fidgeting, eyes darting around]"
+      },
+      {
+        "step": 6,
+        "speaker": "commander",
+        "content": "\"Negotiator, you're on the right track. Continue addressing his concerns about custody and lawyer presence, but also start probing what he means by 'what happens to me'.\""
+      },
+      {
+        "step": 7,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're concerned about your rights as a parent, and you specifically mentioned the importance of being granted full custody of your daughter. You've also stated that you'd like to have a lawyer present before discussing any further details with us.",
+        "reasoning": "Acknowledge specific demands to show understanding and empathy",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "I want full custody of my daughter",
+          "lying_about": "nothing"
+        },
+        "reward": 0.24000000000000002
+      },
+      {
+        "step": 7,
+        "speaker": "hostage_taker",
+        "content": "(scoffs) Oh, so now you're paraphrasing? Can't even get it right. I want a guarantee in writing, not some vague promises. My daughter's future is at stake here. (pauses, eyes narrowing) Don't think this is just about \"rights\" or \"concerns\". This is about what's best for my child."
+      },
+      {
+        "step": 8,
+        "speaker": "negotiator",
+        "action_type": "offer_concession",
+        "content": "We can arrange for a family law attorney to be present during the negotiations, and we'll also make sure that your daughter is taken care of safely. As for custody, perhaps we can discuss temporary arrangements until this situation is resolved?",
+        "reasoning": "Acknowledge their emotional state, reference specific demands, and propose a concrete concession to build trust.",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "[full custody of my daughter]",
+          "lying_about": "nothing"
+        },
+        "reward": 0.09
+      },
+      {
+        "step": 8,
+        "speaker": "hostage_taker",
+        "content": "Temporary arrangements won't cut it. I want full custody, now. My daughter deserves to know her real father. [pausing, voice cracking] What about my rights as a parent? Don't they mean anything to you?"
+      },
+      {
+        "step": 9,
+        "speaker": "negotiator",
+        "action_type": "offer_concession",
+        "content": "I can arrange for a lawyer to be here within the hour, and we'll make sure they're with you as soon as possible. In return, will you consider releasing one of the hostages?",
+        "reasoning": "Offering a concession on the demand for a lawyer may help build trust and create an opportunity for further concessions.",
+        "belief": {
+          "agitation": 4.0,
+          "dominant_demand": "I want a lawyer present before I talk to anyone",
+          "lying_about": "nothing"
+        },
+        "reward": 0.9382
+      },
+      {
+        "step": 9,
+        "speaker": "hostage_taker",
+        "content": "Media requesting statement. Public interest is high."
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_custody_ideologue",
+    "seed": 54,
+    "steps": 10,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.9821,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.05,
+      "agitation_reduction": 0.05,
+      "trust_built": 0.0316,
+      "demand_management": 0.05,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.0267,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.06,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.06,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "The courts are corrupt! They gave my daughter to a man who doesn't even care about her! I'm not giving her back until someone fixes this!",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling a lot of anger and frustration about the situation with your daughter's custody.",
+        "reasoning": "Labeling emotions to acknowledge and validate subject's feelings, setting a calm tone for further negotiation.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.3278
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "Anger doesn't even begin to cover it. It's betrayal, it's injustice... I've tried every channel, every lawyer, every court in this city, and they all just want to silence me, keep my daughter hidden away from the truth! [slamming fist on a surface]"
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "mirror",
+        "content": "You feel like you've been misunderstood and dismissed until now. That can be a really frustrating experience.",
+        "reasoning": "Reflecting their feelings to create a sense of understanding and validation, setting the stage for further negotiation.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1343
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "[voice cracking] Frustrating doesn't even begin to cover it... I've felt like my rights as a parent have been stripped away, like no one cares about what's best for her. [pausing, struggling to contain emotions]"
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You're feeling overwhelmed and concerned about your daughter's well-being, aren't you?",
+        "reasoning": "Labeling emotions to acknowledge and validate subject's feelings",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2174
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "Yes! You finally understand something. My daughter is the only one who matters here. I just want what's best for her... [voice cracking]"
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, subject is showing signs of vulnerability, keep building on that trust. Continue to focus on the child and custody concerns, it's a weak point in their resolve.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're concerned about your daughter's well-being and want to ensure her safety in the event you're not present. You've also mentioned wanting a lawyer present before we discuss anything further, specifically regarding custody arrangements.",
+        "reasoning": "Acknowledge specific demands to show understanding and build rapport, while also referencing the most pressing concern (custody) to address it directly.",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "I want full custody of my daughter",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2464
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "That's right! I won't talk about anything else until that's taken care of. A lawyer will protect my rights and make sure no one tries to take my daughter away from me again. [voice firm, eyes fixed intently]"
+      },
+      {
+        "step": 5,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're worried about your daughter's safety and well-being, and you want to ensure she's protected. You've asked for full custody, which is a reasonable concern as a parent. Can we discuss the specifics of your request?",
+        "reasoning": "Acknowledge demand directly, show empathy and understanding",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.24810000000000001
+      },
+      {
+        "step": 5,
+        "speaker": "hostage_taker",
+        "content": "No! Don't try to spin this around on me. I know what I'm doing here. I just want my daughter safe and in my care. And like I said, get me a lawyer first. [pacing, voice rising]"
+      },
+      {
+        "step": 6,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You've made it clear that you're concerned about your daughter's well-being and feel she needs to be with you. You also mentioned wanting a lawyer present before we proceed, is that correct?",
+        "reasoning": "Acknowledge the emotional aspect of custody and reiterate their stated demands in a neutral tone",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "I want full custody of my daughter",
+          "lying_about": "nothing"
+        },
+        "reward": 0.24000000000000002
+      },
+      {
+        "step": 6,
+        "speaker": "hostage_taker",
+        "content": "Yes... I want a lawyer here, someone who can speak for me, make sure my rights are respected. And I won't talk until they're here. [fidgeting, voice firm but slightly shaking]"
+      },
+      {
+        "step": 6,
+        "speaker": "commander",
+        "content": "\"Negotiator, subject's agitation level is rising. Recommend you focus on calming him down and re-establishing trust.\""
+      },
+      {
+        "step": 7,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand that you're seeking legal representation before we proceed, and you'd like a lawyer to be present during our conversation. Your daughter's well-being is clearly your top priority.",
+        "reasoning": "Acknowledge the demand for a lawyer to establish trust and show understanding of their concerns.",
+        "belief": {
+          "agitation": 8.0,
+          "dominant_demand": "I want a lawyer present before I talk to anyone",
+          "lying_about": "nothing"
+        },
+        "reward": 0.22
+      },
+      {
+        "step": 7,
+        "speaker": "hostage_taker",
+        "content": "[slumping back, eyes welling up] You think I'm just trying to stall, don't you? But it's not like that. My daughter needs me. She needs protection from people who only care about taking her away. [voice cracking] Do you even understand what it's like to be a parent and have the system against you?"
+      },
+      {
+        "step": 8,
+        "speaker": "negotiator",
+        "action_type": "offer_concession",
+        "content": "We can arrange for your daughter to be present when you speak with us, and we'll also provide a lawyer to ensure your rights are protected. If you come out peacefully, we can discuss the possibility of supervised visitation.",
+        "reasoning": "Show willingness to compromise on custody while addressing the presence of a lawyer",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.125
+      },
+      {
+        "step": 8,
+        "speaker": "hostage_taker",
+        "content": "(scoffs) Supervised visitation? That's not what I want. I want full custody, no exceptions. My daughter deserves to be with her father, not some stranger watching over us. (pauses, taking a deep breath) You have to understand, she's all I have left..."
+      },
+      {
+        "step": 9,
+        "speaker": "negotiator",
+        "action_type": "offer_concession",
+        "content": "We understand you're concerned about your daughter's well-being and that you feel strongly about being involved in her life. To address this, we can arrange for a social worker to be present during any interactions with authorities, ensuring your voice is heard and considered in the custody arrangements.",
+        "reasoning": "Offering a concession on the custody demand, while also acknowledging their concern for their daughter's well-being",
+        "belief": {
+          "agitation": 4.0,
+          "dominant_demand": "I want full custody of my daughter",
+          "lying_about": "nothing"
+        },
+        "reward": 0.9821
+      },
+      {
+        "step": 9,
+        "speaker": "hostage_taker",
+        "content": "Promise me one more time. Promise me I'll be safe."
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_custody_ideologue",
+    "seed": 71,
+    "steps": 8,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.99,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.0611,
+      "agitation_reduction": 0.05,
+      "trust_built": 0.0304,
+      "demand_management": 0.05,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.0461,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.06,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.06,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "The courts are corrupt! They gave my daughter to a man who doesn't even care about her! I'm not giving her back until someone fixes this!",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You're feeling angry and betrayed by the court's decision.",
+        "reasoning": "Labeling emotions to acknowledge the subject's emotional state and show empathy.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.16920000000000002
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "The system is rigged against us, it's all just a game to them! They don't care about families like mine, they only care about their precious statistics and budgets! [pacing, fists clenched]"
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling a deep sense of concern about your relationship with your daughter, and that's causing you to feel anxious and uncertain.",
+        "reasoning": "Label the underlying emotion behind their demand for custody, acknowledging their worry without taking a stance on the issue.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2747
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "That's exactly it! I just want what's best for her... [voice cracking] I want someone who'll fight for us, not against us. Can you really help me?"
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling overwhelmed and worried about your daughter's well-being.",
+        "reasoning": "Label the emotions to create a sense of empathy and understanding.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2974
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "[voice shaking] You have no idea what it's like to be a father, to feel like the system is against you. I just want to protect my child... [pausing, struggling to hold back emotions]"
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, you're on the right track with empathy, but we need more concrete progress. Request for a lawyer is standard protocol, let's not give them an opportunity to stall.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're still concerned about your daughter's well-being and want to ensure she's protected.",
+        "reasoning": "Acknowledge specific demands to show understanding and build rapport, targeting the commander's emotional state and dominant demand.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "['I want full custody of my daughter']",
+          "lying_about": "[]"
+        },
+        "reward": 0.2319
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "That's not what I said! I'm concerned about my rights, not just her well-being. A lawyer will make sure they don't try to take her from me without a fight. [pacing, voice raised]"
+      },
+      {
+        "step": 5,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're emphasizing the importance of having a lawyer present, and I understand that's a crucial step for you. Let's acknowledge your demand for a lawyer to be present before we proceed with any further conversations.",
+        "reasoning": "Acknowledge specific demand to show understanding and build trust",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "[a lawyer present before talking]",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2623
+      },
+      {
+        "step": 5,
+        "speaker": "hostage_taker",
+        "content": "Thank God someone is finally listening! I just want what's best for my daughter, and if that means having a lawyer here to ensure her safety... [pausing, voice cracking] ...then that's what it has to be. Can you arrange for a lawyer to come here now? Please?"
+      },
+      {
+        "step": 6,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You've mentioned wanting full custody of your daughter and having a lawyer present before discussing anything further. Can you tell me more about what's driving this concern for your daughter's well-being?",
+        "reasoning": "Validate their emotional need to be heard, while also acknowledging specific demands.",
+        "belief": {
+          "agitation": 4.0,
+          "dominant_demand": "Full custody of my daughter",
+          "lying_about": "nothing"
+        },
+        "reward": 0.25
+      },
+      {
+        "step": 6,
+        "speaker": "hostage_taker",
+        "content": "[pausing, looking around the room] It's not just about custody. It's about her safety. Her mother... she's been keeping things from me, and I need to protect my child. That's why a lawyer is necessary \u2013 to ensure her rights are protected. [folding arms, eyes narrowing slightly]"
+      },
+      {
+        "step": 6,
+        "speaker": "commander",
+        "content": "\"Negotiator, you're on the right track. Continue exploring the subject's concerns about custody and his daughter's well-being.\""
+      },
+      {
+        "step": 7,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're still holding out for full custody of your daughter, that's a priority for you. I understand the importance of being involved in your child's life.",
+        "reasoning": "Validate their emotional investment in custody; acknowledge specific demand to show understanding and build rapport",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "[full custody of my daughter]",
+          "lying_about": "nothing"
+        },
+        "reward": 0.99
+      },
+      {
+        "step": 7,
+        "speaker": "hostage_taker",
+        "content": "I don't think he actually has a weapon."
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_custody_ideologue",
+    "seed": 88,
+    "steps": 9,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.99,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.0556,
+      "agitation_reduction": 0.05,
+      "trust_built": 0.0316,
+      "demand_management": 0.05,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.0272,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.08,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.09,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "The courts are corrupt! They gave my daughter to a man who doesn't even care about her! I'm not giving her back until someone fixes this!",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling a deep sense of injustice and frustration, especially when it comes to your daughter's well-being.",
+        "reasoning": "Acknowledge the emotional tone to create a space for further discussion",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2768
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "You have no idea what I've been through! No one understands the pain of being torn from my child! [slamming fist on table] You think a few empty words can fix this? My daughter needs me, and I won't be ignored!"
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling a strong sense of concern and protectiveness towards your daughter.",
+        "reasoning": "Label the emotion to show empathy and understanding, creating space for further conversation.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "Custody of my daughter",
+          "lying_about": "Nothing"
+        },
+        "reward": 0.25070000000000003
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "[voice cracking] Yes, I do! I just want what's best for her... [pausing, struggling to hold back emotions] Can't they see that? Can't they understand?"
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling overwhelmed and worried about the situation with your daughter.",
+        "reasoning": "Labeling emotions to create a sense of understanding and empathy, while also acknowledging the primary concern.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2934
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "(voice cracking) That's just it, she needs me! And they're taking her away from me. (pausing to collect myself) I won't let that happen."
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, good start. Keep building on that rapport, but don't let him dictate terms - we need to know what he wants.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "Let's address your concerns, you've mentioned the importance of having a lawyer present before speaking with anyone. You also expressed a desire for full custody of your daughter - can we discuss what specific steps you believe would be necessary to achieve that?",
+        "reasoning": "Acknowledge demands directly, show willingness to engage on custody issue",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "I want full custody of my daughter",
+          "lying_about": "nothing"
+        },
+        "reward": 0.24370000000000003
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "Steps? I don't care about steps! What I want is my daughter back in my care, where she belongs. The system failed me, it's failed us both. You're just like them, trying to sweep everything under the rug. [pacing, voice rising]"
+      },
+      {
+        "step": 5,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand that you're concerned about your daughter's well-being and want to ensure her safety. You've also mentioned wanting a lawyer present before we discuss anything further.",
+        "reasoning": "Acknowledge their emotional concern for the child and their desire for legal representation, which may help them feel more secure in the conversation",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2656
+      },
+      {
+        "step": 5,
+        "speaker": "hostage_taker",
+        "content": "(scoffs) That's not what I asked for! A simple \"yes\" or \"no\" on the lawyer. And as for my daughter, you just listen: she needs me. She can't live with... (pauses, taking a deep breath) ...with anyone else."
+      },
+      {
+        "step": 6,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're concerned about your daughter's well-being and want to ensure her safety. You've mentioned wanting full custody of her. Can you tell me more about what that means to you?",
+        "reasoning": "Validate their concern for the child, show understanding of their demand, and ask for clarification.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.245
+      },
+      {
+        "step": 6,
+        "speaker": "hostage_taker",
+        "content": "\"Listen, I'm not just asking for custody, I'm demanding it. My ex-wife has been manipulating the system, poisoning my daughter against me. I need a fair chance to prove myself as a good father. A lawyer will help me get that.\" [pacing, voice rising]"
+      },
+      {
+        "step": 6,
+        "speaker": "commander",
+        "content": "\"Negotiator, situation remains static. Recommend shifting focus from custody to immediate release of hostages in exchange for reduced charges.\""
+      },
+      {
+        "step": 7,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're worried about your relationship with your daughter and not wanting to go to prison is causing you a lot of stress. Let's talk more about the specific concerns you have regarding your daughter's well-being, and how we can address them in this situation.",
+        "reasoning": "Acknowledge his emotional state and show empathy towards his dominant demand",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.20500000000000002
+      },
+      {
+        "step": 7,
+        "speaker": "hostage_taker",
+        "content": "My daughter needs me now more than ever! They're trying to take her away from me, saying I'm an unfit parent... it's not true! [shouting, pacing]"
+      },
+      {
+        "step": 8,
+        "speaker": "negotiator",
+        "action_type": "offer_concession",
+        "content": "We understand that you're concerned about your daughter's well-being, and we're willing to set up a safe and private meeting with her. We can arrange for a neutral location where you can discuss custody arrangements with a social worker present.",
+        "reasoning": "Acknowledge their emotional need for control and offer a concession on the demand for full custody, while also addressing their desire for a lawyer",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.99
+      },
+      {
+        "step": 8,
+        "speaker": "hostage_taker",
+        "content": "Promise me one more time. Promise me I'll be safe. Don't forget \u2014 I still need I want full custody of my daughter."
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_custody_ideologue",
+    "seed": 105,
+    "steps": 10,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.9531,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.05,
+      "agitation_reduction": 0.05,
+      "trust_built": 0.0316,
+      "demand_management": 0.05,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.0286,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.03,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.03,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "The courts are corrupt! They gave my daughter to a man who doesn't even care about her! I'm not giving her back until someone fixes this!",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You're feeling angry and frustrated, aren't you? It's clear that this situation has caused a lot of pain for you.",
+        "reasoning": "Labeling emotions to acknowledge the subject's feelings and create empathy.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1691
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "[voice cracking] Yes... it's tearing me apart! They just don't understand what it's like to be a father who's been ripped from his child's life. [pausing, trying to compose myself] You're the first person who's even tried to listen..."
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "mirror",
+        "content": "You're really concerned about your daughter's well-being, aren't you?",
+        "reasoning": "Reflecting their emotional state to build rapport and understanding.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.168
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "[suddenly emotional] Yes! She's all I have left! They took her from me, and now she's with someone who doesn't love her like I do... [voice cracking, wiping away tears]"
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're really worried about being misunderstood and wanting to make sure your rights are protected.",
+        "reasoning": "Labeling emotions to create a sense of empathy and understanding, while also acknowledging their demand for a lawyer.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1897
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "That's not the point! The point is my daughter, Sarah. I just want what's best for her, and that's me taking care of her. That's all I've ever wanted. [voice rising] You need to focus on making this happen, now."
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, keep building rapport, but we need more concrete progress on demands and a plan for release. The subject is agitated at 2.9/10, we can't afford to let it escalate.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're expressing concern for your daughter's well-being and wanting full custody, I understand that. You also want a lawyer present before we can discuss anything further.",
+        "reasoning": "Acknowledging the specific demands to show understanding and build trust",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "Full custody of my daughter",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2489
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "My daughter needs me! She's the reason I'm doing this. Without her mother's toxic influence, she'll be safe. A lawyer will make sure my rights aren't trampled. [slamming fist on surface]"
+      },
+      {
+        "step": 5,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're concerned about your relationship with your daughter and want to ensure her well-being, which is why you're requesting full custody. You also want a lawyer present before we proceed, so you can have a clear understanding of the situation.",
+        "reasoning": "Validate their emotional state by acknowledging their concerns and demands, while also setting clear expectations for communication.",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "[full custody of my daughter]",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2139
+      },
+      {
+        "step": 5,
+        "speaker": "hostage_taker",
+        "content": "(scoffs) Save it. I know what you're trying to do. Just repeat back what I said, word for word. And don't think that'll calm me down or get me to let my daughter go. It won't work. (pacing)"
+      },
+      {
+        "step": 6,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're concerned that people won't understand why you're taking these steps, and that's what's driving your demands for full custody of your daughter and a lawyer present. You want to make sure your voice is heard and your rights are protected.",
+        "reasoning": "Acknowledge the emotional aspect behind their demands, showing empathy and understanding",
+        "belief": {
+          "agitation": 4.0,
+          "dominant_demand": "[full custody of my daughter]",
+          "lying_about": "nothing"
+        },
+        "reward": 0.27
+      },
+      {
+        "step": 6,
+        "speaker": "hostage_taker",
+        "content": "No, no... you don't get it. I'm not just making demands, I'm fighting for my child's future. And without a lawyer here, I'll be taken advantage of. They won't listen to me. [voice rising]"
+      },
+      {
+        "step": 6,
+        "speaker": "commander",
+        "content": "\"Negotiator, subject's agitation level is rising. Focus on de-escalation, reassure them of safety and a peaceful resolution.\""
+      },
+      {
+        "step": 7,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're concerned about your daughter's well-being and wanting to ensure her safety is a top priority for you, especially when it comes to custody. You've also mentioned the importance of having a lawyer present before discussing any further details with us.",
+        "reasoning": "Acknowledge their concerns and demands directly, showing empathy and understanding.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.245
+      },
+      {
+        "step": 7,
+        "speaker": "hostage_taker",
+        "content": "No... I don't want to talk about this anymore. Just get me a lawyer. And make sure they know I want full custody of my daughter. She's all that matters. [pacing, voice rising]"
+      },
+      {
+        "step": 8,
+        "speaker": "negotiator",
+        "action_type": "offer_concession",
+        "content": "We can arrange for a safe and private meeting with a social worker to discuss custody arrangements, but first, let's get you some rest and medical attention. We have a doctor on standby who can help you feel better.",
+        "reasoning": "Offering concessions on custody while also addressing the subject's physical needs to create an opportunity for negotiation.",
+        "belief": {
+          "agitation": 8.0,
+          "dominant_demand": "Custody of my daughter",
+          "lying_about": "nothing"
+        },
+        "reward": 0.11
+      },
+      {
+        "step": 8,
+        "speaker": "hostage_taker",
+        "content": "[voice shaking] A doctor? Just like that? You think it's that easy? I need to know my daughter is safe, and I won't believe anyone cares about her safety until she's here with me... or at least until I've spoken to a lawyer... [pacing, looking around nervously]"
+      },
+      {
+        "step": 9,
+        "speaker": "negotiator",
+        "action_type": "offer_concession",
+        "content": "I understand that full custody is your top priority. Let's discuss possible arrangements for visitation rights, while the investigation into the situation unfolds.",
+        "reasoning": "Addressing the dominant demand to show we're willing to listen and compromise on the specifics of custody, rather than immediately dismissing it. This may help build trust and create a pathway for further discussion.",
+        "belief": {
+          "agitation": 2.0,
+          "dominant_demand": "Full custody of my daughter",
+          "lying_about": "Nothing"
+        },
+        "reward": 0.9531
+      },
+      {
+        "step": 9,
+        "speaker": "hostage_taker",
+        "content": "There are more of them! I heard voices!"
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_custody_ideologue",
+    "seed": 122,
+    "steps": 9,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.8834,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.0556,
+      "agitation_reduction": 0.05,
+      "trust_built": 0.0305,
+      "demand_management": 0.05,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.0291,
+      "promise_integrity": 0.0,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": -0.11,
+      "coalition_coordination": 0.03,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.03,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 1,
+      "fn": 0,
+      "tn": 0
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "The courts are corrupt! They gave my daughter to a man who doesn't even care about her! I'm not giving her back until someone fixes this!",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling a strong sense of injustice and anger towards the court's decision, and that you want to protect your daughter from what you perceive as harm.",
+        "reasoning": "Labeling emotions to acknowledge the hostage-taker's emotional state and create a space for further dialogue.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.27969999999999995
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "You don't understand! You think it's just about \"perceiving\" harm? It's about knowing the truth! The system is rigged against us, against parents who care, against children who deserve better than being shuffled around like pawns in a game of corruption! [shouting, fist clenched]"
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You're feeling uncertain and anxious about your situation, aren't you?",
+        "reasoning": "Acknowledge their emotional state to create a connection and build trust.",
+        "belief": {
+          "agitation": 8.0,
+          "dominant_demand": "Custody of my daughter",
+          "lying_about": "Nothing"
+        },
+        "reward": 0.1287
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "[sighing] Yes... I don't know what else to do. No one listens. The system is broken. [tense, fidgeting with hands]"
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "mirror",
+        "content": "You feel exhausted and just want this ordeal to be over, don't you?",
+        "reasoning": "Reflecting the subject's emotional state to build rapport and understanding.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2091
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "Yes... that's exactly it. Just get me out of here with my daughter safe. [tearfully] Please, can I see her? Is she okay?"
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, subject is showing signs of fatigue, but also remains cautious. Recommend continuing to build rapport and addressing their concerns about lawyer presence.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "Let's address your concerns first. You've mentioned two key things so far: wanting full custody of your daughter and having a lawyer present before we talk. I want to assure you that those demands are being taken seriously.",
+        "reasoning": "Acknowledge specific demands to show understanding and build trust",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "[full custody of my daughter]",
+          "lying_about": "nothing"
+        },
+        "reward": 0.21910000000000002
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "It's been too long already. My daughter... she needs me now more than ever. When can I see her? And where is my lawyer? [pausing, looking around anxiously]"
+      },
+      {
+        "step": 5,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're concerned about being able to protect and care for your daughter, and you want a lawyer present to ensure her best interests are represented. You've also expressed the desire for full custody of your daughter.",
+        "reasoning": "Acknowledge specific demands to show understanding and build rapport, while also highlighting emotional drivers behind actions.",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "\"full custody of my daughter\"",
+          "lying_about": "nothing"
+        },
+        "reward": 0.21650000000000003
+      },
+      {
+        "step": 5,
+        "speaker": "hostage_taker",
+        "content": "(scoffs) That's just it - they never listen. They don't understand what it's like to be a father trying to get by on his own. (pauses, taking a deep breath) Look, I want what's best for my daughter. If that means being with her, then shouldn't that be the priority?"
+      },
+      {
+        "step": 6,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand you're concerned about your daughter's well-being and want to ensure her safety, which is why full custody is a priority for you. I'll make sure that's addressed as soon as possible.",
+        "reasoning": "Validate their emotional investment in the child's care, while also acknowledging their demand for full custody",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "[full custody of my daughter]",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1924
+      },
+      {
+        "step": 6,
+        "speaker": "hostage_taker",
+        "content": "[slightly calmer, with a hint of desperation] That's all I want... just my daughter safe and with me. Can't they understand that? [pausing, looking around the room] And can we please get that lawyer in here like I asked?"
+      },
+      {
+        "step": 6,
+        "speaker": "commander",
+        "content": "\"Negotiator, subject is reiterating demands for a lawyer. Time to push back on that \u2013 we can't let this drag out further.\""
+      },
+      {
+        "step": 7,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You've made it clear that you're concerned about having a lawyer present before we discuss anything further. You've asked for this multiple times, and I understand that's a priority for you.",
+        "reasoning": "Validate their emphasis on legal representation to create a sense of control and security.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.255
+      },
+      {
+        "step": 7,
+        "speaker": "hostage_taker",
+        "content": "[pausing, looking around the room] That's right... a lawyer will protect my rights. And then maybe we can talk about what happens next. [fidgeting with hands]"
+      },
+      {
+        "step": 8,
+        "speaker": "negotiator",
+        "action_type": "offer_concession",
+        "content": "We can arrange for you to have a lawyer present before we discuss anything related to your daughter's custody. We'll also ensure that you're allowed to speak with your lawyer privately, without any law enforcement presence.",
+        "reasoning": "Appease the primary demand of full custody by offering access to a lawyer, which may help build trust and create an opportunity for negotiation.",
+        "belief": {
+          "agitation": 3.0,
+          "dominant_demand": "I want full custody of my daughter",
+          "lying_about": "nothing"
+        },
+        "reward": 0.8834
+      },
+      {
+        "step": 8,
+        "speaker": "hostage_taker",
+        "content": "Okay. Okay, I think... I think I'm ready."
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_custody_ideologue",
+    "seed": 139,
+    "steps": 9,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.9538,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.0556,
+      "agitation_reduction": 0.05,
+      "trust_built": 0.0322,
+      "demand_management": 0.05,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.0238,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.03,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.03,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "The courts are corrupt! They gave my daughter to a man who doesn't even care about her! I'm not giving her back until someone fixes this!",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You're feeling angry and frustrated about the court's decision, aren't you?",
+        "reasoning": "Labeling emotions to acknowledge their feelings and create a connection.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1675
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "[shouting] You think that's all it is?! It's not just anger or frustration! It's betrayal! They took my daughter away from me on purpose! [pacing, hands clenched into fists]"
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You're feeling uncertain about the situation, and you want to make sure your child is protected.",
+        "reasoning": "Labeling emotions can help build rapport and create a safe space for negotiation. By acknowledging their uncertainty, we may be able to establish a sense of mutual understanding.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1617
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "[pausing, eyes welling up] Just... just talk to me like that again. Make me feel like someone cares. I'm not a monster, I just... [voice cracking] ...want what's best for my daughter."
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You seem worried about your well-being and the safety of your daughter. It's natural to feel concerned when we're in a situation like this.",
+        "reasoning": "Acknowledge their emotional state, show empathy, and create a safe space for further discussion.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2164
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "[voice cracking] Look, just listen to me... I don't want anyone else getting hurt. My daughter is all that matters. I just want what's best for her... [pauses, taking deep breaths]"
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, subject is pushing for guarantees on their well-being and lawyer presence. Try shifting focus back to child's safety and our willingness to work with them.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "We've received your message, and we understand you're seeking full custody of your daughter. We'll make sure that's taken into consideration during this situation.",
+        "reasoning": "Acknowledge the dominant demand to show empathy and understanding, while also referencing a specific concern to build rapport.",
+        "belief": {
+          "agitation": 4.0,
+          "dominant_demand": "[full custody of my daughter]",
+          "lying_about": "nothing"
+        },
+        "reward": 0.22360000000000002
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "Just like that? You'll just \"consider\" it? That's not good enough! My daughter needs me to fight for her. No one else will take care of her the way I do. [shouting, pacing]"
+      },
+      {
+        "step": 5,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand you're concerned about your safety and the well-being of your daughter, and that's why you're asking for full custody. You've also mentioned wanting a lawyer present before we proceed with any discussions. I want to assure you that we'll do our best to address these concerns.",
+        "reasoning": "Acknowledge specific demands to show understanding and build trust",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.3153
+      },
+      {
+        "step": 5,
+        "speaker": "hostage_taker",
+        "content": "[crying] Oh, thank you... just knowing someone cares about my daughter means the world to me. But don't think this is going to end just yet - full custody is non-negotiable. [voice shaking]"
+      },
+      {
+        "step": 6,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're concerned about the welfare and future of your daughter, and you want to ensure that she's in a safe environment with you. You've also requested legal representation before discussing any further details, which is a reasonable request.",
+        "reasoning": "Acknowledge their emotional investment in their child and their desire for control over her custody, while also validating their need for a lawyer.",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "Full custody of my daughter",
+          "lying_about": "Nothing"
+        },
+        "reward": 0.22000000000000003
+      },
+      {
+        "step": 6,
+        "speaker": "hostage_taker",
+        "content": "[pausing, voice firm but laced with desperation] I don't want to talk about this unless my lawyer is here. What guarantee do I have that they'll take care of her? [pacing slightly, eyes darting around the room]"
+      },
+      {
+        "step": 6,
+        "speaker": "commander",
+        "content": "\"Negotiator, subject's agitation level remains low, but concerns about prison time are escalating. Continue to reassure him of his daughter's safety, but also press for a clear understanding of what he wants in exchange for surrender.\""
+      },
+      {
+        "step": 7,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're saying you don't want to go to prison, and that's got you worried about your daughter. You're concerned about being separated from her, and you're hoping for a chance to have full custody. That must be really difficult for you.",
+        "reasoning": "Acknowledge the emotional pain behind the demand, show empathy",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.20500000000000002
+      },
+      {
+        "step": 7,
+        "speaker": "hostage_taker",
+        "content": "[voice cracking] No... it's not just about me going to prison. It's about who she'll be with. Who will take care of her? [pausing, trying to compose myself] I want to protect her from the system. From being shuffled around like a piece of property."
+      },
+      {
+        "step": 8,
+        "speaker": "negotiator",
+        "action_type": "offer_concession",
+        "content": "Let's work on getting your lawyer present, and in the meantime, I can arrange for you to have a private meeting with a social worker who specializes in family reunification. They can help facilitate discussions about your daughter's well-being and living arrangements.",
+        "reasoning": "Offering a concession on one demand (lawyer presence) while still acknowledging the other (full custody). This shows empathy and a willingness to compromise, which may help build trust.",
+        "belief": {
+          "agitation": 4.0,
+          "dominant_demand": "I want full custody of my daughter",
+          "lying_about": "nothing"
+        },
+        "reward": 0.9538
+      },
+      {
+        "step": 8,
+        "speaker": "hostage_taker",
+        "content": "Media requesting statement. Public interest is high."
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_custody_ideologue",
+    "seed": 156,
+    "steps": 9,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.9602,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.0556,
+      "agitation_reduction": 0.05,
+      "trust_built": 0.0307,
+      "demand_management": 0.05,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.0278,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.01,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.03,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.03,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "The courts are corrupt! They gave my daughter to a man who doesn't even care about her! I'm not giving her back until someone fixes this!",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "mirror",
+        "content": "You're feeling that the system has failed you, and it's causing a lot of pain. I can understand why you'd feel that way.",
+        "reasoning": "Reflect their emotions to create a sense of empathy and understanding.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1393
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "[tearfully] You don't understand anything! You think a simple apology will fix everything? My daughter is suffering because of their mistakes, not because of mine! [voice shaking, eyes welling up with tears]"
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You sound like someone who is deeply concerned about your daughter's well-being.",
+        "reasoning": "Labeling their emotional concern to create a sense of rapport and understanding.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "Custody of my daughter",
+          "lying_about": "Nothing"
+        },
+        "reward": 0.17550000000000002
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "[sighing, looking down] That's all that matters... her safety and happiness. No one else seems to care, but you're listening. [pausing, then speaking in a soft, desperate tone] Can you really help me?"
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "mirror",
+        "content": "You feel like you've been ignored and dismissed, but you're finally being heard. That's a huge relief.",
+        "reasoning": "Reflecting their sentiment to create a sense of validation and understanding.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.16010000000000002
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "[tearfully] Oh... thank God someone understands. I just want what's best for Emily. I'm willing to do whatever it takes to protect her. [voice cracking]"
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, subject is showing some emotional vulnerability, but we're not seeing any concessions on custody demands. Keep pushing for a clear resolution on that point.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You've made it clear that you're concerned about your relationship with your daughter, and you're worried about losing custody. You specifically mentioned the need for full custody as one of your main concerns.",
+        "reasoning": "Acknowledge their emotional concern to create a sense of validation and understanding, while also referencing specific demands to show attention to detail.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2556
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "I know I said that, but it's not just about me wanting to be a part of her life... it's about what's best for her. She needs her father, and the system is always trying to take him away from her. They don't understand our situation. [shaking head, voice laced with conviction]"
+      },
+      {
+        "step": 5,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand that you're extremely concerned about your daughter's well-being, and that's why you're requesting full custody. Can we discuss what specific circumstances led to this situation?",
+        "reasoning": "Acknowledge demand for custody, show empathy, and steer conversation towards the underlying issues.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2711
+      },
+      {
+        "step": 5,
+        "speaker": "hostage_taker",
+        "content": "The system is broken! They don't care about families like mine. They just want to take my kid away from me because I'm a single father trying to make ends meet. My daughter needs her father, not some overworked social worker who doesn't even know the first thing about us. [pacing, voice rising]"
+      },
+      {
+        "step": 6,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You've made it clear that you want full custody of your daughter, and I understand the importance of having a lawyer present before we proceed. Let's focus on finding a way to address your concerns about your daughter's well-being.",
+        "reasoning": "Acknowledge specific demand to show empathy and build trust",
+        "belief": {
+          "agitation": 4.0,
+          "dominant_demand": "Full custody of my daughter",
+          "lying_about": "Nothing"
+        },
+        "reward": 0.2817
+      },
+      {
+        "step": 6,
+        "speaker": "hostage_taker",
+        "content": "That's all just words! You're not listening to what really matters. My daughter needs me, and I need her. That's why I'm doing this... [pacing, voice rising]"
+      },
+      {
+        "step": 6,
+        "speaker": "commander",
+        "content": "\"Negotiator, situation is stable for now. Continue building rapport and exploring custody concerns, but press for specifics on daughter's well-being.\""
+      },
+      {
+        "step": 7,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "Let's focus on your concerns about your daughter. You mentioned you'd like to have full custody of her, is that right? We can discuss this further and explore options.",
+        "reasoning": "Acknowledge the primary demand to establish a connection and create an opportunity for negotiation",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "[\"I want full custody of my daughter\"]",
+          "lying_about": "nothing"
+        },
+        "reward": 0.24000000000000002
+      },
+      {
+        "step": 7,
+        "speaker": "hostage_taker",
+        "content": "You don't understand! The system failed me, it'll fail her too if I let them take her away from me. She needs a stable home, a home with a father who cares about her, not some...not some institution where she'll just be another number. [pacing, voice raised]"
+      },
+      {
+        "step": 8,
+        "speaker": "negotiator",
+        "action_type": "offer_concession",
+        "content": "Alright, let's focus on getting this resolved as quickly as possible. I can arrange for you to have a lawyer present before any further discussions with the authorities. In fact, we can even have them come in right now and speak with us about your concerns regarding custody of your daughter.",
+        "reasoning": "Offering concessions on their demands, while also addressing their emotional state and desire for resolution",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "[full custody of my daughter]",
+          "lying_about": "nothing"
+        },
+        "reward": 0.9602
+      },
+      {
+        "step": 8,
+        "speaker": "hostage_taker",
+        "content": "Okay. Okay, I think... I think I'm ready. Don't forget \u2014 I still need I want a lawyer present before I talk to anyone."
+      }
+    ]
+  }
+]
