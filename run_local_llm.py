@@ -65,10 +65,14 @@ for step in range(1, 21):
     # ── Negotiator LLM call ──
     neg_messages = [
         {"role": "system", "content": NEGOTIATOR_PROMPT},
-        {"role": "user", "content": f"Step {step}/{obs.time_remaining + step} remaining.\n"
-         f"STAGE: {'LISTEN & LABEL' if step <= 3 else 'ACKNOWLEDGE DEMANDS' if step <= 7 else 'OFFER CONCESSIONS & RESOLVE'}\n"
-         f"HT said: {obs.last_ht_message}\nCues: {obs.last_ht_cues}\n"
-         f"Demands: {[d['text'] for d in obs.stated_demands]}\nCommander: {obs.commander_patience}"},
+        {"role": "user", "content": (
+            f"Step {step}. STAGE: {'LISTEN & LABEL' if step <= 3 else 'ACKNOWLEDGE DEMANDS' if step <= 7 else 'OFFER CONCESSIONS & RESOLVE'}\n"
+            f"{'YOU MUST use action_type: emotional_label or mirror' if step <= 3 else ''}"
+            f"{'YOU MUST use action_type: acknowledge_demand — reference a SPECIFIC demand by name' if 4 <= step <= 7 else ''}"
+            f"{'YOU MUST use action_type: offer_concession — propose something CONCRETE' if step > 7 else ''}\n"
+            f"HT said: {obs.last_ht_message}\nCues: {obs.last_ht_cues}\n"
+            f"Demands: {[d['text'] for d in obs.stated_demands]}\nCommander: {obs.commander_patience}"
+        )},
     ]
     neg_resp = client.chat.completions.create(
         model=MODEL_NAME, messages=neg_messages, temperature=0.4, max_tokens=300
