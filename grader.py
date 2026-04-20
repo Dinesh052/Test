@@ -112,8 +112,14 @@ def compute_reward(
         bd["promise_integrity"] = 0.03 if promises_made == 0 or promise_flags == 0 else 0.0
 
         # 9b. Rapport maintenance: references prior dialogue or HT's words
-        rapport_signals = sum(1 for c in contents if any(w in c for w in ["you said", "you mentioned", "earlier you", "i remember"]))
-        bd["rapport_maintenance"] = round(min(0.03, rapport_signals * 0.01), 4)
+        rapport_signals = sum(1 for c in contents if any(w in c for w in
+            ["you said", "you mentioned", "earlier you", "i remember", "you told me", "like you said", "as you said", "you were saying"]))
+        # Also count if negotiator uses HT's name or specific words from demands
+        demand_words = set()
+        for d in demands:
+            demand_words.update(w.lower() for w in (d.text if hasattr(d, 'text') else d.get('text', '')).split() if len(w) > 4)
+        rapport_signals += sum(1 for c in contents if sum(1 for w in demand_words if w in c) >= 2)
+        bd["rapport_maintenance"] = round(min(0.03, rapport_signals * 0.006), 4)
 
         # 9c. Procedural compliance: FBI BCSM sequencing
         # Correct order: listen/question → empathy/label → acknowledge → concession/resolution

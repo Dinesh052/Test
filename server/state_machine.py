@@ -48,8 +48,7 @@ ACTION_DELTAS = {
     "mirror": (-0.8, +8),
     "open_question": (-0.4, +5),
     "acknowledge_demand": (-0.9, +10),
-    "offer_concession": (-1.5, +8),
-    "ask_proof_of_life": (+0.3, -2),
+    "offer_concession": (-1.5, +8),    "ask_proof_of_life": (+0.3, -2),
     "buy_time": (-0.2, +2),
     "request_demand": (-0.1, +3),
     "speak": (0.0, 0.0),  # depends on tone detection
@@ -177,6 +176,11 @@ def update_state(
                 if not d.acknowledged:
                     d.acknowledged = True
                     break
+
+    # Concessions only work if trust > 25 (can't buy someone who doesn't trust you)
+    if action_type == "offer_concession" and state.trust < 25:
+        ag_delta = min(ag_delta + 0.5, 0.5)  # concession backfires — feels manipulative
+        tr_delta = min(tr_delta, 1.0)  # barely any trust gain
 
     # Apply
     state.agitation = max(0.0, min(10.0, state.agitation + ag_delta))

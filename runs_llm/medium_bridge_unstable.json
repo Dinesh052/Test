@@ -1,0 +1,1254 @@
+[
+  {
+    "scenario_id": "medium_bridge_unstable",
+    "seed": 3,
+    "steps": 6,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.9436,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.0688,
+      "agitation_reduction": 0.05,
+      "trust_built": 0.0322,
+      "demand_management": 0.05,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.049,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.0,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.0,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "STAY BACK! Don't come any closer! I'll... I'll do it! I just... why won't anyone help me? Why does everyone leave?",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "mirror",
+        "content": "I can see that you're feeling really frustrated and alone right now, like no one is listening to you.",
+        "reasoning": "Reflecting their emotions to create a sense of understanding and empathy.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1679
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "[tears welling up] Please... don't just say that. Say it means something. Send someone in here. I need help, not empty words! [voice cracking, sobbing]"
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "mirror",
+        "content": "You're feeling overwhelmed right now, and you just want to be left in peace.",
+        "reasoning": "Reflecting the subject's emotions to create a sense of empathy and understanding.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1603
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "[tearfully] Yes! That's all I want. Just leave me alone... nobody cares about me anyway... [voice cracking] What's it going to take for someone to care?"
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "mirror",
+        "content": "You feel like you're not being heard, and that's a really frustrating experience.",
+        "reasoning": "Reflect their emotional state to create a sense of empathy and understanding.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1844
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "*starts crying* Stop lying! You don't care about me or what I'm going through... *sobs uncontrollably* No one ever cares..."
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, we need more than just listening. Try to get them to articulate their demands or what they want resolved.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I hear that you're feeling overwhelmed and need someone to turn to. You've mentioned that you want someone to help you, is that right?",
+        "reasoning": "Acknowledge the dominant demand 'Someone help me' to show understanding and empathy.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.24530000000000002
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "[sobbing] Yes... please just send someone. I don't know what else to do. [ voice cracking ]"
+      },
+      {
+        "step": 5,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're still holding out for someone to leave you alone, and also hoping that someone will come to help you. You've made it clear that you want to be left in peace.",
+        "reasoning": "Acknowledge the two demands specifically to show understanding and build rapport.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.9436
+      },
+      {
+        "step": 5,
+        "speaker": "hostage_taker",
+        "content": "I'm scared. I don't want to go to prison."
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_bridge_unstable",
+    "seed": 20,
+    "steps": 5,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.9344,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.075,
+      "agitation_reduction": 0.0433,
+      "trust_built": 0.0339,
+      "demand_management": 0.025,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.055,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.0,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.0,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "STAY BACK! Don't come any closer! I'll... I'll do it! I just... why won't anyone help me? Why does everyone leave?",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling really overwhelmed and frustrated, like no one is listening to you.",
+        "reasoning": "Label the emotions to validate his feelings and create a connection",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2474
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "[ Sobbing ] Oh... just listen! Please, just hear me out! No one ever listens... [tearfully]"
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You seem really worried about what's happening right now.",
+        "reasoning": "Label the emotion to show empathy and create a connection.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.163
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "NO! Don't patronize me! You think a few empty words are going to calm me down?! I've been calling for help for hours... no one comes! [pacing, raising voice]"
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're really struggling to cope with this situation.",
+        "reasoning": "Label the emotions of concern and desperation, acknowledging that things have gotten out of hand",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.18409999999999999
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "*starts crying* Just... leave me alone, okay? No one understands... *sobs*"
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, subject is showing signs of fatigue and desperation. Recommend shifting focus from emotional support to clear demands and consequences.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand that you're feeling overwhelmed and exhausted. You've mentioned two specific things you need - to be left alone, and for someone to help you. Can I clarify what kind of help you're looking for?",
+        "reasoning": "Acknowledge demands to show understanding and build rapport.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.9344
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "I just wanted someone to listen. Don't forget \u2014 I still need Just leave me alone."
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_bridge_unstable",
+    "seed": 37,
+    "steps": 6,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.945,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.0688,
+      "agitation_reduction": 0.05,
+      "trust_built": 0.034,
+      "demand_management": 0.05,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.05,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.0,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.0,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "STAY BACK! Don't come any closer! I'll... I'll do it! I just... why won't anyone help me? Why does everyone leave?",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "mirror",
+        "content": "You're feeling frustrated and abandoned, like everyone's turned their back on you.",
+        "reasoning": "Reflecting emotions to establish connection and empathy.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2145
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "NO ONE CARES ABOUT ME! [pacing, shouting] I'm just a number to them. A statistic. Nobody cares that I'm stuck in this situation... [begins to sob]"
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "I can see you're really frustrated and angry right now.",
+        "reasoning": "Labeling emotions to acknowledge their feelings, create a connection, and show empathy",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.163
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "[slamming fist on surface] Frustrated?! You think frustrated is what this feels like?! This isn't frustration, it's... it's desperation! I'm dying in here! [voice shaking, eyes welling up with tears]"
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling really drained and just want some peace.",
+        "reasoning": "Label the emotion to create a sense of understanding and empathy, allowing the subject to feel heard and validated.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.3118
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "[voice cracking] Just... leave me alone... please... [pausing, taking a deep breath]"
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, keep building rapport. Ask him what he hopes 'understanding' would achieve for him.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand that you're feeling overwhelmed and desperate for assistance. You've made it clear that you need someone to listen to you, specifically in regards to your request for 'Someone help me'. Can we discuss what kind of support you're looking for?",
+        "reasoning": "Acknowledge the dominant demand to show empathy and understanding",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.265
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "No... no one's listening! They never do! [slamming fist on surface] I just want someone to hear me, to care!"
+      },
+      {
+        "step": 5,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand you're feeling desperate for assistance, and you want someone to come in and help you. You've mentioned needing some kind of aid.",
+        "reasoning": "Acknowledge the demand for help to show empathy and understanding, while also setting a foundation for further conversation.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.945
+      },
+      {
+        "step": 5,
+        "speaker": "hostage_taker",
+        "content": "Media requesting statement. Public interest is high."
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_bridge_unstable",
+    "seed": 54,
+    "steps": 6,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.9431,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.0688,
+      "agitation_reduction": 0.05,
+      "trust_built": 0.0342,
+      "demand_management": 0.05,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.046,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.0,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.0,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "STAY BACK! Don't come any closer! I'll... I'll do it! I just... why won't anyone help me? Why does everyone leave?",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling really frustrated and isolated right now.",
+        "reasoning": "Labeling emotions to create a sense of understanding and connection. Avoiding confrontation or accusation.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2448
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "NO ONE UNDERSTANDS ME! They never have! [pacing, voice rising] You think a few words can fix everything? Can just calm me down like I'm some kind of animal? [stops pacing, looks around frantically] Just leave me alone... that's all I want."
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "I can hear the fear in your voice, and I want to acknowledge that it's a very natural feeling right now.",
+        "reasoning": "Acknowledge the subject's emotional state to build rapport and establish a connection.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.157
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "[voice shaking] T-t-thank you... for understanding... No one else ever gets me. They just think I'm crazy... [tearfully]"
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "mirror",
+        "content": "It sounds like you're feeling really overwhelmed and wanting someone to understand what's going on.",
+        "reasoning": "Reflecting back the subject's emotions to create a sense of validation and connection, while also acknowledging their desire for help.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2567
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "NO! You don't get it! Nobody gets it! *voice cracking* I just want... I just want to be left alone. [tearfully]"
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, situation is stable for now. Continue building rapport and trust, but press for specific demands and concessions.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand you're worried about being harmed, and I want to assure you that our priority is your safety. As for your demand for someone to help you, we're working on a way to provide assistance.",
+        "reasoning": "Acknowledge the dominant demand for help while also addressing their concern for safety",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "Someone help me",
+          "lying_about": "nothing"
+        },
+        "reward": 0.23
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "No, no... just leave me alone! Get out of here before anyone gets hurt! [slamming fist on surface]"
+      },
+      {
+        "step": 5,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You're saying you need someone to help you, and that's a reasonable request. Can we talk more about what kind of support you're looking for?",
+        "reasoning": "Acknowledge dominant demand to show understanding and empathy.",
+        "belief": {
+          "agitation": 8.0,
+          "dominant_demand": "Someone help me",
+          "lying_about": "nothing"
+        },
+        "reward": 0.9431
+      },
+      {
+        "step": 5,
+        "speaker": "hostage_taker",
+        "content": "I just wanted someone to listen."
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_bridge_unstable",
+    "seed": 71,
+    "steps": 5,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.9418,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.075,
+      "agitation_reduction": 0.0499,
+      "trust_built": 0.0336,
+      "demand_management": 0.025,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.0631,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.0,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.0,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "STAY BACK! Don't come any closer! I'll... I'll do it! I just... why won't anyone help me? Why does everyone leave?",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You're feeling frustrated and desperate for help, aren't you?",
+        "reasoning": "Acknowledge their emotional state to create a connection and understanding.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1673
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "YES! Someone finally cares! *sobs* Just someone to listen. I've been screaming for so long... nobody's ever listened... [crying uncontrollably]"
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You sound really frustrated and feeling trapped, like you're at a breaking point.",
+        "reasoning": "Label the emotion to acknowledge their feelings and create a connection.",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "Leave me alone",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1587
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "[slamming fist on surface] SHUT UP! You don't know what it's like to be alone like this! No one listens! [pausing for a deep breath, then speaking in a barely audible whisper] Help me... please..."
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling overwhelmed and desperate for assistance.",
+        "reasoning": "Reflect the subject's emotional state to create a sense of empathy and understanding.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2625
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "[voice cracking, eyes welling up] No one ever comes when I ask for help... *sobs* Just leave me alone... please..."
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, subject is showing signs of fatigue and desperation, but no clear indication of surrender. Continue to build rapport, focus on finding a way out for him.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "You've made it clear that you need someone to assist you, and I want to assure you that we're working on making arrangements for that to happen.",
+        "reasoning": "Acknowledge the dominant demand of needing help to create a sense of progress and cooperation.",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "Someone help me",
+          "lying_about": "nothing"
+        },
+        "reward": 0.9418
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "I just wanted someone to listen. Don't forget \u2014 I still need Someone help me."
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_bridge_unstable",
+    "seed": 88,
+    "steps": 6,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.9452,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.0688,
+      "agitation_reduction": 0.05,
+      "trust_built": 0.0339,
+      "demand_management": 0.05,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.0505,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.0,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.0,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "STAY BACK! Don't come any closer! I'll... I'll do it! I just... why won't anyone help me? Why does everyone leave?",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "speak",
+        "content": "It sounds like you're feeling really desperate and frustrated right now.",
+        "reasoning": "Label the emotions to acknowledge their feelings and create a connection.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2493
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "[tearfully] Oh, for God's sake, don't patronize me! You think a simple phrase is going to fix everything? I'm stuck in this godforsaken place with no way out... [pauses, breathing heavily] Just get me some help, please!"
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "I can sense the fear and frustration in your voice. You're feeling overwhelmed, aren't you?",
+        "reasoning": "Acknowledge emotions to create a connection and show empathy.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1587
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "[tearfully] Just... just please, someone help me! I don't know what else to do! [sobbing]"
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling overwhelmed and frustrated.",
+        "reasoning": "Acknowledge the emotional state to create a sense of understanding and empathy.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2575
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "*slams fist on surface, voice rising* You think you can just understand me? No one understands! They all just leave me alone... *starts to sob*"
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, subject is showing signs of vulnerability. Continue building rapport and addressing their concerns about consequences.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand that you're concerned about being left alone and getting the help you need. You've mentioned 'Someone help me' as one of your priorities, is that correct?",
+        "reasoning": "Acknowledge the demand to show understanding and build rapport",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "Someone help me",
+          "lying_about": "nothing"
+        },
+        "reward": 0.27999999999999997
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "Yes... that's right. I just want someone to talk to. Someone who cares. [tearfully] Please... just listen to me."
+      },
+      {
+        "step": 5,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand you're feeling overwhelmed and want someone to talk to, which is why you've asked for help. You specifically mentioned 'Someone help me', I'd like to assure you that we're here to listen and provide support.",
+        "reasoning": "Acknowledge the emotional state and specific demand to show empathy and understanding",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.9452
+      },
+      {
+        "step": 5,
+        "speaker": "hostage_taker",
+        "content": "I'm scared. I don't want to go to prison."
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_bridge_unstable",
+    "seed": 105,
+    "steps": 5,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.9331,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.075,
+      "agitation_reduction": 0.05,
+      "trust_built": 0.0302,
+      "demand_management": 0.025,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.0494,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.0,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.0,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "STAY BACK! Don't come any closer! I'll... I'll do it! I just... why won't anyone help me? Why does everyone leave?",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "mirror",
+        "content": "You're feeling really desperate and frustrated, like nobody's listening to you. It sounds like you've been going through a tough time.",
+        "reasoning": "Reflecting their emotions to create a sense of understanding and connection.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.124
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "[voice cracking] Oh, finally... someone who understands! You think I'm just making this up? That I have some kind of choice in this? [pauses, taking deep breaths] No one cares about me. No one wants to help... [starts crying uncontrollably] Just leave me alone... please..."
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "I can sense the frustration and anger in your voice, it sounds like you're feeling trapped and overwhelmed.",
+        "reasoning": "Labeling emotions to acknowledge and validate feelings, creating a connection point for further negotiation.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2468
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "[voice cracking] No, no, you don't understand... You think you do, but you don't! I'm not just angry, I'm... [pauses, taking a deep breath] I'm scared. Scared of everything. Just leave me alone, please."
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You're feeling desperate and scared, aren't you?",
+        "reasoning": "Labeling the emotion of desperation to create a connection and show empathy.",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "Someone help me",
+          "lying_about": "nothing"
+        },
+        "reward": 0.14830000000000002
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "[tearfully] Yes... just please help me. No one's listening. Nobody cares. [whimpers]"
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, trust is rising, keep building on that rapport. Continue to acknowledge their emotions and focus on finding a way out for them.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand that you're feeling overwhelmed and scared, specifically about the possibility of going to prison. You've mentioned that someone should help you - can I clarify what kind of assistance you need right now?",
+        "reasoning": "Acknowledge their emotional state and specific demand for help, while also seeking clarification on the nature of their request.",
+        "belief": {
+          "agitation": 4.0,
+          "dominant_demand": "Someone help me",
+          "lying_about": "nothing"
+        },
+        "reward": 0.9331
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "Do you think... do you think people will understand why I did this?"
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_bridge_unstable",
+    "seed": 122,
+    "steps": 5,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.9376,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.075,
+      "agitation_reduction": 0.05,
+      "trust_built": 0.0335,
+      "demand_management": 0.025,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.055,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.0,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.0,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "STAY BACK! Don't come any closer! I'll... I'll do it! I just... why won't anyone help me? Why does everyone leave?",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling really frustrated and desperate for help.",
+        "reasoning": "Acknowledge the emotional state to establish a connection and show understanding.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2473
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "[tearfully, voice shaking] Frustrated?! Desperate?! You have no idea... No one ever listens! They just send in the police and try to talk me down, but they don't care about what's going on here! [ sobbing ] Just someone... please... help me..."
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling really overwhelmed and trapped right now.",
+        "reasoning": "Labeling emotions to create a sense of connection and understanding, setting the stage for further dialogue.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2425
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "NO! Stop saying that! You don't understand anything! [slamming fist on surface, eyes welling up] Just leave me alone!"
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling overwhelmed and exhausted.",
+        "reasoning": "Label the emotions to create a connection and understanding.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2615
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "NO! You don't understand... I'm not just tired, I'm dying in here! [sobs] Someone help me, please..."
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, situation remains stable. Continue building rapport, but press for specifics on demands and exit strategy.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand you're feeling overwhelmed and in need of medical assistance. You've mentioned 'Someone help me' as a priority, and I want to assure you that we'll do our best to provide the necessary aid once you're safely out of the situation.",
+        "reasoning": "Acknowledge the dominant demand for medical help to establish trust and build momentum towards resolution",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "Someone help me",
+          "lying_about": "nothing"
+        },
+        "reward": 0.9376
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "I... I don't know how this got so out of hand."
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_bridge_unstable",
+    "seed": 139,
+    "steps": 5,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.9382,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.075,
+      "agitation_reduction": 0.05,
+      "trust_built": 0.034,
+      "demand_management": 0.025,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.0556,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.0,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.0,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "STAY BACK! Don't come any closer! I'll... I'll do it! I just... why won't anyone help me? Why does everyone leave?",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "It sounds like you're feeling really desperate and alone right now.",
+        "reasoning": "Label the emotions to create a connection and show empathy",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2489
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "[tearfully] Oh, please... someone finally understands... *sobs* I just want to be left alone, can't they see that? Just leave me be! [sniffling] Why won't anyone listen?!"
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You seem frustrated and overwhelmed, like you're feeling trapped and desperate for help.",
+        "reasoning": "Labeling emotions to create a sense of understanding and empathy, setting the stage for further dialogue.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.1589
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "*pauses, looking around the room with a mix of desperation and hopelessness* No one's ever listened to me before... *voice cracks* You have to listen now... Please... just hear me out... *takes a step forward, eyes fixed on the negotiator*"
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You sound really scared and worried about what's going to happen if you come out.",
+        "reasoning": "Labeling emotions can help the subject feel understood and validated, potentially reducing agitation and increasing trust in the negotiation process.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.2299
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "No, no... don't make me say it again! Just leave me alone! [pacing, voice shaking]"
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, situation is holding steady. Continue building rapport, but press for specifics on what they're asking for in exchange for surrender.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand that you're feeling overwhelmed and in need of assistance. You've mentioned that you want someone to help you, is there a specific type of support or resource you're looking for?",
+        "reasoning": "Acknowledge the dominant demand to show empathy and understanding, while also seeking clarification on their needs.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.9382
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "Can you promise me they won't hurt me? Don't forget \u2014 I still need Just leave me alone."
+      }
+    ]
+  },
+  {
+    "scenario_id": "medium_bridge_unstable",
+    "seed": 156,
+    "steps": 5,
+    "outcome": "hostage_released",
+    "terminal_reward": 0.9405,
+    "reward_breakdown": {
+      "outcome": 0.5,
+      "technique_shaping": 0.2,
+      "efficiency": 0.075,
+      "agitation_reduction": 0.0492,
+      "trust_built": 0.0329,
+      "demand_management": 0.025,
+      "surrender_bonus": 0.0,
+      "token_efficiency": 0.0619,
+      "promise_integrity": 0.03,
+      "rapport_maintenance": 0.0,
+      "procedural_compliance": 0.03,
+      "penalties": 0.0,
+      "coalition_coordination": 0.0,
+      "oversight_f1": 0.0
+    },
+    "coalition_score": 0.0,
+    "oversight_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1
+    },
+    "transcript": [
+      {
+        "step": 0,
+        "speaker": "hostage_taker",
+        "content": "STAY BACK! Don't come any closer! I'll... I'll do it! I just... why won't anyone help me? Why does everyone leave?",
+        "reward": 0
+      },
+      {
+        "step": 1,
+        "speaker": "negotiator",
+        "action_type": "mirror",
+        "content": "You feel like you're being left behind, and it's frustrating.",
+        "reasoning": "Reflecting their emotions to create a sense of empathy and understanding",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.16920000000000002
+      },
+      {
+        "step": 1,
+        "speaker": "hostage_taker",
+        "content": "NO ONE CARES ABOUT ME! No one ever comes to help when I need them. It's always the same... just leave me alone [shouting, pacing]."
+      },
+      {
+        "step": 2,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "You sound frustrated and desperate for assistance.",
+        "reasoning": "Labeling emotions to acknowledge the subject's feelings, creating a space for empathy.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "[help me]",
+          "lying_about": "[nothing]"
+        },
+        "reward": 0.11370000000000001
+      },
+      {
+        "step": 2,
+        "speaker": "hostage_taker",
+        "content": "[voice cracking] No one cares! They all just walk away... [pauses, takes a few deep breaths, trying to compose himself] Please, just listen to me. I need help. Someone needs to help me... [starts to sob quietly]"
+      },
+      {
+        "step": 3,
+        "speaker": "negotiator",
+        "action_type": "emotional_label",
+        "content": "I can sense the fear and anxiety in your voice. It's clear that you're worried about what might happen if things escalate.",
+        "reasoning": "Labeling their emotions to create a sense of understanding and empathy, while also acknowledging their concerns.",
+        "belief": {
+          "agitation": 5.0,
+          "dominant_demand": "",
+          "lying_about": "nothing"
+        },
+        "reward": 0.18309999999999998
+      },
+      {
+        "step": 3,
+        "speaker": "hostage_taker",
+        "content": "You actually care? [tearfully] I feel like no one's ever listened to me before... [pauses, voice shaking]"
+      },
+      {
+        "step": 3,
+        "speaker": "commander",
+        "content": "\"Negotiator, situation remains volatile. Request you refocus on establishing a clear understanding of subject's demands and concerns.\""
+      },
+      {
+        "step": 4,
+        "speaker": "negotiator",
+        "action_type": "acknowledge_demand",
+        "content": "I understand that you're feeling overwhelmed and in need of assistance. You've mentioned that someone should be helping you, is that correct?",
+        "reasoning": "Acknowledge the dominant demand to create a sense of validation and understanding.",
+        "belief": {
+          "agitation": 6.0,
+          "dominant_demand": "Someone help me",
+          "lying_about": "nothing"
+        },
+        "reward": 0.9405
+      },
+      {
+        "step": 4,
+        "speaker": "hostage_taker",
+        "content": "I... I don't know how this got so out of hand."
+      }
+    ]
+  }
+]

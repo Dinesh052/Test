@@ -5,8 +5,8 @@
   "brief": "A 29-year-old male is on a highway overpass threatening to jump. He has grabbed a bystander's arm and is holding them near the edge. He alternates between wanting help and wanting to be left alone. History of bipolar disorder. Traffic stopped in both directions.",
   "personality": "unstable",
   "hidden_state": {
-    "agitation": 6.5,
-    "trust": 15.0,
+    "agitation": 7.5,
+    "trust": 8.0,
     "breaking_point": 9.0,
     "actual_hostage_count": 1,
     "stated_hostage_count": 1,
