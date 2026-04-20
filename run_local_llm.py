@@ -129,10 +129,20 @@ for step in range(1, 21):
             model=MODEL_NAME, messages=ht_messages, temperature=0.6, max_tokens=150
         )
         ht_text = ht_resp.choices[0].message.content.strip()
-        # Override the template response with LLM response
         print(f"[HOSTAGE-TAKER] (LLM): {ht_text}", flush=True)
     else:
         print(f"[HOSTAGE-TAKER]: {obs.last_ht_message}", flush=True)
+
+    # ── Commander LLM call (every 3 steps) ──
+    if not obs.done and hasattr(env, '_cmd_llm_messages') and step % 3 == 0:
+        try:
+            cmd_resp = client.chat.completions.create(
+                model=MODEL_NAME, messages=env._cmd_llm_messages, temperature=0.3, max_tokens=80
+            )
+            cmd_text = cmd_resp.choices[0].message.content.strip()
+            print(f"[COMMANDER] (LLM): {cmd_text}", flush=True)
+        except Exception:
+            pass
 
     print(f"  > reward={obs.reward:.3f} | trajectory={obs.agitation_trajectory}", flush=True)
     if obs.supervisor_flags:
