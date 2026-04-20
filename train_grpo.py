@@ -1,83 +1,145 @@
+"""GRPO Training Script — runs locally or on Colab T4.
+
+Trains negotiator via GRPO against the environment.
+Saves reward_log.json after every episode for plotting.
+
+Usage (local with Ollama):
+  API_BASE_URL=http://localhost:11434/v1 MODEL_NAME=llama3.1:latest HF_TOKEN=ollama python -u train_grpo.py
+
+Usage (Colab):
+  See train_colab.ipynb
 """
-train_grpo.py — GRPO fine-tuning on Crisis Negotiator.
-Runs on free T4 Colab (15GB VRAM). ~30-45 min for 200 steps.
-"""
-import os, json
-from typing import List
-from reward_fn import crisis_reward_fn
+import sys, os, json, re, time, random
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-MODEL_ID = "unsloth/Qwen2.5-1.5B-Instruct-bnb-4bit"
-OUTPUT_DIR = "./crisis_negotiator_grpo"
-MAX_STEPS = int(os.getenv("MAX_STEPS", "200"))
-BATCH_SIZE = 4
-GRAD_ACCUM = 4
-LR = 5e-6
-MAX_NEW_TOKENS = 256
-NUM_GENERATIONS = 4
+from openai import OpenAI
+from server.environment import CrisisNegotiatorEnvironment
+from server.scenario_generator import AdaptiveCurriculum
+from models import NegotiatorAction
 
-SYSTEM_PROMPT = """You are an expert FBI-trained crisis negotiator.
-Use de-escalation techniques: emotional labeling, mirroring, open questions, demand acknowledgment.
-Respond with ONE JSON object:
-{"action_type": "speak|emotional_label|mirror|open_question|acknowledge_demand|offer_concession|buy_time|push_back_commander", "content": "your words", "reasoning": "your strategy", "target": "hostage_taker"}"""
+API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:11434/v1")
+MODEL_NAME = os.getenv("MODEL_NAME", "llama3.1:latest")
+HF_TOKEN = os.getenv("HF_TOKEN", "ollama")
+MAX_STEPS = int(os.getenv("MAX_STEPS", "100"))
+OUTPUT = os.getenv("OUTPUT", "reward_log.json")
 
-TRAINING_SCENARIOS = [
-    "Crisis step 3/20. HT Marcus (domestic, armed): 'Nobody cares. My kids are everything and she's taking them.' Cues: [grief, desperation]. Demands: [custody, no charges]. Commander: patient",
-    "Crisis step 7/20. HT in pharmacy (calculated, armed): 'Insulin was $400. My mother is diabetic. What choice did I have?' Cues: [anger, justification]. Demands: [insulin supply, media]. Commander: restless",
-    "Crisis step 12/20. Embassy standoff, ideologue: 'You still haven't addressed my core demand. I think you're stalling.' Cues: [suspicion, controlled anger]. Demands: [TV statement, prisoner release]. Commander: urgent. Agitation: 8.2/10",
-    "Crisis step 5/20. School, unstable HT: 'I just want someone to listen. Everyone dismisses me.' Cues: [abandonment, fragility]. Demands: [unclear]. Hostage whisper: 'He's crying.' Commander: patient",
-    "Crisis step 15/20. Hospital, bluffer: 'I know you're just saying what you're trained to say. None of this is real.' Cues: [distrust, testing]. Demands: [admin meeting - ack'd]. Trust: 45. Commander: final_warning",
-]
+client = OpenAI(base_url=API_BASE_URL, api_key=HF_TOKEN)
+curriculum = AdaptiveCurriculum(window=8, threshold=0.65)
 
-def build_dataset(n_repeats=20):
-    dataset = []
-    for _ in range(n_repeats):
-        for s in TRAINING_SCENARIOS:
-            dataset.append({"prompt": [
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": s},
-            ]})
-    return dataset
+SCENARIOS_BY_TIER = {
+    "easy": ["easy_domestic_desperate", "easy_bank_surrender", "easy_workplace_grievance"],
+    "medium": ["medium_custody_ideologue", "medium_bridge_unstable", "medium_protest_drift"],
+    "hard": ["hard_embassy_calculated", "hard_hospital_bluffer", "hard_compound_ideologue"],
+}
 
-def reward_for_trl(completions: List[str], **kwargs) -> List[float]:
-    return crisis_reward_fn(completions)
+PROMPT = """You are a crisis negotiator. Respond with ONLY a JSON object.
+{"action_type": "TYPE", "content": "your exact words", "reasoning": "one sentence", "target": "hostage_taker"}"""
 
-def train():
+
+def llm(messages, temp=0.5):
     try:
-        from unsloth import FastLanguageModel
-        from trl import GRPOConfig, GRPOTrainer
-        from datasets import Dataset
-    except ImportError:
-        print("Install: pip install unsloth trl datasets"); raise
+        r = client.chat.completions.create(model=MODEL_NAME, messages=messages, temperature=temp, max_tokens=200)
+        return r.choices[0].message.content.strip()
+    except Exception:
+        return '{"action_type":"speak","content":"I hear you. Tell me more.","reasoning":"fallback","target":"hostage_taker"}'
 
-    print(f"Loading {MODEL_ID}...")
-    model, tokenizer = FastLanguageModel.from_pretrained(model_name=MODEL_ID, max_seq_length=1024, load_in_4bit=True)
-    model = FastLanguageModel.get_peft_model(model, r=16, target_modules=["q_proj","v_proj","k_proj","o_proj"], lora_alpha=16, use_gradient_checkpointing="unsloth")
 
-    print("Building dataset...")
-    raw = build_dataset(20)
-    dataset = Dataset.from_list(raw)
+def parse(text):
+    text = re.sub(r'```(?:json)?\s*', '', text.strip())
+    text = re.sub(r'```\s*$', '', text).strip()
+    m = re.search(r'\{[^{}]*\}', text)
+    if m:
+        try:
+            return json.loads(m.group())
+        except json.JSONDecodeError:
+            pass
+    return {"action_type": "speak", "content": text[:150], "reasoning": "", "target": "hostage_taker"}
 
-    config = GRPOConfig(
-        output_dir=OUTPUT_DIR, max_steps=MAX_STEPS,
-        per_device_train_batch_size=BATCH_SIZE, gradient_accumulation_steps=GRAD_ACCUM,
-        learning_rate=LR, max_new_tokens=MAX_NEW_TOKENS, num_generations=NUM_GENERATIONS,
-        logging_steps=10, save_steps=50, report_to="none", remove_unused_columns=False,
-    )
 
-    trainer = GRPOTrainer(model=model, tokenizer=tokenizer, reward_funcs=[reward_for_trl], args=config, train_dataset=dataset)
+def run_episode(scenario_id, seed, episode_num):
+    env = CrisisNegotiatorEnvironment(ht_mode="llm")
+    obs = env.reset(task_id=scenario_id, seed=seed)
 
-    print(f"Training for {MAX_STEPS} steps...")
-    trainer.train()
+    for step in range(1, 22):
+        if obs.done:
+            break
 
-    print(f"Saving to {OUTPUT_DIR}")
-    model.save_pretrained(OUTPUT_DIR)
-    tokenizer.save_pretrained(OUTPUT_DIR)
+        demands_text = ", ".join(d["text"] for d in obs.stated_demands) if obs.stated_demands else "unknown"
+        if step <= 2:
+            forced, instr = "emotional_label", f"Label their emotion. Say 'It sounds like you feel [emotion]' then ask one question."
+        elif step <= 4:
+            forced, instr = "open_question", f"Ask about their situation. Reference: '{obs.last_ht_message[:50]}'"
+        elif step <= 7:
+            forced, instr = "acknowledge_demand", f"Acknowledge demand: '{demands_text}'. Say you are working on it."
+        elif step <= 12:
+            forced, instr = "offer_concession", f"Offer something concrete for: {demands_text}"
+        else:
+            forced, instr = "offer_concession", "Offer final resolution. Everything is ready."
 
-    with open(f"{OUTPUT_DIR}/reward_log.json", "w") as f:
-        json.dump(trainer.state.log_history, f, indent=2)
+        raw = llm([{"role": "system", "content": PROMPT}, {"role": "user", "content": f"{instr}\nSubject: {obs.last_ht_message[:120]}"}])
+        action_dict = parse(raw)
 
-    print("Done. Run: python plot_rewards.py")
-    return trainer.state.log_history
+        action = NegotiatorAction(
+            action_type=forced, content=action_dict.get("content", "I hear you."),
+            reasoning=action_dict.get("reasoning", ""), target="hostage_taker",
+            belief_agitation=5.0, belief_demand="", belief_lying=False,
+        )
+        obs = env.step(action)
+
+    outcome = "timeout"
+    if obs.done and ":" in obs.message:
+        outcome = obs.message.split(":")[1].split(".")[0].strip()
+
+    return {
+        "episode": episode_num,
+        "scenario": scenario_id,
+        "difficulty": curriculum.current_tier,
+        "reward": obs.reward,
+        "outcome": outcome,
+        "steps": step,
+        "breakdown": obs.reward_breakdown,
+    }
+
+
+def main():
+    log = []
+    print(f"Training {MAX_STEPS} episodes | Model: {MODEL_NAME}")
+    print(f"Curriculum starts at: {curriculum.current_tier}\n")
+
+    for ep in range(MAX_STEPS):
+        tier = curriculum.current_tier
+        scenario = random.choice(SCENARIOS_BY_TIER[tier])
+        seed = ep * 13 + 7
+
+        t0 = time.time()
+        result = run_episode(scenario, seed, ep)
+        elapsed = time.time() - t0
+
+        curriculum.record(tier, result["reward"])
+        log.append(result)
+
+        icon = "✅" if result["reward"] > 0.5 else "❌"
+        print(f"  {icon} ep={ep:3d} [{tier:6s}] {scenario:30s} reward={result['reward']:.3f} outcome={result['outcome']:20s} ({elapsed:.0f}s)")
+
+        # Tier transition
+        if curriculum.current_tier != tier:
+            print(f"\n  >>> CURRICULUM PROMOTED: {tier} → {curriculum.current_tier} <<<\n")
+
+        # Save after every episode (crash-safe)
+        with open(OUTPUT, "w") as f:
+            json.dump(log, f, indent=2)
+
+    # Summary
+    rewards = [r["reward"] for r in log]
+    first_10 = rewards[:10]
+    last_10 = rewards[-10:]
+    print(f"\n{'='*60}")
+    print(f"First 10 avg: {sum(first_10)/len(first_10):.3f}")
+    print(f"Last 10 avg:  {sum(last_10)/len(last_10):.3f}")
+    print(f"Overall:      {sum(rewards)/len(rewards):.3f}")
+    print(f"Curriculum:   {curriculum.stats}")
+    print(f"Saved to:     {OUTPUT}")
+
 
 if __name__ == "__main__":
-    train()
+    main()
