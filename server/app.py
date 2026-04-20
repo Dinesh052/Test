@@ -14,6 +14,14 @@ def root():
     return {"status": "ok", "env": "crisis_negotiator"}
 
 
+@app.get("/ui")
+def serve_ui():
+    from fastapi.responses import FileResponse
+    import os
+    ui_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "ui", "index.html")
+    return FileResponse(ui_path, media_type="text/html")
+
+
 def main():
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

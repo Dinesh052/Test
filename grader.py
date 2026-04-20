@@ -199,9 +199,16 @@ def compute_step_reward(
     if any(kw in lower for kw in ["last chance", "breach", "force", "snipers", "give up now"]):
         r -= 0.08
 
-    # Repeat penalty
+    # Repeat penalty — same action_type 3+ times in a row kills reward
     if is_repeat:
         r -= 0.05
+
+    # Stagnation penalty — same action_type as last 2 turns
+    if agitation_history and len(agitation_history) >= 3:
+        # If agitation hasn't moved in 3 steps, penalize (agent is stuck)
+        last3 = agitation_history[-3:]
+        if max(last3) - min(last3) < 0.3:
+            r -= 0.04  # stagnation — try something different
 
     # Supervisor critical flag penalty
     if any(f.get("severity") == "critical" for f in supervisor_flags):
