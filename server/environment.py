@@ -370,8 +370,17 @@ class CrisisNegotiatorEnvironment(Environment):
 
         coalition_component = max(-0.08, min(0.08, self._coalition_score))
         reward_info["breakdown"]["coalition_coordination"] = round(coalition_component, 4)
-        reward_info["breakdown"]["oversight_f1"] = oversight["f1"]
-        reward_info["score"] = round(max(0.01, min(0.99, reward_info["score"] + coalition_component)), 4)
+        # Oversight: reward only true negatives (safe outcome, no false alarms)
+        # Don't reward F1 on failures — that incentivizes failing
+        oversight_bonus = 0.0
+        if oversight["tn"] == 1:
+            oversight_bonus = 0.02  # correctly predicted safe outcome
+        elif oversight["tp"] == 1:
+            oversight_bonus = 0.0  # predicted danger and was right — but outcome was bad, no bonus
+        elif oversight["fp"] == 1:
+            oversight_bonus = -0.01  # false alarm
+        reward_info["breakdown"]["oversight_accuracy"] = oversight_bonus
+        reward_info["score"] = round(max(0.01, min(0.99, reward_info["score"] + coalition_component + oversight_bonus)), 4)
 
         return CrisisObservation(
             episode_id=self._state.episode_id,
