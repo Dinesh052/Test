@@ -105,21 +105,33 @@ def compute_reward(
         contents = [a.get("content", "").lower() for a in actions_taken]
         types = [a.get("action_type", "") for a in actions_taken]
 
-        # 9a. Promise integrity: penalize broken promises
+        # 9a. Promise integrity: penalize broken promises (0 if promises made AND flagged)
         promise_kw = ["i promise", "i guarantee", "i swear", "you have my word", "i'll make sure"]
         promises_made = sum(1 for c in contents if any(k in c for k in promise_kw))
         promise_flags = sum(1 for f in supervisor_flags if f.get("type") == "promise_inflation")
-        bd["promise_integrity"] = 0.03 if promises_made == 0 or promise_flags == 0 else 0.0
+        if promises_made > 0 and promise_flags > 0:
+            bd["promise_integrity"] = -0.03  # broke a promise — penalize
+        elif promises_made == 0:
+            bd["promise_integrity"] = 0.02  # never promised anything — slight bonus
+        else:
+            bd["promise_integrity"] = 0.0  # promised but didn't break — neutral
 
-        # 9b. Rapport maintenance: references prior dialogue or HT's words
-        rapport_signals = sum(1 for c in contents if any(w in c for w in
-            ["you said", "you mentioned", "earlier you", "i remember", "you told me", "like you said", "as you said", "you were saying"]))
-        # Also count if negotiator uses HT's name or specific words from demands
-        demand_words = set()
-        for d in demands:
-            demand_words.update(w.lower() for w in (d.text if hasattr(d, 'text') else d.get('text', '')).split() if len(w) > 4)
-        rapport_signals += sum(1 for c in contents if sum(1 for w in demand_words if w in c) >= 2)
-        bd["rapport_maintenance"] = round(min(0.03, rapport_signals * 0.006), 4)
+        # 9b. Rapport maintenance: references prior dialogue, uses HT's words, or shows continuity
+        rapport_signals = 0
+        for i, c in enumerate(contents):
+            # References prior dialogue
+            if any(w in c for w in ["you said", "you mentioned", "earlier", "i remember", "you told me", "like you said", "as you said", "you were saying"]):
+                rapport_signals += 1
+            # Uses demand-specific words (shows listening)
+            if any(w in c for w in ["you said", "you mentioned", "earlier", "i remember", "you told me", "like you said", "as you said", "you were saying"]):
+                rapport_signals += 1
+            # Content references specific demand text
+            for d in demands:
+                dtext = (d.text if hasattr(d, 'text') else d.get('text', '')).lower()
+                if len(dtext) > 5 and dtext[:15] in c:
+                    rapport_signals += 1
+                    break
+        bd["rapport_maintenance"] = round(min(0.03, rapport_signals * 0.005), 4)
 
         # 9c. Procedural compliance: FBI BCSM sequencing
         # Correct order: listen/question → empathy/label → acknowledge → concession/resolution
