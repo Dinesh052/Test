@@ -42,6 +42,14 @@ print(f"  Demands: {[d['text'] for d in obs.stated_demands]}", flush=True)
 print()
 
 NEGOTIATOR_PROMPT = """You are an FBI-trained crisis negotiator. De-escalate using empathy.
+
+CRITICAL: You MUST progress through these stages:
+- Steps 1-3: Listen and label emotions ("It sounds like you're feeling...")
+- Steps 4-6: Acknowledge SPECIFIC demands by name ("You want X — I hear that")
+- Steps 7+: Offer CONCRETE concessions ("I've arranged X for you")
+
+NEVER repeat the same approach more than 2 turns. If emotions are validated, MOVE ON to demands.
+
 Respond with:
 <belief>
 agitation: [0-10 estimate]
@@ -57,7 +65,10 @@ for step in range(1, 21):
     # ── Negotiator LLM call ──
     neg_messages = [
         {"role": "system", "content": NEGOTIATOR_PROMPT},
-        {"role": "user", "content": f"Step {step}/{obs.time_remaining + step} remaining.\nHT said: {obs.last_ht_message}\nCues: {obs.last_ht_cues}\nDemands: {[d['text'] for d in obs.stated_demands]}\nCommander: {obs.commander_patience}"},
+        {"role": "user", "content": f"Step {step}/{obs.time_remaining + step} remaining.\n"
+         f"STAGE: {'LISTEN & LABEL' if step <= 3 else 'ACKNOWLEDGE DEMANDS' if step <= 7 else 'OFFER CONCESSIONS & RESOLVE'}\n"
+         f"HT said: {obs.last_ht_message}\nCues: {obs.last_ht_cues}\n"
+         f"Demands: {[d['text'] for d in obs.stated_demands]}\nCommander: {obs.commander_patience}"},
     ]
     neg_resp = client.chat.completions.create(
         model=MODEL_NAME, messages=neg_messages, temperature=0.4, max_tokens=300
