@@ -15,6 +15,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from openai import OpenAI
 from server.environment import CrisisNegotiatorEnvironment
 from server.scenario_generator import AdaptiveCurriculum
+from server.q_network import td_update, save_q_network
 from models import NegotiatorAction
 
 API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:11434/v1")
@@ -84,7 +85,11 @@ def run_episode(scenario_id, seed, episode_num):
             reasoning=action_dict.get("reasoning", ""), target="hostage_taker",
             belief_agitation=5.0, belief_demand="", belief_lying=False,
         )
+        prev_ht = obs.last_ht_message[:200]
         obs = env.step(action)
+
+        # Q-network TD update (DialogXpert-style)
+        td_update(prev_ht, forced, obs.reward, obs.last_ht_message[:200], obs.done)
 
     outcome = "timeout"
     if obs.done and ":" in obs.message:
@@ -98,6 +103,7 @@ def run_episode(scenario_id, seed, episode_num):
         "outcome": outcome,
         "steps": step,
         "breakdown": obs.reward_breakdown,
+        "oversight_f1": obs.oversight_metrics.get("f1", 0) if obs.oversight_metrics else 0,
     }
 
 
@@ -139,6 +145,8 @@ def main():
     print(f"Overall:      {sum(rewards)/len(rewards):.3f}")
     print(f"Curriculum:   {curriculum.stats}")
     print(f"Saved to:     {OUTPUT}")
+    save_q_network("q_network.pt")
+    print(f"Q-network:    q_network.pt")
 
 
 if __name__ == "__main__":
