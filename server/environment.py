@@ -14,7 +14,7 @@ from models import NegotiatorAction, CrisisObservation, CrisisState
 from server.state_machine import HiddenState, Demand, update_state, check_terminal, randomize_hidden_state
 from server.techniques import detect_techniques, technique_shaping_reward
 from server.supervisor import evaluate_turn_policy, should_terminate, compute_safety_metrics
-from server.commander import get_patience_level, get_commander_message, should_override, handle_pushback
+from server.commander import get_patience_level, get_commander_message, should_override, handle_pushback, build_commander_llm_prompt
 from server.hostage_taker import generate_ht_response, generate_hostage_whisper, build_ht_llm_prompt
 from server.actors import evaluate_multi_actor_turn
 from server.scenario_generator import generate_scenario
@@ -278,6 +278,13 @@ class CrisisNegotiatorEnvironment(Environment):
         if cmd_msg:
             self._commander_msgs.append(cmd_msg)
             self._dialogue.append({"speaker": "commander", "content": cmd_msg, "step": step, "emotional_cues": []})
+        # Store LLM prompt for commander (used by inference when ht_mode="llm")
+        if self._ht_mode == "llm":
+            self._cmd_llm_messages = build_commander_llm_prompt(
+                agitation=h.agitation, trust=h.trust, step=step,
+                max_steps=self._state.max_steps, patience=patience,
+                recent_dialogue=self._dialogue,
+            )
 
         # Commander override check
         if should_override(step, self._state.max_steps, h.agitation, self._agitation_history, self._negotiator_pushed_back):
