@@ -41,41 +41,37 @@ print(f"[HOSTAGE-TAKER]: {obs.last_ht_message}", flush=True)
 print(f"  Demands: {[d['text'] for d in obs.stated_demands]}", flush=True)
 print()
 
-NEGOTIATOR_PROMPT = """You are an FBI-trained crisis negotiator. De-escalate using empathy.
-
-CRITICAL: You MUST progress through these stages:
-- Steps 1-3: Listen and label emotions ("It sounds like you're feeling...")
-- Steps 4-6: Acknowledge SPECIFIC demands by name ("You want X — I hear that")
-- Steps 7+: Offer CONCRETE concessions ("I've arranged X for you")
-
-NEVER repeat the same approach more than 2 turns. If emotions are validated, MOVE ON to demands.
-
-Respond with:
-<belief>
-agitation: [0-10 estimate]
-dominant_demand: [what they want most]
-lying_about: [what or nothing]
-</belief>
-{"action_type": "emotional_label|mirror|open_question|acknowledge_demand|offer_concession|buy_time|speak", "content": "your words", "reasoning": "strategy", "target": "hostage_taker"}"""
+NEGOTIATOR_PROMPT = """You are a crisis negotiator. Respond with ONLY a JSON object, nothing else.
+{"action_type": "TYPE", "content": "your exact words", "reasoning": "one sentence", "target": "hostage_taker"}"""
 
 for step in range(1, 21):
     if obs.done:
         break
 
-    # ── Negotiator LLM call ──
+    # ── Negotiator LLM call — force action type by step ──
+    demands_text = ", ".join(d["text"] for d in obs.stated_demands) if obs.stated_demands else "unknown"
+    if step <= 2:
+        forced_type = "emotional_label"
+        instruction = f"Label their emotion. Say something like 'It sounds like you feel [emotion]' then ask ONE short question. Do NOT repeat previous responses."
+    elif step <= 4:
+        forced_type = "open_question"
+        instruction = f"Ask a specific open question about their situation. Reference something they just said: '{obs.last_ht_message[:60]}'"
+    elif step <= 7:
+        forced_type = "acknowledge_demand"
+        instruction = f"Acknowledge this SPECIFIC demand: '{demands_text}'. Say you understand and are working on it."
+    elif step <= 12:
+        forced_type = "offer_concession"
+        instruction = f"Offer something CONCRETE. Say 'I have arranged [specific thing]' related to: {demands_text}"
+    else:
+        forced_type = "offer_concession"
+        instruction = "Offer final resolution. Say everything is ready and they can come out safely."
+
     neg_messages = [
         {"role": "system", "content": NEGOTIATOR_PROMPT},
-        {"role": "user", "content": (
-            f"Step {step}. STAGE: {'LISTEN & LABEL' if step <= 3 else 'ACKNOWLEDGE DEMANDS' if step <= 7 else 'OFFER CONCESSIONS & RESOLVE'}\n"
-            f"{'YOU MUST use action_type: emotional_label or mirror' if step <= 3 else ''}"
-            f"{'YOU MUST use action_type: acknowledge_demand — reference a SPECIFIC demand by name' if 4 <= step <= 7 else ''}"
-            f"{'YOU MUST use action_type: offer_concession — propose something CONCRETE' if step > 7 else ''}\n"
-            f"HT said: {obs.last_ht_message}\nCues: {obs.last_ht_cues}\n"
-            f"Demands: {[d['text'] for d in obs.stated_demands]}\nCommander: {obs.commander_patience}"
-        )},
+        {"role": "user", "content": f"{instruction}\nSubject just said: {obs.last_ht_message[:150]}"},
     ]
     neg_resp = client.chat.completions.create(
-        model=MODEL_NAME, messages=neg_messages, temperature=0.4, max_tokens=300
+        model=MODEL_NAME, messages=neg_messages, temperature=0.4, max_tokens=200
     )
     neg_text = neg_resp.choices[0].message.content.strip()
 
@@ -90,7 +86,6 @@ for step in range(1, 21):
         if dm: belief["dominant_demand"] = dm.group(1).strip()
         lm = re.search(r'lying_about:\s*(.+)', bt)
         if lm: belief["lying_about"] = lm.group(1).strip()
-
     # Parse JSON action
     json_match = re.search(r'\{[^{}]*\}', neg_text)
     if json_match:
@@ -102,14 +97,10 @@ for step in range(1, 21):
         action_dict = {"action_type": "speak", "content": neg_text[:100]}
 
     action = NegotiatorAction(
-        action_type=action_dict.get("action_type", "speak") if action_dict.get("action_type", "speak") in [
-            "speak","request_demand","acknowledge_demand","offer_concession",
-            "ask_proof_of_life","buy_time","push_back_commander",
-            "emotional_label","mirror","open_question"
-        ] else "speak",
+        action_type=forced_type,  # forced by step, not LLM output
         content=action_dict.get("content", neg_text[:100]),
         reasoning=action_dict.get("reasoning", ""),
-        target="hostage_taker" if action_dict.get("target", "hostage_taker") in ["hostage_taker","commander"] else "hostage_taker",
+        target="hostage_taker",
         belief_agitation=belief["agitation"],
         belief_demand=belief.get("dominant_demand"),
         belief_lying=belief.get("lying_about", "nothing") != "nothing",
