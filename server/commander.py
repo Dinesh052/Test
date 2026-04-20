@@ -25,13 +25,23 @@ def get_commander_message(
     """Generate commander message if appropriate this turn. Returns None if silent."""
     ratio = step / max_steps
 
-    # Commander speaks at specific intervals or when triggered
     if patience == "final_warning" and not negotiator_pushed_back:
         return "This is your last chance. We're preparing to breach. Wrap it up NOW."
     if patience == "urgent" and step % 3 == 0:
-        return "Status update required. We can't hold the perimeter much longer."
+        msgs = [
+            "Status update required. We can't hold the perimeter much longer.",
+            "Tactical team is getting restless. Show me progress or we move.",
+            "Media is asking questions. I need something to tell them. What's your status?",
+            "Family liaison is asking if we should bring relatives in. Your call.",
+        ]
+        return msgs[step % len(msgs)]
     if patience == "restless" and step % 4 == 0:
-        return "How's it going in there? We need progress."
+        msgs = [
+            "How's it going in there? We need progress.",
+            "The chief is on the line asking for an update. What do I tell him?",
+            "We've got media helicopters overhead now. Clock is ticking.",
+        ]
+        return msgs[step % len(msgs)]
     if ratio > 0.5 and step % 5 == 0 and patience == "patient":
         return "Checking in. Any movement on demands?"
     return None

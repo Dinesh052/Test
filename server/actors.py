@@ -36,9 +36,12 @@ def evaluate_multi_actor_turn(
             messages.append({"actor": "media_liaison", "content": "Public messaging stabilized. Perimeter pressure reduced."})
             reward_delta += 0.01
             agitation_delta -= 0.05
+    elif rng.random() < 0.15:
+        # Media checks in periodically regardless
+        messages.append({"actor": "media_liaison", "content": "Media requesting statement. Public interest is high."})
 
     # --- Family liaison actor (cooperation channel) ---
-    family_signal = any(k in lower for k in ["family", "mother", "father", "kids", "children", "safe"])
+    family_signal = any(k in lower for k in ["family", "mother", "father", "kids", "children", "safe", "daughter", "son", "loved"])
     empathy_signal = action_type in ("emotional_label", "mirror", "open_question") or any(
         k in lower for k in ["i hear you", "it sounds like", "help me understand"]
     )
