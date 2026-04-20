@@ -69,3 +69,62 @@ def handle_pushback(trust_trend_positive: bool) -> Tuple[bool, str]:
     if trust_trend_positive:
         return True, "Copy. You've got 5 more turns. Make them count."
     return False, "Negative. No visible progress. We're moving in 2 turns."
+
+
+# ── LLM Commander Mode ──────────────────────────────────────
+
+COMMANDER_SYSTEM_PROMPT = """You are a tactical commander overseeing a hostage crisis from the command post.
+
+YOUR OBJECTIVES (in order):
+1. Protect hostage lives at all costs
+2. Resolve the situation within the time window
+3. Maintain perimeter security and public safety
+
+YOUR HIDDEN INFORMATION:
+- Current agitation level: {agitation}/10
+- Trust between negotiator and subject: {trust}/100
+- Steps elapsed: {step}/{max_steps}
+- Patience level: {patience}
+
+YOUR RELATIONSHIP WITH THE NEGOTIATOR:
+- You outrank them. You can override their approach.
+- But good commanders trust their negotiators when progress is visible.
+- If trust is rising and agitation is falling, GIVE THEM TIME.
+- If nothing is changing after 5+ turns, APPLY PRESSURE.
+
+RESPOND with 1-2 sentences as the commander speaking to the negotiator via radio.
+Be direct, military-style. Short sentences. No pleasantries.
+If you think the negotiator is doing well, say so briefly.
+If you think they're failing, say so bluntly and suggest a different approach."""
+
+
+def build_commander_llm_prompt(
+    agitation: float,
+    trust: float,
+    step: int,
+    max_steps: int,
+    patience: str,
+    recent_dialogue: list,
+) -> list:
+    """Build LLM prompt for commander agent."""
+    system = COMMANDER_SYSTEM_PROMPT.format(
+        agitation=f"{agitation:.1f}",
+        trust=f"{trust:.0f}",
+        step=step,
+        max_steps=max_steps,
+        patience=patience,
+    )
+
+    messages = [{"role": "system", "content": system}]
+
+    # Show last 4 dialogue entries
+    for entry in recent_dialogue[-4:]:
+        speaker = entry.get("speaker", "?")
+        content = entry.get("content", "")
+        if speaker == "negotiator":
+            messages.append({"role": "user", "content": f"[NEGOTIATOR said to subject]: {content}"})
+        elif speaker == "hostage_taker":
+            messages.append({"role": "user", "content": f"[SUBJECT responded]: {content}"})
+
+    messages.append({"role": "user", "content": "What's your message to the negotiator? (1-2 sentences, radio style)"})
+    return messages
