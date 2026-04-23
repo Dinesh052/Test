@@ -89,13 +89,21 @@ def compute_reward(
     bd["surrender_bonus"] = 0.05 if outcome == "voluntary_surrender" else 0.0
 
     # 8. Token efficiency (Mercor bonus): rewards concise quality
+    # Mercor sub-theme: reward scales with quality / log(tokens)
     # Fewer tokens achieving same outcome = higher bonus (uncapped scaling)
-    # token_efficiency = 0.10 * (1 - tokens_used / max_possible_tokens)
     if actions_taken and raw_outcome > 0:
         total_tokens = sum(len(a.get("content", "").split()) for a in actions_taken)
         max_tokens = steps_taken * 40  # assume ~40 words max per turn
         token_ratio = min(1.0, total_tokens / max(max_tokens, 1))
-        bd["token_efficiency"] = round(0.10 * (1.0 - token_ratio), 4)
+        # Standard efficiency: penalize verbosity
+        base_token_eff = 0.10 * (1.0 - token_ratio)
+        # Mercor uncapped formula: quality / log(tokens + 1)
+        quality_score = (raw_outcome + 1.0) / 2.0  # normalize to [0, 1]
+        import math
+        mercor_bonus = quality_score / max(math.log(total_tokens + 1), 1.0)
+        # Blend: 70% base + 30% Mercor formula, capped at 0.10
+        bd["token_efficiency"] = round(min(0.10, 0.7 * base_token_eff + 0.3 * mercor_bonus * 0.10), 4)
+        fb.append(f"Token efficiency: {bd['token_efficiency']:+.3f} (Mercor: quality/log(tokens)={mercor_bonus:.3f})")
     else:
         bd["token_efficiency"] = 0.0
 

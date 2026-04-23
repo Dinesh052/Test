@@ -5,6 +5,7 @@ Generates 432+ unique scenario combinations from:
   × 2 commander patience × 2 deception flags = 540 combos
 """
 from __future__ import annotations
+import json
 import random
 from typing import Optional
 
@@ -236,4 +237,90 @@ class AdversarialSelfPlay:
             "episodes": self.episode_count,
             "negotiator_avg": round(sum(recent) / max(len(recent), 1), 3),
             "ht_win_rate": round(sum(ht_recent) / max(len(ht_recent), 1), 3),
+        }
+
+
+class FailureAdaptiveGenerator:
+    """Self-improvement loop: generates harder variants of failed scenarios.
+
+    After each episode, if score < threshold, mutates the scenario to create
+    a targeted harder variant and adds it to the training pool. This drives
+    recursive skill amplification (Theme 4).
+
+    Mutations applied on failure:
+      - Increase starting agitation by +0.5–1.0
+      - Decrease starting trust by -5–10
+      - Add demand drift if not present
+      - Enable deception flags
+      - Swap personality to a harder archetype
+    """
+
+    def __init__(self, failure_threshold: float = 0.4):
+        self.failure_threshold = failure_threshold
+        self.generated_pool: list[dict] = []
+        self.mutation_count = 0
+
+    def on_episode_end(self, scenario: dict, reward: float, seed: int = 0) -> Optional[dict]:
+        """Called after each episode. Returns a mutated scenario if reward was low."""
+        if reward >= self.failure_threshold:
+            return None
+
+        self.mutation_count += 1
+        rng = random.Random(seed + self.mutation_count)
+
+        mutated = json.loads(json.dumps(scenario))  # deep copy
+        hs = mutated["hidden_state"]
+
+        # Increase difficulty
+        hs["agitation"] = min(9.0, hs["agitation"] + rng.uniform(0.5, 1.0))
+        hs["trust"] = max(0.0, hs["trust"] - rng.uniform(5, 10))
+
+        # Add deception if not present
+        if hs["stated_hostage_count"] == hs["actual_hostage_count"]:
+            hs["stated_hostage_count"] = hs["actual_hostage_count"] + rng.randint(1, 3)
+
+        if not hs["claims_weapon"] and not hs["has_weapon"]:
+            hs["claims_weapon"] = True  # bluff about weapon
+
+        # Add demand drift if not present
+        if not mutated.get("demand_drift"):
+            drift_step = rng.randint(5, 10)
+            mutated["demand_drift"] = {
+                "trigger_step": drift_step,
+                "new_demand": {
+                    "id": f"mut_drift_{self.mutation_count}",
+                    "text": rng.choice([
+                        "I changed my mind — I need a helicopter",
+                        "New condition — bring my lawyer",
+                        "I want to talk to the media NOW",
+                    ]),
+                    "priority": "core",
+                    "flexible": True,
+                },
+                "announcement": "Wait — I have a new demand!",
+            }
+
+        # Swap to harder personality with 40% chance
+        easy_to_hard = {"desperate": "calculated", "bluffer": "unstable"}
+        pers = mutated.get("personality", "desperate")
+        if pers in easy_to_hard and rng.random() < 0.4:
+            mutated["personality"] = easy_to_hard[pers]
+
+        mutated["id"] = f"mutated_{self.mutation_count}_{mutated['id']}"
+        mutated["title"] = f"[Mutated] {mutated.get('title', 'Unknown')}"
+
+        self.generated_pool.append(mutated)
+        return mutated
+
+    def sample_from_pool(self, rng: random.Random) -> Optional[dict]:
+        """Sample a previously generated hard scenario from the pool."""
+        if not self.generated_pool:
+            return None
+        return rng.choice(self.generated_pool)
+
+    @property
+    def stats(self) -> dict:
+        return {
+            "mutations_generated": self.mutation_count,
+            "pool_size": len(self.generated_pool),
         }
