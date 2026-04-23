@@ -18,6 +18,28 @@ tags:
   - crisis-negotiation
   - self-improvement
   - reinforcement-learning
+  - mercor-token-efficiency
+  - snorkel-expert-in-the-loop
+  - fleet-ai-oversight
+
+# Training artifacts
+training_script: train_colab.py
+training_notebook: train_colab.ipynb
+reward_function: reward_fn.py
+grader: grader.py
+blog_url: "https://huggingface.co/blog/Dinesh052/crisis-negotiator-openenv"
+demo_url: "/ui"
+
+# Themes addressed
+themes:
+  - "Theme 1: Multi-Agent Interactions"
+  - "Theme 4: Self-Improvement"
+sub_themes:
+  - "Fleet AI: Scalable Oversight (supervisor agent)"
+  - "Halluminate: Multi-Actor Environments (4 agents + 2 liaisons)"
+  - "Mercor: Token-scaled rewards (quality/log(tokens))"
+  - "Snorkel AI: Simulated Experts-in-the-Loop (rotating expert feedback)"
+
 tasks:
   - easy_domestic_desperate
   - easy_bank_surrender
@@ -34,3 +56,5 @@ difficulty_levels:
   - easy
   - medium
   - hard
+procedural_generation: true
+max_combinations: 540
