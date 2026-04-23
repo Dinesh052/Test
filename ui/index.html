@@ -1499,13 +1499,40 @@ let llmMode = false;
 const OLLAMA_URL = 'http://localhost:11434/v1/chat/completions';
 const LLM_MODEL = 'llama3.1:latest';
 
-function toggleLLM() {
-  llmMode = !llmMode;
+async function toggleLLM() {
   const btn = document.getElementById('btn-llm');
-  btn.textContent = llmMode ? 'LLM: ON' : 'LLM: OFF';
-  btn.style.background = llmMode ? '#0d2e0d' : '#1a1229';
-  btn.style.borderColor = llmMode ? '#2ea04350' : '#a371f740';
-  btn.style.color = llmMode ? 'var(--green)' : 'var(--sup)';
+  if (!llmMode) {
+    // Test Ollama connectivity before enabling
+    btn.textContent = 'LLM: checking...';
+    btn.style.color = 'var(--cmd)';
+    try {
+      const resp = await fetch('http://localhost:11434/api/tags', {signal: AbortSignal.timeout(3000)});
+      if (!resp.ok) throw new Error('bad status');
+      const data = await resp.json();
+      const models = (data.models || []).map(m => m.name);
+      const hasModel = models.some(m => m.startsWith('llama3'));
+      if (!hasModel) {
+        // Ollama is running but llama3.1 not pulled
+        showSupFlag({msg: `Ollama running but no llama3 model found. Run: ollama pull llama3.1  (models: ${models.join(', ')||'none'})`, sev: 'critical'});
+        btn.textContent = 'LLM: OFF';
+        btn.style.background = '#1a1229'; btn.style.borderColor = '#a371f740'; btn.style.color = 'var(--sup)';
+        return;
+      }
+      llmMode = true;
+      btn.textContent = 'LLM: ON';
+      btn.style.background = '#0d2e0d'; btn.style.borderColor = '#2ea04350'; btn.style.color = 'var(--green)';
+      showSupFlag({msg: 'LLM mode active — Ollama llama3.1 connected', sev: 'info'});
+    } catch(e) {
+      // Ollama not running
+      showSupFlag({msg: 'Ollama not found at localhost:11434. Install from https://ollama.com then run: ollama pull llama3.1', sev: 'critical'});
+      btn.textContent = 'LLM: OFF';
+      btn.style.background = '#1a1229'; btn.style.borderColor = '#a371f740'; btn.style.color = 'var(--sup)';
+    }
+  } else {
+    llmMode = false;
+    btn.textContent = 'LLM: OFF';
+    btn.style.background = '#1a1229'; btn.style.borderColor = '#a371f740'; btn.style.color = 'var(--sup)';
+  }
 }
 
 const NEG_SYSTEM = `You are an FBI-trained crisis negotiator. De-escalate using empathy.
@@ -1521,10 +1548,21 @@ async function llmCall(messages) {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({model:LLM_MODEL, messages, temperature:0.5, max_tokens:200, stream:false}),
+      signal: AbortSignal.timeout(15000),
     });
+    if (!resp.ok) {
+      const txt = await resp.text();
+      showSupFlag({msg: `Ollama error ${resp.status}: ${txt.slice(0,80)}`, sev: 'critical'});
+      return null;
+    }
     const data = await resp.json();
     return data.choices[0].message.content.trim();
   } catch(e) {
+    showSupFlag({msg: `LLM call failed: ${e.message}. Is Ollama running? (ollama serve)`, sev: 'critical'});
+    llmMode = false;
+    const btn = document.getElementById('btn-llm');
+    btn.textContent = 'LLM: OFF';
+    btn.style.background = '#1a1229'; btn.style.borderColor = '#a371f740'; btn.style.color = 'var(--sup)';
     return null;
   }
 }

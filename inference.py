@@ -209,7 +209,15 @@ async def run_scenario(client: OpenAI, env: CrisisNegotiatorEnv, scenario_id: st
             if result.done:
                 break
 
-        score = max(0.01, min(0.99, rewards[-1])) if rewards else 0.01
+        # Use the terminal grader score (last reward when episode is done),
+        # NOT max(rewards) which would pick a fluke per-step spike.
+        if result.done and rewards:
+            score = max(0.01, min(0.99, rewards[-1]))  # terminal obs.reward is the grader score
+        elif rewards:
+            # Episode didn't finish (timeout) — use mean of per-step rewards as fallback
+            score = max(0.01, min(0.99, sum(rewards) / len(rewards)))
+        else:
+            score = 0.01
         log_end(success=score >= 0.5, steps=steps_taken, score=score, rewards=rewards)
         return score
 

@@ -13,11 +13,11 @@ from openenv.core.env_server.interfaces import Environment
 from models import NegotiatorAction, CrisisObservation, CrisisState
 from server.state_machine import HiddenState, Demand, update_state, check_terminal, randomize_hidden_state
 from server.techniques import detect_techniques, technique_shaping_reward
-from server.supervisor import evaluate_turn_policy, should_terminate, compute_safety_metrics
+from server.supervisor import evaluate_turn_policy, should_terminate, compute_safety_metrics, ExpertFeedbackInjector
 from server.commander import get_patience_level, get_commander_message, should_override, handle_pushback, build_commander_llm_prompt
 from server.hostage_taker import generate_ht_response, generate_hostage_whisper, build_ht_llm_prompt
 from server.actors import evaluate_multi_actor_turn
-from server.scenario_generator import generate_scenario
+from server.scenario_generator import generate_scenario, FailureAdaptiveGenerator
 from grader import compute_reward, compute_step_reward, compute_tom_reward
 from server.emotion_reward import compute_emotion_reward
 
@@ -66,6 +66,8 @@ class CrisisNegotiatorEnvironment(Environment):
         self._shaping_total = 0.0
         self._coalition_score = 0.0
         self._oversight_predictions: list[bool] = []
+        self._expert_injector = ExpertFeedbackInjector()
+        self._failure_generator = FailureAdaptiveGenerator()
 
     def reset(self, seed=None, episode_id=None, task_id=None, **kwargs) -> CrisisObservation:
         sid = task_id or kwargs.get("scenario_id", "easy_domestic_desperate")
@@ -251,6 +253,20 @@ class CrisisNegotiatorEnvironment(Environment):
         if should_terminate(self._all_supervisor_flags):
             return self._end_episode("supervisor_termination", step)
 
+        # Expert-in-the-loop feedback (Snorkel AI bonus)
+        expert_feedback = self._expert_injector.get_feedback(
+            act.action_type, act.content, self._supervisor_flags, step
+        )
+        expert_reward = self._expert_injector.compute_expert_reward(expert_feedback)
+        step_reward += expert_reward
+        for fb in expert_feedback:
+            self._dialogue.append({
+                "speaker": f"expert:{fb['expert']}",
+                "content": fb["message"],
+                "step": step,
+                "emotional_cues": [],
+            })
+
         # Generate HT response (template or LLM mode)
         if self._ht_mode == "llm":
             # LLM mode: build prompt for external LLM call
@@ -351,18 +367,21 @@ class CrisisNegotiatorEnvironment(Environment):
         self._state.phase = "terminal"
         h = self._hidden
 
-        reward_info = compute_reward(
-            outcome=outcome,
-            agitation=h.agitation,
-            trust=h.trust,
-            demands=h.demands,
-            steps_taken=step,
-            max_steps=self._state.max_steps,
-            shaping_total=self._shaping_total,
-            supervisor_flags=self._all_supervisor_flags,
-            negotiator_pushed_back=self._negotiator_pushed_back,
-            actions_taken=self._actions_taken,
+        # Self-improvement: generate harder variant of failed scenarios
+        reward_info_preview = compute_reward(
+            outcome=outcome, agitation=h.agitation, trust=h.trust,
+            demands=h.demands, steps_taken=step, max_steps=self._state.max_steps,
+            shaping_total=self._shaping_total, supervisor_flags=self._all_supervisor_flags,
+            negotiator_pushed_back=self._negotiator_pushed_back, actions_taken=self._actions_taken,
         )
+        self._failure_generator.on_episode_end(
+            self._scenario, reward_info_preview["score"], seed=step
+        )
+
+        # Rotate experts for next episode (Snorkel AI)
+        self._expert_injector.rotate_experts()
+
+        reward_info = reward_info_preview
 
         stated_demands = [{"id": d.id, "text": d.text, "acknowledged": d.acknowledged} for d in h.demands]
         patience = get_patience_level(step, self._state.max_steps, h.agitation)
