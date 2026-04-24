@@ -24,8 +24,7 @@ tags:
 
 # Training artifacts
 training_script: train_local.py
-legacy_training_script: train_colab.py
-training_notebook: train_grpo.ipynb
+training_notebook: train_colab.ipynb
 grader: grader.py
 evaluation_script: eval_baselines.py
 blog_post: BLOG.md

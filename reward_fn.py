@@ -133,6 +133,7 @@ def _determine_outcome(state: EpisodeState) -> Optional[str]:
 class DemandProxy:
     def __init__(self, d: Dict):
         self.acknowledged = d.get("acknowledged", False)
+        self.text = d.get("text", "")
 
 
 def crisis_reward_fn(completions: List[str], **kwargs) -> List[float]:

@@ -130,9 +130,6 @@ def compute_reward(
             # References prior dialogue
             if any(w in c for w in ["you said", "you mentioned", "earlier", "i remember", "you told me", "like you said", "as you said", "you were saying"]):
                 rapport_signals += 1
-            # Uses demand-specific words (shows listening)
-            if any(w in c for w in ["you said", "you mentioned", "earlier", "i remember", "you told me", "like you said", "as you said", "you were saying"]):
-                rapport_signals += 1
             # Content references specific demand text
             for d in demands:
                 dtext = (d.text if hasattr(d, 'text') else d.get('text', '')).lower()
