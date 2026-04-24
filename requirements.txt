@@ -1,8 +1,18 @@
-openenv-core>=0.2.0
-fastapi>=0.104.0
-uvicorn>=0.24.0
-pydantic>=2.0.0
-requests>=2.25.0
-openai>=1.0.0
-numpy>=1.24.0
+# Runtime (server + UI + inference)
+openenv-core>=0.2.0,<1.0
+fastapi>=0.104.0,<1.0
+uvicorn>=0.24.0,<1.0
+pydantic>=2.5.0,<3.0
+requests>=2.31.0
+openai>=1.30.0
+numpy>=1.24.0,<3.0
 sentence-transformers>=2.7.0
+
+# Plotting (used by eval_baselines.py and generate_reward_curves.py)
+matplotlib>=3.8.0
+
+# NOTE: Training dependencies (torch, transformers, trl, peft, bitsandbytes,
+# unsloth, datasets, accelerate) are intentionally NOT listed here. They
+# require a CUDA-enabled environment with Python 3.10-3.12 and are installed
+# separately via `train_local.py` setup or in Colab. See README "Training".
+

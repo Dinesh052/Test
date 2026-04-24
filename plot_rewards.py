@@ -1,6 +1,8 @@
-"""Plot reward curves from reward_log.json. Generates reward_curve.png.
+"""Plot reward curves. Generates reward_curve.png and (optionally) reward_curve_training.png.
 
-Usage: python plot_rewards.py
+Usage:
+    python plot_rewards.py                        # episode log (reward_log.json)
+    python plot_rewards.py crisis_training_log.json  # GRPO step log
 """
 import json, sys
 
@@ -11,7 +13,19 @@ except ImportError:
     print("pip install matplotlib numpy")
     sys.exit(1)
 
-LOG = "reward_log.json"
+# Accept an explicit path or fall back to reward_log.json
+LOG = sys.argv[1] if len(sys.argv) > 1 else "reward_log.json"
+
+# If given the GRPO step-log, delegate to the dedicated training-curve function
+if "crisis_training" in LOG:
+    import importlib.util, os
+    spec = importlib.util.spec_from_file_location("train_local", os.path.join(os.path.dirname(__file__), "train_local.py"))
+    tl = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tl)  # type: ignore
+    raw = json.load(open(LOG))
+    tl._plot_training_curve(raw)
+    sys.exit(0)
+
 data = json.load(open(LOG))
 
 episodes = [d["episode"] for d in data]

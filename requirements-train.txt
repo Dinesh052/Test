@@ -1,0 +1,35 @@
+# GPU training stack — install in a separate Python 3.10-3.12 venv
+# Tested with Python 3.11 + CUDA 12.8 on RTX 4090 16GB Laptop
+#
+# Setup (one-time):
+#   uv venv --python 3.11 .venv-train
+#   uv pip install --python .venv-train\Scripts\python.exe torch --index-url https://download.pytorch.org/whl/cu128
+#   uv pip install --python .venv-train\Scripts\python.exe -r requirements-train.txt
+#
+# Then run:
+#   .venv-train\Scripts\python.exe train_local.py
+
+# Core ML
+transformers>=4.45.0,<5.0
+trl>=0.12.0,<0.15
+peft>=0.13.0
+accelerate>=1.0.0
+datasets>=3.0.0
+bitsandbytes>=0.44.0; platform_system != "Darwin"
+sentencepiece>=0.2.0
+protobuf>=4.0
+einops>=0.8.0
+
+# Server-side deps so train_local.py can import the env
+openenv-core>=0.2.0,<1.0
+fastapi>=0.104.0,<1.0
+pydantic>=2.5.0,<3.0
+sentence-transformers>=2.7.0
+
+# Plotting
+matplotlib>=3.8.0
+
+# Optional — Unsloth gives 2x faster training; train_local.py auto-falls back
+# to plain transformers+bnb if unsloth import fails.
+unsloth>=2025.10.0; sys_platform == "linux"
+unsloth_zoo>=2025.10.0; sys_platform == "linux"
