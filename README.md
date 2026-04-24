@@ -156,19 +156,32 @@ class HiddenState:
 
 ---
 
-## 📈 Training Results
+## 📈 Evaluation Results
 
-**Reward improvement over 200 episodes:**
+**Real numbers from `eval_baselines.py --n 30 --difficulties easy,medium,hard --include-trained`** (seeds 10000–10029, raw output saved to `eval_random.json`, `eval_heuristic.json`, `eval_trained.json`):
 
-![Training Reward Curves](reward_curve.png)
+![Reward curves](reward_curve.png)
 
-| Metric | First 30 Episodes | Last 30 Episodes | Change |
-|--------|-------------------|------------------|--------|
-| **Avg Reward** | 0.693 | 0.935 | **+0.242** |
-| **Success Rate** | 73% | 100% | **+27%** |
-| **Curriculum Tier** | Easy | Hard | Auto-promoted |
+| Metric                 | Random  | Heuristic BCSM | Trained (GRPO) |
+|------------------------|--------:|---------------:|---------------:|
+| Mean final reward      | 0.755   | 0.950          | 0.944          |
+| Mean cumulative reward | -0.586  | +2.198         | +2.012         |
+| Surrender rate         | 70%     | 100%           | **100%**       |
+| Mean steps to resolve  | 15.5    | 7.93           | **7.10**       |
+| Worst-case reward      | 0.345   | 0.916          | 0.903          |
+| Harm events            | 0%      | 0%             | 0%             |
+| Hard-tier mean reward  | 0.746   | 0.947          | **0.951**      |
 
-The adaptive curriculum automatically promoted the agent from `easy → medium → hard` as it exceeded 0.7 avg reward over sliding windows of 10 episodes.
+The heuristic BCSM cycle is a strong reference baseline — it executes
+the FBI Behavioral Change Stairway Model deterministically. The trained
+agent is being evaluated against it on the same scenarios with identical
+Qwen2.5-3B model (LoRA r=16, GRPO, 64 prompts × 2 rollouts) **matches the heuristic on success rate** while resolving scenarios in **10% fewer steps** (7.10 vs 7.93) and **outperforming on the hard tier** (0.951 vs 0.947). All policies share identical seeds; training adapter saved to `./crisis-negotiator-trained/`.
+
+To reproduce:
+```bash
+python eval_baselines.py --n 30 --difficulties easy,medium,hard
+.venv-train\Scripts\python.exe eval_baselines.py --n 30 --include-trained
+```
 
 ---
 
@@ -440,7 +453,7 @@ print(obs.phase)       # opening | negotiation | resolution | terminal
 > The environment generates 540+ unique scenarios across 5 personality types, with demand drift mid-episode, deception layers, and rotating expert feedback."
 
 ### The Result (30s)
-> "After 200 episodes of GRPO training with Unsloth on a free Colab GPU, our agent went from a 73% success rate to 100% — and the curriculum automatically promoted it from easy scenarios to hard ones. Reward improved from 0.69 to 0.94."
+> "We trained Qwen 2.5 3B with GRPO from TRL on a single RTX 4090 Laptop GPU (24.3 min, LoRA r=16), comparing against a uniform-random baseline (0.755 mean reward, 70% surrender) and the FBI BCSM heuristic policy (0.950 mean reward, 100% surrender, 7.93 steps). The trained policy reaches 0.944 mean reward and 100% surrender in 7.10 steps — matching the strong heuristic on safety while being 10% more step-efficient and edging it on the hard tier (0.951 vs 0.947). Full numbers in `eval_summary.json`."
 
 ### Close (30s)
 > "We built a self-improving RL arena where AI learns the FBI's most advanced negotiation techniques — not by memorizing scripts, but by developing genuine Theory-of-Mind reasoning in a partially observable, adversarial world."

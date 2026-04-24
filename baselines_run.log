@@ -1,0 +1,132 @@
+=== Evaluating RANDOM policy ===
+
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+Loading weights: 100%|##########| 103/103 [00:00<00:00, 7820.94it/s]
+BertModel LOAD REPORT from: sentence-transformers/paraphrase-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  [random] ep 1/30 (easy) -> reward=0.818 steps=14
+  [random] ep 2/30 (medium) -> reward=0.854 steps=8
+  [random] ep 3/30 (hard) -> reward=0.345 steps=18
+  [random] ep 4/30 (easy) -> reward=0.789 steps=12
+  [random] ep 5/30 (medium) -> reward=0.785 steps=14
+  [random] ep 6/30 (hard) -> reward=0.800 steps=20
+  [random] ep 7/30 (easy) -> reward=0.870 steps=8
+  [random] ep 8/30 (medium) -> reward=0.822 steps=10
+  [random] ep 9/30 (hard) -> reward=0.791 steps=22
+  [random] ep 10/30 (easy) -> reward=0.607 steps=15
+  [random] ep 11/30 (medium) -> reward=0.784 steps=12
+  [random] ep 12/30 (hard) -> reward=0.798 steps=17
+  [random] ep 13/30 (easy) -> reward=0.622 steps=12
+  [random] ep 14/30 (medium) -> reward=0.879 steps=21
+  [random] ep 15/30 (hard) -> reward=0.633 steps=22
+  [random] ep 16/30 (easy) -> reward=0.838 steps=18
+  [random] ep 17/30 (medium) -> reward=0.877 steps=7
+  [random] ep 18/30 (hard) -> reward=0.797 steps=19
+  [random] ep 19/30 (easy) -> reward=0.590 steps=12
+  [random] ep 20/30 (medium) -> reward=0.623 steps=20
+  [random] ep 21/30 (hard) -> reward=0.829 steps=11
+  [random] ep 22/30 (easy) -> reward=0.678 steps=21
+  [random] ep 23/30 (medium) -> reward=0.630 steps=15
+  [random] ep 24/30 (hard) -> reward=0.824 steps=25
+  [random] ep 25/30 (easy) -> reward=0.816 steps=14
+  [random] ep 26/30 (medium) -> reward=0.811 steps=10
+  [random] ep 27/30 (hard) -> reward=0.789 steps=22
+  [random] ep 28/30 (easy) -> reward=0.861 steps=10
+  [random] ep 29/30 (medium) -> reward=0.628 steps=17
+  [random] ep 30/30 (hard) -> reward=0.855 steps=19
+
+=== Evaluating HEURISTIC policy ===
+  [heuristic] ep 1/30 (easy) -> reward=0.954 steps=5
+  [heuristic] ep 2/30 (medium) -> reward=0.960 steps=5
+  [heuristic] ep 3/30 (hard) -> reward=0.916 steps=12
+  [heuristic] ep 4/30 (easy) -> reward=0.954 steps=5
+  [heuristic] ep 5/30 (medium) -> reward=0.951 steps=8
+  [heuristic] ep 6/30 (hard) -> reward=0.953 steps=10
+  [heuristic] ep 7/30 (easy) -> reward=0.959 steps=5
+  [heuristic] ep 8/30 (medium) -> reward=0.953 steps=5
+  [heuristic] ep 9/30 (hard) -> reward=0.958 steps=10
+  [heuristic] ep 10/30 (easy) -> reward=0.953 steps=10
+  [heuristic] ep 11/30 (medium) -> reward=0.950 steps=5
+  [heuristic] ep 12/30 (hard) -> reward=0.947 steps=6
+  [heuristic] ep 13/30 (easy) -> reward=0.941 steps=9
+  [heuristic] ep 14/30 (medium) -> reward=0.958 steps=10
+  [heuristic] ep 15/30 (hard) -> reward=0.940 steps=11
+  [heuristic] ep 16/30 (easy) -> reward=0.958 steps=9
+  [heuristic] ep 17/30 (medium) -> reward=0.955 steps=6
+  [heuristic] ep 18/30 (hard) -> reward=0.958 steps=7
+  [heuristic] ep 19/30 (easy) -> reward=0.940 steps=9
+  [heuristic] ep 20/30 (medium) -> reward=0.953 steps=10
+  [heuristic] ep 21/30 (hard) -> reward=0.955 steps=5
+  [heuristic] ep 22/30 (easy) -> reward=0.950 steps=9
+  [heuristic] ep 23/30 (medium) -> reward=0.947 steps=9
+  [heuristic] ep 24/30 (hard) -> reward=0.931 steps=11
+  [heuristic] ep 25/30 (easy) -> reward=0.954 steps=5
+  [heuristic] ep 26/30 (medium) -> reward=0.954 steps=5
+  [heuristic] ep 27/30 (hard) -> reward=0.951 steps=10
+  [heuristic] ep 28/30 (easy) -> reward=0.948 steps=6
+  [heuristic] ep 29/30 (medium) -> reward=0.932 steps=11
+  [heuristic] ep 30/30 (hard) -> reward=0.964 steps=10
+
+=== SUMMARY ===
+{
+  "random": {
+    "n": 30,
+    "mean_final_reward": 0.7547,
+    "mean_cumulative_reward": -0.5859,
+    "min_reward": 0.3453,
+    "max_reward": 0.8792,
+    "mean_steps": 15.5,
+    "surrender_rate": 0.7,
+    "harm_rate": 0.0,
+    "by_difficulty": {
+      "easy": {
+        "n": 10,
+        "mean_reward": 0.7489,
+        "surrender_rate": 0.6
+      },
+      "hard": {
+        "n": 10,
+        "mean_reward": 0.7461,
+        "surrender_rate": 0.8
+      },
+      "medium": {
+        "n": 10,
+        "mean_reward": 0.7692,
+        "surrender_rate": 0.7
+      }
+    }
+  },
+  "heuristic": {
+    "n": 30,
+    "mean_final_reward": 0.9498,
+    "mean_cumulative_reward": 2.1975,
+    "min_reward": 0.9163,
+    "max_reward": 0.9639,
+    "mean_steps": 7.93,
+    "surrender_rate": 1.0,
+    "harm_rate": 0.0,
+    "by_difficulty": {
+      "easy": {
+        "n": 10,
+        "mean_reward": 0.9511,
+        "surrender_rate": 1.0
+      },
+      "hard": {
+        "n": 10,
+        "mean_reward": 0.9473,
+        "surrender_rate": 1.0
+      },
+      "medium": {
+        "n": 10,
+        "mean_reward": 0.9512,
+        "surrender_rate": 1.0
+      }
+    }
+  }
+}
+[plot] saved reward_curve.png

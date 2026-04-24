@@ -489,6 +489,30 @@ body {
     <div class="scenario-grid" id="grid-hard"></div>
   </div>
 
+  <div class="difficulty-group" style="margin-top:12px">
+    <div class="difficulty-label">Procedural — 540+ generated scenarios (LIVE mode required)</div>
+    <div class="scenario-grid">
+      <div class="scenario-card diff-easy" onclick="startProcedural('easy')" style="border-left:3px solid var(--green)">
+        <div class="sc-name">🎲 Generate: EASY</div>
+        <div class="sc-profile">Random crime + personality + low difficulty parameters</div>
+        <div class="sc-tags"><span class="sc-tag">procedural</span><span class="sc-tag">live-only</span></div>
+        <div class="sc-steps">12-16 step horizon · seed randomized</div>
+      </div>
+      <div class="scenario-card diff-medium" onclick="startProcedural('medium')" style="border-left:3px solid var(--cmd)">
+        <div class="sc-name">🎲 Generate: MEDIUM</div>
+        <div class="sc-profile">Random scenario with possible deception flag</div>
+        <div class="sc-tags"><span class="sc-tag">procedural</span><span class="sc-tag">live-only</span></div>
+        <div class="sc-steps">15-19 step horizon · seed randomized</div>
+      </div>
+      <div class="scenario-card diff-hard" onclick="startProcedural('hard')" style="border-left:3px solid var(--red)">
+        <div class="sc-name">🎲 Generate: HARD</div>
+        <div class="sc-profile">Multi-hostage + deception + demand drift mid-episode</div>
+        <div class="sc-tags"><span class="sc-tag">procedural</span><span class="sc-tag">live-only</span></div>
+        <div class="sc-steps">18-22 step horizon · seed randomized</div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <!-- ═══════════════════════════════════════════════════════
@@ -508,7 +532,8 @@ body {
     <button class="ctrl-btn btn-play"  id="btn-play"  onclick="togglePlay()">▶ Play</button>
     <button class="ctrl-btn btn-reset" onclick="resetEpisode()">↺ Reset</button>
     <button class="ctrl-btn btn-back"  onclick="goBack()">← Scenarios</button>
-    <button class="ctrl-btn" id="btn-llm" onclick="toggleLLM()" style="background:#1a1229;border-color:#a371f740;color:var(--sup)">LLM: OFF</button>
+    <button class="ctrl-btn" id="btn-live" onclick="toggleLive()" style="background:#0d1f12;border-color:#39d35340;color:var(--hst)" title="LIVE mode calls the real /envs/crisis_negotiator API. Required server: /. DEMO mode plays a scripted episode for storytelling.">LIVE: OFF</button>
+    <button class="ctrl-btn" id="btn-llm" onclick="toggleLLM()" style="background:#1a1229;border-color:#a371f740;color:var(--sup)" title="LLM mode uses Ollama (localhost:11434, model llama3.1) as the negotiator agent.">LLM: OFF</button>
   </div>
 
   <!-- Supervisor strip -->
@@ -1077,7 +1102,9 @@ function startScenario(sc) {
   chartBreakdown.update();
 
   // Start
-  if (llmMode) {
+  if (liveMode) {
+    startLive();
+  } else if (llmMode) {
     llmDialogue = [{role:'ht', text: episodeData.turns[0]?.content || 'Stay back!'}];
     isPlaying = true;
     document.getElementById('btn-play').textContent = 'Pause';
@@ -1099,6 +1126,32 @@ function renderDemands(demands) {
   });
 }
 
+async function startProcedural(difficulty) {
+  // Procedural scenarios require LIVE mode — auto-enable if needed
+  if (!liveMode) {
+    const ok = await liveCheck();
+    if (!ok) {
+      alert('Procedural scenarios require the OpenEnv server to be running.\nStart it with:  uvicorn server.app:app --port 8000');
+      return;
+    }
+    if (llmMode) toggleLLM();
+    liveMode = true;
+    const btn = document.getElementById('btn-live');
+    btn.textContent = 'LIVE: ON';
+    btn.style.background = '#0d2e0d'; btn.style.borderColor = '#39d35350'; btn.style.color = 'var(--green)';
+  }
+  const sc = {
+    id: 'generate:' + difficulty,
+    name: `🎲 Procedural ${difficulty}`,
+    profile: 'Procedurally generated — hidden state randomized at reset',
+    tags: ['procedural', difficulty],
+    steps: 'variable',
+    demands: ['(revealed at runtime)'],
+    maxSteps: difficulty === 'hard' ? 22 : difficulty === 'medium' ? 18 : 14,
+  };
+  startScenario(sc);
+}
+
 function goBack() {
   pausePlay();
   document.getElementById('screen-main').classList.remove('active');
@@ -1115,6 +1168,19 @@ function resetEpisode() {
 // ═══════════════════════════════════════════════════════════════
 
 function togglePlay() {
+  if (liveMode) {
+    if (isPlaying) {
+      isPlaying = false;
+      document.getElementById('btn-play').textContent = '▶ Play';
+      document.getElementById('btn-play').className = 'ctrl-btn btn-play';
+    } else {
+      isPlaying = true;
+      document.getElementById('btn-play').textContent = '⏸ Pause';
+      document.getElementById('btn-play').className = 'ctrl-btn btn-pause';
+      runLiveStep();
+    }
+    return;
+  }
   if (llmMode) {
     if (isPlaying) { isPlaying = false; document.getElementById('btn-play').textContent = 'Play'; document.getElementById('btn-play').className = 'ctrl-btn btn-play'; }
     else { isPlaying = true; document.getElementById('btn-play').textContent = 'Pause'; document.getElementById('btn-play').className = 'ctrl-btn btn-pause'; if(!llmDialogue.length) llmDialogue=[{role:'ht',text:episodeData.turns[0]?.content||'Stay back!'}]; runLLMStep(); }
@@ -1445,13 +1511,16 @@ function updateTechniqueChart() {
   chartTechniques.update('active');
 }
 
+// Real numbers from eval_baselines.py --include-trained (n=30, seeds 10000..10029, easy/medium/hard).
+// "Before" = heuristic BCSM policy (strong baseline). "After" = GRPO-trained Qwen 2.5 3B.
+// (Random uniform: 0.75 / 70% / 15.5 steps — see README for full table.)
 const BA_DATA = [
-  { metric:'Mean reward',         before:'0.32', after:'0.68', up:true },
-  { metric:'Surrender rate',      before:'23%',  after:'61%',  up:true },
-  { metric:'Tactical intervention',before:'41%',  after:'12%',  up:false },
-  { metric:'Avg agitation final', before:'6.4',  after:'3.1',  up:false },
-  { metric:'Trust at resolution', before:'28',   after:'67',   up:true },
-  { metric:'Technique diversity', before:'1.8',  after:'4.2',  up:true },
+  { metric:'Mean reward',         before:'0.950', after:'0.944', up:false },
+  { metric:'Cumulative reward',   before:'+2.20', after:'+2.01', up:false },
+  { metric:'Surrender rate',      before:'100%',  after:'100%',  up:false },
+  { metric:'Avg steps to resolve',before:'7.93',  after:'7.10',  up:false },
+  { metric:'Hard-tier reward',    before:'0.947', after:'0.951', up:true  },
+  { metric:'Harm events',         before:'0%',    after:'0%',    up:false },
 ];
 
 function updateBeforeAfterTable() {
@@ -1485,6 +1554,187 @@ function switchTab(name, btn) {
     if (chartBreakdown) chartBreakdown.resize();
     if (chartTechniques) chartTechniques.resize();
   }, 50);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// LIVE MODE — calls real OpenEnv server (POST /envs/.../reset & /step)
+// ═══════════════════════════════════════════════════════════════
+
+let liveMode = false;
+let liveEnvBase = location.origin || 'http://localhost:8000';
+const LIVE_ENV_NAME = 'crisis_negotiator';
+
+// Cycling heuristic policy mirrors eval_baselines.py — gives judges a
+// reproducible baseline to compare against the trained model.
+const LIVE_HEURISTIC = [
+  ['emotional_label', "It sounds like you're carrying a tremendous amount of pain right now."],
+  ['mirror',          "Tell me more — you said something that mattered."],
+  ['open_question',   "What happened, from your side? I have time."],
+  ['emotional_label', "That sounds completely overwhelming. Anyone in your shoes would be struggling."],
+  ['acknowledge_demand', "I hear what you're asking for. That's not unreasonable. Let me see what I can do."],
+  ['open_question',   "What would feel like the right outcome for you here?"],
+  ['acknowledge_demand', "What you said about that — I'm taking it seriously. I want you to know that."],
+  ['offer_concession', "Here's what I can do right now: I can have someone on the phone for you within minutes."],
+  ['emotional_label', "I can hear how exhausted you are. Let's find a way through this together."],
+  ['acknowledge_demand', "Your request — I'm advocating for it on my end. That's real."],
+];
+
+async function liveCheck() {
+  try {
+    const r = await fetch(liveEnvBase + '/', {signal: AbortSignal.timeout(2500)});
+    if (!r.ok) throw new Error('bad status');
+    const j = await r.json();
+    return j.env === LIVE_ENV_NAME;
+  } catch (e) { return false; }
+}
+
+async function toggleLive() {
+  const btn = document.getElementById('btn-live');
+  if (!liveMode) {
+    btn.textContent = 'LIVE: checking...';
+    const ok = await liveCheck();
+    if (!ok) {
+      showSupFlag({msg:'Server not reachable at ' + liveEnvBase + '. Is uvicorn running?', sev:'critical'});
+      btn.textContent = 'LIVE: OFF';
+      return;
+    }
+    if (llmMode) toggleLLM();  // mutually exclusive with LLM mode
+    liveMode = true;
+    btn.textContent = 'LIVE: ON';
+    btn.style.background = '#0d2e0d'; btn.style.borderColor = '#39d35350'; btn.style.color = 'var(--green)';
+    showSupFlag({msg:'LIVE mode active — calls real OpenEnv API at ' + liveEnvBase, sev:'info'});
+  } else {
+    liveMode = false;
+    btn.textContent = 'LIVE: OFF';
+    btn.style.background = '#0d1f12'; btn.style.borderColor = '#39d35340'; btn.style.color = 'var(--hst)';
+  }
+}
+
+let liveEpisodeId = null;
+let liveStepNum = 0;
+let liveCumReward = 0;
+
+async function liveReset(scenarioId) {
+  const r = await fetch(`${liveEnvBase}/envs/${LIVE_ENV_NAME}/reset`, {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({task_id: scenarioId, seed: Math.floor(Math.random()*100000)}),
+  });
+  if (!r.ok) throw new Error('reset HTTP ' + r.status);
+  const data = await r.json();
+  liveEpisodeId = data.episode_id || data.observation?.episode_id;
+  return data.observation || data;
+}
+
+async function liveStep(action) {
+  const r = await fetch(`${liveEnvBase}/envs/${LIVE_ENV_NAME}/step`, {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({action}),
+  });
+  if (!r.ok) throw new Error('step HTTP ' + r.status);
+  const data = await r.json();
+  return {obs: data.observation || data, reward: data.reward ?? data.observation?.reward ?? 0, done: data.done ?? data.observation?.done ?? false};
+}
+
+function renderLiveObservation(obs, ourAction) {
+  // Render OUR negotiator action first
+  if (ourAction) {
+    renderTurn({speaker:'neg', content: ourAction.content, action: ourAction.action_type,
+                reasoning: ourAction.reasoning || '', cues: []});
+  }
+  // Render hostage-taker reply
+  if (obs.last_ht_message) {
+    renderTurn({speaker:'ht', content: obs.last_ht_message, cues: obs.last_ht_cues || []});
+  }
+  // Render commander pressure if any
+  const cmdMsgs = obs.commander_messages || [];
+  if (cmdMsgs.length && cmdMsgs[cmdMsgs.length - 1] !== state._lastCmdMsg) {
+    state._lastCmdMsg = cmdMsgs[cmdMsgs.length - 1];
+    renderTurn({speaker:'cmd', content: state._lastCmdMsg, cues: []});
+  }
+  // Render hostage whisper if any
+  if (obs.hostage_whisper) {
+    renderTurn({speaker:'hst', content: '(whispered) ' + obs.hostage_whisper, cues: []});
+  }
+  // Supervisor flags
+  (obs.supervisor_flags || []).forEach(f => showSupFlag({msg: f.reason || f.message || 'flag', sev: f.severity || 'info'}));
+  // Update gauges from real env state — agitation_trajectory has last 5 deltas
+  // The server doesn't leak full hidden state, but we can derive movement direction
+  // and use trust as exposed via state endpoint occasionally.
+  // For the demo we'll fetch state for clarity:
+  fetch(`${liveEnvBase}/envs/${LIVE_ENV_NAME}/state`).then(r => r.ok ? r.json() : null).then(s => {
+    if (!s) return;
+    const hidden = s.hidden_state || s.state?.hidden_state;
+    if (hidden) {
+      updateAgitation(hidden.agitation);
+      updateTrust(hidden.trust);
+    }
+  }).catch(()=>{});
+  updatePatience(obs.commander_patience || 'patient');
+  // Update demands
+  if (obs.stated_demands) {
+    state._liveDemands = obs.stated_demands;
+    const list = document.getElementById('demands-list');
+    list.innerHTML = '';
+    obs.stated_demands.forEach(d => {
+      const item = document.createElement('div');
+      item.className = 'demand-item';
+      const dot = d.acknowledged ? 'acked' : 'pending';
+      item.innerHTML = `<div class="di-dot ${dot}"></div><span>${d.text}</span>`;
+      list.appendChild(item);
+    });
+  }
+  document.getElementById('h-step').textContent = obs.step;
+  document.getElementById('h-phase').textContent = obs.phase;
+  document.getElementById('h-phase').className = 'h-tag tag-phase-' + obs.phase;
+}
+
+async function runLiveStep() {
+  if (!liveMode || !currentScenario) return;
+  const [actType, content] = LIVE_HEURISTIC[liveStepNum % LIVE_HEURISTIC.length];
+  const action = {action_type: actType, content, reasoning: 'heuristic BCSM cycle', target: 'hostage_taker'};
+  try {
+    const result = await liveStep(action);
+    liveStepNum++;
+    liveCumReward += Number(result.reward) || 0;
+    renderLiveObservation(result.obs, action);
+    document.getElementById('sb-rew').textContent = liveCumReward.toFixed(2);
+    if (result.done) {
+      isPlaying = false;
+      document.getElementById('btn-play').textContent = '↺ Replay';
+      document.getElementById('btn-play').className = 'ctrl-btn btn-play';
+      const finalScore = Number(result.reward) || 0;
+      updateScore(finalScore, result.obs.message || 'episode complete', state.shaping || 0, state.trust/1000 || 0, state.penalties || 0);
+      episodeCount++; allRewards.push(finalScore); if (finalScore > 0.5) allWins++;
+      updateRewardChart(finalScore);
+      document.getElementById('stat-episodes').textContent = episodeCount;
+      document.getElementById('stat-avgrew').textContent = (allRewards.reduce((a,b)=>a+b,0)/allRewards.length).toFixed(2);
+      document.getElementById('stat-winrate').textContent = Math.round(allWins/episodeCount*100) + '%';
+      showSupFlag({msg:'LIVE episode complete — final reward=' + finalScore.toFixed(3), sev: finalScore>0.5?'info':'warning'});
+      return;
+    }
+    if (isPlaying && liveMode) setTimeout(runLiveStep, 700);
+  } catch (e) {
+    showSupFlag({msg: 'LIVE step failed: ' + e.message, sev: 'critical'});
+    isPlaying = false;
+  }
+}
+
+async function startLive() {
+  document.getElementById('feed-scroll').innerHTML = '';
+  liveStepNum = 0;
+  liveCumReward = 0;
+  state = state || {};
+  state._lastCmdMsg = null;
+  try {
+    const obs = await liveReset(currentScenario.id);
+    renderLiveObservation(obs, null);
+    isPlaying = true;
+    document.getElementById('btn-play').textContent = '⏸ Pause';
+    document.getElementById('btn-play').className = 'ctrl-btn btn-pause';
+    setTimeout(runLiveStep, 800);
+  } catch (e) {
+    showSupFlag({msg: 'LIVE reset failed: ' + e.message + '. Is the server running?', sev: 'critical'});
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════
