@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import json; d = json.load\\(open\\('reward_log.json'\\)\\); print\\('reward_log.json has', len\\(d\\) if isinstance\\(d, list\\) else 'dict:', str\\(d\\)[:400]\\)\")",
+      "Bash(python rollout.py --policy random --n 10 --out runs/smoke_random.json)",
+      "Bash(python rollout.py --policy heuristic --n 11 --out runs/smoke_heuristic.json)",
+      "Bash(python rollout.py --policy heuristic --n 20 --out runs/smoke_heur_hard.json --use-curriculum --seed-offset 1000)",
+      "Bash(python rollout.py --policy heuristic --n 30 --out runs/smoke_heur_hard.json --use-curriculum --seed-offset 5000)",
+      "Bash(python -c ' *)",
+      "Bash(python rollout.py --policy random --n 60 --out runs/baseline_random.json)",
+      "Bash(python rollout.py --policy heuristic --n 60 --out runs/baseline_heuristic.json)",
+      "Bash(python plot_rewards.py)",
+      "Bash(python reward_fn.py)",
+      "Bash(python -m pytest tests/ -v)",
+      "Bash(python -m pytest tests/ -q)",
+      "Bash(python rollout.py --policy heuristic --n 60 --out runs/curriculum_hard.json --use-curriculum)",
+      "Bash(wait)",
+      "Bash(python -m pytest tests/test_grader.py::test_tom_reward_perfect_prediction_is_max tests/test_grader.py::test_tom_reward_worst_prediction_is_zero -v)",
+      "Bash(python eval.py --plot --out eval_results.json)",
+      "Bash(grep -v \"^Loading\\\\|UNEXPECTED\\\\|LOAD REPORT\\\\|Key\\\\|Status\\\\|Notes\\\\|BERT\\\\|BertModel\\\\|weights\\\\|it/s\\\\|----\\\\|^$\")",
+      "Bash(grep -v \"^Loading\\\\|UNEXPECTED\\\\|LOAD REPORT\\\\|Key\\\\|Status\\\\|Notes\\\\|BERT\\\\|BertModel\\\\|weights\\\\|it/s\\\\|^$\")",
+      "Bash(python -c \"from models import CrisisObservation; print\\([f for f in CrisisObservation.model_fields if 'whisper' in f.lower\\(\\) or 'ack' in f.lower\\(\\)]\\)\")",
+      "Bash(python -m pytest tests/ -v --tb=short)",
+      "Bash(python -c \"import torch; print\\('CUDA:', torch.cuda.is_available\\(\\)\\); print\\('Device count:', torch.cuda.device_count\\(\\)\\)\")",
+      "Bash(python -c \"import unsloth; print\\('unsloth ok'\\)\")",
+      "Bash(python -c \"from trl import GRPOTrainer; print\\('trl ok'\\)\")",
+      "Bash(python -c \"import torch; print\\('torch', torch.__version__\\); import transformers; print\\('transformers', transformers.__version__\\)\")",
+      "Bash(pip show *)",
+      "Bash(python -c \"import torch; t = torch.zeros\\(1\\).cuda\\(\\); print\\('GPU works, VRAM:', torch.cuda.get_device_properties\\(0\\).total_memory // 1024**3, 'GB'\\)\")",
+      "Bash(pip install *)",
+      "Bash(python -c \"from trl import GRPOTrainer, GRPOConfig; import inspect; print\\(inspect.signature\\(GRPOTrainer.__init__\\)\\)\")",
+      "Bash(python -c \"import peft; print\\('peft', peft.__version__\\)\")",
+      "Bash(python -c \"from trl import GRPOConfig; print\\('GRPOConfig ok'\\)\")",
+      "Bash(python -c \"import trl; import os; print\\(os.path.dirname\\(trl.__file__\\)\\)\")",
+      "Bash(python -c \"from trl import GRPOConfig, GRPOTrainer; print\\('import ok'\\)\")",
+      "Bash(python -c \"from trl import GRPOConfig, GRPOTrainer; import inspect; sig = inspect.signature\\(GRPOTrainer.__init__\\); print\\('ok:', list\\(sig.parameters.keys\\(\\)\\)[:12]\\)\")",
+      "Bash(python train_local.py --n 2 --generations 2 --out runs/smoke_grpo.json)",
+      "Bash(python train_local.py --n 60 --generations 4 --out runs/grpo_trained.json)",
+      "Bash(python -m pytest tests/test_grader.py -v)"
+    ]
+  }
+}
