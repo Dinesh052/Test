@@ -4,7 +4,7 @@
 
 [![OpenEnv](https://img.shields.io/badge/OpenEnv-compatible-blue)](https://github.com/meta-pytorch/OpenEnv)
 [![HuggingFace Spaces](https://img.shields.io/badge/🤗-HuggingFace_Spaces-yellow)](https://huggingface.co/spaces/Dinesh052/crisis-negotiator-openenv)
-[![Training Notebook](https://img.shields.io/badge/Colab-Training_Notebook-orange)](train_colab.ipynb)
+[![Training Notebook](https://img.shields.io/badge/Colab-Training_Notebook-orange)](train_grpo.ipynb)
 
 ---
 
@@ -24,7 +24,7 @@ Crisis negotiation is among the hardest human communication tasks — combining 
 │                                                                      │
 │  ┌─────────────────────────────────────────────────────────────┐    │
 │  │              HIDDEN STATE (partially observable)              │    │
-│  │  agitation: 0-10    trust: 0-100    breaking_point: 2-5     │    │
+│  │  agitation: 0-10    trust: 0-100    breaking_point: 8.5-9.8   │    │
 │  │  demands: [{id, text, priority, flexible, acknowledged}]     │    │
 │  │  personality: archetype    deception: {hostages, weapon}     │    │
 │  └─────────────────────────────────────────────────────────────┘    │

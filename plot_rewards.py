@@ -13,8 +13,8 @@ except ImportError:
     print("pip install matplotlib numpy")
     sys.exit(1)
 
-# Accept an explicit path or fall back to reward_log.json
-LOG = sys.argv[1] if len(sys.argv) > 1 else "reward_log.json"
+# Accept an explicit path or fall back to the GRPO training log
+LOG = sys.argv[1] if len(sys.argv) > 1 else "crisis_training_log.json"
 
 # If given the GRPO step-log, delegate to the dedicated training-curve function
 if "crisis_training" in LOG:
