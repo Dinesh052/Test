@@ -23,11 +23,14 @@ tags:
   - fleet-ai-oversight
 
 # Training artifacts
-training_script: train_colab.py
-training_notebook: train_colab.ipynb
-reward_function: reward_fn.py
+training_script: train_local.py
+legacy_training_script: train_colab.py
+training_notebook: train_grpo.ipynb
 grader: grader.py
-blog_url: "https://huggingface.co/blog/Dinesh052/crisis-negotiator-openenv"
+evaluation_script: eval_baselines.py
+blog_post: BLOG.md
+video_script: VIDEO_SCRIPT.md
+blog_url: "BLOG.md"
 demo_url: "/ui"
 
 # Themes addressed
@@ -36,7 +39,7 @@ themes:
   - "Theme 4: Self-Improvement"
 sub_themes:
   - "Fleet AI: Scalable Oversight (supervisor agent)"
-  - "Halluminate: Multi-Actor Environments (4 agents + 2 liaisons)"
+  - "Halluminate: Partially Observable Multi-Actor Environment (negotiator LLM + scripted hostage-taker + commander + supervisor)"
   - "Mercor: Token-scaled rewards (quality/log(tokens))"
   - "Snorkel AI: Simulated Experts-in-the-Loop (rotating expert feedback)"
 
