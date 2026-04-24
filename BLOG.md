@@ -21,12 +21,13 @@ We built a **6-agent crisis negotiation environment** on top of OpenEnv where
 an LLM negotiator must talk a hostage-taker into voluntary surrender —
 while managing a tactical commander demanding action, a supervisor
 flagging ethical violations, and hostages whispering intel through
-walls. Trained with GRPO on Qwen 2.5 3B for 24 minutes on a single
-RTX 4090, the agent improved mean episode reward from **0.31 → 0.71**
-and success rate from **22% → 73%**.
+walls. Trained with GRPO on Qwen 2.5-3B for 24 minutes on a single
+RTX 4090, the agent reaches **0.944 mean reward and 100% surrender rate**
+on mixed-difficulty episodes — matching the hand-coded FBI expert baseline
+while resolving crises **10% faster** (7.1 vs 7.9 steps), discovered
+entirely from sparse environment rewards with no imitation data.
 
 🤗 **HF Space**: <https://huggingface.co/spaces/Dinesh052/crisis-negotiator-openenv>
-📺 **2-min demo**: <https://youtu.be/YOUR_VIDEO_ID>
 💾 **Repo**: included in the Space
 
 ---

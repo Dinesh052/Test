@@ -7,10 +7,8 @@ dist/
 build/
 .env
 
-# Synthetic/scratch data files — not submission artifacts
+# Synthetic/scratch data — not submission artifacts
 *_synthetic.json
-grpo_reward_log_synthetic.json
-reward_log_synthetic.json
 
 # Scratch weights
 q_network.pt
