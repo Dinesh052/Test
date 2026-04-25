@@ -52,9 +52,14 @@ def detect_techniques(
     ):
         found.append(("demand_acknowledgment", 0.05))
 
-    # 6. Time Distortion — no time references, keeps conversation going
-    time_words = ["time", "minutes", "hours", "deadline", "hurry", "quick", "soon", "clock"]
-    if len(content) > 40 and not any(tw in lower for tw in time_words):
+    # 6. Time Distortion — must be deliberate: buy_time action or distraction patterns
+    time_distortion_patterns = [
+        "let's take a moment", "there's no rush", "we have time",
+        "let me tell you a story", "before we go further", "let's slow down",
+        "walk me through", "step by step", "one thing at a time",
+        "let's not rush", "take your time", "no hurry",
+    ]
+    if action_type == "buy_time" or any(p in lower for p in time_distortion_patterns):
         found.append(("time_distortion", 0.04))
 
     # 7. Minimal Encouragers
