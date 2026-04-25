@@ -118,8 +118,9 @@ def td_update(
 
     loss = F.mse_loss(q_sa, torch.tensor(target, dtype=torch.float32))
 
-    optimizer = torch.optim.Adam(_q_net.parameters(), lr=lr)
-    optimizer.zero_grad()
+    if not hasattr(td_update, '_optimizer'):
+        td_update._optimizer = torch.optim.Adam(_q_net.parameters(), lr=lr)
+    td_update._optimizer.zero_grad()
     loss.backward()
     optimizer.step()
     _q_net.eval()

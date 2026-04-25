@@ -3,7 +3,7 @@
   "difficulty": "easy",
   "title": "Failed Bank Robbery — Wants to Surrender",
   "brief": "A 24-year-old male attempted to rob a bank but the silent alarm triggered before he could leave. He is now trapped inside with 3 employees. He has a handgun but has not pointed it at anyone. He appears panicked and has expressed willingness to give up if he won't be harmed.",
-  "personality": "desperate",
+  "personality": "bluffer",
   "hidden_state": {
     "agitation": 6.5,
     "trust": 25.0,

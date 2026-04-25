@@ -30,7 +30,7 @@ coevolution_script: training/train_coevolve_grpo.py
 belief_probe: eval/plot_belief_convergence.py
 blog_post: BLOG.md
 video_script: VIDEO_SCRIPT.md
-demo_url: "/ui"
+demo_url: "https://huggingface.co/spaces/Dinesh052/crisis-negotiator-openenv"
 
 themes:
   - "Theme 1: Multi-Agent Interactions"
