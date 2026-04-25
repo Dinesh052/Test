@@ -19,3 +19,4 @@ coevolve-ht/
 
 # Logs (keep results/ JSONs, ignore raw logs)
 *.log
+.DS_Store
