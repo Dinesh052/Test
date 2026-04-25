@@ -535,6 +535,7 @@ def main():
         output_dir=CFG.output_dir,
         num_generations=CFG.num_generations,
         max_completion_length=CFG.max_new_tokens,
+        loss_type="dr_grpo",  # Dr. GRPO: removes 1/|o| length bias (arXiv:2503.20783)
         temperature=0.9,
         beta=0.04,
         per_device_train_batch_size=CFG.num_generations,  # must == num_generations
@@ -654,11 +655,11 @@ if __name__ == "__main__":
     if "7B" in CFG.model_name or "7b" in CFG.model_name:
         try:
             vram = torch.cuda.get_device_properties(0).total_mem / 1e9
-            if vram < 40 and CFG.num_generations > 2:
-                CFG.num_generations = 2
-                CFG.grad_accum = 4  # compensate with grad accum
-                print(f"[config] 7B on {vram:.0f}GB: reduced to num_generations=2, grad_accum=4")
+            if vram < 40 and CFG.num_generations > 4:
+                CFG.num_generations = 4
+                CFG.grad_accum = 2  # compensate with grad accum
+                print(f"[config] 7B on {vram:.0f}GB: reduced to num_generations=4, grad_accum=2")
         except Exception:
-            CFG.num_generations = 2
-            CFG.grad_accum = 4
+            CFG.num_generations = 4
+            CFG.grad_accum = 2
     main()

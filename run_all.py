@@ -71,7 +71,7 @@ def main():
     if cache_dir.exists():
         shutil.rmtree(cache_dir, ignore_errors=True)
         print("[preflight] Cleared unsloth_compiled_cache")
-    subprocess.run("pip install -q mergekit llm-blender 2>/dev/null || true", shell=True)
+    subprocess.run("pip install -q mergekit llm-blender matplotlib 2>/dev/null || true", shell=True)
 
     pipeline_log = {"steps": [], "start_time": time.strftime("%Y-%m-%d %H:%M:%S")}
     t_start = time.time()
