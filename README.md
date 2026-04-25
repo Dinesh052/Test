@@ -5,6 +5,7 @@
 [![OpenEnv](https://img.shields.io/badge/OpenEnv-compatible-blue)](https://github.com/meta-pytorch/OpenEnv)
 [![HuggingFace Spaces](https://img.shields.io/badge/🤗-HuggingFace_Spaces-yellow)](https://huggingface.co/spaces/Dinesh052/crisis-negotiator-openenv)
 [![Training Notebook](https://img.shields.io/badge/Colab-Training_Notebook-orange)](train_grpo.ipynb)
+[![Blog Post](https://img.shields.io/badge/📝-Blog_Post-green)](BLOG.md)
 
 ---
 
@@ -186,6 +187,22 @@ To reproduce:
 python eval/eval_baselines.py --n 50 --difficulties easy,medium,hard --include-trained
 python eval/plot_belief_convergence.py --n 50
 ```
+
+### Training Progress
+
+![GRPO training reward curve — 256 steps, rewards climb from 0.15 to 0.30+ with spikes to 0.40](plots/reward_curve_training_v2.png)
+
+### Policy Comparison
+
+![Random vs Heuristic vs Trained — trained nearly doubles random reward and cuts harm by half](plots/reward_curve.png)
+
+### Theory-of-Mind Belief Convergence
+
+![Trained model predicts hidden agitation with 0.65 error (vs 3.21 random) and detects deception with F1=0.87](plots/belief_convergence.png)
+
+### Adversarial Co-Evolution
+
+![Negotiator vs HT arms race over 4 rounds — both agents improve adversarially](plots/coevolution_curves.png)
 
 ---
 
