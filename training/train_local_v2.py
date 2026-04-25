@@ -469,7 +469,7 @@ def build_dataset(tokenizer, n: int):
     phase_counts = {"opening": 0, "negotiation": 0, "resolution": 0, "other": 0, "terminal": 0}
     for i in range(n):
         prelength = i % 6  # 0..5 to spread across phases
-        obs = reset_for_prompt(i, seed=CFG.seed + i, prelength=prelength)
+        obs = reset_for_prompt(i, seed=CFG.seed + i * 7, prelength=prelength)
         user_prompt = build_prompt(obs)
         msgs = [
             {"role": "system", "content": SYSTEM_PROMPT},
