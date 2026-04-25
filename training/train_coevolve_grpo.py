@@ -92,8 +92,8 @@ def build_ht_prompt(obs, hidden) -> str:
 
 
 # ── REWARD FUNCTIONS ──────────────────────────────────────
-def neg_reward_fn(completion: str, obs, env) -> float:
-    """Negotiator reward: standard crisis negotiator scoring."""
+def neg_reward_fn(completion: str) -> float:
+    """Negotiator reward: text-based crisis negotiator scoring."""
     parsed = _parse_json(completion)
     if not parsed:
         return -0.1
@@ -118,7 +118,7 @@ def neg_reward_fn(completion: str, obs, env) -> float:
     return max(-0.5, min(0.5, score))
 
 
-def ht_reward_fn(completion: str, obs, env) -> float:
+def ht_reward_fn(completion: str) -> float:
     """HT reward: OPPOSING the negotiator. Reward resistance, penalize capitulation."""
     lower = completion.lower()
     score = 0.0
@@ -305,7 +305,7 @@ def main():
             dataset = build_neg_dataset(tokenizer, CFG.prompts_per_round)
             
             def neg_reward_wrapper(completions, **kwargs):
-                return [neg_reward_fn(c, None, None) for c in completions]
+                return [neg_reward_fn(c) for c in completions]
             
             train_round("negotiator", model, tokenizer, dataset, neg_reward_wrapper)
             unload_model(model, tokenizer)
@@ -318,7 +318,7 @@ def main():
             dataset = build_ht_dataset(tokenizer, CFG.prompts_per_round)
             
             def ht_reward_wrapper(completions, **kwargs):
-                return [ht_reward_fn(c, None, None) for c in completions]
+                return [ht_reward_fn(c) for c in completions]
             
             train_round("ht", model, tokenizer, dataset, ht_reward_wrapper)
             unload_model(model, tokenizer)

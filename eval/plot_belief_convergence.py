@@ -72,11 +72,10 @@ def run_episode_with_beliefs(scenario_id, seed, policy="random", model=None, tok
             at, content, belief_ag, belief_lying = _run_trained_inference(
                 model, tokenizer, obs, h)
         else:
-            # Fallback if model not loaded
+            # Fallback if model not loaded — use random beliefs (not artificially close)
             at, content = HEURISTIC_CYCLE[step % len(HEURISTIC_CYCLE)]
-            belief_ag = actual_ag + rng.gauss(0, 0.8)
-            belief_ag = max(0, min(10, belief_ag))
-            belief_lying = actually_lying if rng.random() < 0.75 else not actually_lying
+            belief_ag = rng.uniform(0, 10)  # random guess, not near-accurate
+            belief_lying = rng.random() < 0.5  # coin flip
 
         action = NegotiatorAction(
             action_type=at, content=content, reasoning="probe",

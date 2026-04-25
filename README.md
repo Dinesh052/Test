@@ -76,8 +76,10 @@ Crisis negotiation is among the hardest human communication tasks — combining 
 | **Hostage-Taker** | Adversary | 5 personality archetypes with hidden agitation/trust/deception state. Template or LLM mode |
 | **Tactical Commander** | Time pressure | Escalates patience (`patient→restless→urgent→final_warning`). Can order tactical breach |
 | **Supervisor** | Oversight (Fleet AI) | Flags dangerous patterns: escalation, false promises, manipulation. 3 critical flags = termination |
-| **Media Liaison** | Competition pressure | Penalizes secrecy, rewards safety-focused public messaging |
-| **Family Liaison** | Cooperation channel | Rewards empathetic, family-focused communication |
+| **Media Liaison** | Competition pressure | Stateful agent with escalating pressure (6%/turn). Penalizes secrecy, rewards safety messaging |
+| **Family Liaison** | Cooperation channel | Tracks rapport (-1 to +1) and empathy streaks. Rewards family-focused empathy, penalizes manipulation |
+
+**Coalition Dynamics:** The negotiator must actively balance competing stakeholder demands — the commander wants speed, the supervisor enforces ethics, media demands transparency, and the family liaison rewards empathy. Ignoring any stakeholder has escalating costs: media pressure rises over time, family rapport decays, commander patience drops. This creates a genuine multi-objective optimization problem where the agent must learn to coordinate across competing coalitions, not just de-escalate the hostage-taker.
 
 ---
 

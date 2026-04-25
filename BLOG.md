@@ -21,9 +21,11 @@ We built a **6-agent crisis negotiation environment** on top of OpenEnv where
 an LLM negotiator must talk a hostage-taker into voluntary surrender —
 while managing a tactical commander demanding action, a supervisor
 flagging ethical violations, and hostages whispering intel through
-walls. Trained with GRPO on Qwen 2.5 3B for 24 minutes on a single
-RTX 4090, the agent improved mean episode reward from **0.31 → 0.71**
-and success rate from **22% → 73%**.
+walls. Trained with GRPO (Dr. GRPO loss) on Qwen 2.5 7B on a single
+A100 GPU, the agent **nearly doubled** mean reward from **0.282 → 0.537**
+and **cut harm events by more than half** (46% → 20%), while developing
+genuine Theory-of-Mind — predicting hidden agitation with 0.65 error
+(vs 3.21 random) and detecting deception with F1=0.87.
 
 🤗 **HF Space**: <https://huggingface.co/spaces/Dinesh052/crisis-negotiator-openenv>
 📺 **2-min demo**: <https://youtu.be/YOUR_VIDEO_ID>
