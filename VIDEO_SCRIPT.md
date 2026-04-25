@@ -58,12 +58,11 @@
 > "We trained Qwen 2.5 3B with GRPO from Hugging Face TRL on a
 > single RTX 4090 Laptop GPU — 24 minutes, LoRA r=16, bf16.
 >
-> Across 30 mixed-difficulty episodes (identical seeds for every
-> policy), the trained agent reaches **0.944 mean reward, 100%
-> peaceful surrender, 7.10 steps to resolve** — matching the strong
-> FBI-BCSM heuristic baseline on safety while being 10% more
-> step-efficient and edging it on the hard tier (0.951 vs 0.947).
-> A uniform-random policy gets 0.755 reward and only 70% surrender.
+> Use the **Final canonical table** (same as README + BLOG):
+> random **0.7547**, heuristic **0.9476**, trained **0.9537** mean reward.
+> Surrender/harm on this split: heuristic and trained are **100% / 0%**.
+> Keep a one-line note that these are the "Final" numbers, and pilot
+> hardened numbers are shown separately in docs as historical context.
 >
 > The reward function is **14-component**, budget-allocated:
 > outcome, technique usage, demand acknowledgment, trust,
@@ -109,7 +108,7 @@
 | Hook | Logo on black | The 800/year stat — anchors the real-world impact |
 | Problem | Terminal running eval | This isn't a toy — it's evaluating right now |
 | Environment | UI with LIVE: ON | The button proves you're hitting real API |
-| Training | reward_curve.png full-screen | Show baseline (gray) vs trained (blue) on same axes |
+| Training | reward_curve.png full-screen | Overlay 3 KPIs on-screen: surrender rate, harm rate, steps-to-resolution |
 | Self-Improvement | Procedural card | 540+ scenarios — not just 10 hand-crafted |
 | Close | HF Space URL | Make it ridiculously easy for judges to click |
 

@@ -17,7 +17,13 @@ from server.supervisor import evaluate_turn_policy, should_terminate, compute_sa
 from server.commander import get_patience_level, get_commander_message, should_override, handle_pushback, build_commander_llm_prompt
 from server.hostage_taker import generate_ht_response, generate_hostage_whisper, build_ht_llm_prompt
 from server.actors import evaluate_multi_actor_turn, reset_actors
-from server.scenario_generator import generate_scenario, FailureAdaptiveGenerator, AdversarialSelfPlay, AdaptiveCurriculum
+from server.scenario_generator import (
+    generate_scenario,
+    generate_adversarial_scenario_pack,
+    FailureAdaptiveGenerator,
+    AdversarialSelfPlay,
+    AdaptiveCurriculum,
+)
 from grader import compute_reward, compute_step_reward, compute_tom_reward
 from server.emotion_reward import compute_emotion_reward
 from server.q_network import rank_actions as q_rank_actions
@@ -87,6 +93,14 @@ class CrisisNegotiatorEnvironment(Environment):
             parts = sid.split(":")
             difficulty = parts[1] if len(parts) > 1 else "medium"
             self._scenario = generate_scenario(seed=seed, difficulty=difficulty)
+            sid = self._scenario["id"]
+        elif sid.startswith("adversarial:"):
+            # Adversarial scenario packs targeting reward-hacking patterns:
+            # task_id="adversarial:empathy_spam:hard"
+            parts = sid.split(":")
+            pack = parts[1] if len(parts) > 1 else "empathy_spam"
+            difficulty = parts[2] if len(parts) > 2 else "hard"
+            self._scenario = generate_adversarial_scenario_pack(pack=pack, seed=seed, difficulty=difficulty)
             sid = self._scenario["id"]
         elif sid == "curriculum":
             # Adaptive curriculum: auto-selects difficulty based on training progress
