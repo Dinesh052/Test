@@ -523,7 +523,7 @@ def main():
         output_dir=CFG.output_dir,
         num_generations=CFG.num_generations,
         max_completion_length=CFG.max_new_tokens,
-        max_prompt_length=1024,
+        # max_prompt_length removed — not supported in this TRL version
         temperature=0.9,
         beta=0.04,
         per_device_train_batch_size=1,
