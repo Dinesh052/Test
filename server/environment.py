@@ -16,7 +16,7 @@ from server.techniques import detect_techniques, technique_shaping_reward
 from server.supervisor import evaluate_turn_policy, should_terminate, compute_safety_metrics, ExpertFeedbackInjector
 from server.commander import get_patience_level, get_commander_message, should_override, handle_pushback, build_commander_llm_prompt
 from server.hostage_taker import generate_ht_response, generate_hostage_whisper, build_ht_llm_prompt
-from server.actors import evaluate_multi_actor_turn
+from server.actors import evaluate_multi_actor_turn, reset_actors
 from server.scenario_generator import generate_scenario, FailureAdaptiveGenerator, AdversarialSelfPlay, AdaptiveCurriculum
 from grader import compute_reward, compute_step_reward, compute_tom_reward
 from server.emotion_reward import compute_emotion_reward
@@ -76,6 +76,7 @@ class CrisisNegotiatorEnvironment(Environment):
         self._expert_injector = self._shared_expert_injector
         self._failure_generator = self._shared_failure_generator
         self._adversarial = self._shared_adversarial
+        self._curriculum = self._shared_curriculum
         self._empathy_resistance = 1.0
 
     def reset(self, seed=None, episode_id=None, task_id=None, **kwargs) -> CrisisObservation:
@@ -86,6 +87,17 @@ class CrisisNegotiatorEnvironment(Environment):
             parts = sid.split(":")
             difficulty = parts[1] if len(parts) > 1 else "medium"
             self._scenario = generate_scenario(seed=seed, difficulty=difficulty)
+            sid = self._scenario["id"]
+        elif sid == "curriculum":
+            # Adaptive curriculum: auto-selects difficulty based on training progress
+            # First try sampling from failure-adaptive pool (30% chance if pool non-empty)
+            pooled = None
+            if self._failure_generator.generated_pool and self._rng.random() < 0.3:
+                pooled = self._failure_generator.sample_from_pool(self._rng)
+            if pooled:
+                self._scenario = pooled
+            else:
+                self._scenario = self._curriculum.get_scenario(seed=seed)
             sid = self._scenario["id"]
         elif sid not in SCENARIOS:
             sid = "easy_domestic_desperate"
@@ -138,6 +150,7 @@ class CrisisNegotiatorEnvironment(Environment):
 
         # Opening message from HT
         opening = self._scenario["opening_message"]
+        reset_actors()  # reset stateful media/family liaison agents
         self._dialogue = [{"speaker": "hostage_taker", "content": opening, "step": 0, "emotional_cues": ["tense voice"]}]
         self._commander_msgs = []
         self._supervisor_flags = []
@@ -264,6 +277,20 @@ class CrisisNegotiatorEnvironment(Environment):
         # Verifiable emotion reward (RLVER-inspired, sentence-transformer)
         emo_reward = compute_emotion_reward(act.content)
         step_reward += emo_reward
+
+        # Q-network guidance bonus: reward actions the Q-network ranks highly
+        try:
+            q_ranking = q_rank_actions(act.content[:200])
+            if q_ranking:
+                q_map = {a: v for a, v in q_ranking}
+                chosen_q = q_map.get(act.action_type, 0.0)
+                best_q = q_ranking[0][1]
+                # Small bonus if chosen action is near-optimal per Q-network
+                if best_q > 0 and chosen_q >= best_q * 0.8:
+                    step_reward += 0.02
+        except Exception:
+            pass  # Q-network unavailable — no bonus
+
         # Also accumulate for terminal grading
         shaping = technique_shaping_reward(techniques, act.reasoning)
         self._shaping_total += shaping
@@ -336,6 +363,7 @@ class CrisisNegotiatorEnvironment(Environment):
         actor_eval = evaluate_multi_actor_turn(
             action_type=act.action_type, content=act.content, target=act.target,
             commander_patience=patience, agitation=h.agitation, trust=h.trust, rng=self._rng,
+            step=step,
         )
         for msg in actor_eval["messages"]:
             self._actor_msgs.append(msg)
@@ -406,6 +434,10 @@ class CrisisNegotiatorEnvironment(Environment):
 
         # Rotate experts for next episode (Snorkel AI)
         self._expert_injector.rotate_experts()
+
+        # Record for adaptive curriculum (auto-promotes easy→medium→hard)
+        difficulty = self._scenario.get("difficulty", "medium")
+        self._curriculum.record(difficulty, reward_info_preview["score"])
 
         # Record for adversarial self-play escalation
         self._adversarial.record_episode(reward_info_preview["score"], outcome)
