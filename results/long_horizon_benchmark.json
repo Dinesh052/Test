@@ -1,0 +1,24 @@
+{
+  "config": {
+    "n": 12,
+    "seed_offset": 40000,
+    "task": "generate:long",
+    "include_trained": false
+  },
+  "results": {
+    "random": {
+      "n": 12,
+      "mean_reward": 0.2378,
+      "mean_steps": 12.33,
+      "surrender_rate": 0.0833,
+      "harm_rate": 0.9167
+    },
+    "heuristic": {
+      "n": 12,
+      "mean_reward": 0.6669,
+      "mean_steps": 10.42,
+      "surrender_rate": 0.6667,
+      "harm_rate": 0.3333
+    }
+  }
+}
