@@ -425,8 +425,12 @@ def load_model(model_name: str):
     try:
         from unsloth import FastLanguageModel
         print(f"[model] Loading {model_name} via Unsloth...")
+        # Use 4-bit only if VRAM < 40GB; otherwise bf16 avoids dtype mismatch
+        vram = torch.cuda.get_device_properties(0).total_mem / 1e9 if torch.cuda.is_available() else 0
+        use_4bit = vram < 40
         model, tokenizer = FastLanguageModel.from_pretrained(
-            model_name, max_seq_length=CFG.max_seq_length, load_in_4bit=True)
+            model_name, max_seq_length=CFG.max_seq_length,
+            load_in_4bit=use_4bit, dtype=torch.bfloat16 if not use_4bit else None)
         model = FastLanguageModel.get_peft_model(
             model, r=CFG.lora_r,
             target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],
