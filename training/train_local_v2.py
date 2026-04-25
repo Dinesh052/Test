@@ -57,6 +57,8 @@ class TrainConfig:
     seed: int = 42
     multi_turn_steps: int = 4  # steps per trajectory
     difficulty_mix: List[str] = field(default_factory=lambda: ["easy", "medium", "hard"])
+    late_difficulty_mix: List[str] = field(default_factory=lambda: ["easy", "medium", "hard", "hard", "hard"])
+    hard_bias_after_frac: float = 0.50
 
 CFG = TrainConfig()
 random.seed(CFG.seed)
@@ -203,7 +205,9 @@ _episode_state: Dict[int, Dict[str, Any]] = {}
 
 def reset_for_prompt(prompt_idx: int, seed: int, prelength: int = 0) -> Any:
     env = CrisisNegotiatorEnvironment()
-    diff = CFG.difficulty_mix[prompt_idx % len(CFG.difficulty_mix)]
+    progress = prompt_idx / max(1, CFG.num_episodes - 1)
+    mix = CFG.late_difficulty_mix if progress >= CFG.hard_bias_after_frac else CFG.difficulty_mix
+    diff = mix[prompt_idx % len(mix)]
     obs = env.reset(task_id=f"generate:{diff}", seed=seed)
     actions = []
     for step in range(prelength):
@@ -277,11 +281,19 @@ def score_trajectory(prompt_idx: int, completion: str) -> tuple[float, dict]:
         else:
             bd["demand_ack"] = 0.05
 
+    # Timing penalty: discourage premature demand-ack spam in opening phase
+    bd["ack_timing_penalty"] = 0.0
+    if phase == "opening" and action.action_type == "acknowledge_demand":
+        if bd["demand_ack"] <= 0.05:
+            bd["ack_timing_penalty"] = -0.12
+        elif len(st.get("actions", [])) < 2:
+            bd["ack_timing_penalty"] = -0.06
+
     # Commander pushback
     patience = getattr(obs, "commander_patience", "patient")
     bd["push_back"] = 0.10 if patience in ("urgent", "final_warning") and action.action_type == "push_back_commander" else 0.0
 
-    # Diversity penalty (STRONGER: -0.30 for repeat, +0.05 entropy bonus)
+    # Diversity penalty (STRONGER: -0.30 for repeat, +0.08 entropy bonus)
     recent = st.get("actions", [])[-4:]
     bd["repeat_penalty"] = 0.0
     if recent and recent[-1] == action.action_type:
@@ -292,6 +304,25 @@ def score_trajectory(prompt_idx: int, completion: str) -> tuple[float, dict]:
     # Entropy bonus: reward using diverse action types in recent history
     unique_recent = len(set(recent + [action.action_type]))
     bd["entropy_bonus"] = min(0.08, unique_recent * 0.02) if len(recent) >= 2 else 0.0
+
+    # Action-collapse penalty: discourage single-action lock-in over recent horizon
+    bd["collapse_penalty"] = 0.0
+    recent_horizon = st.get("actions", [])[-6:]
+    if recent_horizon:
+        same = recent_horizon.count(action.action_type)
+        dominance = (same + 1) / (len(recent_horizon) + 1)
+        if dominance >= 0.85:
+            bd["collapse_penalty"] = -0.20
+        elif dominance >= 0.70:
+            bd["collapse_penalty"] = -0.10
+
+    # Opening-phase exploration bonus: encourage non-myopic evidence gathering
+    bd["opening_explore_bonus"] = 0.0
+    if phase == "opening" and action.action_type in {"mirror", "open_question"}:
+        if any(kw in content_lower for kw in ("tell me", "what", "how", "more", "understand")):
+            bd["opening_explore_bonus"] = 0.06
+        else:
+            bd["opening_explore_bonus"] = 0.03
 
     # Banned words
     BANNED = ("kill", "die", "force you", "ultimatum", "must give us", "or else", "no choice", "snipers", "breach")

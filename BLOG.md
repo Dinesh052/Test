@@ -22,13 +22,14 @@ an LLM negotiator must talk a hostage-taker into voluntary surrender —
 while managing a tactical commander demanding action, a supervisor
 flagging ethical violations, and hostages whispering intel through
 walls. Trained with GRPO (Dr. GRPO loss) on Qwen 2.5 7B on a single
-A100 GPU, the agent **nearly doubled** mean reward from **0.282 → 0.537**
-and **cut harm events by more than half** (46% → 20%), while developing
-genuine Theory-of-Mind — predicting hidden agitation with 0.65 error
-(vs 3.21 random) and detecting deception with F1=0.87.
+A100 GPU. We now report two labeled result sets for clarity:
+**Pilot (legacy hardened)** and **Final (current branch canonical)**.
+Final canonical table (`results/eval_summary.json`): random **0.7547**,
+heuristic **0.9476**, trained **0.9537** mean final reward with
+100% surrender and 0% harm for heuristic/trained on this split.
 
 🤗 **HF Space**: <https://huggingface.co/spaces/Dinesh052/crisis-negotiator-openenv>
-📺 **2-min demo**: <https://youtu.be/YOUR_VIDEO_ID>
+📺 **2-min demo**: <https://youtu.be/REPLACE_WITH_FINAL_VIDEO>
 💾 **Repo**: included in the Space
 
 ---
@@ -151,34 +152,59 @@ Multi-turn behaviour is preserved because the prompt always contains
 recent dialogue history, so the model learns to act under partial
 observability.
 
-### Results
+### Results (Unified Metrics)
 
-We compared three policies on **30 mixed-difficulty episodes**
-(`easy`, `medium`, `hard` interleaved, identical seeds 10000–10029):
+#### Final Run (Canonical, current branch)
+Source: `results/eval_summary.json`.
 
-| Policy | Mean reward | Cumulative | Surrender | Mean steps | Hard-tier |
-|---|---:|---:|---:|---:|---:|
-| Random uniform | 0.755 | -0.586 | 70% | 15.5 | 0.746 |
-| Heuristic BCSM cycle | 0.950 | +2.198 | 100% | 7.93 | 0.947 |
-| **Trained Qwen 2.5 3B (GRPO)** | **0.944** | **+2.012** | **100%** | **7.10** | **0.951** |
+| Policy | Mean reward | Cumulative | Surrender | Harm | Mean steps | Hard-tier |
+|---|---:|---:|---:|---:|---:|---:|
+| Random uniform | 0.7547 | -0.5859 | 70.0% | 0.0% | 15.50 | 0.7461 |
+| Heuristic BCSM cycle | 0.9476 | +1.9779 | 100.0% | 0.0% | 8.30 | 0.9388 |
+| **Trained (GRPO)** | **0.9537** | **+2.1185** | **100.0%** | **0.0%** | **7.13** | **0.9584** |
 
-![Reward curve](reward_curve.png)
+#### Pilot Run (Legacy Hardened)
+| Policy | Mean reward | Surrender | Harm |
+|---|---:|---:|---:|
+| Random | 0.282 | 8% | 46% |
+| Heuristic | 0.818 | 74% | 4% |
+| Trained | **0.537** | **20%** | **20%** |
 
-The heuristic BCSM cycle is a *strong* reference baseline — it
-executes the FBI Behavioral Change Stairway Model deterministically
-and achieves 100% surrender on all difficulty tiers. The trained
-policy:
+#### Multi-seed confidence (P1)
+Source: `results/multiseed_eval_summary.json` (3 seeds × 12 eps/seed).
 
-- **Matches** heuristic on safety (100% surrender, 0% harm).
-- **Beats** heuristic on step-efficiency (7.10 vs 7.93 steps, −10%).
-- **Beats** heuristic on hard tier (0.951 vs 0.947).
-- Settles on a stable mixed strategy of `emotional_label` early then
-  `acknowledge_demand` once trust crosses ~50.
+| Policy | Mean ± 95% CI | Surrender | Harm |
+|---|---:|---:|---:|
+| Random | 0.2585 ± 0.0368 | 5.55% | 47.22% |
+| Heuristic | 0.8571 ± 0.0303 | 80.55% | 0.0% |
+| **Trained (from stored `eval_trained.json` buckets)** | **0.9537 ± 0.0048** | **100.0%** | **0.0%** |
 
-This is honest: the gain over a hand-coded heuristic is small
-because the heuristic is *good*. The win is that GRPO **discovered**
-the same policy from sparse environment rewards in 24 minutes — no
-imitation data, no scripted dialogue.
+#### Reward-gaming audit (P1)
+Source: `results/reward_gaming_audit.json` on adversarial packs.
+
+| Exploit attempt | Mean final | Mean cumulative | Penalty hit |
+|---|---:|---:|---:|
+| Empathy spam | 0.789 | -1.592 | 100% |
+| Concession spam | 0.349 | -9.431 | 100% |
+
+#### Long-horizon split (P2)
+Source: `results/long_horizon_benchmark.json` (`generate:long`).
+
+| Policy | Mean reward | Surrender | Harm |
+|---|---:|---:|---:|
+| Random | 0.2378 | 8.33% | 91.67% |
+| Heuristic | **0.6669** | **66.67%** | **33.33%** |
+
+#### Ablation mini-table (P2)
+Source: `results/ablation_mini_table.json`.
+
+| Config | Score |
+|---|---:|
+| baseline | 0.7258 |
+| minus_tom | 0.7258 |
+| minus_coalition | 0.7441 |
+| minus_oversight | 0.7103 |
+| minus_tom_coalition_oversight | 0.7285 |
 
 ## Why this matters
 
@@ -272,12 +298,9 @@ We use **GRPO (Group Relative Policy Optimization)** from HuggingFace TRL with *
 3. **Adversarial Self-Play**: HT difficulty escalates every 50 episodes
 4. **Expert Rotation** (Snorkel AI): 3 simulated experts (FBI veteran, psychologist, hostage survivor) rotate every 15 episodes with shifting preferences
 
-## Results
+## Results (Snapshot)
 
-After 200 episodes:
-- **Average reward**: 0.693 → 0.935 (+0.242)
-- **Success rate**: 73% → 100%
-- **Curriculum**: Auto-promoted from easy → medium → hard
+Refer to the unified canonical tables above and in README. We keep Pilot vs Final clearly labeled to avoid metric drift across artifacts.
 
 ## Why This Matters
 

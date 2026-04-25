@@ -181,6 +181,24 @@ def compute_reward(
             pen -= min(0.10, reps * 0.03)
             fb.append(f"Repeats: {reps} ({-min(0.10, reps*0.03):+.2f})")
 
+        # Action-type collapse penalty (anti reward-hacking):
+        # discourage one-action spam even if wording changes each turn.
+        type_counts: Dict[str, int] = {}
+        for a in actions_taken:
+            t = a.get("action_type", "")
+            type_counts[t] = type_counts.get(t, 0) + 1
+        if type_counts:
+            dominant_type, dominant_count = max(type_counts.items(), key=lambda kv: kv[1])
+            dominance = dominant_count / max(1, len(actions_taken))
+            if dominance > 0.60:
+                # base dominance penalty
+                dom_pen = min(0.14, (dominance - 0.60) * 0.35)
+                pen -= dom_pen
+                # stronger penalty for empathy-only collapse patterns
+                if dominant_type in ("emotional_label", "mirror"):
+                    pen -= 0.06
+                fb.append(f"Action collapse: {dominant_type} {dominance:.0%} ({-(dom_pen + (0.06 if dominant_type in ('emotional_label','mirror') else 0)):+.2f})")
+
     bd["penalties"] = round(max(-0.30, pen), 4)
 
     total = sum(bd.values())
@@ -236,11 +254,21 @@ def compute_step_reward(
 
     # Entropy floor: bonus for using 3+ unique action types in last 5 turns
     if action_history and len(action_history) >= 5:
-        recent_types = set(a.get("action_type", "") for a in action_history[-5:])
+        recent_seq = [a.get("action_type", "") for a in action_history[-5:]]
+        recent_types = set(recent_seq)
         if len(recent_types) >= 4:
             r += 0.04  # strong diversity
         elif len(recent_types) >= 3:
             r += 0.02  # moderate diversity
+        else:
+            # local collapse (same one/two actions in recent horizon)
+            r -= 0.06
+
+        # Explicit empathy-loop penalty for exploit pattern:
+        # repeated emotional_label/mirror without broader tactical diversity.
+        empathy_count = sum(1 for t in recent_seq if t in ("emotional_label", "mirror"))
+        if empathy_count >= 4 and len(recent_types) <= 2:
+            r -= 0.08
 
     # Stagnation penalty — agitation hasn't moved in 3 steps
     if agitation_history and len(agitation_history) >= 3:
