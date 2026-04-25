@@ -25,7 +25,7 @@ app = create_app(
     NegotiatorAction,
     CrisisObservation,
     env_name="crisis_negotiator",
-    max_concurrent_envs=1,
+    max_concurrent_envs=4,
 )
 
 # ── Episode storage ──────────────────────────────────────

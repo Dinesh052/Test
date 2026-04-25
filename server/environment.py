@@ -44,6 +44,11 @@ SCENARIOS = _load_scenarios()
 class CrisisNegotiatorEnvironment(Environment):
     SUPPORTS_CONCURRENT_SESSIONS = False
 
+    # Class-level singletons — persist across environment re-instantiations during training
+    _shared_expert_injector = ExpertFeedbackInjector()
+    _shared_adversarial = AdversarialSelfPlay()
+    _shared_failure_generator = FailureAdaptiveGenerator()
+
     def __init__(self, ht_mode: str = "template"):
         """
         Args:
@@ -66,9 +71,9 @@ class CrisisNegotiatorEnvironment(Environment):
         self._shaping_total = 0.0
         self._coalition_score = 0.0
         self._oversight_predictions: list[bool] = []
-        self._expert_injector = ExpertFeedbackInjector()
-        self._failure_generator = FailureAdaptiveGenerator()
-        self._adversarial = AdversarialSelfPlay()
+        self._expert_injector = self._shared_expert_injector
+        self._failure_generator = self._shared_failure_generator
+        self._adversarial = self._shared_adversarial
         self._empathy_resistance = 1.0
 
     def reset(self, seed=None, episode_id=None, task_id=None, **kwargs) -> CrisisObservation:
@@ -256,8 +261,7 @@ class CrisisNegotiatorEnvironment(Environment):
 
         # Verifiable emotion reward (RLVER-inspired, sentence-transformer)
         emo_reward = compute_emotion_reward(act.content)
-        if emo_reward is not None:
-            step_reward += emo_reward
+        step_reward += emo_reward
         # Also accumulate for terminal grading
         shaping = technique_shaping_reward(techniques, act.reasoning)
         self._shaping_total += shaping

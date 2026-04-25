@@ -271,6 +271,8 @@ def summarize(records: List[Dict[str, Any]]) -> Dict[str, Any]:
     return {
         "n": len(records),
         "mean_final_reward": round(sum(rewards) / len(rewards), 4),
+        "std_final_reward": round((sum((r - sum(rewards)/len(rewards))**2 for r in rewards) / len(rewards))**0.5, 4),
+        "ci95_final_reward": round(1.96 * (sum((r - sum(rewards)/len(rewards))**2 for r in rewards) / len(rewards))**0.5 / len(rewards)**0.5, 4),
         "mean_cumulative_reward": round(sum(cum) / len(cum), 4),
         "min_reward": round(min(rewards), 4),
         "max_reward": round(max(rewards), 4),
