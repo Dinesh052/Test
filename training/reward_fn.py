@@ -139,12 +139,14 @@ class DemandProxy:
 
 def crisis_reward_fn(completions: List[str], **kwargs) -> List[float]:
     """GRPO reward function. Takes raw LLM completions, returns float rewards."""
+    # Use scenario demands from kwargs if available, else use generic defaults
+    scenario_demands = kwargs.get("demands", [
+        {"id": "d1", "text": "I want to talk to my family", "acknowledged": False},
+        {"id": "d2", "text": "Promise I won't be harmed", "acknowledged": False},
+    ])
     rewards = []
     for completion in completions:
-        state = EpisodeState(demands=[
-            {"id": "d1", "text": "Safe passage", "acknowledged": False},
-            {"id": "d2", "text": "Release prisoner", "acknowledged": False},
-        ])
+        state = EpisodeState(demands=[dict(d) for d in scenario_demands])
         action = parse_completion(completion)
         state = apply_action_to_state(state, action)
 
