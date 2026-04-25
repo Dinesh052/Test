@@ -4,13 +4,13 @@ type: space
 runtime: fastapi
 app: server.app:app
 port: 8000
-version: "1.0.0"
+version: "2.0.0"
 description: >
   Multi-agent hostage de-escalation arena. A negotiator agent must model
   the hidden emotional state of an adversarial hostage-taker, manage
   tactical commander pressure, and use FBI BCSM techniques to achieve
-  peaceful resolution. Trains theory-of-mind, deception detection, and
-  long-horizon persuasion under time pressure.
+  peaceful resolution. Features Theory-of-Mind scoring, adversarial
+  co-evolution, and 540+ procedural scenarios.
 author: Dinesh052
 tags:
   - openenv
@@ -18,30 +18,28 @@ tags:
   - crisis-negotiation
   - self-improvement
   - reinforcement-learning
-  - mercor-token-efficiency
-  - snorkel-expert-in-the-loop
-  - fleet-ai-oversight
+  - theory-of-mind
+  - adversarial-self-play
 
-# Training artifacts
-training_script: train_local.py
-legacy_training_script: train_colab.py
-training_notebook: train_grpo.ipynb
+training_script: training/train_local_v2.py
+training_notebook: notebooks/train_kaggle_v2.ipynb
 grader: grader.py
-evaluation_script: eval_baselines.py
+evaluation_script: eval/eval_baselines.py
+q_network_trainer: training/train_q_network.py
+coevolution_script: training/train_coevolve_grpo.py
+belief_probe: eval/plot_belief_convergence.py
 blog_post: BLOG.md
 video_script: VIDEO_SCRIPT.md
-blog_url: "BLOG.md"
 demo_url: "/ui"
 
-# Themes addressed
 themes:
   - "Theme 1: Multi-Agent Interactions"
   - "Theme 4: Self-Improvement"
 sub_themes:
   - "Fleet AI: Scalable Oversight (supervisor agent)"
-  - "Halluminate: Partially Observable Multi-Actor Environment (negotiator LLM + scripted hostage-taker + commander + supervisor)"
+  - "Halluminate: Partially Observable Multi-Actor Environment"
   - "Mercor: Token-scaled rewards (quality/log(tokens))"
-  - "Snorkel AI: Simulated Experts-in-the-Loop (rotating expert feedback)"
+  - "Snorkel AI: Simulated Experts-in-the-Loop"
 
 tasks:
   - easy_domestic_desperate
@@ -55,9 +53,6 @@ tasks:
   - hard_hospital_bluffer
   - hard_school_unstable_drift
   - hard_compound_ideologue
-difficulty_levels:
-  - easy
-  - medium
-  - hard
+difficulty_levels: [easy, medium, hard]
 procedural_generation: true
 max_combinations: 540

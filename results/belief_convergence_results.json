@@ -1,0 +1,20 @@
+{
+  "random": {
+    "mean_belief_error": 3.6,
+    "deception_f1": 0.68,
+    "deception_precision": 1.0,
+    "deception_recall": 0.51
+  },
+  "heuristic": {
+    "mean_belief_error": 6.63,
+    "deception_f1": 0.0,
+    "deception_precision": 0.0,
+    "deception_recall": 0.0
+  },
+  "trained": {
+    "mean_belief_error": 0.46,
+    "deception_f1": 0.89,
+    "deception_precision": 1.0,
+    "deception_recall": 0.8
+  }
+}
