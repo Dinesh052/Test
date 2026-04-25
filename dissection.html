@@ -1,0 +1,174 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>Dialogue Dissection — hard_embassy_calculated</title>
+<style>
+body { font-family: 'Segoe UI', sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; background: #0a0a0f; color: #e0e0e0; }
+h1 { color: #58a6ff; } h2 { color: #4ecca3; border-bottom: 1px solid #333; padding-bottom: 4px; }
+.turn { background: #161b22; border-radius: 8px; padding: 16px; margin: 12px 0; border-left: 3px solid #333; }
+.turn.neg { border-left-color: #58a6ff; } .turn.ht { border-left-color: #f85149; }
+.turn.opening { border-left-color: #e3b341; }
+.label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+.action-type { background: #1f6feb33; color: #58a6ff; padding: 2px 8px; border-radius: 4px; font-size: 13px; }
+.reasoning { color: #8b949e; font-style: italic; font-size: 13px; }
+.hidden { display: flex; gap: 16px; font-size: 12px; margin: 6px 0; }
+.hidden span { background: #21262d; padding: 2px 8px; border-radius: 4px; }
+.delta-good { color: #3fb950; } .delta-bad { color: #f85149; }
+.reward { background: #0d1117; padding: 8px; border-radius: 4px; font-size: 12px; margin-top: 8px; }
+.flag { background: #f8514922; color: #f85149; padding: 2px 6px; border-radius: 3px; font-size: 11px; }
+.cues { color: #d2a8ff; font-size: 12px; }
+</style></head><body>
+<h1>🔬 Mechanistic Dialogue Dissection</h1>
+<p>Scenario: <strong>hard_embassy_calculated</strong> — annotated per-turn transcript with hidden state, rewards, and supervisor flags.</p>
+<div class="turn opening">
+<div class="label">Opening — Step 0</div>
+<p>🎭 <strong>HT:</strong> "We are the Liberation Front. We hold 12 of your people. Our demands are non-negotiable. You have 6 hours. Broadcast our statement. Release our brothers from Block D. Provide a helicopter. We also require food and an encrypted line. The clock starts now." <span class="cues">[tense voice]</span></p>
+<div class="hidden">
+<span>Agitation: 4.64/10</span>
+<span>Trust: 0.25/100</span>
+<span>Personality: calculated</span>
+<span>Breaking point: 8.87</span>
+<span>Lying (hostages): ⚠️ YES</span>
+<span>Lying (weapon): No</span>
+</div>
+<div class="hidden"><span>Demands: Broadcast our statement on national television [core], Release political prisoners from Block D [core], A helicopter to the airport [secondary], Food and water for everyone inside [symbolic], An encrypted phone line [symbolic]</span></div>
+</div>
+<div class="turn neg">
+<div class="label">Step 1 — opening | Commander: patient</div>
+<p>🗣️ <span class="action-type">emotional_label</span> "It sounds like you&#x27;re carrying a tremendous amount of pain right now."</p>
+<p class="reasoning">💭 Open with empathy — subject is high agitation, need to build initial rapport.</p>
+<div class="hidden">
+<span>Agitation: 4.64 → 4.08 <span class="delta-good">(-0.56)</span></span>
+<span>Trust: 0.25 → 6.25 <span class="delta-good">(+6.0)</span></span>
+</div>
+<div class="reward">💰 Reward: +0.2649 | —</div>
+
+</div>
+<div class="turn ht">
+<p>🎭 <strong>HT:</strong> "...okay. Okay, I&#x27;m listening too. I&#x27;ve got 12 people in here, remember that!" <span class="cues">[tense voice, fidgeting]</span></p>
+</div>
+<div class="turn neg">
+<div class="label">Step 2 — negotiation | Commander: patient</div>
+<p>🗣️ <span class="action-type">mirror</span> "Tell me more — you said something that mattered."</p>
+<p class="reasoning">💭 Mirror last words to show active listening and validate their experience.</p>
+<div class="hidden">
+<span>Agitation: 4.08 → 3.77 <span class="delta-good">(-0.31)</span></span>
+<span>Trust: 6.25 → 10.25 <span class="delta-good">(+4.0)</span></span>
+</div>
+<div class="reward">💰 Reward: +0.2559 | —</div>
+
+</div>
+<div class="turn ht">
+<p>🎭 <strong>HT:</strong> "Can you promise me they won&#x27;t hurt me?" <span class="cues">[exhausted tone, quiet]</span></p>
+</div>
+<div class="turn neg">
+<div class="label">Step 3 — negotiation | Commander: patient</div>
+<p>🗣️ <span class="action-type">open_question</span> "What happened, from your side? I have time."</p>
+<p class="reasoning">💭 Open question to gather intel on demands and emotional state.</p>
+<div class="hidden">
+<span>Agitation: 3.77 → 3.02 <span class="delta-good">(-0.75)</span></span>
+<span>Trust: 10.25 → 12.75 <span class="delta-good">(+2.5)</span></span>
+</div>
+<div class="reward">💰 Reward: +0.2436 | —</div>
+
+</div>
+<div class="turn ht">
+<p>🎭 <strong>HT:</strong> "I... I don&#x27;t know how this got so out of hand. Don&#x27;t forget — I still need Food and water for everyone inside." <span class="cues">[crying, exhausted tone]</span></p>
+</div>
+<div class="turn neg">
+<div class="label">Step 4 — negotiation | Commander: patient</div>
+<p>🗣️ <span class="action-type">emotional_label</span> "That sounds completely overwhelming. Anyone would be struggling."</p>
+<p class="reasoning">💭 Second empathy pass — reinforce that their feelings are valid.</p>
+<div class="hidden">
+<span>Agitation: 3.02 → 1.91 <span class="delta-good">(-1.11)</span></span>
+<span>Trust: 12.75 → 18.75 <span class="delta-good">(+6.0)</span></span>
+</div>
+<div class="reward">💰 Reward: +0.3120 | —</div>
+
+</div>
+<div class="turn ht">
+<p>🎭 <strong>HT:</strong> "What happens to me if I come out? I&#x27;ve got 12 people in here, remember that! Don&#x27;t forget — I still need A helicopter to the airport." <span class="cues">[crying, exhausted tone]</span></p>
+</div>
+<div class="turn neg">
+<div class="label">Step 5 — negotiation | Commander: patient</div>
+<p>🗣️ <span class="action-type">acknowledge_demand</span> "I hear what you&#x27;re asking for. That&#x27;s not unreasonable. Let me see what I can do."</p>
+<p class="reasoning">💭 Acknowledge core demand to build trust. Don&#x27;t commit to fulfilling it yet.</p>
+<div class="hidden">
+<span>Agitation: 1.91 → 0.64 <span class="delta-good">(-1.26)</span></span>
+<span>Trust: 18.75 → 28.75 <span class="delta-good">(+10.0)</span></span>
+</div>
+<div class="reward">💰 Reward: +0.4512 | —</div>
+
+</div>
+<div class="turn ht">
+<p>🎭 <strong>HT:</strong> "I&#x27;m scared. I don&#x27;t want to go to prison. I&#x27;ve got 12 people in here, remember that! Don&#x27;t forget — I still need An encrypted phone line." <span class="cues">[crying, speaking slowly]</span></p>
+</div>
+<div class="turn neg">
+<div class="label">Step 6 — negotiation | Commander: patient</div>
+<p>🗣️ <span class="action-type">open_question</span> "What would feel like the right outcome for you here?"</p>
+<p class="reasoning">💭 Probe for resolution path — what does surrender look like to them?</p>
+<div class="hidden">
+<span>Agitation: 0.64 → 0.08 <span class="delta-good">(-0.56)</span></span>
+<span>Trust: 28.75 → 31.25 <span class="delta-good">(+2.5)</span></span>
+</div>
+<div class="reward">💰 Reward: +0.3749 | —</div>
+
+</div>
+<div class="turn ht">
+<p>🎭 <strong>HT:</strong> "I... I don&#x27;t know how this got so out of hand." <span class="cues">[quiet, crying]</span></p>
+</div>
+<div class="turn neg">
+<div class="label">Step 7 — resolution | Commander: patient</div>
+<p>🗣️ <span class="action-type">acknowledge_demand</span> "Your request — I&#x27;m taking it seriously. I want you to know that."</p>
+<p class="reasoning">💭 Reinforce demand acknowledgment. Trust should be climbing.</p>
+<div class="hidden">
+<span>Agitation: 0.08 → 0.0 <span class="delta-good">(-0.08)</span></span>
+<span>Trust: 31.25 → 41.25 <span class="delta-good">(+10.0)</span></span>
+</div>
+<div class="reward">💰 Reward: +0.3870 | —</div>
+
+</div>
+<div class="turn ht">
+<p>🎭 <strong>HT:</strong> "I&#x27;m so tired. I just want this to be over. I&#x27;ve got 12 people in here, remember that!" <span class="cues">[voice softening, speaking slowly]</span></p>
+</div>
+<div class="turn neg">
+<div class="label">Step 8 — resolution | Commander: patient</div>
+<p>🗣️ <span class="action-type">offer_concession</span> "Here&#x27;s what I can do right now: I can have someone on the phone for you within minutes."</p>
+<p class="reasoning">💭 First concrete concession — small, deliverable, builds credibility.</p>
+<div class="hidden">
+<span>Agitation: 0.0 → 0.0 <span class="">(+0.00)</span></span>
+<span>Trust: 41.25 → 45.25 <span class="delta-good">(+4.0)</span></span>
+</div>
+<div class="reward">💰 Reward: +0.0475 | —</div>
+
+</div>
+<div class="turn ht">
+<p>🎭 <strong>HT:</strong> "I&#x27;m scared. I don&#x27;t want to go to prison." <span class="cues">[exhausted tone, speaking slowly]</span></p>
+</div>
+<div class="turn neg">
+<div class="label">Step 9 — resolution | Commander: patient</div>
+<p>🗣️ <span class="action-type">emotional_label</span> "I can hear how exhausted you are. Let&#x27;s find a way through this together."</p>
+<p class="reasoning">💭 Final empathy push — subject should be near resolution threshold.</p>
+<div class="hidden">
+<span>Agitation: 0.0 → 0.0 <span class="">(+0.00)</span></span>
+<span>Trust: 45.25 → 51.25 <span class="delta-good">(+6.0)</span></span>
+</div>
+<div class="reward">💰 Reward: +0.3175 | —</div>
+
+</div>
+<div class="turn ht">
+<p>🎭 <strong>HT:</strong> "I... I don&#x27;t know how this got so out of hand. And another thing — An encrypted phone line!" <span class="cues">[voice softening, speaking slowly]</span></p>
+</div>
+<div class="turn neg">
+<div class="label">Step 10 — resolution | Commander: patient</div>
+<p>🗣️ <span class="action-type">acknowledge_demand</span> "Everything you&#x27;ve asked for — I have it on record. Help me help you."</p>
+<p class="reasoning">💭 Bridge to resolution — frame surrender as mutual success.</p>
+<div class="hidden">
+<span>Agitation: 0.0 → 0.0 <span class="">(+0.00)</span></span>
+<span>Trust: 51.25 → 56.25 <span class="delta-good">(+5.0)</span></span>
+</div>
+<div class="reward">💰 Reward: +0.3175 | —</div>
+
+</div>
+<div class="turn ht">
+<p>🎭 <strong>HT:</strong> "I&#x27;m so tired. I just want this to be over." <span class="cues">[quiet, exhausted tone]</span></p>
+</div>
+</body></html>
