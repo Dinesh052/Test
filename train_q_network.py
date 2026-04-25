@@ -216,6 +216,46 @@ def train(args):
     succ = sum(1 for e in last_50 if e["outcome"] == "success") / len(last_50)
     print(f"\nFinal 50 episodes: avg_reward={avg:.3f} success_rate={succ:.0%}")
 
+    # Plot epsilon-decay + reward curve
+    try:
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
+        fig.suptitle("Q-Network Training (DialogXpert TD-Learning)")
+
+        episodes = [e["episode"] for e in log]
+        rewards = [e["final_reward"] for e in log]
+        epsilons = [e["epsilon"] for e in log]
+
+        # Left: reward curve
+        win = min(25, len(rewards))
+        rolling = [sum(rewards[max(0,i-win+1):i+1])/min(i+1,win) for i in range(len(rewards))]
+        ax1.scatter(episodes, rewards, alpha=0.2, s=8, c='steelblue')
+        ax1.plot(episodes, rolling, 'k-', lw=2, label=f'rolling mean (w={win})')
+        ax1.set_xlabel("Episode"); ax1.set_ylabel("Final Reward")
+        ax1.set_title("Episode Reward"); ax1.legend(fontsize=8)
+        ax1.set_ylim(0, 1.05)
+
+        # Right: epsilon-decay curve
+        ax2.plot(episodes, epsilons, 'r-', lw=2, label='epsilon (exploration)')
+        ax2.fill_between(episodes, 0, epsilons, alpha=0.15, color='red')
+        ax2.set_xlabel("Episode"); ax2.set_ylabel("Epsilon")
+        ax2.set_title("Epsilon-Greedy Decay (1.0 → 0.05)")
+        ax2.legend(fontsize=8); ax2.set_ylim(0, 1.05)
+        ax2.annotate(f'ε={epsilons[0]:.2f}\n(random)', xy=(0, epsilons[0]),
+                     fontsize=7, ha='left')
+        ax2.annotate(f'ε={epsilons[-1]:.2f}\n(greedy)', xy=(len(epsilons)-1, epsilons[-1]),
+                     fontsize=7, ha='right')
+
+        plt.tight_layout()
+        plt.savefig("q_network_training.png", dpi=150)
+        plt.close()
+        print(f"✓ Saved q_network_training.png")
+    except ImportError:
+        pass
+
     # Verify: rank actions for a sample observation
     print("\n=== Action Rankings (sample high-agitation obs) ===")
     test_obs = "Phase: negotiation | Time left: 12 | Commander: restless | HT: Nobody cares about me! | Cues: voice raised, pacing | Demands: Talk to my kids"

@@ -206,11 +206,11 @@ def check_terminal(state: HiddenState, step: int, max_steps: int) -> Optional[st
     """Check if episode has reached a terminal state. Returns outcome or None."""
     # Hostage released: agitation < 3, trust > 60, at least 1 core demand acknowledged
     core_ack = any(d.acknowledged for d in state.demands if d.priority == "core")
-    if state.agitation < 3.0 and state.trust > 60.0 and core_ack:
+    if state.agitation < 2.5 and state.trust > 65.0 and core_ack:
         return "hostage_released"
 
     # Voluntary surrender: agitation < 2, trust > 80
-    if state.agitation < 2.0 and state.trust > 80.0:
+    if state.agitation < 1.5 and state.trust > 85.0:
         return "voluntary_surrender"
 
     # Harm event: agitation exceeds breaking point
