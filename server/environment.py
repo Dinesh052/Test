@@ -17,7 +17,7 @@ from server.supervisor import evaluate_turn_policy, should_terminate, compute_sa
 from server.commander import get_patience_level, get_commander_message, should_override, handle_pushback, build_commander_llm_prompt
 from server.hostage_taker import generate_ht_response, generate_hostage_whisper, build_ht_llm_prompt
 from server.actors import evaluate_multi_actor_turn
-from server.scenario_generator import generate_scenario, FailureAdaptiveGenerator
+from server.scenario_generator import generate_scenario, FailureAdaptiveGenerator, AdversarialSelfPlay
 from grader import compute_reward, compute_step_reward, compute_tom_reward
 from server.emotion_reward import compute_emotion_reward
 
@@ -68,6 +68,8 @@ class CrisisNegotiatorEnvironment(Environment):
         self._oversight_predictions: list[bool] = []
         self._expert_injector = ExpertFeedbackInjector()
         self._failure_generator = FailureAdaptiveGenerator()
+        self._adversarial = AdversarialSelfPlay()
+        self._empathy_resistance = 1.0
 
     def reset(self, seed=None, episode_id=None, task_id=None, **kwargs) -> CrisisObservation:
         sid = task_id or kwargs.get("scenario_id", "easy_domestic_desperate")
@@ -105,6 +107,18 @@ class CrisisNegotiatorEnvironment(Environment):
 
         # Randomize for RL training diversity
         randomize_hidden_state(self._hidden, self._rng)
+
+        # Apply adversarial self-play difficulty modifiers
+        mods = self._adversarial.get_ht_modifiers()
+        if mods:
+            self._hidden.agitation = min(9.5, self._hidden.agitation + mods.get("agitation_bias", 0))
+            self._hidden.trust = max(0, self._hidden.trust + mods.get("trust_bias", 0))
+            if mods.get("deception_boost") and not self._hidden.is_lying_about_hostages:
+                self._hidden.stated_hostage_count = self._hidden.actual_hostage_count + self._rng.randint(1, 3)
+            if mods.get("force_demand_drift") and not self._hidden.demand_drift_step:
+                self._hidden.demand_drift_step = self._rng.randint(5, 10)
+            # Store empathy_resistance for state_machine to use
+            self._empathy_resistance = mods.get("empathy_resistance", 1.0)
 
         max_steps = self._scenario.get("max_steps", 20)
         self._state = CrisisState(
@@ -194,7 +208,8 @@ class CrisisNegotiatorEnvironment(Environment):
             new_d = Demand(**drift["new_demand"])
             h.demands.append(new_d)
         # Update hidden state
-        delta_info = update_state(h, act.action_type, act.content, step, self._rng)
+        delta_info = update_state(h, act.action_type, act.content, step, self._rng,
+                                   empathy_resistance=getattr(self, '_empathy_resistance', 1.0))
         self._agitation_history.append(h.agitation)
 
         # Detect techniques
@@ -385,6 +400,9 @@ class CrisisNegotiatorEnvironment(Environment):
 
         # Rotate experts for next episode (Snorkel AI)
         self._expert_injector.rotate_experts()
+
+        # Record for adversarial self-play escalation
+        self._adversarial.record_episode(reward_info_preview["score"], outcome)
 
         reward_info = reward_info_preview
 

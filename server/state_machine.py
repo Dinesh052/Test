@@ -121,6 +121,7 @@ def update_state(
     content: str,
     step: int,
     rng: random.Random | None = None,
+    empathy_resistance: float = 1.0,
 ) -> dict:
     """Apply one negotiator action to the hidden state. Returns delta info."""
     rng = rng or random.Random()
@@ -146,6 +147,11 @@ def update_state(
     # Apply multipliers (negative deltas get amplified for responsive personalities)
     ag_delta *= ag_mult
     tr_delta *= tr_mult
+
+    # Adversarial self-play: reduce empathy effectiveness at higher HT levels
+    if empathy_resistance < 1.0 and ag_delta < 0:
+        ag_delta *= empathy_resistance
+        tr_delta *= empathy_resistance
 
     # Calm streak / emotional contagion
     if tone in ("calm", "empathetic") or action_type in ("emotional_label", "mirror", "open_question"):
