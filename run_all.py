@@ -47,12 +47,18 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--skip-train", action="store_true", help="Skip training, only run eval")
     parser.add_argument("--quick", action="store_true", help="Reduced episodes for quick test")
+    parser.add_argument("--a100", action="store_true", help="A100 mode: 7B model, r=32, more data")
     args = parser.parse_args()
 
-    n = 10 if args.quick else 30
-    prompts = 32 if args.quick else 64
-    rounds = 2 if args.quick else 4
-    q_episodes = 200 if args.quick else 500
+    if args.quick:
+        n, prompts, rounds, q_episodes = 10, 32, 2, 200
+        model_args = ""
+    elif args.a100:
+        n, prompts, rounds, q_episodes = 50, 64, 6, 800
+        model_args = "--model Qwen/Qwen2.5-7B-Instruct --lora-r 32"
+    else:
+        n, prompts, rounds, q_episodes = 30, 64, 4, 500
+        model_args = ""
 
     results_dir = ROOT / "results"
     results_dir.mkdir(exist_ok=True)
@@ -66,8 +72,8 @@ def main():
     if not args.skip_train:
         # 1a. Main GRPO training
         run(
-            f"python training/train_local_v2.py --num-episodes {prompts} --num-epochs 1",
-            "STEP 1/8: Main GRPO Training (Qwen2.5-3B + LoRA)"
+            f"python training/train_local_v2.py --num-episodes {prompts} --num-epochs 1 {model_args}",
+            f"STEP 1/8: Main GRPO Training {'(7B + r=32)' if args.a100 else '(3B + r=16)'}"
         )
         pipeline_log["steps"].append({"name": "grpo_train", "time": time.time() - t_start})
 

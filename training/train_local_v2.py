@@ -626,4 +626,17 @@ def _plot_training_curve(log: list) -> None:
 
 
 if __name__ == "__main__":
+    import argparse
+    p = argparse.ArgumentParser()
+    p.add_argument("--model", default=None)
+    p.add_argument("--lora-r", type=int, default=None)
+    p.add_argument("--num-episodes", type=int, default=None)
+    p.add_argument("--num-epochs", type=int, default=None)
+    p.add_argument("--num-generations", type=int, default=None)
+    a = p.parse_args()
+    if a.model: CFG.model_name = a.model
+    if a.lora_r: CFG.lora_r = a.lora_r
+    if a.num_episodes: CFG.num_episodes = a.num_episodes
+    if a.num_epochs: CFG.num_epochs = a.num_epochs
+    if a.num_generations: CFG.num_generations = a.num_generations
     main()
