@@ -422,11 +422,12 @@ def log_step(global_step: int, prompt_idx: int, completion: str, reward: float, 
 
 # ─── MODEL LOADING ────────────────────────────────────────
 def load_model(model_name: str):
+    # Try Unsloth first — but ONLY if it can fully load the model.
+    # If Unsloth fails, we must NOT let its monkey-patches interfere.
     try:
         from unsloth import FastLanguageModel
         print(f"[model] Loading {model_name} via Unsloth...")
-        # Use 4-bit only if VRAM < 40GB; otherwise bf16 avoids dtype mismatch
-        vram = torch.cuda.get_device_properties(0).total_mem / 1e9 if torch.cuda.is_available() else 0
+        vram = torch.cuda.get_device_properties(0).total_memory / 1e9 if torch.cuda.is_available() else 0
         use_4bit = vram < 40
         model, tokenizer = FastLanguageModel.from_pretrained(
             model_name, max_seq_length=CFG.max_seq_length,
@@ -436,9 +437,16 @@ def load_model(model_name: str):
             target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],
             lora_alpha=CFG.lora_alpha, lora_dropout=0,
             use_gradient_checkpointing="unsloth")
+        print("[model] Loaded (unsloth)")
         return model, tokenizer, "unsloth"
     except Exception as e:
         print(f"[model] Unsloth unavailable ({e}). Using transformers + LoRA.")
+        # Remove Unsloth's compiled cache to prevent monkey-patch interference
+        import shutil
+        cache_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "unsloth_compiled_cache")
+        if os.path.exists(cache_dir):
+            shutil.rmtree(cache_dir, ignore_errors=True)
+            print("[model] Cleared unsloth_compiled_cache")
 
     from transformers import AutoModelForCausalLM, AutoTokenizer
     from peft import LoraConfig, get_peft_model

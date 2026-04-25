@@ -13,10 +13,15 @@ Usage:
     python train_coevolve_grpo.py --rounds 4 --prompts-per-round 64
 """
 from __future__ import annotations
-import argparse, copy, gc, json, os, random, re, sys, time
+import argparse, copy, gc, json, os, random, re, sys, time, shutil
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+
+# Clear Unsloth compiled cache to prevent monkey-patch interference
+_cache = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "unsloth_compiled_cache")
+if os.path.exists(_cache):
+    shutil.rmtree(_cache, ignore_errors=True)
 
 import torch
 
