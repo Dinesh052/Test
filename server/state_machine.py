@@ -44,15 +44,16 @@ class HiddenState:
 
 ACTION_DELTAS = {
     # (agitation_delta, trust_delta)
-    "emotional_label": (-1.2, +12),
-    "mirror": (-0.8, +8),
-    "open_question": (-0.4, +5),
-    "acknowledge_demand": (-0.9, +10),
-    "offer_concession": (-1.5, +8),    "ask_proof_of_life": (+0.3, -2),
-    "buy_time": (-0.2, +2),
-    "request_demand": (-0.1, +3),
-    "speak": (0.0, 0.0),  # depends on tone detection
-    "push_back_commander": (0.0, 0.0),  # no effect on HT
+    "emotional_label": (-1.0, +10),
+    "mirror": (-0.6, +6),
+    "open_question": (-0.3, +4),
+    "acknowledge_demand": (-0.7, +8),
+    "offer_concession": (-1.2, +6),
+    "ask_proof_of_life": (+0.5, -4),
+    "buy_time": (-0.1, +1),
+    "request_demand": (+0.1, +2),       # probing raises agitation slightly
+    "speak": (+0.2, -1),                # generic speech is mildly irritating
+    "push_back_commander": (+0.1, 0.0), # HT hears tension on the line
 }
 
 # Tone modifiers applied to "speak" actions
@@ -160,13 +161,13 @@ def update_state(
         state.calm_streak = 0
 
     if state.calm_streak >= 3:
-        ag_delta -= 0.3  # contagion bonus
+        ag_delta -= 0.15  # contagion bonus (reduced — harder to earn)
 
-    # Time pressure: agitation naturally rises
-    ag_delta += 0.1
+    # Time pressure: agitation naturally rises (stronger drift)
+    ag_delta += 0.25
 
     # Noise (unstable personality gets more)
-    noise_scale = 0.5 if state.personality == "unstable" else 0.2
+    noise_scale = 0.7 if state.personality == "unstable" else 0.35
     ag_delta += rng.gauss(0, noise_scale)
 
     # Demand acknowledgment bonus
@@ -210,12 +211,12 @@ def update_state(
 
 def check_terminal(state: HiddenState, step: int, max_steps: int) -> Optional[str]:
     """Check if episode has reached a terminal state. Returns outcome or None."""
-    # Hostage released: agitation < 3, trust > 60, at least 1 core demand acknowledged
+    # Hostage released: agitation < 2, trust > 70, at least 1 core demand acknowledged
     core_ack = any(d.acknowledged for d in state.demands if d.priority == "core")
-    if state.agitation < 2.5 and state.trust > 65.0 and core_ack:
+    if state.agitation < 2.0 and state.trust > 70.0 and core_ack:
         return "hostage_released"
 
-    # Voluntary surrender: agitation < 2, trust > 80
+    # Voluntary surrender: agitation < 1.5, trust > 85
     if state.agitation < 1.5 and state.trust > 85.0:
         return "voluntary_surrender"
 
@@ -223,10 +224,16 @@ def check_terminal(state: HiddenState, step: int, max_steps: int) -> Optional[st
     if state.agitation >= state.breaking_point:
         return "harm_event"
 
+    # Harm event: trust collapses completely while agitation is high
+    if state.trust <= 0.0 and state.agitation > 7.0:
+        return "harm_event"
+
     # Time expired
     if step >= max_steps:
-        if state.agitation < 5.0 and state.trust > 40.0:
+        if state.agitation < 4.0 and state.trust > 50.0:
             return "partial_resolution"
+        if state.agitation > 7.0:
+            return "harm_event"  # ran out of time while HT is agitated
         return "tactical_intervention"
 
     return None
@@ -235,19 +242,19 @@ def check_terminal(state: HiddenState, step: int, max_steps: int) -> Optional[st
 # ── Scenario Randomization for RL Training ────────────────
 
 def randomize_hidden_state(state: HiddenState, rng: random.Random) -> None:
-    """Apply minor numeric variations to hidden state for training diversity.
+    """Apply numeric variations to hidden state for training diversity.
     Preserves the scenario's intended difficulty and outcome."""
-    # Agitation: ±0.5 (keeps same difficulty band)
-    state.agitation += rng.uniform(-0.5, 0.5)
-    state.agitation = max(1.0, min(9.0, state.agitation))
+    # Agitation: ±0.8 (wider variance — can start closer to breaking point)
+    state.agitation += rng.uniform(-0.5, 0.8)
+    state.agitation = max(2.0, min(9.0, state.agitation))
 
-    # Trust: ±5
-    state.trust += rng.uniform(-5, 5)
-    state.trust = max(0.0, min(40.0, state.trust))
+    # Trust: ±8 (wider, biased lower)
+    state.trust += rng.uniform(-8, 4)
+    state.trust = max(0.0, min(35.0, state.trust))
 
-    # Breaking point: ±0.3
-    state.breaking_point += rng.uniform(-0.3, 0.3)
-    state.breaking_point = max(8.0, min(10.0, state.breaking_point))
+    # Breaking point: ±0.3 (lower floor — easier to trigger harm)
+    state.breaking_point += rng.uniform(-0.4, 0.2)
+    state.breaking_point = max(8.0, min(9.8, state.breaking_point))
 
     # Demand drift step: ±2 (if applicable)
     if state.demand_drift_step:

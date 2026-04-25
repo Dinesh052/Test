@@ -523,10 +523,9 @@ def main():
         output_dir=CFG.output_dir,
         num_generations=CFG.num_generations,
         max_completion_length=CFG.max_new_tokens,
-        # max_prompt_length removed — not supported in this TRL version
         temperature=0.9,
         beta=0.04,
-        per_device_train_batch_size=1,
+        per_device_train_batch_size=CFG.num_generations,  # must == num_generations
         gradient_accumulation_steps=CFG.grad_accum,
         num_train_epochs=CFG.num_epochs,
         learning_rate=CFG.learning_rate,
@@ -639,4 +638,15 @@ if __name__ == "__main__":
     if a.num_episodes: CFG.num_episodes = a.num_episodes
     if a.num_epochs: CFG.num_epochs = a.num_epochs
     if a.num_generations: CFG.num_generations = a.num_generations
+    # Auto-reduce generations for 7B models on <24GB GPUs
+    if "7B" in CFG.model_name or "7b" in CFG.model_name:
+        try:
+            vram = torch.cuda.get_device_properties(0).total_mem / 1e9
+            if vram < 40 and CFG.num_generations > 2:
+                CFG.num_generations = 2
+                CFG.grad_accum = 4  # compensate with grad accum
+                print(f"[config] 7B on {vram:.0f}GB: reduced to num_generations=2, grad_accum=4")
+        except Exception:
+            CFG.num_generations = 2
+            CFG.grad_accum = 4
     main()

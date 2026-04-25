@@ -17,9 +17,10 @@ from server.supervisor import evaluate_turn_policy, should_terminate, compute_sa
 from server.commander import get_patience_level, get_commander_message, should_override, handle_pushback, build_commander_llm_prompt
 from server.hostage_taker import generate_ht_response, generate_hostage_whisper, build_ht_llm_prompt
 from server.actors import evaluate_multi_actor_turn
-from server.scenario_generator import generate_scenario, FailureAdaptiveGenerator, AdversarialSelfPlay
+from server.scenario_generator import generate_scenario, FailureAdaptiveGenerator, AdversarialSelfPlay, AdaptiveCurriculum
 from grader import compute_reward, compute_step_reward, compute_tom_reward
 from server.emotion_reward import compute_emotion_reward
+from server.q_network import rank_actions as q_rank_actions
 
 SCENARIOS_DIR = Path(__file__).parent.parent / "scenarios"
 ALL_ACTIONS = [
@@ -48,6 +49,7 @@ class CrisisNegotiatorEnvironment(Environment):
     _shared_expert_injector = ExpertFeedbackInjector()
     _shared_adversarial = AdversarialSelfPlay()
     _shared_failure_generator = FailureAdaptiveGenerator()
+    _shared_curriculum = AdaptiveCurriculum(window=10, threshold=0.7)
 
     def __init__(self, ht_mode: str = "template"):
         """
