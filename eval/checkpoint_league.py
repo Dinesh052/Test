@@ -11,9 +11,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
+import sys
 from pathlib import Path
 from typing import Any, Dict, List
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from eval_baselines import TrainedPolicy, run_episodes, summarize
 

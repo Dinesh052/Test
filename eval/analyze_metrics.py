@@ -114,9 +114,12 @@ def main():
         )
 
     # Focused gap analysis for trained policy
+    if "trained" not in summary or "heuristic" not in summary:
+        print("\n[warn] Trained or heuristic results missing from eval_summary.json — skipping gap analysis.")
+        return
     tr = summary["trained"]
     he = summary["heuristic"]
-    hard_gap = tr["by_difficulty"]["hard"]["mean_reward"] - he["by_difficulty"]["hard"]["mean_reward"]
+    hard_gap = tr.get("by_difficulty", {}).get("hard", {}).get("mean_reward", 0) - he.get("by_difficulty", {}).get("hard", {}).get("mean_reward", 0)
 
     print("\n=== TUNING RECOMMENDATIONS ===")
     print("1) Keep trained > heuristic edge on hard tasks while reducing policy collapse.")

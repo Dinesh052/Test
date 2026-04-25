@@ -164,29 +164,27 @@ class HiddenState:
 ### Canonical Metrics Tables (Unified Across README + BLOG + VIDEO)
 
 > We keep two labeled result sets to avoid ambiguity:
-> - **Pilot Run (legacy hardened setup)**
-> - **Final Run (current branch canonical report)**
+> - **Pilot Run (legacy easy setup)** — early development, before environment hardening
+> - **Final Run (current branch canonical report)** — hardened environment with tighter thresholds, higher agitation drift, and harm-on-timeout
 
 #### Final Run (Canonical)
-Source: `results/eval_summary.json` (n=30, mixed difficulty).
-
-| Metric | Random | Heuristic BCSM | Trained (GRPO) |
-|---|---:|---:|---:|
-| Mean final reward | 0.7547 | 0.9476 | **0.9537** |
-| Mean cumulative reward | -0.5859 | +1.9779 | **+2.1185** |
-| Surrender rate | 70.0% | 100.0% | **100.0%** |
-| Harm rate | 0.0% | 0.0% | **0.0%** |
-| Mean steps | 15.50 | 8.30 | **7.13** |
-| Hard-tier mean reward | 0.7461 | 0.9388 | **0.9584** |
-
-#### Pilot Run (Legacy Hardened Setup)
-Source: prior hardened run (kept for historical context only).
+Source: hardened environment (n=50, mixed difficulty).
 
 | Metric | Random | Heuristic BCSM | Trained (GRPO) |
 |---|---:|---:|---:|
 | Mean final reward | 0.282 | 0.818 | **0.537** |
 | Surrender rate | 8% | 74% | **20%** |
 | Harm rate | 46% | 4% | **20%** |
+| Mean steps | 15.5 | 12.0 | 14.3 |
+
+#### Pilot Run (Legacy Easy Setup)
+Source: `results/eval_summary.json` (n=30, pre-hardening, kept for historical context only).
+
+| Metric | Random | Heuristic BCSM | Trained (GRPO) |
+|---|---:|---:|---:|
+| Mean final reward | 0.7547 | 0.9476 | **0.9537** |
+| Surrender rate | 70.0% | 100.0% | **100.0%** |
+| Harm rate | 0.0% | 0.0% | **0.0%** |
 
 ### Multi-seed Confidence View (P1)
 Source: `results/multiseed_eval_summary.json` (3 seeds × 12 episodes/seed).
@@ -219,8 +217,8 @@ Source: `results/long_horizon_benchmark.json` (`generate:long`, delayed pivot, 2
 | Random | 0.2378 | 12.33 | 8.33% | 91.67% |
 | Heuristic BCSM | **0.6669** | **10.42** | **66.67%** | **33.33%** |
 
-### Ablation Mini-Table (P2)
-Source: `results/ablation_mini_table.json`.
+### Reward Component Contribution Analysis (P2)
+Source: `results/ablation_mini_table.json`. Post-hoc analysis: measures each reward component's contribution by subtracting it from the terminal score.
 
 | Configuration | Mean score | Δ vs baseline |
 |---|---:|---:|
