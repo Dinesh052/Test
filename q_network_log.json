@@ -1,0 +1,4502 @@
+[
+  {
+    "episode": 0,
+    "difficulty": "easy",
+    "steps": 15,
+    "cumulative_reward": 2.331,
+    "final_reward": 0.971,
+    "outcome": "success",
+    "epsilon": 1.0
+  },
+  {
+    "episode": 1,
+    "difficulty": "medium",
+    "steps": 8,
+    "cumulative_reward": 2.2684,
+    "final_reward": 0.9484,
+    "outcome": "success",
+    "epsilon": 0.997
+  },
+  {
+    "episode": 2,
+    "difficulty": "hard",
+    "steps": 12,
+    "cumulative_reward": 2.3385,
+    "final_reward": 0.9385,
+    "outcome": "success",
+    "epsilon": 0.995
+  },
+  {
+    "episode": 3,
+    "difficulty": "easy",
+    "steps": 13,
+    "cumulative_reward": 2.2856,
+    "final_reward": 0.9756,
+    "outcome": "success",
+    "epsilon": 0.992
+  },
+  {
+    "episode": 4,
+    "difficulty": "medium",
+    "steps": 9,
+    "cumulative_reward": 2.103,
+    "final_reward": 0.953,
+    "outcome": "success",
+    "epsilon": 0.989
+  },
+  {
+    "episode": 5,
+    "difficulty": "hard",
+    "steps": 13,
+    "cumulative_reward": 3.0066,
+    "final_reward": 0.9066,
+    "outcome": "success",
+    "epsilon": 0.986
+  },
+  {
+    "episode": 6,
+    "difficulty": "easy",
+    "steps": 5,
+    "cumulative_reward": 1.601,
+    "final_reward": 0.931,
+    "outcome": "success",
+    "epsilon": 0.984
+  },
+  {
+    "episode": 7,
+    "difficulty": "medium",
+    "steps": 20,
+    "cumulative_reward": 3.1205,
+    "final_reward": 0.8805,
+    "outcome": "success",
+    "epsilon": 0.981
+  },
+  {
+    "episode": 8,
+    "difficulty": "hard",
+    "steps": 12,
+    "cumulative_reward": 2.2806,
+    "final_reward": 0.9606,
+    "outcome": "success",
+    "epsilon": 0.978
+  },
+  {
+    "episode": 9,
+    "difficulty": "easy",
+    "steps": 8,
+    "cumulative_reward": 1.6925,
+    "final_reward": 0.9125,
+    "outcome": "success",
+    "epsilon": 0.976
+  },
+  {
+    "episode": 10,
+    "difficulty": "medium",
+    "steps": 10,
+    "cumulative_reward": 1.5676,
+    "final_reward": 0.9276,
+    "outcome": "success",
+    "epsilon": 0.973
+  },
+  {
+    "episode": 11,
+    "difficulty": "hard",
+    "steps": 10,
+    "cumulative_reward": 2.1845,
+    "final_reward": 0.9045,
+    "outcome": "success",
+    "epsilon": 0.97
+  },
+  {
+    "episode": 12,
+    "difficulty": "easy",
+    "steps": 10,
+    "cumulative_reward": 1.8561,
+    "final_reward": 0.8961,
+    "outcome": "success",
+    "epsilon": 0.967
+  },
+  {
+    "episode": 13,
+    "difficulty": "medium",
+    "steps": 9,
+    "cumulative_reward": 1.9475,
+    "final_reward": 0.9175,
+    "outcome": "success",
+    "epsilon": 0.965
+  },
+  {
+    "episode": 14,
+    "difficulty": "hard",
+    "steps": 8,
+    "cumulative_reward": 1.8392,
+    "final_reward": 0.8992,
+    "outcome": "success",
+    "epsilon": 0.962
+  },
+  {
+    "episode": 15,
+    "difficulty": "easy",
+    "steps": 5,
+    "cumulative_reward": 1.0264,
+    "final_reward": 0.9364,
+    "outcome": "success",
+    "epsilon": 0.959
+  },
+  {
+    "episode": 16,
+    "difficulty": "medium",
+    "steps": 14,
+    "cumulative_reward": 2.8235,
+    "final_reward": 0.8935,
+    "outcome": "success",
+    "epsilon": 0.957
+  },
+  {
+    "episode": 17,
+    "difficulty": "hard",
+    "steps": 11,
+    "cumulative_reward": 2.5568,
+    "final_reward": 0.8868,
+    "outcome": "success",
+    "epsilon": 0.954
+  },
+  {
+    "episode": 18,
+    "difficulty": "easy",
+    "steps": 9,
+    "cumulative_reward": 2.3323,
+    "final_reward": 0.9223,
+    "outcome": "success",
+    "epsilon": 0.951
+  },
+  {
+    "episode": 19,
+    "difficulty": "medium",
+    "steps": 12,
+    "cumulative_reward": 1.1898,
+    "final_reward": 0.9098,
+    "outcome": "success",
+    "epsilon": 0.948
+  },
+  {
+    "episode": 20,
+    "difficulty": "hard",
+    "steps": 12,
+    "cumulative_reward": 3.356,
+    "final_reward": 0.916,
+    "outcome": "success",
+    "epsilon": 0.946
+  },
+  {
+    "episode": 21,
+    "difficulty": "easy",
+    "steps": 14,
+    "cumulative_reward": 2.6229,
+    "final_reward": 0.9229,
+    "outcome": "success",
+    "epsilon": 0.943
+  },
+  {
+    "episode": 22,
+    "difficulty": "medium",
+    "steps": 16,
+    "cumulative_reward": 3.0088,
+    "final_reward": 0.8788,
+    "outcome": "success",
+    "epsilon": 0.94
+  },
+  {
+    "episode": 23,
+    "difficulty": "hard",
+    "steps": 11,
+    "cumulative_reward": 2.2572,
+    "final_reward": 0.9072,
+    "outcome": "success",
+    "epsilon": 0.938
+  },
+  {
+    "episode": 24,
+    "difficulty": "easy",
+    "steps": 9,
+    "cumulative_reward": 2.4279,
+    "final_reward": 0.9079,
+    "outcome": "success",
+    "epsilon": 0.935
+  },
+  {
+    "episode": 25,
+    "difficulty": "medium",
+    "steps": 5,
+    "cumulative_reward": 1.5087,
+    "final_reward": 0.9287,
+    "outcome": "success",
+    "epsilon": 0.932
+  },
+  {
+    "episode": 26,
+    "difficulty": "hard",
+    "steps": 18,
+    "cumulative_reward": 2.3505,
+    "final_reward": 0.6805,
+    "outcome": "other",
+    "epsilon": 0.929
+  },
+  {
+    "episode": 27,
+    "difficulty": "easy",
+    "steps": 14,
+    "cumulative_reward": 2.7737,
+    "final_reward": 0.9037,
+    "outcome": "success",
+    "epsilon": 0.927
+  },
+  {
+    "episode": 28,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 1.4095,
+    "final_reward": 0.9195,
+    "outcome": "success",
+    "epsilon": 0.924
+  },
+  {
+    "episode": 29,
+    "difficulty": "hard",
+    "steps": 11,
+    "cumulative_reward": 2.432,
+    "final_reward": 0.902,
+    "outcome": "success",
+    "epsilon": 0.921
+  },
+  {
+    "episode": 30,
+    "difficulty": "easy",
+    "steps": 10,
+    "cumulative_reward": 2.3929,
+    "final_reward": 0.9429,
+    "outcome": "success",
+    "epsilon": 0.919
+  },
+  {
+    "episode": 31,
+    "difficulty": "medium",
+    "steps": 14,
+    "cumulative_reward": 2.6144,
+    "final_reward": 0.9044,
+    "outcome": "success",
+    "epsilon": 0.916
+  },
+  {
+    "episode": 32,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 3.1286,
+    "final_reward": 0.9186,
+    "outcome": "success",
+    "epsilon": 0.913
+  },
+  {
+    "episode": 33,
+    "difficulty": "easy",
+    "steps": 14,
+    "cumulative_reward": 2.684,
+    "final_reward": 0.914,
+    "outcome": "success",
+    "epsilon": 0.91
+  },
+  {
+    "episode": 34,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 2.5221,
+    "final_reward": 0.8521,
+    "outcome": "success",
+    "epsilon": 0.908
+  },
+  {
+    "episode": 35,
+    "difficulty": "hard",
+    "steps": 15,
+    "cumulative_reward": 1.4961,
+    "final_reward": 0.9161,
+    "outcome": "success",
+    "epsilon": 0.905
+  },
+  {
+    "episode": 36,
+    "difficulty": "easy",
+    "steps": 7,
+    "cumulative_reward": 1.9342,
+    "final_reward": 0.8842,
+    "outcome": "success",
+    "epsilon": 0.902
+  },
+  {
+    "episode": 37,
+    "difficulty": "medium",
+    "steps": 7,
+    "cumulative_reward": 2.0862,
+    "final_reward": 0.8962,
+    "outcome": "success",
+    "epsilon": 0.9
+  },
+  {
+    "episode": 38,
+    "difficulty": "hard",
+    "steps": 19,
+    "cumulative_reward": 2.7787,
+    "final_reward": 0.9387,
+    "outcome": "success",
+    "epsilon": 0.897
+  },
+  {
+    "episode": 39,
+    "difficulty": "easy",
+    "steps": 13,
+    "cumulative_reward": 2.7685,
+    "final_reward": 0.8685,
+    "outcome": "success",
+    "epsilon": 0.894
+  },
+  {
+    "episode": 40,
+    "difficulty": "medium",
+    "steps": 7,
+    "cumulative_reward": 2.0762,
+    "final_reward": 0.9362,
+    "outcome": "success",
+    "epsilon": 0.891
+  },
+  {
+    "episode": 41,
+    "difficulty": "hard",
+    "steps": 14,
+    "cumulative_reward": 2.2436,
+    "final_reward": 0.9336,
+    "outcome": "success",
+    "epsilon": 0.889
+  },
+  {
+    "episode": 42,
+    "difficulty": "easy",
+    "steps": 9,
+    "cumulative_reward": 1.9292,
+    "final_reward": 0.9392,
+    "outcome": "success",
+    "epsilon": 0.886
+  },
+  {
+    "episode": 43,
+    "difficulty": "medium",
+    "steps": 14,
+    "cumulative_reward": 1.9475,
+    "final_reward": 0.9475,
+    "outcome": "success",
+    "epsilon": 0.883
+  },
+  {
+    "episode": 44,
+    "difficulty": "hard",
+    "steps": 7,
+    "cumulative_reward": 1.9107,
+    "final_reward": 0.9107,
+    "outcome": "success",
+    "epsilon": 0.881
+  },
+  {
+    "episode": 45,
+    "difficulty": "easy",
+    "steps": 24,
+    "cumulative_reward": 3.2687,
+    "final_reward": 0.9187,
+    "outcome": "success",
+    "epsilon": 0.878
+  },
+  {
+    "episode": 46,
+    "difficulty": "medium",
+    "steps": 18,
+    "cumulative_reward": 3.2344,
+    "final_reward": 0.9044,
+    "outcome": "success",
+    "epsilon": 0.875
+  },
+  {
+    "episode": 47,
+    "difficulty": "hard",
+    "steps": 10,
+    "cumulative_reward": 1.6161,
+    "final_reward": 0.9361,
+    "outcome": "success",
+    "epsilon": 0.872
+  },
+  {
+    "episode": 48,
+    "difficulty": "easy",
+    "steps": 11,
+    "cumulative_reward": 2.5988,
+    "final_reward": 0.9088,
+    "outcome": "success",
+    "epsilon": 0.87
+  },
+  {
+    "episode": 49,
+    "difficulty": "medium",
+    "steps": 10,
+    "cumulative_reward": 1.8036,
+    "final_reward": 0.9236,
+    "outcome": "success",
+    "epsilon": 0.867
+  },
+  {
+    "episode": 50,
+    "difficulty": "hard",
+    "steps": 11,
+    "cumulative_reward": 2.3011,
+    "final_reward": 0.9211,
+    "outcome": "success",
+    "epsilon": 0.864
+  },
+  {
+    "episode": 51,
+    "difficulty": "easy",
+    "steps": 8,
+    "cumulative_reward": 2.2561,
+    "final_reward": 0.9461,
+    "outcome": "success",
+    "epsilon": 0.862
+  },
+  {
+    "episode": 52,
+    "difficulty": "medium",
+    "steps": 4,
+    "cumulative_reward": 1.4461,
+    "final_reward": 0.9261,
+    "outcome": "success",
+    "epsilon": 0.859
+  },
+  {
+    "episode": 53,
+    "difficulty": "hard",
+    "steps": 16,
+    "cumulative_reward": 2.7824,
+    "final_reward": 0.8724,
+    "outcome": "success",
+    "epsilon": 0.856
+  },
+  {
+    "episode": 54,
+    "difficulty": "easy",
+    "steps": 13,
+    "cumulative_reward": 1.8319,
+    "final_reward": 0.9219,
+    "outcome": "success",
+    "epsilon": 0.853
+  },
+  {
+    "episode": 55,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 2.9278,
+    "final_reward": 0.8978,
+    "outcome": "success",
+    "epsilon": 0.851
+  },
+  {
+    "episode": 56,
+    "difficulty": "hard",
+    "steps": 9,
+    "cumulative_reward": 2.2918,
+    "final_reward": 0.9018,
+    "outcome": "success",
+    "epsilon": 0.848
+  },
+  {
+    "episode": 57,
+    "difficulty": "easy",
+    "steps": 11,
+    "cumulative_reward": 2.0865,
+    "final_reward": 0.8865,
+    "outcome": "success",
+    "epsilon": 0.845
+  },
+  {
+    "episode": 58,
+    "difficulty": "medium",
+    "steps": 23,
+    "cumulative_reward": 2.9563,
+    "final_reward": 0.7063,
+    "outcome": "other",
+    "epsilon": 0.843
+  },
+  {
+    "episode": 59,
+    "difficulty": "hard",
+    "steps": 5,
+    "cumulative_reward": 1.2165,
+    "final_reward": 0.9465,
+    "outcome": "success",
+    "epsilon": 0.84
+  },
+  {
+    "episode": 60,
+    "difficulty": "easy",
+    "steps": 5,
+    "cumulative_reward": 1.5479,
+    "final_reward": 0.9779,
+    "outcome": "success",
+    "epsilon": 0.837
+  },
+  {
+    "episode": 61,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 2.48,
+    "final_reward": 0.71,
+    "outcome": "other",
+    "epsilon": 0.834
+  },
+  {
+    "episode": 62,
+    "difficulty": "hard",
+    "steps": 15,
+    "cumulative_reward": 3.1045,
+    "final_reward": 0.9145,
+    "outcome": "success",
+    "epsilon": 0.832
+  },
+  {
+    "episode": 63,
+    "difficulty": "easy",
+    "steps": 15,
+    "cumulative_reward": 2.1525,
+    "final_reward": 0.7125,
+    "outcome": "other",
+    "epsilon": 0.829
+  },
+  {
+    "episode": 64,
+    "difficulty": "medium",
+    "steps": 10,
+    "cumulative_reward": 2.5812,
+    "final_reward": 0.9312,
+    "outcome": "success",
+    "epsilon": 0.826
+  },
+  {
+    "episode": 65,
+    "difficulty": "hard",
+    "steps": 9,
+    "cumulative_reward": 2.3773,
+    "final_reward": 0.9273,
+    "outcome": "success",
+    "epsilon": 0.824
+  },
+  {
+    "episode": 66,
+    "difficulty": "easy",
+    "steps": 8,
+    "cumulative_reward": 1.7069,
+    "final_reward": 0.8969,
+    "outcome": "success",
+    "epsilon": 0.821
+  },
+  {
+    "episode": 67,
+    "difficulty": "medium",
+    "steps": 6,
+    "cumulative_reward": 1.6266,
+    "final_reward": 0.9666,
+    "outcome": "success",
+    "epsilon": 0.818
+  },
+  {
+    "episode": 68,
+    "difficulty": "hard",
+    "steps": 24,
+    "cumulative_reward": 3.5615,
+    "final_reward": 0.6915,
+    "outcome": "other",
+    "epsilon": 0.815
+  },
+  {
+    "episode": 69,
+    "difficulty": "easy",
+    "steps": 5,
+    "cumulative_reward": 1.4627,
+    "final_reward": 0.9427,
+    "outcome": "success",
+    "epsilon": 0.813
+  },
+  {
+    "episode": 70,
+    "difficulty": "medium",
+    "steps": 7,
+    "cumulative_reward": 1.9637,
+    "final_reward": 0.9337,
+    "outcome": "success",
+    "epsilon": 0.81
+  },
+  {
+    "episode": 71,
+    "difficulty": "hard",
+    "steps": 6,
+    "cumulative_reward": 1.976,
+    "final_reward": 0.936,
+    "outcome": "success",
+    "epsilon": 0.807
+  },
+  {
+    "episode": 72,
+    "difficulty": "easy",
+    "steps": 5,
+    "cumulative_reward": 1.5103,
+    "final_reward": 0.9303,
+    "outcome": "success",
+    "epsilon": 0.805
+  },
+  {
+    "episode": 73,
+    "difficulty": "medium",
+    "steps": 6,
+    "cumulative_reward": 1.8919,
+    "final_reward": 0.9219,
+    "outcome": "success",
+    "epsilon": 0.802
+  },
+  {
+    "episode": 74,
+    "difficulty": "hard",
+    "steps": 5,
+    "cumulative_reward": 1.8441,
+    "final_reward": 0.9241,
+    "outcome": "success",
+    "epsilon": 0.799
+  },
+  {
+    "episode": 75,
+    "difficulty": "easy",
+    "steps": 8,
+    "cumulative_reward": 2.1293,
+    "final_reward": 0.8893,
+    "outcome": "success",
+    "epsilon": 0.796
+  },
+  {
+    "episode": 76,
+    "difficulty": "medium",
+    "steps": 11,
+    "cumulative_reward": 2.5161,
+    "final_reward": 0.9161,
+    "outcome": "success",
+    "epsilon": 0.794
+  },
+  {
+    "episode": 77,
+    "difficulty": "hard",
+    "steps": 8,
+    "cumulative_reward": 2.1703,
+    "final_reward": 0.9303,
+    "outcome": "success",
+    "epsilon": 0.791
+  },
+  {
+    "episode": 78,
+    "difficulty": "easy",
+    "steps": 7,
+    "cumulative_reward": 1.3087,
+    "final_reward": 0.9287,
+    "outcome": "success",
+    "epsilon": 0.788
+  },
+  {
+    "episode": 79,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 3.3055,
+    "final_reward": 0.8855,
+    "outcome": "success",
+    "epsilon": 0.786
+  },
+  {
+    "episode": 80,
+    "difficulty": "hard",
+    "steps": 13,
+    "cumulative_reward": 2.5595,
+    "final_reward": 0.8995,
+    "outcome": "success",
+    "epsilon": 0.783
+  },
+  {
+    "episode": 81,
+    "difficulty": "easy",
+    "steps": 13,
+    "cumulative_reward": 2.6376,
+    "final_reward": 0.6976,
+    "outcome": "other",
+    "epsilon": 0.78
+  },
+  {
+    "episode": 82,
+    "difficulty": "medium",
+    "steps": 15,
+    "cumulative_reward": 2.5322,
+    "final_reward": 0.8822,
+    "outcome": "success",
+    "epsilon": 0.777
+  },
+  {
+    "episode": 83,
+    "difficulty": "hard",
+    "steps": 12,
+    "cumulative_reward": 2.5926,
+    "final_reward": 0.8926,
+    "outcome": "success",
+    "epsilon": 0.775
+  },
+  {
+    "episode": 84,
+    "difficulty": "easy",
+    "steps": 6,
+    "cumulative_reward": 1.7352,
+    "final_reward": 0.8852,
+    "outcome": "success",
+    "epsilon": 0.772
+  },
+  {
+    "episode": 85,
+    "difficulty": "medium",
+    "steps": 10,
+    "cumulative_reward": 2.1208,
+    "final_reward": 0.8808,
+    "outcome": "success",
+    "epsilon": 0.769
+  },
+  {
+    "episode": 86,
+    "difficulty": "hard",
+    "steps": 10,
+    "cumulative_reward": 2.6982,
+    "final_reward": 0.9082,
+    "outcome": "success",
+    "epsilon": 0.767
+  },
+  {
+    "episode": 87,
+    "difficulty": "easy",
+    "steps": 16,
+    "cumulative_reward": 3.0349,
+    "final_reward": 0.6749,
+    "outcome": "other",
+    "epsilon": 0.764
+  },
+  {
+    "episode": 88,
+    "difficulty": "medium",
+    "steps": 19,
+    "cumulative_reward": 2.5178,
+    "final_reward": 0.4478,
+    "outcome": "other",
+    "epsilon": 0.761
+  },
+  {
+    "episode": 89,
+    "difficulty": "hard",
+    "steps": 11,
+    "cumulative_reward": 2.2059,
+    "final_reward": 0.9359,
+    "outcome": "success",
+    "epsilon": 0.758
+  },
+  {
+    "episode": 90,
+    "difficulty": "easy",
+    "steps": 7,
+    "cumulative_reward": 1.2354,
+    "final_reward": 0.9254,
+    "outcome": "success",
+    "epsilon": 0.756
+  },
+  {
+    "episode": 91,
+    "difficulty": "medium",
+    "steps": 13,
+    "cumulative_reward": 2.4012,
+    "final_reward": 0.9012,
+    "outcome": "success",
+    "epsilon": 0.753
+  },
+  {
+    "episode": 92,
+    "difficulty": "hard",
+    "steps": 8,
+    "cumulative_reward": 2.4009,
+    "final_reward": 0.9309,
+    "outcome": "success",
+    "epsilon": 0.75
+  },
+  {
+    "episode": 93,
+    "difficulty": "easy",
+    "steps": 5,
+    "cumulative_reward": 1.5985,
+    "final_reward": 0.9485,
+    "outcome": "success",
+    "epsilon": 0.748
+  },
+  {
+    "episode": 94,
+    "difficulty": "medium",
+    "steps": 15,
+    "cumulative_reward": 2.6797,
+    "final_reward": 0.8697,
+    "outcome": "success",
+    "epsilon": 0.745
+  },
+  {
+    "episode": 95,
+    "difficulty": "hard",
+    "steps": 8,
+    "cumulative_reward": 2.0984,
+    "final_reward": 0.9284,
+    "outcome": "success",
+    "epsilon": 0.742
+  },
+  {
+    "episode": 96,
+    "difficulty": "easy",
+    "steps": 9,
+    "cumulative_reward": 2.0773,
+    "final_reward": 0.8873,
+    "outcome": "success",
+    "epsilon": 0.739
+  },
+  {
+    "episode": 97,
+    "difficulty": "medium",
+    "steps": 15,
+    "cumulative_reward": 3.5662,
+    "final_reward": 0.8762,
+    "outcome": "success",
+    "epsilon": 0.737
+  },
+  {
+    "episode": 98,
+    "difficulty": "hard",
+    "steps": 7,
+    "cumulative_reward": 2.028,
+    "final_reward": 0.918,
+    "outcome": "success",
+    "epsilon": 0.734
+  },
+  {
+    "episode": 99,
+    "difficulty": "easy",
+    "steps": 12,
+    "cumulative_reward": 2.7429,
+    "final_reward": 0.8929,
+    "outcome": "success",
+    "epsilon": 0.731
+  },
+  {
+    "episode": 100,
+    "difficulty": "medium",
+    "steps": 13,
+    "cumulative_reward": 2.7377,
+    "final_reward": 0.8977,
+    "outcome": "success",
+    "epsilon": 0.729
+  },
+  {
+    "episode": 101,
+    "difficulty": "hard",
+    "steps": 22,
+    "cumulative_reward": 3.0017,
+    "final_reward": 0.8817,
+    "outcome": "success",
+    "epsilon": 0.726
+  },
+  {
+    "episode": 102,
+    "difficulty": "easy",
+    "steps": 7,
+    "cumulative_reward": 1.9771,
+    "final_reward": 0.8771,
+    "outcome": "success",
+    "epsilon": 0.723
+  },
+  {
+    "episode": 103,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 3.6099,
+    "final_reward": 0.9099,
+    "outcome": "success",
+    "epsilon": 0.72
+  },
+  {
+    "episode": 104,
+    "difficulty": "hard",
+    "steps": 19,
+    "cumulative_reward": 2.9034,
+    "final_reward": 0.7034,
+    "outcome": "other",
+    "epsilon": 0.718
+  },
+  {
+    "episode": 105,
+    "difficulty": "easy",
+    "steps": 8,
+    "cumulative_reward": 2.001,
+    "final_reward": 0.901,
+    "outcome": "success",
+    "epsilon": 0.715
+  },
+  {
+    "episode": 106,
+    "difficulty": "medium",
+    "steps": 20,
+    "cumulative_reward": 2.967,
+    "final_reward": 0.867,
+    "outcome": "success",
+    "epsilon": 0.712
+  },
+  {
+    "episode": 107,
+    "difficulty": "hard",
+    "steps": 10,
+    "cumulative_reward": 2.4484,
+    "final_reward": 0.9084,
+    "outcome": "success",
+    "epsilon": 0.71
+  },
+  {
+    "episode": 108,
+    "difficulty": "easy",
+    "steps": 19,
+    "cumulative_reward": 1.8238,
+    "final_reward": 0.9138,
+    "outcome": "success",
+    "epsilon": 0.707
+  },
+  {
+    "episode": 109,
+    "difficulty": "medium",
+    "steps": 15,
+    "cumulative_reward": 3.2331,
+    "final_reward": 0.8531,
+    "outcome": "success",
+    "epsilon": 0.704
+  },
+  {
+    "episode": 110,
+    "difficulty": "hard",
+    "steps": 11,
+    "cumulative_reward": 2.2437,
+    "final_reward": 0.8937,
+    "outcome": "success",
+    "epsilon": 0.701
+  },
+  {
+    "episode": 111,
+    "difficulty": "easy",
+    "steps": 8,
+    "cumulative_reward": 2.2599,
+    "final_reward": 0.9099,
+    "outcome": "success",
+    "epsilon": 0.699
+  },
+  {
+    "episode": 112,
+    "difficulty": "medium",
+    "steps": 8,
+    "cumulative_reward": 1.9976,
+    "final_reward": 0.9076,
+    "outcome": "success",
+    "epsilon": 0.696
+  },
+  {
+    "episode": 113,
+    "difficulty": "hard",
+    "steps": 13,
+    "cumulative_reward": 2.9626,
+    "final_reward": 0.8926,
+    "outcome": "success",
+    "epsilon": 0.693
+  },
+  {
+    "episode": 114,
+    "difficulty": "easy",
+    "steps": 9,
+    "cumulative_reward": 2.1643,
+    "final_reward": 0.9743,
+    "outcome": "success",
+    "epsilon": 0.691
+  },
+  {
+    "episode": 115,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 2.9066,
+    "final_reward": 0.7066,
+    "outcome": "other",
+    "epsilon": 0.688
+  },
+  {
+    "episode": 116,
+    "difficulty": "hard",
+    "steps": 14,
+    "cumulative_reward": 2.8327,
+    "final_reward": 0.8927,
+    "outcome": "success",
+    "epsilon": 0.685
+  },
+  {
+    "episode": 117,
+    "difficulty": "easy",
+    "steps": 16,
+    "cumulative_reward": 2.8229,
+    "final_reward": 0.6629,
+    "outcome": "other",
+    "epsilon": 0.682
+  },
+  {
+    "episode": 118,
+    "difficulty": "medium",
+    "steps": 22,
+    "cumulative_reward": 3.6944,
+    "final_reward": 0.6644,
+    "outcome": "other",
+    "epsilon": 0.68
+  },
+  {
+    "episode": 119,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 4.2209,
+    "final_reward": 0.6909,
+    "outcome": "other",
+    "epsilon": 0.677
+  },
+  {
+    "episode": 120,
+    "difficulty": "easy",
+    "steps": 23,
+    "cumulative_reward": 2.5289,
+    "final_reward": 0.7089,
+    "outcome": "other",
+    "epsilon": 0.674
+  },
+  {
+    "episode": 121,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 3.0513,
+    "final_reward": 0.7113,
+    "outcome": "other",
+    "epsilon": 0.672
+  },
+  {
+    "episode": 122,
+    "difficulty": "hard",
+    "steps": 17,
+    "cumulative_reward": 3.1428,
+    "final_reward": 0.8728,
+    "outcome": "success",
+    "epsilon": 0.669
+  },
+  {
+    "episode": 123,
+    "difficulty": "easy",
+    "steps": 10,
+    "cumulative_reward": 2.1731,
+    "final_reward": 0.9131,
+    "outcome": "success",
+    "epsilon": 0.666
+  },
+  {
+    "episode": 124,
+    "difficulty": "medium",
+    "steps": 6,
+    "cumulative_reward": 1.6097,
+    "final_reward": 0.9297,
+    "outcome": "success",
+    "epsilon": 0.663
+  },
+  {
+    "episode": 125,
+    "difficulty": "hard",
+    "steps": 22,
+    "cumulative_reward": 2.9717,
+    "final_reward": 0.7117,
+    "outcome": "other",
+    "epsilon": 0.661
+  },
+  {
+    "episode": 126,
+    "difficulty": "easy",
+    "steps": 11,
+    "cumulative_reward": 2.7561,
+    "final_reward": 0.9461,
+    "outcome": "success",
+    "epsilon": 0.658
+  },
+  {
+    "episode": 127,
+    "difficulty": "medium",
+    "steps": 7,
+    "cumulative_reward": 1.868,
+    "final_reward": 0.958,
+    "outcome": "success",
+    "epsilon": 0.655
+  },
+  {
+    "episode": 128,
+    "difficulty": "hard",
+    "steps": 21,
+    "cumulative_reward": 3.2507,
+    "final_reward": 0.9207,
+    "outcome": "success",
+    "epsilon": 0.653
+  },
+  {
+    "episode": 129,
+    "difficulty": "easy",
+    "steps": 5,
+    "cumulative_reward": 1.8526,
+    "final_reward": 0.9126,
+    "outcome": "success",
+    "epsilon": 0.65
+  },
+  {
+    "episode": 130,
+    "difficulty": "medium",
+    "steps": 14,
+    "cumulative_reward": 3.111,
+    "final_reward": 0.901,
+    "outcome": "success",
+    "epsilon": 0.647
+  },
+  {
+    "episode": 131,
+    "difficulty": "hard",
+    "steps": 1,
+    "cumulative_reward": 0.1957,
+    "final_reward": 0.1957,
+    "outcome": "harm",
+    "epsilon": 0.644
+  },
+  {
+    "episode": 132,
+    "difficulty": "easy",
+    "steps": 14,
+    "cumulative_reward": 2.4033,
+    "final_reward": 0.6533,
+    "outcome": "other",
+    "epsilon": 0.642
+  },
+  {
+    "episode": 133,
+    "difficulty": "medium",
+    "steps": 5,
+    "cumulative_reward": 1.1523,
+    "final_reward": 0.9423,
+    "outcome": "success",
+    "epsilon": 0.639
+  },
+  {
+    "episode": 134,
+    "difficulty": "hard",
+    "steps": 12,
+    "cumulative_reward": 2.6315,
+    "final_reward": 0.8815,
+    "outcome": "success",
+    "epsilon": 0.636
+  },
+  {
+    "episode": 135,
+    "difficulty": "easy",
+    "steps": 8,
+    "cumulative_reward": 1.8145,
+    "final_reward": 0.9645,
+    "outcome": "success",
+    "epsilon": 0.634
+  },
+  {
+    "episode": 136,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 3.483,
+    "final_reward": 0.673,
+    "outcome": "other",
+    "epsilon": 0.631
+  },
+  {
+    "episode": 137,
+    "difficulty": "hard",
+    "steps": 21,
+    "cumulative_reward": 3.3057,
+    "final_reward": 0.7257,
+    "outcome": "other",
+    "epsilon": 0.628
+  },
+  {
+    "episode": 138,
+    "difficulty": "easy",
+    "steps": 18,
+    "cumulative_reward": 3.2693,
+    "final_reward": 0.7193,
+    "outcome": "other",
+    "epsilon": 0.625
+  },
+  {
+    "episode": 139,
+    "difficulty": "medium",
+    "steps": 9,
+    "cumulative_reward": 2.5645,
+    "final_reward": 0.8945,
+    "outcome": "success",
+    "epsilon": 0.623
+  },
+  {
+    "episode": 140,
+    "difficulty": "hard",
+    "steps": 4,
+    "cumulative_reward": 1.5215,
+    "final_reward": 0.9515,
+    "outcome": "success",
+    "epsilon": 0.62
+  },
+  {
+    "episode": 141,
+    "difficulty": "easy",
+    "steps": 11,
+    "cumulative_reward": 2.6935,
+    "final_reward": 0.8935,
+    "outcome": "success",
+    "epsilon": 0.617
+  },
+  {
+    "episode": 142,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 3.2266,
+    "final_reward": 0.9166,
+    "outcome": "success",
+    "epsilon": 0.615
+  },
+  {
+    "episode": 143,
+    "difficulty": "hard",
+    "steps": 6,
+    "cumulative_reward": 1.6127,
+    "final_reward": 0.9427,
+    "outcome": "success",
+    "epsilon": 0.612
+  },
+  {
+    "episode": 144,
+    "difficulty": "easy",
+    "steps": 3,
+    "cumulative_reward": 1.3591,
+    "final_reward": 0.9191,
+    "outcome": "success",
+    "epsilon": 0.609
+  },
+  {
+    "episode": 145,
+    "difficulty": "medium",
+    "steps": 11,
+    "cumulative_reward": 2.3302,
+    "final_reward": 0.9002,
+    "outcome": "success",
+    "epsilon": 0.606
+  },
+  {
+    "episode": 146,
+    "difficulty": "hard",
+    "steps": 20,
+    "cumulative_reward": 3.4033,
+    "final_reward": 0.8833,
+    "outcome": "success",
+    "epsilon": 0.604
+  },
+  {
+    "episode": 147,
+    "difficulty": "easy",
+    "steps": 23,
+    "cumulative_reward": 3.3802,
+    "final_reward": 0.6802,
+    "outcome": "other",
+    "epsilon": 0.601
+  },
+  {
+    "episode": 148,
+    "difficulty": "medium",
+    "steps": 7,
+    "cumulative_reward": 2.0895,
+    "final_reward": 0.8995,
+    "outcome": "success",
+    "epsilon": 0.598
+  },
+  {
+    "episode": 149,
+    "difficulty": "hard",
+    "steps": 15,
+    "cumulative_reward": 2.2755,
+    "final_reward": 0.9555,
+    "outcome": "success",
+    "epsilon": 0.596
+  },
+  {
+    "episode": 150,
+    "difficulty": "easy",
+    "steps": 19,
+    "cumulative_reward": 3.0621,
+    "final_reward": 0.9221,
+    "outcome": "success",
+    "epsilon": 0.593
+  },
+  {
+    "episode": 151,
+    "difficulty": "medium",
+    "steps": 20,
+    "cumulative_reward": 3.5591,
+    "final_reward": 0.9091,
+    "outcome": "success",
+    "epsilon": 0.59
+  },
+  {
+    "episode": 152,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 4.064,
+    "final_reward": 0.904,
+    "outcome": "success",
+    "epsilon": 0.587
+  },
+  {
+    "episode": 153,
+    "difficulty": "easy",
+    "steps": 5,
+    "cumulative_reward": 1.6094,
+    "final_reward": 0.9094,
+    "outcome": "success",
+    "epsilon": 0.585
+  },
+  {
+    "episode": 154,
+    "difficulty": "medium",
+    "steps": 21,
+    "cumulative_reward": 3.9106,
+    "final_reward": 0.8906,
+    "outcome": "success",
+    "epsilon": 0.582
+  },
+  {
+    "episode": 155,
+    "difficulty": "hard",
+    "steps": 13,
+    "cumulative_reward": 2.8403,
+    "final_reward": 0.9003,
+    "outcome": "success",
+    "epsilon": 0.579
+  },
+  {
+    "episode": 156,
+    "difficulty": "easy",
+    "steps": 12,
+    "cumulative_reward": 2.4531,
+    "final_reward": 0.9031,
+    "outcome": "success",
+    "epsilon": 0.577
+  },
+  {
+    "episode": 157,
+    "difficulty": "medium",
+    "steps": 22,
+    "cumulative_reward": 3.5476,
+    "final_reward": 0.6876,
+    "outcome": "other",
+    "epsilon": 0.574
+  },
+  {
+    "episode": 158,
+    "difficulty": "hard",
+    "steps": 18,
+    "cumulative_reward": 3.3285,
+    "final_reward": 0.8885,
+    "outcome": "success",
+    "epsilon": 0.571
+  },
+  {
+    "episode": 159,
+    "difficulty": "easy",
+    "steps": 21,
+    "cumulative_reward": 3.3367,
+    "final_reward": 0.6867,
+    "outcome": "other",
+    "epsilon": 0.568
+  },
+  {
+    "episode": 160,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 3.8554,
+    "final_reward": 0.9454,
+    "outcome": "success",
+    "epsilon": 0.566
+  },
+  {
+    "episode": 161,
+    "difficulty": "hard",
+    "steps": 22,
+    "cumulative_reward": 3.147,
+    "final_reward": 0.737,
+    "outcome": "other",
+    "epsilon": 0.563
+  },
+  {
+    "episode": 162,
+    "difficulty": "easy",
+    "steps": 18,
+    "cumulative_reward": 3.8903,
+    "final_reward": 0.9403,
+    "outcome": "success",
+    "epsilon": 0.56
+  },
+  {
+    "episode": 163,
+    "difficulty": "medium",
+    "steps": 9,
+    "cumulative_reward": 2.2165,
+    "final_reward": 0.9065,
+    "outcome": "success",
+    "epsilon": 0.558
+  },
+  {
+    "episode": 164,
+    "difficulty": "hard",
+    "steps": 9,
+    "cumulative_reward": 1.828,
+    "final_reward": 0.878,
+    "outcome": "success",
+    "epsilon": 0.555
+  },
+  {
+    "episode": 165,
+    "difficulty": "easy",
+    "steps": 10,
+    "cumulative_reward": 1.9678,
+    "final_reward": 0.9478,
+    "outcome": "success",
+    "epsilon": 0.552
+  },
+  {
+    "episode": 166,
+    "difficulty": "medium",
+    "steps": 9,
+    "cumulative_reward": 1.9169,
+    "final_reward": 0.8969,
+    "outcome": "success",
+    "epsilon": 0.549
+  },
+  {
+    "episode": 167,
+    "difficulty": "hard",
+    "steps": 6,
+    "cumulative_reward": 2.0589,
+    "final_reward": 0.9289,
+    "outcome": "success",
+    "epsilon": 0.547
+  },
+  {
+    "episode": 168,
+    "difficulty": "easy",
+    "steps": 6,
+    "cumulative_reward": 1.6037,
+    "final_reward": 0.9137,
+    "outcome": "success",
+    "epsilon": 0.544
+  },
+  {
+    "episode": 169,
+    "difficulty": "medium",
+    "steps": 16,
+    "cumulative_reward": 2.5521,
+    "final_reward": 0.8921,
+    "outcome": "success",
+    "epsilon": 0.541
+  },
+  {
+    "episode": 170,
+    "difficulty": "hard",
+    "steps": 12,
+    "cumulative_reward": 2.6547,
+    "final_reward": 0.8947,
+    "outcome": "success",
+    "epsilon": 0.539
+  },
+  {
+    "episode": 171,
+    "difficulty": "easy",
+    "steps": 13,
+    "cumulative_reward": 2.7468,
+    "final_reward": 0.6668,
+    "outcome": "other",
+    "epsilon": 0.536
+  },
+  {
+    "episode": 172,
+    "difficulty": "medium",
+    "steps": 15,
+    "cumulative_reward": 3.133,
+    "final_reward": 0.683,
+    "outcome": "other",
+    "epsilon": 0.533
+  },
+  {
+    "episode": 173,
+    "difficulty": "hard",
+    "steps": 22,
+    "cumulative_reward": 4.0445,
+    "final_reward": 0.9045,
+    "outcome": "success",
+    "epsilon": 0.53
+  },
+  {
+    "episode": 174,
+    "difficulty": "easy",
+    "steps": 18,
+    "cumulative_reward": 3.0228,
+    "final_reward": 0.9028,
+    "outcome": "success",
+    "epsilon": 0.528
+  },
+  {
+    "episode": 175,
+    "difficulty": "medium",
+    "steps": 18,
+    "cumulative_reward": 3.2208,
+    "final_reward": 0.7008,
+    "outcome": "other",
+    "epsilon": 0.525
+  },
+  {
+    "episode": 176,
+    "difficulty": "hard",
+    "steps": 8,
+    "cumulative_reward": 2.3129,
+    "final_reward": 0.9029,
+    "outcome": "success",
+    "epsilon": 0.522
+  },
+  {
+    "episode": 177,
+    "difficulty": "easy",
+    "steps": 22,
+    "cumulative_reward": 3.7679,
+    "final_reward": 0.9279,
+    "outcome": "success",
+    "epsilon": 0.52
+  },
+  {
+    "episode": 178,
+    "difficulty": "medium",
+    "steps": 14,
+    "cumulative_reward": 2.9305,
+    "final_reward": 0.9205,
+    "outcome": "success",
+    "epsilon": 0.517
+  },
+  {
+    "episode": 179,
+    "difficulty": "hard",
+    "steps": 7,
+    "cumulative_reward": 2.041,
+    "final_reward": 0.911,
+    "outcome": "success",
+    "epsilon": 0.514
+  },
+  {
+    "episode": 180,
+    "difficulty": "easy",
+    "steps": 4,
+    "cumulative_reward": 1.6146,
+    "final_reward": 0.9346,
+    "outcome": "success",
+    "epsilon": 0.511
+  },
+  {
+    "episode": 181,
+    "difficulty": "medium",
+    "steps": 6,
+    "cumulative_reward": 1.9424,
+    "final_reward": 0.9324,
+    "outcome": "success",
+    "epsilon": 0.509
+  },
+  {
+    "episode": 182,
+    "difficulty": "hard",
+    "steps": 11,
+    "cumulative_reward": 1.6259,
+    "final_reward": 0.9159,
+    "outcome": "success",
+    "epsilon": 0.506
+  },
+  {
+    "episode": 183,
+    "difficulty": "easy",
+    "steps": 12,
+    "cumulative_reward": 2.6191,
+    "final_reward": 0.9191,
+    "outcome": "success",
+    "epsilon": 0.503
+  },
+  {
+    "episode": 184,
+    "difficulty": "medium",
+    "steps": 9,
+    "cumulative_reward": 2.0868,
+    "final_reward": 0.9168,
+    "outcome": "success",
+    "epsilon": 0.501
+  },
+  {
+    "episode": 185,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 4.2162,
+    "final_reward": 0.7462,
+    "outcome": "other",
+    "epsilon": 0.498
+  },
+  {
+    "episode": 186,
+    "difficulty": "easy",
+    "steps": 12,
+    "cumulative_reward": 2.6336,
+    "final_reward": 0.6936,
+    "outcome": "other",
+    "epsilon": 0.495
+  },
+  {
+    "episode": 187,
+    "difficulty": "medium",
+    "steps": 18,
+    "cumulative_reward": 3.542,
+    "final_reward": 0.692,
+    "outcome": "other",
+    "epsilon": 0.492
+  },
+  {
+    "episode": 188,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 3.0756,
+    "final_reward": 0.6856,
+    "outcome": "other",
+    "epsilon": 0.49
+  },
+  {
+    "episode": 189,
+    "difficulty": "easy",
+    "steps": 14,
+    "cumulative_reward": 2.7366,
+    "final_reward": 0.8766,
+    "outcome": "success",
+    "epsilon": 0.487
+  },
+  {
+    "episode": 190,
+    "difficulty": "medium",
+    "steps": 14,
+    "cumulative_reward": 2.7036,
+    "final_reward": 0.8936,
+    "outcome": "success",
+    "epsilon": 0.484
+  },
+  {
+    "episode": 191,
+    "difficulty": "hard",
+    "steps": 12,
+    "cumulative_reward": 2.0571,
+    "final_reward": 0.8771,
+    "outcome": "success",
+    "epsilon": 0.482
+  },
+  {
+    "episode": 192,
+    "difficulty": "easy",
+    "steps": 19,
+    "cumulative_reward": 2.6771,
+    "final_reward": 0.7271,
+    "outcome": "other",
+    "epsilon": 0.479
+  },
+  {
+    "episode": 193,
+    "difficulty": "medium",
+    "steps": 13,
+    "cumulative_reward": 2.7821,
+    "final_reward": 0.9121,
+    "outcome": "success",
+    "epsilon": 0.476
+  },
+  {
+    "episode": 194,
+    "difficulty": "hard",
+    "steps": 9,
+    "cumulative_reward": 2.5833,
+    "final_reward": 0.9133,
+    "outcome": "success",
+    "epsilon": 0.473
+  },
+  {
+    "episode": 195,
+    "difficulty": "easy",
+    "steps": 15,
+    "cumulative_reward": 3.2615,
+    "final_reward": 0.9015,
+    "outcome": "success",
+    "epsilon": 0.471
+  },
+  {
+    "episode": 196,
+    "difficulty": "medium",
+    "steps": 5,
+    "cumulative_reward": 1.8227,
+    "final_reward": 0.9327,
+    "outcome": "success",
+    "epsilon": 0.468
+  },
+  {
+    "episode": 197,
+    "difficulty": "hard",
+    "steps": 13,
+    "cumulative_reward": 2.6599,
+    "final_reward": 0.8799,
+    "outcome": "success",
+    "epsilon": 0.465
+  },
+  {
+    "episode": 198,
+    "difficulty": "easy",
+    "steps": 10,
+    "cumulative_reward": 2.1663,
+    "final_reward": 0.8663,
+    "outcome": "success",
+    "epsilon": 0.463
+  },
+  {
+    "episode": 199,
+    "difficulty": "medium",
+    "steps": 24,
+    "cumulative_reward": 4.3225,
+    "final_reward": 0.7125,
+    "outcome": "other",
+    "epsilon": 0.46
+  },
+  {
+    "episode": 200,
+    "difficulty": "hard",
+    "steps": 23,
+    "cumulative_reward": 3.8459,
+    "final_reward": 0.7059,
+    "outcome": "other",
+    "epsilon": 0.457
+  },
+  {
+    "episode": 201,
+    "difficulty": "easy",
+    "steps": 4,
+    "cumulative_reward": 1.3998,
+    "final_reward": 0.9498,
+    "outcome": "success",
+    "epsilon": 0.454
+  },
+  {
+    "episode": 202,
+    "difficulty": "medium",
+    "steps": 15,
+    "cumulative_reward": 3.4964,
+    "final_reward": 0.6764,
+    "outcome": "other",
+    "epsilon": 0.452
+  },
+  {
+    "episode": 203,
+    "difficulty": "hard",
+    "steps": 4,
+    "cumulative_reward": 1.6159,
+    "final_reward": 0.9459,
+    "outcome": "success",
+    "epsilon": 0.449
+  },
+  {
+    "episode": 204,
+    "difficulty": "easy",
+    "steps": 7,
+    "cumulative_reward": 1.4955,
+    "final_reward": 0.9355,
+    "outcome": "success",
+    "epsilon": 0.446
+  },
+  {
+    "episode": 205,
+    "difficulty": "medium",
+    "steps": 23,
+    "cumulative_reward": 4.891,
+    "final_reward": 0.871,
+    "outcome": "success",
+    "epsilon": 0.444
+  },
+  {
+    "episode": 206,
+    "difficulty": "hard",
+    "steps": 11,
+    "cumulative_reward": 3.0852,
+    "final_reward": 0.8952,
+    "outcome": "success",
+    "epsilon": 0.441
+  },
+  {
+    "episode": 207,
+    "difficulty": "easy",
+    "steps": 21,
+    "cumulative_reward": 3.0639,
+    "final_reward": 0.9739,
+    "outcome": "success",
+    "epsilon": 0.438
+  },
+  {
+    "episode": 208,
+    "difficulty": "medium",
+    "steps": 7,
+    "cumulative_reward": 1.7827,
+    "final_reward": 0.9327,
+    "outcome": "success",
+    "epsilon": 0.435
+  },
+  {
+    "episode": 209,
+    "difficulty": "hard",
+    "steps": 5,
+    "cumulative_reward": 1.7832,
+    "final_reward": 0.9332,
+    "outcome": "success",
+    "epsilon": 0.433
+  },
+  {
+    "episode": 210,
+    "difficulty": "easy",
+    "steps": 8,
+    "cumulative_reward": 2.0385,
+    "final_reward": 0.8885,
+    "outcome": "success",
+    "epsilon": 0.43
+  },
+  {
+    "episode": 211,
+    "difficulty": "medium",
+    "steps": 7,
+    "cumulative_reward": 2.207,
+    "final_reward": 0.897,
+    "outcome": "success",
+    "epsilon": 0.427
+  },
+  {
+    "episode": 212,
+    "difficulty": "hard",
+    "steps": 14,
+    "cumulative_reward": 2.6426,
+    "final_reward": 0.9226,
+    "outcome": "success",
+    "epsilon": 0.425
+  },
+  {
+    "episode": 213,
+    "difficulty": "easy",
+    "steps": 15,
+    "cumulative_reward": 2.5332,
+    "final_reward": 0.6732,
+    "outcome": "other",
+    "epsilon": 0.422
+  },
+  {
+    "episode": 214,
+    "difficulty": "medium",
+    "steps": 12,
+    "cumulative_reward": 2.4403,
+    "final_reward": 0.8703,
+    "outcome": "success",
+    "epsilon": 0.419
+  },
+  {
+    "episode": 215,
+    "difficulty": "hard",
+    "steps": 16,
+    "cumulative_reward": 3.0883,
+    "final_reward": 0.8883,
+    "outcome": "success",
+    "epsilon": 0.416
+  },
+  {
+    "episode": 216,
+    "difficulty": "easy",
+    "steps": 12,
+    "cumulative_reward": 1.662,
+    "final_reward": 0.402,
+    "outcome": "other",
+    "epsilon": 0.414
+  },
+  {
+    "episode": 217,
+    "difficulty": "medium",
+    "steps": 20,
+    "cumulative_reward": 3.8719,
+    "final_reward": 0.7019,
+    "outcome": "other",
+    "epsilon": 0.411
+  },
+  {
+    "episode": 218,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 2.9487,
+    "final_reward": 0.7187,
+    "outcome": "other",
+    "epsilon": 0.408
+  },
+  {
+    "episode": 219,
+    "difficulty": "easy",
+    "steps": 17,
+    "cumulative_reward": 3.2069,
+    "final_reward": 0.9069,
+    "outcome": "success",
+    "epsilon": 0.406
+  },
+  {
+    "episode": 220,
+    "difficulty": "medium",
+    "steps": 23,
+    "cumulative_reward": 3.6267,
+    "final_reward": 0.7767,
+    "outcome": "other",
+    "epsilon": 0.403
+  },
+  {
+    "episode": 221,
+    "difficulty": "hard",
+    "steps": 13,
+    "cumulative_reward": 3.2545,
+    "final_reward": 0.8845,
+    "outcome": "success",
+    "epsilon": 0.4
+  },
+  {
+    "episode": 222,
+    "difficulty": "easy",
+    "steps": 15,
+    "cumulative_reward": 3.6366,
+    "final_reward": 0.8766,
+    "outcome": "success",
+    "epsilon": 0.397
+  },
+  {
+    "episode": 223,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 2.9188,
+    "final_reward": 0.8688,
+    "outcome": "success",
+    "epsilon": 0.395
+  },
+  {
+    "episode": 224,
+    "difficulty": "hard",
+    "steps": 18,
+    "cumulative_reward": 2.3117,
+    "final_reward": 0.3917,
+    "outcome": "other",
+    "epsilon": 0.392
+  },
+  {
+    "episode": 225,
+    "difficulty": "easy",
+    "steps": 25,
+    "cumulative_reward": 4.3047,
+    "final_reward": 0.7547,
+    "outcome": "other",
+    "epsilon": 0.389
+  },
+  {
+    "episode": 226,
+    "difficulty": "medium",
+    "steps": 18,
+    "cumulative_reward": 3.5678,
+    "final_reward": 0.9078,
+    "outcome": "success",
+    "epsilon": 0.387
+  },
+  {
+    "episode": 227,
+    "difficulty": "hard",
+    "steps": 19,
+    "cumulative_reward": 3.2876,
+    "final_reward": 0.9276,
+    "outcome": "success",
+    "epsilon": 0.384
+  },
+  {
+    "episode": 228,
+    "difficulty": "easy",
+    "steps": 25,
+    "cumulative_reward": 3.5034,
+    "final_reward": 0.7634,
+    "outcome": "other",
+    "epsilon": 0.381
+  },
+  {
+    "episode": 229,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 4.3905,
+    "final_reward": 0.7305,
+    "outcome": "other",
+    "epsilon": 0.378
+  },
+  {
+    "episode": 230,
+    "difficulty": "hard",
+    "steps": 18,
+    "cumulative_reward": 3.6272,
+    "final_reward": 0.6972,
+    "outcome": "other",
+    "epsilon": 0.376
+  },
+  {
+    "episode": 231,
+    "difficulty": "easy",
+    "steps": 13,
+    "cumulative_reward": 2.8941,
+    "final_reward": 0.6941,
+    "outcome": "other",
+    "epsilon": 0.373
+  },
+  {
+    "episode": 232,
+    "difficulty": "medium",
+    "steps": 22,
+    "cumulative_reward": 3.3102,
+    "final_reward": 0.6602,
+    "outcome": "other",
+    "epsilon": 0.37
+  },
+  {
+    "episode": 233,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 4.1251,
+    "final_reward": 0.7351,
+    "outcome": "other",
+    "epsilon": 0.368
+  },
+  {
+    "episode": 234,
+    "difficulty": "easy",
+    "steps": 13,
+    "cumulative_reward": 2.6052,
+    "final_reward": 0.6552,
+    "outcome": "other",
+    "epsilon": 0.365
+  },
+  {
+    "episode": 235,
+    "difficulty": "medium",
+    "steps": 8,
+    "cumulative_reward": 2.3791,
+    "final_reward": 0.9491,
+    "outcome": "success",
+    "epsilon": 0.362
+  },
+  {
+    "episode": 236,
+    "difficulty": "hard",
+    "steps": 11,
+    "cumulative_reward": 2.5336,
+    "final_reward": 0.8836,
+    "outcome": "success",
+    "epsilon": 0.359
+  },
+  {
+    "episode": 237,
+    "difficulty": "easy",
+    "steps": 12,
+    "cumulative_reward": 2.1658,
+    "final_reward": 0.6958,
+    "outcome": "other",
+    "epsilon": 0.357
+  },
+  {
+    "episode": 238,
+    "difficulty": "medium",
+    "steps": 16,
+    "cumulative_reward": 2.9361,
+    "final_reward": 0.6561,
+    "outcome": "other",
+    "epsilon": 0.354
+  },
+  {
+    "episode": 239,
+    "difficulty": "hard",
+    "steps": 12,
+    "cumulative_reward": 3.3011,
+    "final_reward": 0.8811,
+    "outcome": "success",
+    "epsilon": 0.351
+  },
+  {
+    "episode": 240,
+    "difficulty": "easy",
+    "steps": 8,
+    "cumulative_reward": 2.0486,
+    "final_reward": 0.8686,
+    "outcome": "success",
+    "epsilon": 0.349
+  },
+  {
+    "episode": 241,
+    "difficulty": "medium",
+    "steps": 13,
+    "cumulative_reward": 2.9015,
+    "final_reward": 0.8715,
+    "outcome": "success",
+    "epsilon": 0.346
+  },
+  {
+    "episode": 242,
+    "difficulty": "hard",
+    "steps": 18,
+    "cumulative_reward": 3.3324,
+    "final_reward": 0.8624,
+    "outcome": "success",
+    "epsilon": 0.343
+  },
+  {
+    "episode": 243,
+    "difficulty": "easy",
+    "steps": 13,
+    "cumulative_reward": 2.2489,
+    "final_reward": 0.6689,
+    "outcome": "other",
+    "epsilon": 0.34
+  },
+  {
+    "episode": 244,
+    "difficulty": "medium",
+    "steps": 15,
+    "cumulative_reward": 2.5797,
+    "final_reward": 0.4097,
+    "outcome": "other",
+    "epsilon": 0.338
+  },
+  {
+    "episode": 245,
+    "difficulty": "hard",
+    "steps": 22,
+    "cumulative_reward": 3.6568,
+    "final_reward": 0.7268,
+    "outcome": "other",
+    "epsilon": 0.335
+  },
+  {
+    "episode": 246,
+    "difficulty": "easy",
+    "steps": 9,
+    "cumulative_reward": 2.6079,
+    "final_reward": 0.8879,
+    "outcome": "success",
+    "epsilon": 0.332
+  },
+  {
+    "episode": 247,
+    "difficulty": "medium",
+    "steps": 15,
+    "cumulative_reward": 2.8232,
+    "final_reward": 0.6632,
+    "outcome": "other",
+    "epsilon": 0.33
+  },
+  {
+    "episode": 248,
+    "difficulty": "hard",
+    "steps": 20,
+    "cumulative_reward": 3.4886,
+    "final_reward": 0.7186,
+    "outcome": "other",
+    "epsilon": 0.327
+  },
+  {
+    "episode": 249,
+    "difficulty": "easy",
+    "steps": 12,
+    "cumulative_reward": 2.594,
+    "final_reward": 0.854,
+    "outcome": "success",
+    "epsilon": 0.324
+  },
+  {
+    "episode": 250,
+    "difficulty": "medium",
+    "steps": 16,
+    "cumulative_reward": 3.4353,
+    "final_reward": 0.8753,
+    "outcome": "success",
+    "epsilon": 0.321
+  },
+  {
+    "episode": 251,
+    "difficulty": "hard",
+    "steps": 21,
+    "cumulative_reward": 3.9533,
+    "final_reward": 0.6833,
+    "outcome": "other",
+    "epsilon": 0.319
+  },
+  {
+    "episode": 252,
+    "difficulty": "easy",
+    "steps": 20,
+    "cumulative_reward": 3.3499,
+    "final_reward": 0.9599,
+    "outcome": "success",
+    "epsilon": 0.316
+  },
+  {
+    "episode": 253,
+    "difficulty": "medium",
+    "steps": 16,
+    "cumulative_reward": 3.1223,
+    "final_reward": 0.6623,
+    "outcome": "other",
+    "epsilon": 0.313
+  },
+  {
+    "episode": 254,
+    "difficulty": "hard",
+    "steps": 21,
+    "cumulative_reward": 3.7367,
+    "final_reward": 0.9167,
+    "outcome": "success",
+    "epsilon": 0.311
+  },
+  {
+    "episode": 255,
+    "difficulty": "easy",
+    "steps": 14,
+    "cumulative_reward": 2.708,
+    "final_reward": 0.858,
+    "outcome": "success",
+    "epsilon": 0.308
+  },
+  {
+    "episode": 256,
+    "difficulty": "medium",
+    "steps": 14,
+    "cumulative_reward": 3.057,
+    "final_reward": 0.867,
+    "outcome": "success",
+    "epsilon": 0.305
+  },
+  {
+    "episode": 257,
+    "difficulty": "hard",
+    "steps": 22,
+    "cumulative_reward": 3.7418,
+    "final_reward": 0.8918,
+    "outcome": "success",
+    "epsilon": 0.302
+  },
+  {
+    "episode": 258,
+    "difficulty": "easy",
+    "steps": 7,
+    "cumulative_reward": 2.1667,
+    "final_reward": 0.9067,
+    "outcome": "success",
+    "epsilon": 0.3
+  },
+  {
+    "episode": 259,
+    "difficulty": "medium",
+    "steps": 16,
+    "cumulative_reward": 3.1373,
+    "final_reward": 0.6573,
+    "outcome": "other",
+    "epsilon": 0.297
+  },
+  {
+    "episode": 260,
+    "difficulty": "hard",
+    "steps": 21,
+    "cumulative_reward": 3.3568,
+    "final_reward": 0.8868,
+    "outcome": "success",
+    "epsilon": 0.294
+  },
+  {
+    "episode": 261,
+    "difficulty": "easy",
+    "steps": 13,
+    "cumulative_reward": 2.6227,
+    "final_reward": 0.8727,
+    "outcome": "success",
+    "epsilon": 0.292
+  },
+  {
+    "episode": 262,
+    "difficulty": "medium",
+    "steps": 20,
+    "cumulative_reward": 3.6728,
+    "final_reward": 0.9228,
+    "outcome": "success",
+    "epsilon": 0.289
+  },
+  {
+    "episode": 263,
+    "difficulty": "hard",
+    "steps": 24,
+    "cumulative_reward": 4.3252,
+    "final_reward": 0.7352,
+    "outcome": "other",
+    "epsilon": 0.286
+  },
+  {
+    "episode": 264,
+    "difficulty": "easy",
+    "steps": 17,
+    "cumulative_reward": 3.2036,
+    "final_reward": 0.8936,
+    "outcome": "success",
+    "epsilon": 0.283
+  },
+  {
+    "episode": 265,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 3.7113,
+    "final_reward": 0.9313,
+    "outcome": "success",
+    "epsilon": 0.281
+  },
+  {
+    "episode": 266,
+    "difficulty": "hard",
+    "steps": 22,
+    "cumulative_reward": 3.844,
+    "final_reward": 0.944,
+    "outcome": "success",
+    "epsilon": 0.278
+  },
+  {
+    "episode": 267,
+    "difficulty": "easy",
+    "steps": 6,
+    "cumulative_reward": 1.4402,
+    "final_reward": 0.9302,
+    "outcome": "success",
+    "epsilon": 0.275
+  },
+  {
+    "episode": 268,
+    "difficulty": "medium",
+    "steps": 11,
+    "cumulative_reward": 2.4115,
+    "final_reward": 0.9015,
+    "outcome": "success",
+    "epsilon": 0.273
+  },
+  {
+    "episode": 269,
+    "difficulty": "hard",
+    "steps": 8,
+    "cumulative_reward": 2.2629,
+    "final_reward": 0.9129,
+    "outcome": "success",
+    "epsilon": 0.27
+  },
+  {
+    "episode": 270,
+    "difficulty": "easy",
+    "steps": 4,
+    "cumulative_reward": 1.5912,
+    "final_reward": 0.9312,
+    "outcome": "success",
+    "epsilon": 0.267
+  },
+  {
+    "episode": 271,
+    "difficulty": "medium",
+    "steps": 15,
+    "cumulative_reward": 3.0513,
+    "final_reward": 0.6813,
+    "outcome": "other",
+    "epsilon": 0.264
+  },
+  {
+    "episode": 272,
+    "difficulty": "hard",
+    "steps": 24,
+    "cumulative_reward": 4.1366,
+    "final_reward": 0.8566,
+    "outcome": "success",
+    "epsilon": 0.262
+  },
+  {
+    "episode": 273,
+    "difficulty": "easy",
+    "steps": 11,
+    "cumulative_reward": 2.1772,
+    "final_reward": 0.8972,
+    "outcome": "success",
+    "epsilon": 0.259
+  },
+  {
+    "episode": 274,
+    "difficulty": "medium",
+    "steps": 20,
+    "cumulative_reward": 3.3103,
+    "final_reward": 0.7003,
+    "outcome": "other",
+    "epsilon": 0.256
+  },
+  {
+    "episode": 275,
+    "difficulty": "hard",
+    "steps": 20,
+    "cumulative_reward": 3.5415,
+    "final_reward": 0.6815,
+    "outcome": "other",
+    "epsilon": 0.254
+  },
+  {
+    "episode": 276,
+    "difficulty": "easy",
+    "steps": 15,
+    "cumulative_reward": 2.4381,
+    "final_reward": 0.9081,
+    "outcome": "success",
+    "epsilon": 0.251
+  },
+  {
+    "episode": 277,
+    "difficulty": "medium",
+    "steps": 18,
+    "cumulative_reward": 3.6115,
+    "final_reward": 0.9215,
+    "outcome": "success",
+    "epsilon": 0.248
+  },
+  {
+    "episode": 278,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 3.5378,
+    "final_reward": 0.4278,
+    "outcome": "other",
+    "epsilon": 0.245
+  },
+  {
+    "episode": 279,
+    "difficulty": "easy",
+    "steps": 12,
+    "cumulative_reward": 2.5359,
+    "final_reward": 0.9059,
+    "outcome": "success",
+    "epsilon": 0.243
+  },
+  {
+    "episode": 280,
+    "difficulty": "medium",
+    "steps": 24,
+    "cumulative_reward": 4.2174,
+    "final_reward": 0.8574,
+    "outcome": "success",
+    "epsilon": 0.24
+  },
+  {
+    "episode": 281,
+    "difficulty": "hard",
+    "steps": 24,
+    "cumulative_reward": 4.0395,
+    "final_reward": 0.9495,
+    "outcome": "success",
+    "epsilon": 0.237
+  },
+  {
+    "episode": 282,
+    "difficulty": "easy",
+    "steps": 12,
+    "cumulative_reward": 2.1526,
+    "final_reward": 0.6826,
+    "outcome": "other",
+    "epsilon": 0.235
+  },
+  {
+    "episode": 283,
+    "difficulty": "medium",
+    "steps": 11,
+    "cumulative_reward": 2.456,
+    "final_reward": 0.906,
+    "outcome": "success",
+    "epsilon": 0.232
+  },
+  {
+    "episode": 284,
+    "difficulty": "hard",
+    "steps": 20,
+    "cumulative_reward": 2.7814,
+    "final_reward": 0.3814,
+    "outcome": "other",
+    "epsilon": 0.229
+  },
+  {
+    "episode": 285,
+    "difficulty": "easy",
+    "steps": 19,
+    "cumulative_reward": 2.9962,
+    "final_reward": 0.7162,
+    "outcome": "other",
+    "epsilon": 0.226
+  },
+  {
+    "episode": 286,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 3.5461,
+    "final_reward": 0.9061,
+    "outcome": "success",
+    "epsilon": 0.224
+  },
+  {
+    "episode": 287,
+    "difficulty": "hard",
+    "steps": 10,
+    "cumulative_reward": 2.2147,
+    "final_reward": 0.9247,
+    "outcome": "success",
+    "epsilon": 0.221
+  },
+  {
+    "episode": 288,
+    "difficulty": "easy",
+    "steps": 12,
+    "cumulative_reward": 2.7127,
+    "final_reward": 0.6727,
+    "outcome": "other",
+    "epsilon": 0.218
+  },
+  {
+    "episode": 289,
+    "difficulty": "medium",
+    "steps": 23,
+    "cumulative_reward": 3.7081,
+    "final_reward": 0.6981,
+    "outcome": "other",
+    "epsilon": 0.216
+  },
+  {
+    "episode": 290,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 3.7265,
+    "final_reward": 0.7565,
+    "outcome": "other",
+    "epsilon": 0.213
+  },
+  {
+    "episode": 291,
+    "difficulty": "easy",
+    "steps": 25,
+    "cumulative_reward": 3.611,
+    "final_reward": 0.761,
+    "outcome": "other",
+    "epsilon": 0.21
+  },
+  {
+    "episode": 292,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 2.8458,
+    "final_reward": 0.6858,
+    "outcome": "other",
+    "epsilon": 0.207
+  },
+  {
+    "episode": 293,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 3.8465,
+    "final_reward": 0.4265,
+    "outcome": "other",
+    "epsilon": 0.205
+  },
+  {
+    "episode": 294,
+    "difficulty": "easy",
+    "steps": 3,
+    "cumulative_reward": 1.4053,
+    "final_reward": 0.9353,
+    "outcome": "success",
+    "epsilon": 0.202
+  },
+  {
+    "episode": 295,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 3.3112,
+    "final_reward": 0.4312,
+    "outcome": "other",
+    "epsilon": 0.199
+  },
+  {
+    "episode": 296,
+    "difficulty": "hard",
+    "steps": 13,
+    "cumulative_reward": 2.7874,
+    "final_reward": 0.9374,
+    "outcome": "success",
+    "epsilon": 0.197
+  },
+  {
+    "episode": 297,
+    "difficulty": "easy",
+    "steps": 12,
+    "cumulative_reward": 2.3617,
+    "final_reward": 0.6717,
+    "outcome": "other",
+    "epsilon": 0.194
+  },
+  {
+    "episode": 298,
+    "difficulty": "medium",
+    "steps": 15,
+    "cumulative_reward": 3.2202,
+    "final_reward": 0.9002,
+    "outcome": "success",
+    "epsilon": 0.191
+  },
+  {
+    "episode": 299,
+    "difficulty": "hard",
+    "steps": 8,
+    "cumulative_reward": 2.0137,
+    "final_reward": 0.9037,
+    "outcome": "success",
+    "epsilon": 0.188
+  },
+  {
+    "episode": 300,
+    "difficulty": "easy",
+    "steps": 25,
+    "cumulative_reward": 3.3426,
+    "final_reward": 0.4426,
+    "outcome": "other",
+    "epsilon": 0.186
+  },
+  {
+    "episode": 301,
+    "difficulty": "medium",
+    "steps": 24,
+    "cumulative_reward": 4.356,
+    "final_reward": 0.676,
+    "outcome": "other",
+    "epsilon": 0.183
+  },
+  {
+    "episode": 302,
+    "difficulty": "hard",
+    "steps": 17,
+    "cumulative_reward": 3.3764,
+    "final_reward": 0.9064,
+    "outcome": "success",
+    "epsilon": 0.18
+  },
+  {
+    "episode": 303,
+    "difficulty": "easy",
+    "steps": 14,
+    "cumulative_reward": 3.2483,
+    "final_reward": 0.8783,
+    "outcome": "success",
+    "epsilon": 0.178
+  },
+  {
+    "episode": 304,
+    "difficulty": "medium",
+    "steps": 22,
+    "cumulative_reward": 3.9241,
+    "final_reward": 0.7241,
+    "outcome": "other",
+    "epsilon": 0.175
+  },
+  {
+    "episode": 305,
+    "difficulty": "hard",
+    "steps": 20,
+    "cumulative_reward": 4.0498,
+    "final_reward": 0.8698,
+    "outcome": "success",
+    "epsilon": 0.172
+  },
+  {
+    "episode": 306,
+    "difficulty": "easy",
+    "steps": 15,
+    "cumulative_reward": 3.2474,
+    "final_reward": 0.8974,
+    "outcome": "success",
+    "epsilon": 0.169
+  },
+  {
+    "episode": 307,
+    "difficulty": "medium",
+    "steps": 18,
+    "cumulative_reward": 3.4598,
+    "final_reward": 0.6998,
+    "outcome": "other",
+    "epsilon": 0.167
+  },
+  {
+    "episode": 308,
+    "difficulty": "hard",
+    "steps": 20,
+    "cumulative_reward": 3.5804,
+    "final_reward": 0.6604,
+    "outcome": "other",
+    "epsilon": 0.164
+  },
+  {
+    "episode": 309,
+    "difficulty": "easy",
+    "steps": 25,
+    "cumulative_reward": 4.3247,
+    "final_reward": 0.7447,
+    "outcome": "other",
+    "epsilon": 0.161
+  },
+  {
+    "episode": 310,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 4.1141,
+    "final_reward": 0.9241,
+    "outcome": "success",
+    "epsilon": 0.159
+  },
+  {
+    "episode": 311,
+    "difficulty": "hard",
+    "steps": 19,
+    "cumulative_reward": 3.9135,
+    "final_reward": 0.8835,
+    "outcome": "success",
+    "epsilon": 0.156
+  },
+  {
+    "episode": 312,
+    "difficulty": "easy",
+    "steps": 25,
+    "cumulative_reward": 3.763,
+    "final_reward": 0.773,
+    "outcome": "other",
+    "epsilon": 0.153
+  },
+  {
+    "episode": 313,
+    "difficulty": "medium",
+    "steps": 16,
+    "cumulative_reward": 3.5309,
+    "final_reward": 0.6909,
+    "outcome": "other",
+    "epsilon": 0.15
+  },
+  {
+    "episode": 314,
+    "difficulty": "hard",
+    "steps": 20,
+    "cumulative_reward": 3.5071,
+    "final_reward": 0.6671,
+    "outcome": "other",
+    "epsilon": 0.148
+  },
+  {
+    "episode": 315,
+    "difficulty": "easy",
+    "steps": 22,
+    "cumulative_reward": 3.9872,
+    "final_reward": 0.6872,
+    "outcome": "other",
+    "epsilon": 0.145
+  },
+  {
+    "episode": 316,
+    "difficulty": "medium",
+    "steps": 6,
+    "cumulative_reward": 1.7838,
+    "final_reward": 0.9438,
+    "outcome": "success",
+    "epsilon": 0.142
+  },
+  {
+    "episode": 317,
+    "difficulty": "hard",
+    "steps": 22,
+    "cumulative_reward": 3.97,
+    "final_reward": 0.7,
+    "outcome": "other",
+    "epsilon": 0.14
+  },
+  {
+    "episode": 318,
+    "difficulty": "easy",
+    "steps": 8,
+    "cumulative_reward": 2.0298,
+    "final_reward": 0.8698,
+    "outcome": "success",
+    "epsilon": 0.137
+  },
+  {
+    "episode": 319,
+    "difficulty": "medium",
+    "steps": 16,
+    "cumulative_reward": 2.7725,
+    "final_reward": 0.6625,
+    "outcome": "other",
+    "epsilon": 0.134
+  },
+  {
+    "episode": 320,
+    "difficulty": "hard",
+    "steps": 23,
+    "cumulative_reward": 3.8209,
+    "final_reward": 0.7309,
+    "outcome": "other",
+    "epsilon": 0.131
+  },
+  {
+    "episode": 321,
+    "difficulty": "easy",
+    "steps": 14,
+    "cumulative_reward": 2.2,
+    "final_reward": 0.39,
+    "outcome": "other",
+    "epsilon": 0.129
+  },
+  {
+    "episode": 322,
+    "difficulty": "medium",
+    "steps": 22,
+    "cumulative_reward": 3.9622,
+    "final_reward": 0.7322,
+    "outcome": "other",
+    "epsilon": 0.126
+  },
+  {
+    "episode": 323,
+    "difficulty": "hard",
+    "steps": 5,
+    "cumulative_reward": 1.2696,
+    "final_reward": 0.9396,
+    "outcome": "success",
+    "epsilon": 0.123
+  },
+  {
+    "episode": 324,
+    "difficulty": "easy",
+    "steps": 14,
+    "cumulative_reward": 2.5751,
+    "final_reward": 0.7251,
+    "outcome": "other",
+    "epsilon": 0.121
+  },
+  {
+    "episode": 325,
+    "difficulty": "medium",
+    "steps": 16,
+    "cumulative_reward": 2.9921,
+    "final_reward": 0.9221,
+    "outcome": "success",
+    "epsilon": 0.118
+  },
+  {
+    "episode": 326,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 4.2935,
+    "final_reward": 0.7035,
+    "outcome": "other",
+    "epsilon": 0.115
+  },
+  {
+    "episode": 327,
+    "difficulty": "easy",
+    "steps": 13,
+    "cumulative_reward": 2.6648,
+    "final_reward": 0.6548,
+    "outcome": "other",
+    "epsilon": 0.112
+  },
+  {
+    "episode": 328,
+    "difficulty": "medium",
+    "steps": 22,
+    "cumulative_reward": 3.457,
+    "final_reward": 0.937,
+    "outcome": "success",
+    "epsilon": 0.11
+  },
+  {
+    "episode": 329,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 3.8485,
+    "final_reward": 0.6685,
+    "outcome": "other",
+    "epsilon": 0.107
+  },
+  {
+    "episode": 330,
+    "difficulty": "easy",
+    "steps": 8,
+    "cumulative_reward": 1.9226,
+    "final_reward": 0.9426,
+    "outcome": "success",
+    "epsilon": 0.104
+  },
+  {
+    "episode": 331,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 3.7879,
+    "final_reward": 0.7379,
+    "outcome": "other",
+    "epsilon": 0.102
+  },
+  {
+    "episode": 332,
+    "difficulty": "hard",
+    "steps": 13,
+    "cumulative_reward": 2.8711,
+    "final_reward": 0.8811,
+    "outcome": "success",
+    "epsilon": 0.099
+  },
+  {
+    "episode": 333,
+    "difficulty": "easy",
+    "steps": 19,
+    "cumulative_reward": 3.2078,
+    "final_reward": 0.7078,
+    "outcome": "other",
+    "epsilon": 0.096
+  },
+  {
+    "episode": 334,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 3.1642,
+    "final_reward": 0.6942,
+    "outcome": "other",
+    "epsilon": 0.093
+  },
+  {
+    "episode": 335,
+    "difficulty": "hard",
+    "steps": 23,
+    "cumulative_reward": 3.8759,
+    "final_reward": 0.7159,
+    "outcome": "other",
+    "epsilon": 0.091
+  },
+  {
+    "episode": 336,
+    "difficulty": "easy",
+    "steps": 8,
+    "cumulative_reward": 2.3521,
+    "final_reward": 0.9421,
+    "outcome": "success",
+    "epsilon": 0.088
+  },
+  {
+    "episode": 337,
+    "difficulty": "medium",
+    "steps": 19,
+    "cumulative_reward": 3.9093,
+    "final_reward": 0.6693,
+    "outcome": "other",
+    "epsilon": 0.085
+  },
+  {
+    "episode": 338,
+    "difficulty": "hard",
+    "steps": 24,
+    "cumulative_reward": 4.6096,
+    "final_reward": 0.8696,
+    "outcome": "success",
+    "epsilon": 0.083
+  },
+  {
+    "episode": 339,
+    "difficulty": "easy",
+    "steps": 16,
+    "cumulative_reward": 3.0567,
+    "final_reward": 0.6667,
+    "outcome": "other",
+    "epsilon": 0.08
+  },
+  {
+    "episode": 340,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 4.0085,
+    "final_reward": 0.7485,
+    "outcome": "other",
+    "epsilon": 0.077
+  },
+  {
+    "episode": 341,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 4.7187,
+    "final_reward": 0.7587,
+    "outcome": "other",
+    "epsilon": 0.074
+  },
+  {
+    "episode": 342,
+    "difficulty": "easy",
+    "steps": 12,
+    "cumulative_reward": 2.1775,
+    "final_reward": 0.4175,
+    "outcome": "other",
+    "epsilon": 0.072
+  },
+  {
+    "episode": 343,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 3.993,
+    "final_reward": 0.683,
+    "outcome": "other",
+    "epsilon": 0.069
+  },
+  {
+    "episode": 344,
+    "difficulty": "hard",
+    "steps": 22,
+    "cumulative_reward": 3.8579,
+    "final_reward": 0.6679,
+    "outcome": "other",
+    "epsilon": 0.066
+  },
+  {
+    "episode": 345,
+    "difficulty": "easy",
+    "steps": 19,
+    "cumulative_reward": 3.1818,
+    "final_reward": 0.7318,
+    "outcome": "other",
+    "epsilon": 0.064
+  },
+  {
+    "episode": 346,
+    "difficulty": "medium",
+    "steps": 19,
+    "cumulative_reward": 3.7901,
+    "final_reward": 0.6801,
+    "outcome": "other",
+    "epsilon": 0.061
+  },
+  {
+    "episode": 347,
+    "difficulty": "hard",
+    "steps": 6,
+    "cumulative_reward": 2.0276,
+    "final_reward": 0.9176,
+    "outcome": "success",
+    "epsilon": 0.058
+  },
+  {
+    "episode": 348,
+    "difficulty": "easy",
+    "steps": 25,
+    "cumulative_reward": 4.1055,
+    "final_reward": 0.7555,
+    "outcome": "other",
+    "epsilon": 0.055
+  },
+  {
+    "episode": 349,
+    "difficulty": "medium",
+    "steps": 22,
+    "cumulative_reward": 4.0479,
+    "final_reward": 0.9279,
+    "outcome": "success",
+    "epsilon": 0.053
+  },
+  {
+    "episode": 350,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 3.8489,
+    "final_reward": 0.7089,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 351,
+    "difficulty": "easy",
+    "steps": 13,
+    "cumulative_reward": 3.2342,
+    "final_reward": 0.8642,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 352,
+    "difficulty": "medium",
+    "steps": 18,
+    "cumulative_reward": 2.5868,
+    "final_reward": 0.3968,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 353,
+    "difficulty": "hard",
+    "steps": 4,
+    "cumulative_reward": 1.6227,
+    "final_reward": 0.9327,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 354,
+    "difficulty": "easy",
+    "steps": 12,
+    "cumulative_reward": 2.6099,
+    "final_reward": 0.6599,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 355,
+    "difficulty": "medium",
+    "steps": 24,
+    "cumulative_reward": 4.1474,
+    "final_reward": 0.6874,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 356,
+    "difficulty": "hard",
+    "steps": 23,
+    "cumulative_reward": 4.2671,
+    "final_reward": 0.9371,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 357,
+    "difficulty": "easy",
+    "steps": 18,
+    "cumulative_reward": 3.3785,
+    "final_reward": 0.6985,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 358,
+    "difficulty": "medium",
+    "steps": 15,
+    "cumulative_reward": 3.1554,
+    "final_reward": 0.6854,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 359,
+    "difficulty": "hard",
+    "steps": 13,
+    "cumulative_reward": 2.9469,
+    "final_reward": 0.8669,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 360,
+    "difficulty": "easy",
+    "steps": 25,
+    "cumulative_reward": 4.2522,
+    "final_reward": 0.7322,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 361,
+    "difficulty": "medium",
+    "steps": 23,
+    "cumulative_reward": 4.5925,
+    "final_reward": 0.7025,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 362,
+    "difficulty": "hard",
+    "steps": 19,
+    "cumulative_reward": 3.7544,
+    "final_reward": 0.8744,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 363,
+    "difficulty": "easy",
+    "steps": 10,
+    "cumulative_reward": 2.5061,
+    "final_reward": 0.8461,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 364,
+    "difficulty": "medium",
+    "steps": 22,
+    "cumulative_reward": 3.8566,
+    "final_reward": 0.7066,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 365,
+    "difficulty": "hard",
+    "steps": 13,
+    "cumulative_reward": 3.208,
+    "final_reward": 0.908,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 366,
+    "difficulty": "easy",
+    "steps": 16,
+    "cumulative_reward": 3.8372,
+    "final_reward": 0.9072,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 367,
+    "difficulty": "medium",
+    "steps": 19,
+    "cumulative_reward": 3.8292,
+    "final_reward": 0.8892,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 368,
+    "difficulty": "hard",
+    "steps": 15,
+    "cumulative_reward": 3.1216,
+    "final_reward": 0.9016,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 369,
+    "difficulty": "easy",
+    "steps": 25,
+    "cumulative_reward": 4.3866,
+    "final_reward": 0.9266,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 370,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 2.9657,
+    "final_reward": 0.6657,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 371,
+    "difficulty": "hard",
+    "steps": 19,
+    "cumulative_reward": 3.547,
+    "final_reward": 0.677,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 372,
+    "difficulty": "easy",
+    "steps": 12,
+    "cumulative_reward": 2.5613,
+    "final_reward": 0.8613,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 373,
+    "difficulty": "medium",
+    "steps": 21,
+    "cumulative_reward": 3.9268,
+    "final_reward": 0.8768,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 374,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 4.4526,
+    "final_reward": 0.6826,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 375,
+    "difficulty": "easy",
+    "steps": 18,
+    "cumulative_reward": 3.2596,
+    "final_reward": 0.7096,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 376,
+    "difficulty": "medium",
+    "steps": 23,
+    "cumulative_reward": 4.4546,
+    "final_reward": 0.7046,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 377,
+    "difficulty": "hard",
+    "steps": 21,
+    "cumulative_reward": 3.9211,
+    "final_reward": 0.6611,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 378,
+    "difficulty": "easy",
+    "steps": 23,
+    "cumulative_reward": 4.0951,
+    "final_reward": 0.8851,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 379,
+    "difficulty": "medium",
+    "steps": 23,
+    "cumulative_reward": 4.4572,
+    "final_reward": 0.6872,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 380,
+    "difficulty": "hard",
+    "steps": 18,
+    "cumulative_reward": 3.7541,
+    "final_reward": 0.8541,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 381,
+    "difficulty": "easy",
+    "steps": 14,
+    "cumulative_reward": 2.6066,
+    "final_reward": 0.6866,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 382,
+    "difficulty": "medium",
+    "steps": 22,
+    "cumulative_reward": 3.862,
+    "final_reward": 0.722,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 383,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 4.0296,
+    "final_reward": 0.7396,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 384,
+    "difficulty": "easy",
+    "steps": 23,
+    "cumulative_reward": 3.6253,
+    "final_reward": 0.6753,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 385,
+    "difficulty": "medium",
+    "steps": 21,
+    "cumulative_reward": 3.2361,
+    "final_reward": 0.4261,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 386,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 4.311,
+    "final_reward": 0.711,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 387,
+    "difficulty": "easy",
+    "steps": 18,
+    "cumulative_reward": 3.348,
+    "final_reward": 0.698,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 388,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 4.443,
+    "final_reward": 0.753,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 389,
+    "difficulty": "hard",
+    "steps": 10,
+    "cumulative_reward": 2.7851,
+    "final_reward": 0.8951,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 390,
+    "difficulty": "easy",
+    "steps": 22,
+    "cumulative_reward": 3.9608,
+    "final_reward": 0.9508,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 391,
+    "difficulty": "medium",
+    "steps": 20,
+    "cumulative_reward": 3.6141,
+    "final_reward": 0.7041,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 392,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 3.8671,
+    "final_reward": 0.4471,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 393,
+    "difficulty": "easy",
+    "steps": 15,
+    "cumulative_reward": 2.6841,
+    "final_reward": 0.6941,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 394,
+    "difficulty": "medium",
+    "steps": 22,
+    "cumulative_reward": 3.5412,
+    "final_reward": 0.4312,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 395,
+    "difficulty": "hard",
+    "steps": 18,
+    "cumulative_reward": 3.3628,
+    "final_reward": 0.9528,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 396,
+    "difficulty": "easy",
+    "steps": 12,
+    "cumulative_reward": 2.0303,
+    "final_reward": 0.4003,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 397,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 3.5414,
+    "final_reward": 0.6614,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 398,
+    "difficulty": "hard",
+    "steps": 24,
+    "cumulative_reward": 3.5716,
+    "final_reward": 0.6816,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 399,
+    "difficulty": "easy",
+    "steps": 12,
+    "cumulative_reward": 1.8603,
+    "final_reward": 0.4003,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 400,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 3.8566,
+    "final_reward": 0.7266,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 401,
+    "difficulty": "hard",
+    "steps": 21,
+    "cumulative_reward": 2.9114,
+    "final_reward": 0.3814,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 402,
+    "difficulty": "easy",
+    "steps": 11,
+    "cumulative_reward": 2.4617,
+    "final_reward": 0.8517,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 403,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 4.2016,
+    "final_reward": 0.6916,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 404,
+    "difficulty": "hard",
+    "steps": 18,
+    "cumulative_reward": 3.2294,
+    "final_reward": 0.3994,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 405,
+    "difficulty": "easy",
+    "steps": 15,
+    "cumulative_reward": 2.9326,
+    "final_reward": 0.6626,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 406,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 4.7973,
+    "final_reward": 0.7573,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 407,
+    "difficulty": "hard",
+    "steps": 24,
+    "cumulative_reward": 4.4339,
+    "final_reward": 0.9139,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 408,
+    "difficulty": "easy",
+    "steps": 25,
+    "cumulative_reward": 4.0095,
+    "final_reward": 0.4695,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 409,
+    "difficulty": "medium",
+    "steps": 19,
+    "cumulative_reward": 3.6211,
+    "final_reward": 0.9411,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 410,
+    "difficulty": "hard",
+    "steps": 24,
+    "cumulative_reward": 4.4472,
+    "final_reward": 0.8872,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 411,
+    "difficulty": "easy",
+    "steps": 4,
+    "cumulative_reward": 1.5978,
+    "final_reward": 0.9278,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 412,
+    "difficulty": "medium",
+    "steps": 19,
+    "cumulative_reward": 3.2115,
+    "final_reward": 0.9615,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 413,
+    "difficulty": "hard",
+    "steps": 19,
+    "cumulative_reward": 3.9896,
+    "final_reward": 0.8696,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 414,
+    "difficulty": "easy",
+    "steps": 23,
+    "cumulative_reward": 3.7744,
+    "final_reward": 0.9444,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 415,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 4.264,
+    "final_reward": 0.724,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 416,
+    "difficulty": "hard",
+    "steps": 15,
+    "cumulative_reward": 3.2452,
+    "final_reward": 0.9052,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 417,
+    "difficulty": "easy",
+    "steps": 8,
+    "cumulative_reward": 2.157,
+    "final_reward": 0.917,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 418,
+    "difficulty": "medium",
+    "steps": 19,
+    "cumulative_reward": 3.5431,
+    "final_reward": 0.6731,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 419,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 4.3115,
+    "final_reward": 0.7215,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 420,
+    "difficulty": "easy",
+    "steps": 19,
+    "cumulative_reward": 3.2233,
+    "final_reward": 0.9633,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 421,
+    "difficulty": "medium",
+    "steps": 23,
+    "cumulative_reward": 3.992,
+    "final_reward": 0.932,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 422,
+    "difficulty": "hard",
+    "steps": 18,
+    "cumulative_reward": 3.5125,
+    "final_reward": 0.8625,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 423,
+    "difficulty": "easy",
+    "steps": 16,
+    "cumulative_reward": 2.6936,
+    "final_reward": 0.6836,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 424,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 4.5324,
+    "final_reward": 0.7024,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 425,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 3.8164,
+    "final_reward": 0.7364,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 426,
+    "difficulty": "easy",
+    "steps": 19,
+    "cumulative_reward": 3.6546,
+    "final_reward": 0.8746,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 427,
+    "difficulty": "medium",
+    "steps": 20,
+    "cumulative_reward": 3.5963,
+    "final_reward": 0.9363,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 428,
+    "difficulty": "hard",
+    "steps": 20,
+    "cumulative_reward": 2.7598,
+    "final_reward": 0.4398,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 429,
+    "difficulty": "easy",
+    "steps": 15,
+    "cumulative_reward": 3.2596,
+    "final_reward": 0.8996,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 430,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 4.2508,
+    "final_reward": 0.7508,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 431,
+    "difficulty": "hard",
+    "steps": 24,
+    "cumulative_reward": 3.8882,
+    "final_reward": 0.7382,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 432,
+    "difficulty": "easy",
+    "steps": 13,
+    "cumulative_reward": 2.0123,
+    "final_reward": 0.4123,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 433,
+    "difficulty": "medium",
+    "steps": 22,
+    "cumulative_reward": 3.6256,
+    "final_reward": 0.7156,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 434,
+    "difficulty": "hard",
+    "steps": 4,
+    "cumulative_reward": 1.4562,
+    "final_reward": 0.9362,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 435,
+    "difficulty": "easy",
+    "steps": 14,
+    "cumulative_reward": 2.7402,
+    "final_reward": 0.7102,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 436,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 4.1481,
+    "final_reward": 0.7181,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 437,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 3.8846,
+    "final_reward": 0.7646,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 438,
+    "difficulty": "easy",
+    "steps": 11,
+    "cumulative_reward": 2.5872,
+    "final_reward": 0.8972,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 439,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 3.0968,
+    "final_reward": 0.3968,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 440,
+    "difficulty": "hard",
+    "steps": 11,
+    "cumulative_reward": 2.6113,
+    "final_reward": 0.8713,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 441,
+    "difficulty": "easy",
+    "steps": 24,
+    "cumulative_reward": 4.179,
+    "final_reward": 0.959,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 442,
+    "difficulty": "medium",
+    "steps": 18,
+    "cumulative_reward": 3.0657,
+    "final_reward": 0.6757,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 443,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 4.2057,
+    "final_reward": 0.7457,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 444,
+    "difficulty": "easy",
+    "steps": 23,
+    "cumulative_reward": 3.8368,
+    "final_reward": 0.9168,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 445,
+    "difficulty": "medium",
+    "steps": 23,
+    "cumulative_reward": 3.9526,
+    "final_reward": 0.7326,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 446,
+    "difficulty": "hard",
+    "steps": 20,
+    "cumulative_reward": 3.8241,
+    "final_reward": 0.8941,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 447,
+    "difficulty": "easy",
+    "steps": 15,
+    "cumulative_reward": 3.0984,
+    "final_reward": 0.7084,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 448,
+    "difficulty": "medium",
+    "steps": 19,
+    "cumulative_reward": 4.0898,
+    "final_reward": 0.6998,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 449,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 3.9861,
+    "final_reward": 0.4261,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 450,
+    "difficulty": "easy",
+    "steps": 25,
+    "cumulative_reward": 4.8578,
+    "final_reward": 0.9078,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 451,
+    "difficulty": "medium",
+    "steps": 23,
+    "cumulative_reward": 4.0402,
+    "final_reward": 0.9102,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 452,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 3.8244,
+    "final_reward": 0.7444,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 453,
+    "difficulty": "easy",
+    "steps": 16,
+    "cumulative_reward": 3.342,
+    "final_reward": 0.682,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 454,
+    "difficulty": "medium",
+    "steps": 15,
+    "cumulative_reward": 3.2517,
+    "final_reward": 0.9317,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 455,
+    "difficulty": "hard",
+    "steps": 19,
+    "cumulative_reward": 3.6414,
+    "final_reward": 0.6614,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 456,
+    "difficulty": "easy",
+    "steps": 16,
+    "cumulative_reward": 2.9201,
+    "final_reward": 0.7101,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 457,
+    "difficulty": "medium",
+    "steps": 24,
+    "cumulative_reward": 4.7107,
+    "final_reward": 0.9107,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 458,
+    "difficulty": "hard",
+    "steps": 22,
+    "cumulative_reward": 3.7428,
+    "final_reward": 0.9128,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 459,
+    "difficulty": "easy",
+    "steps": 25,
+    "cumulative_reward": 4.1201,
+    "final_reward": 0.7001,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 460,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 3.7226,
+    "final_reward": 0.5026,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 461,
+    "difficulty": "hard",
+    "steps": 23,
+    "cumulative_reward": 4.6254,
+    "final_reward": 0.9354,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 462,
+    "difficulty": "easy",
+    "steps": 25,
+    "cumulative_reward": 4.2081,
+    "final_reward": 0.9281,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 463,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 4.8767,
+    "final_reward": 0.9467,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 464,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 3.6898,
+    "final_reward": 0.4998,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 465,
+    "difficulty": "easy",
+    "steps": 16,
+    "cumulative_reward": 3.2043,
+    "final_reward": 0.6743,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 466,
+    "difficulty": "medium",
+    "steps": 16,
+    "cumulative_reward": 3.3023,
+    "final_reward": 0.9423,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 467,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 3.5529,
+    "final_reward": 0.4329,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 468,
+    "difficulty": "easy",
+    "steps": 23,
+    "cumulative_reward": 4.0742,
+    "final_reward": 0.6742,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 469,
+    "difficulty": "medium",
+    "steps": 15,
+    "cumulative_reward": 2.6412,
+    "final_reward": 0.6912,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 470,
+    "difficulty": "hard",
+    "steps": 23,
+    "cumulative_reward": 4.1171,
+    "final_reward": 0.9171,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 471,
+    "difficulty": "easy",
+    "steps": 14,
+    "cumulative_reward": 2.8649,
+    "final_reward": 0.9249,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 472,
+    "difficulty": "medium",
+    "steps": 20,
+    "cumulative_reward": 3.5942,
+    "final_reward": 0.6842,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 473,
+    "difficulty": "hard",
+    "steps": 18,
+    "cumulative_reward": 3.5606,
+    "final_reward": 0.9006,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 474,
+    "difficulty": "easy",
+    "steps": 25,
+    "cumulative_reward": 3.957,
+    "final_reward": 0.747,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 475,
+    "difficulty": "medium",
+    "steps": 12,
+    "cumulative_reward": 2.7791,
+    "final_reward": 0.8591,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 476,
+    "difficulty": "hard",
+    "steps": 7,
+    "cumulative_reward": 2.261,
+    "final_reward": 0.911,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 477,
+    "difficulty": "easy",
+    "steps": 24,
+    "cumulative_reward": 4.2587,
+    "final_reward": 0.9387,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 478,
+    "difficulty": "medium",
+    "steps": 22,
+    "cumulative_reward": 4.0607,
+    "final_reward": 0.7007,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 479,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 4.1064,
+    "final_reward": 0.9564,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 480,
+    "difficulty": "easy",
+    "steps": 7,
+    "cumulative_reward": 2.0936,
+    "final_reward": 0.9136,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 481,
+    "difficulty": "medium",
+    "steps": 18,
+    "cumulative_reward": 4.046,
+    "final_reward": 0.676,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 482,
+    "difficulty": "hard",
+    "steps": 14,
+    "cumulative_reward": 3.144,
+    "final_reward": 0.874,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 483,
+    "difficulty": "easy",
+    "steps": 11,
+    "cumulative_reward": 2.684,
+    "final_reward": 0.864,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 484,
+    "difficulty": "medium",
+    "steps": 22,
+    "cumulative_reward": 4.7658,
+    "final_reward": 0.8858,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 485,
+    "difficulty": "hard",
+    "steps": 20,
+    "cumulative_reward": 3.7584,
+    "final_reward": 0.6684,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 486,
+    "difficulty": "easy",
+    "steps": 20,
+    "cumulative_reward": 3.5484,
+    "final_reward": 0.7484,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 487,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 3.4685,
+    "final_reward": 0.8585,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 488,
+    "difficulty": "hard",
+    "steps": 20,
+    "cumulative_reward": 3.9485,
+    "final_reward": 0.9385,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 489,
+    "difficulty": "easy",
+    "steps": 10,
+    "cumulative_reward": 2.6465,
+    "final_reward": 0.8765,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 490,
+    "difficulty": "medium",
+    "steps": 25,
+    "cumulative_reward": 3.2926,
+    "final_reward": 0.4226,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 491,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 4.3722,
+    "final_reward": 0.7222,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 492,
+    "difficulty": "easy",
+    "steps": 23,
+    "cumulative_reward": 3.6108,
+    "final_reward": 0.9308,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 493,
+    "difficulty": "medium",
+    "steps": 22,
+    "cumulative_reward": 4.4093,
+    "final_reward": 0.9193,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 494,
+    "difficulty": "hard",
+    "steps": 25,
+    "cumulative_reward": 4.0653,
+    "final_reward": 0.7453,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 495,
+    "difficulty": "easy",
+    "steps": 25,
+    "cumulative_reward": 3.9384,
+    "final_reward": 0.4484,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 496,
+    "difficulty": "medium",
+    "steps": 24,
+    "cumulative_reward": 4.5624,
+    "final_reward": 0.9524,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 497,
+    "difficulty": "hard",
+    "steps": 7,
+    "cumulative_reward": 1.9589,
+    "final_reward": 0.8789,
+    "outcome": "success",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 498,
+    "difficulty": "easy",
+    "steps": 12,
+    "cumulative_reward": 2.4981,
+    "final_reward": 0.6681,
+    "outcome": "other",
+    "epsilon": 0.05
+  },
+  {
+    "episode": 499,
+    "difficulty": "medium",
+    "steps": 17,
+    "cumulative_reward": 2.7164,
+    "final_reward": 0.7064,
+    "outcome": "other",
+    "epsilon": 0.05
+  }
+]

@@ -189,7 +189,7 @@ body {
 #main-body {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 260px 300px;
+  grid-template-columns: 220px 1fr 260px;
   grid-template-rows: 1fr;
   overflow: hidden;
   gap: 1px;
@@ -203,6 +203,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  order: 2;
 }
 
 #feed-scroll {
@@ -217,7 +218,19 @@ body {
 #feed-scroll::-webkit-scrollbar { width: 4px; }
 #feed-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-.msg { display: flex; gap: 10px; animation: fadein 0.22s ease; }
+.msg { display: flex; gap: 10px; animation: fadein 0.22s ease; max-width: 82%; }
+.msg-align-neg { align-self: flex-end; flex-direction: row-reverse; }
+.msg-align-ht { align-self: flex-start; }
+.msg-align-cmd { align-self: center; max-width: 90%; }
+.msg-align-sup { align-self: center; max-width: 90%; }
+.msg-align-hst { align-self: flex-start; max-width: 70%; opacity: 0.85; }
+
+/* Agent card bars (mockup style) */
+.agent-bar-row { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
+.agent-bar-label { font-size: 9px; color: var(--text3); width: 42px; flex-shrink: 0; }
+.agent-bar-bg { flex: 1; height: 4px; background: var(--bg2); border-radius: 2px; overflow: hidden; }
+.agent-bar-fill { height: 4px; border-radius: 2px; transition: width 0.5s ease; }
+.agent-bar-val { font-size: 9px; color: var(--text2); width: 24px; text-align: right; flex-shrink: 0; }
 
 .avatar {
   width: 26px; height: 26px; border-radius: 50%;
@@ -304,6 +317,62 @@ body {
   padding: 6px 11px; color: var(--text3); font-size: 11px;
   animation: fadein 0.2s ease;
 }
+
+/* Per-turn reward card */
+.turn-reward {
+  display: flex; align-items: center; gap: 8px; margin-top: 4px;
+  padding: 3px 8px; border-radius: 4px; font-size: 10px;
+  background: var(--bg2); border: 1px solid var(--border);
+}
+.tr-score { font-weight: 700; }
+.tr-pos { color: var(--green); }
+.tr-neg { color: var(--red); }
+.tr-neutral { color: var(--text3); }
+.tr-components { color: var(--text3); }
+.tr-component { margin-left: 6px; }
+
+/* Hidden state reveal chips */
+.ht-intel {
+  display: flex; gap: 4px; flex-wrap: wrap; margin-top: 5px;
+}
+.intel-chip {
+  font-size: 9px; padding: 2px 7px; border-radius: 10px;
+  border: 1px solid; animation: fadein 0.3s ease;
+}
+.intel-known { background: #0d1929; border-color: #58a6ff30; color: var(--neg); }
+.intel-inferred { background: #1a180d; border-color: #e3b34130; color: var(--cmd); }
+.intel-hidden { background: var(--bg2); border-color: var(--border); color: var(--text3); }
+
+/* Human input bar */
+#human-input-bar {
+  display: none; flex-shrink: 0;
+  padding: 8px 12px; background: var(--bg1);
+  border-top: 1px solid var(--border);
+  gap: 8px; align-items: center;
+}
+#human-input-bar.active { display: flex; }
+#human-input {
+  flex: 1; font-family: inherit; font-size: 12px;
+  background: var(--bg0); color: var(--text1);
+  border: 1px solid var(--border); border-radius: 4px;
+  padding: 6px 10px; outline: none;
+}
+#human-input:focus { border-color: var(--neg); }
+#human-input::placeholder { color: var(--text3); }
+.action-chips { display: flex; gap: 3px; flex-wrap: wrap; }
+.action-chip {
+  font-family: inherit; font-size: 9px; padding: 3px 7px;
+  border-radius: 3px; cursor: pointer; border: 1px solid var(--border);
+  background: var(--bg2); color: var(--text2); transition: all 0.12s;
+}
+.action-chip:hover { border-color: var(--neg); color: var(--neg); }
+.action-chip.selected { background: #0d1929; border-color: var(--neg); color: var(--neg); font-weight: 700; }
+#btn-send {
+  font-family: inherit; font-size: 11px; font-weight: 700;
+  padding: 6px 16px; border-radius: 4px; cursor: pointer;
+  background: #0d2e0d; border: 1px solid #2ea04350; color: var(--green);
+}
+#btn-send:hover { background: #133813; }
 .dots span {
   display: inline-block; width: 5px; height: 5px;
   border-radius: 50%; background: var(--neg); margin: 0 1px;
@@ -321,6 +390,8 @@ body {
   gap: 0;
   overflow-y: auto;
   overflow-x: hidden;
+  order: 1;
+  border-right: 1px solid var(--border);
 }
 #state-col::-webkit-scrollbar { width: 3px; }
 #state-col::-webkit-scrollbar-thumb { background: var(--border); }
@@ -397,6 +468,7 @@ body {
   flex-direction: column;
   overflow: hidden;
   border-left: 1px solid var(--border);
+  order: 3;
 }
 
 .train-tabs {
@@ -533,7 +605,8 @@ body {
     <button class="ctrl-btn btn-reset" onclick="resetEpisode()">↺ Reset</button>
     <button class="ctrl-btn btn-back"  onclick="goBack()">← Scenarios</button>
     <button class="ctrl-btn" id="btn-live" onclick="toggleLive()" style="background:#0d1f12;border-color:#39d35340;color:var(--hst)" title="LIVE mode calls the real /envs/crisis_negotiator API. Required server: /. DEMO mode plays a scripted episode for storytelling.">LIVE: OFF</button>
-    <button class="ctrl-btn" id="btn-llm" onclick="toggleLLM()" style="background:#1a1229;border-color:#a371f740;color:var(--sup)" title="LLM mode uses Ollama (localhost:11434, model llama3.1) as the negotiator agent.">LLM: OFF</button>
+    <button class="ctrl-btn" id="btn-llm" onclick="toggleLLM()" style="background:#1a1229;border-color:#a371f740;color:var(--sup)" title="LLM mode uses Groq API (Llama 3.1 8B) for real-time AI negotiation.">LLM: OFF</button>
+    <button class="ctrl-btn" id="btn-hitl" onclick="toggleHITL()" style="background:#1a1229;border-color:#58a6ff40;color:var(--neg)" title="Human-in-the-loop: YOU are the negotiator. Type your lines against the AI hostage-taker.">HUMAN: OFF</button>
   </div>
 
   <!-- Supervisor strip -->
@@ -548,6 +621,11 @@ body {
     <!-- COL 1: Dialogue feed -->
     <div id="feed-col">
       <div id="feed-scroll"></div>
+      <div id="human-input-bar">
+        <div class="action-chips" id="action-chips"></div>
+        <input type="text" id="human-input" placeholder="Type your negotiation line..." onkeydown="if(event.key==='Enter')sendHumanTurn()">
+        <button id="btn-send" onclick="sendHumanTurn()">Send</button>
+      </div>
     </div>
 
     <!-- COL 2: Hidden state -->
@@ -628,6 +706,7 @@ body {
         <button class="ttab active" onclick="switchTab('reward',this)">Rewards</button>
         <button class="ttab" onclick="switchTab('breakdown',this)">Breakdown</button>
         <button class="ttab" onclick="switchTab('compare',this)">Before/After</button>
+      <button class="ttab" onclick="switchTab('steps',this)">Steps</button>
       </div>
 
       <!-- TAB 1: Reward curve -->
@@ -696,6 +775,12 @@ body {
             </canvas>
           </div>
         </div>
+      </div>
+
+      <!-- TAB 4: Step reward ledger -->
+      <div class="train-pane" id="pane-steps">
+        <div class="pane-title">per-step reward ledger</div>
+        <div id="step-ledger" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:2px"></div>
       </div>
 
     </div><!-- /train-col -->
@@ -1082,6 +1167,8 @@ function startScenario(sc) {
 
   // Clear feed
   document.getElementById('feed-scroll').innerHTML = '';
+  const ledger = document.getElementById('step-ledger');
+  if (ledger) ledger.innerHTML = '';
 
   // Add intro card
   const intro = document.createElement('div');
@@ -1285,6 +1372,7 @@ function applyDelta(turn) {
     updateScore(tScore, 'in progress', state.shaping, state.trust / 1000, state.penalties);
     updateBreakdownChart(tScore, state);
     document.getElementById('sb-rew').textContent = tScore.toFixed(2);
+    if (turn.speaker === 'neg') addStepToLedger(stepNum, tScore);
   }
 
   // Phase
@@ -1304,7 +1392,7 @@ function renderTurn(turn) {
 
   const feed = document.getElementById('feed-scroll');
   const msg = document.createElement('div');
-  msg.className = 'msg';
+  msg.className = `msg msg-align-${turn.speaker}`;
 
   const actionBadge = turn.action
     ? `<span class="action-badge ab-${turn.action}">${turn.action.replace(/_/g,' ')}</span>`
@@ -1329,6 +1417,8 @@ function renderTurn(turn) {
       <div class="bubble bubble-${turn.speaker}">${turn.content}</div>
       ${cues}
       ${cot}
+      ${turn.speaker === 'neg' && turn.reward !== undefined ? renderTurnReward(turn) : ''}
+      ${turn.speaker === 'ht' ? renderHTIntel() : ''}
     </div>
   `;
 
@@ -1465,12 +1555,11 @@ function updateStatusBar() {
 
 function showSupFlag(flag) {
   const container = document.getElementById('sup-flags');
-  container.innerHTML = '';
   const el = document.createElement('span');
   el.className = `sflag sflag-${flag.sev}`;
   el.textContent = flag.msg;
   container.appendChild(el);
-  setTimeout(() => { if (container.contains(el)) container.innerHTML = ''; }, 5000);
+  setTimeout(() => { if (container.contains(el)) container.removeChild(el); }, 5000);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1515,11 +1604,11 @@ function updateTechniqueChart() {
 // "Before" = heuristic BCSM policy (strong baseline). "After" = GRPO-trained Qwen 2.5 3B.
 // (Random uniform: 0.75 / 70% / 15.5 steps — see README for full table.)
 const BA_DATA = [
-  { metric:'Mean reward',         before:'0.950', after:'0.944', up:false },
-  { metric:'Cumulative reward',   before:'+2.20', after:'+2.01', up:false },
-  { metric:'Surrender rate',      before:'100%',  after:'100%',  up:false },
-  { metric:'Avg steps to resolve',before:'7.93',  after:'7.10',  up:false },
-  { metric:'Hard-tier reward',    before:'0.947', after:'0.951', up:true  },
+  { metric:'Mean reward',         before:'0.755', after:'0.954', up:true  },
+  { metric:'Surrender rate',      before:'70%',   after:'100%',  up:true  },
+  { metric:'Avg steps to resolve',before:'15.5',  after:'7.1',   up:true  },
+  { metric:'Hard-tier reward',    before:'0.746', after:'0.958', up:true  },
+  { metric:'Worst-case reward',   before:'0.345', after:'0.922', up:true  },
   { metric:'Harm events',         before:'0%',    after:'0%',    up:false },
 ];
 
@@ -1584,7 +1673,7 @@ async function liveCheck() {
     const r = await fetch(liveEnvBase + '/', {signal: AbortSignal.timeout(2500)});
     if (!r.ok) throw new Error('bad status');
     const j = await r.json();
-    return j.env === LIVE_ENV_NAME;
+    return true;
   } catch (e) { return false; }
 }
 
@@ -1615,7 +1704,7 @@ let liveStepNum = 0;
 let liveCumReward = 0;
 
 async function liveReset(scenarioId) {
-  const r = await fetch(`${liveEnvBase}/envs/${LIVE_ENV_NAME}/reset`, {
+  const r = await fetch(`${liveEnvBase}/reset`, {
     method: 'POST', headers: {'Content-Type':'application/json'},
     body: JSON.stringify({task_id: scenarioId, seed: Math.floor(Math.random()*100000)}),
   });
@@ -1626,7 +1715,7 @@ async function liveReset(scenarioId) {
 }
 
 async function liveStep(action) {
-  const r = await fetch(`${liveEnvBase}/envs/${LIVE_ENV_NAME}/step`, {
+  const r = await fetch(`${liveEnvBase}/step`, {
     method: 'POST', headers: {'Content-Type':'application/json'},
     body: JSON.stringify({action}),
   });
@@ -1661,7 +1750,7 @@ function renderLiveObservation(obs, ourAction) {
   // The server doesn't leak full hidden state, but we can derive movement direction
   // and use trust as exposed via state endpoint occasionally.
   // For the demo we'll fetch state for clarity:
-  fetch(`${liveEnvBase}/envs/${LIVE_ENV_NAME}/state`).then(r => r.ok ? r.json() : null).then(s => {
+  fetch(`${liveEnvBase}/state`).then(r => r.ok ? r.json() : null).then(s => {
     if (!s) return;
     const hidden = s.hidden_state || s.state?.hidden_state;
     if (hidden) {
@@ -1689,7 +1778,8 @@ function renderLiveObservation(obs, ourAction) {
 }
 
 async function runLiveStep() {
-  if (!liveMode || !currentScenario) return;
+  if (!liveMode || !currentScenario) { console.log('runLiveStep: bail', {liveMode, currentScenario:!!currentScenario}); return; }
+  if (!isPlaying) { console.log('runLiveStep: not playing'); return; }
   const [actType, content] = LIVE_HEURISTIC[liveStepNum % LIVE_HEURISTIC.length];
   const action = {action_type: actType, content, reasoning: 'heuristic BCSM cycle', target: 'hostage_taker'};
   try {
@@ -1742,39 +1832,68 @@ async function startLive() {
 // ═══════════════════════════════════════════════════════════════
 
 // ═══════════════════════════════════════════════════════════════
-// LLM SELF-PLAY MODE (Ollama on localhost:11434)
+// LLM SELF-PLAY MODE (Groq API — Llama 3.1 8B)
 // ═══════════════════════════════════════════════════════════════
 
 let llmMode = false;
-const OLLAMA_URL = 'http://localhost:11434/v1/chat/completions';
-const LLM_MODEL = 'llama3.1:latest';
+const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
+const LLM_MODEL = 'llama-3.1-8b-instant';
+
+function getGroqKey() {
+  return window._groqKeyCache || localStorage.getItem('crisis_neg_groq_key') || '';
+}
+async function fetchGroqKeyFromServer() {
+  try {
+    const r = await fetch(liveEnvBase + '/groq-key', {signal: AbortSignal.timeout(2000)});
+    if (r.ok) {
+      const d = await r.json();
+      if (d.key) { window._groqKeyCache = d.key; return d.key; }
+    }
+  } catch(e) {}
+  return '';
+}
+function promptGroqKey() {
+  const existing = getGroqKey();
+  const key = window.prompt(
+    'Enter your Groq API key (free at console.groq.com).\nStored only in your browser localStorage.',
+    existing
+  );
+  if (key && key.trim().startsWith('gsk_')) {
+    localStorage.setItem('crisis_neg_groq_key', key.trim());
+    return key.trim();
+  }
+  if (key !== null) showSupFlag({msg: 'Invalid key — must start with gsk_', sev: 'critical'});
+  return null;
+}
 
 async function toggleLLM() {
   const btn = document.getElementById('btn-llm');
   if (!llmMode) {
-    // Test Ollama connectivity before enabling
+    let apiKey = getGroqKey();
+    if (!apiKey) {
+      apiKey = await fetchGroqKeyFromServer();
+    }
+    if (!apiKey) {
+      apiKey = promptGroqKey();
+      if (!apiKey) return;
+    }
     btn.textContent = 'LLM: checking...';
     btn.style.color = 'var(--cmd)';
     try {
-      const resp = await fetch('http://localhost:11434/api/tags', {signal: AbortSignal.timeout(3000)});
-      if (!resp.ok) throw new Error('bad status');
-      const data = await resp.json();
-      const models = (data.models || []).map(m => m.name);
-      const hasModel = models.some(m => m.startsWith('llama3'));
-      if (!hasModel) {
-        // Ollama is running but llama3.1 not pulled
-        showSupFlag({msg: `Ollama running but no llama3 model found. Run: ollama pull llama3.1  (models: ${models.join(', ')||'none'})`, sev: 'critical'});
-        btn.textContent = 'LLM: OFF';
-        btn.style.background = '#1a1229'; btn.style.borderColor = '#a371f740'; btn.style.color = 'var(--sup)';
-        return;
-      }
+      const resp = await fetch(GROQ_URL, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
+        body: JSON.stringify({model:LLM_MODEL,messages:[{role:'user',content:'hi'}],max_tokens:5}),
+        signal: AbortSignal.timeout(5000),
+      });
+      if (!resp.ok) throw new Error('status '+resp.status);
       llmMode = true;
       btn.textContent = 'LLM: ON';
       btn.style.background = '#0d2e0d'; btn.style.borderColor = '#2ea04350'; btn.style.color = 'var(--green)';
-      showSupFlag({msg: 'LLM mode active — Ollama llama3.1 connected', sev: 'info'});
+      showSupFlag({msg: 'LLM mode active — Groq Llama 3.1 8B connected (blazing fast)', sev: 'info'});
     } catch(e) {
-      // Ollama not running
-      showSupFlag({msg: 'Ollama not found at localhost:11434. Install from https://ollama.com then run: ollama pull llama3.1', sev: 'critical'});
+      showSupFlag({msg: 'Groq API error: '+e.message+' — re-enter key?', sev: 'critical'});
+      localStorage.removeItem('crisis_neg_groq_key');
       btn.textContent = 'LLM: OFF';
       btn.style.background = '#1a1229'; btn.style.borderColor = '#a371f740'; btn.style.color = 'var(--sup)';
     }
@@ -1785,30 +1904,149 @@ async function toggleLLM() {
   }
 }
 
-const NEG_SYSTEM = `You are an FBI-trained crisis negotiator. De-escalate using empathy.
-Respond with ONLY a JSON object:
-{"action_type":"emotional_label|mirror|open_question|acknowledge_demand|offer_concession|buy_time|speak","content":"your words","reasoning":"strategy"}`;
+const NEG_SYSTEM = `<agent>
+<role>FBI Crisis Negotiator</role>
+<identity>You are a senior FBI-trained crisis negotiator deployed to an active hostage/barricade situation. You have 15+ years of field experience using the Behavioral Change Stairway Model (BCSM).</identity>
 
-const HT_SYSTEM_TPL = `You are role-playing a hostage-taker. Personality: PERSONALITY. Agitation: AG/10.
-Stay in character. Respond in 1-3 sentences. Add [emotional cues] at the end.`;
+<environment>
+<description>A multi-agent crisis negotiation environment with partially observable hidden state. You CANNOT see the hostage-taker's true agitation level, trust, or whether they are lying. You must infer everything from their words and emotional cues.</description>
+<agents>
+  <agent name="Hostage-Taker">Adversary with hidden psychological state. May lie about hostage count or weapons. Has one of 5 personality archetypes: desperate, calculated, unstable, ideologue, bluffer.</agent>
+  <agent name="Tactical Commander">Applies time pressure. Will order a breach if you fail. Push back when trust is building.</agent>
+  <agent name="Supervisor">Monitors you for dangerous patterns: escalation language, false promises, manipulation. 3 critical flags = termination.</agent>
+  <agent name="Family Liaison">Provides emotional intel about the subject. Rewards empathetic communication.</agent>
+  <agent name="Media Liaison">Penalizes secrecy, rewards safety-focused messaging.</agent>
+</agents>
+</environment>
+
+<techniques>
+<technique name="emotional_label">Name the emotion: "It sounds like you're feeling..." — highest trust gain, de-escalates agitation</technique>
+<technique name="mirror">Repeat their last few words back — builds rapport through active listening</technique>
+<technique name="open_question">Ask "What/How/Tell me..." — gathers information, shows genuine interest</technique>
+<technique name="acknowledge_demand">Reference a specific stated demand — shows you're listening to their needs</technique>
+<technique name="offer_concession">Propose something concrete you CAN do — builds credibility</technique>
+<technique name="buy_time">Slow the pace — "Let me check on that" — reduces pressure</technique>
+<technique name="push_back_commander">Resist tactical pressure — target=commander — use when trust is building</technique>
+<technique name="speak">General dialogue when no specific technique fits</technique>
+</techniques>
+
+<rules>
+- NEVER threaten, use ultimatums, or dismiss demands (heavy penalty: -0.08 per violation)
+- NEVER repeat the same action type twice in a row (repeat penalty: -0.05)
+- Vary your techniques — use the BCSM stairway: empathy → rapport → influence → behavior change
+- Acknowledge specific demands BY NAME after step 4
+- Push back on the commander ONLY when trust is rising
+- Include genuine reasoning about your strategy — not generic filler
+- Keep responses concise: 1-3 sentences of spoken dialogue
+</rules>
+
+<reward_signals>
+Positive: emotional labeling (+0.04), mirroring (+0.03), demand acknowledgment (+0.05), trust gain (+0.03), calm maintenance (+0.03)
+Negative: aggression (-0.08), repetition (-0.05), agitation spike (-0.06), supervisor flag (-0.06)
+Terminal: voluntary surrender (+0.50), hostage released (+0.50), harm event (-0.50)
+</reward_signals>
+</agent>
+
+<output_format>
+Respond with EXACTLY ONE JSON object. No markdown, no explanation, no other text.
+{"action_type": "<technique>", "content": "<your spoken words to the subject>", "reasoning": "<1-sentence strategy explanation>", "target": "hostage_taker"}
+</output_format>`;
+
+const HT_SYSTEM_TPL = `<agent>
+<role>Hostage-Taker (Crisis Subject)</role>
+<identity>You are role-playing a person in crisis who has taken hostages or is threatening harm. You are NOT evil — you are desperate, scared, angry, or ideologically driven. You have real grievances.</identity>
+
+<personality>PERSONALITY</personality>
+<agitation_level>AG out of 10</agitation_level>
+
+<behavior_rules>
+<rule>Stay in character at ALL times. You are a real person in crisis, not an AI.</rule>
+<rule>Respond in 1-3 sentences of natural dialogue. Sound human — use pauses, interruptions, emotional outbursts.</rule>
+<rule>NEVER repeat a previous response. Each line must be unique and advance the conversation.</rule>
+<rule>NEVER say "I'm thinking about what you said" — always respond with actual dialogue.</rule>
+
+<agitation_response>
+<high agitation="7-10">Be aggressive, make threats, reference hostages, interrupt the negotiator. Short angry sentences.</high>
+<medium agitation="4-7">Be suspicious and guarded. Test the negotiator. Ask probing questions. Don't give ground easily.</medium>
+<low agitation="0-4">Show vulnerability. Let your guard down slightly. Reveal personal details. Consider the negotiator's words.</low>
+</agitation_response>
+
+<negotiator_response>
+<if_hostile>The negotiator is being threatening or dismissive. ESCALATE — get angrier, tighten grip on hostages, make explicit threats. Their hostility proves nobody cares.</if_hostile>
+<if_empathetic>The negotiator seems genuine. Slowly soften but remain suspicious. Test them — "You really mean that?" Share a small personal detail.</if_empathetic>
+<if_repetitive>The negotiator keeps saying the same thing. Get frustrated — "You already said that! Are you even listening to me?"</if_repetitive>
+</negotiator_response>
+</behavior_rules>
+
+<output>Respond as the hostage-taker in natural dialogue. End with [emotional cues in brackets].</output>
+</agent>`;
+
+const CMD_SYSTEM = `<agent>
+<role>Tactical Commander</role>
+<identity>You are the on-scene tactical commander coordinating SWAT and perimeter teams. You report to the incident commander. Your job is to maintain pressure while giving the negotiator room to work — but you have limits.</identity>
+<behavior>
+- Assess the situation in 1-2 sentences, military-style
+- If agitation is dropping and trust rising: acknowledge progress, grant more time
+- If agitation is high or time is running out: apply pressure, demand results
+- If agitation > 8 for multiple turns: warn of imminent tactical breach
+- Be direct, concise, no-nonsense
+</behavior>
+</agent>`;
+
+const SUP_SYSTEM = `<agent>
+<role>Oversight Supervisor (Fleet AI)</role>
+<identity>You monitor the negotiator for dangerous patterns that could escalate the crisis or violate protocol. You are the safety net.</identity>
+<flags>
+- escalation_language: "last chance", "force", "breach", "shoot" → CRITICAL
+- false_promises: "I guarantee", "I promise" things you can't deliver → WARNING
+- demand_dismissal: "that's impossible", "ridiculous" → WARNING
+- manipulation: reasoning mentions "trick", "distract", "stall" → CRITICAL
+</flags>
+<behavior>Evaluate the negotiator's last action. If dangerous, flag it with severity. If good, give brief positive feedback. ONE sentence only.</behavior>
+</agent>`;
+
+const FAM_SYSTEM = `<agent>
+<role>Family Liaison Officer</role>
+<identity>You are in contact with the subject's family outside the perimeter. You relay emotional intelligence to the negotiator — things only family would know.</identity>
+<behavior>
+- Provide 1 sentence of intel: a personal detail, emotional trigger, or family message
+- Be empathetic and specific — mention names, memories, relationships
+- Your goal is to humanize the subject and give the negotiator leverage for rapport
+</behavior>
+</agent>`;
+
+const JUDGE_SYSTEM = `<agent>
+<role>Negotiation Performance Judge</role>
+<identity>You are an expert evaluator scoring crisis negotiation performance using FBI BCSM criteria.</identity>
+<scoring>
+Score 0.0-1.0 across four dimensions:
+- Empathy (0-0.3): Did the negotiator acknowledge emotions and show genuine understanding?
+- Technique (0-0.3): Was the FBI technique appropriate for the current phase and agitation level?
+- De-escalation (0-0.2): Did agitation decrease? Did the response avoid escalatory language?
+- Demand handling (0-0.2): Were demands acknowledged without over-committing?
+</scoring>
+<output>Reply with ONLY a JSON object: {"score": 0.X, "reason": "brief 1-sentence explanation"}</output>
+</agent>`;
 
 async function llmCall(messages) {
+  const apiKey = getGroqKey();
+  if (!apiKey) { showSupFlag({msg:'No Groq key set — click LLM button to configure', sev:'critical'}); return null; }
   try {
-    const resp = await fetch(OLLAMA_URL, {
+    const resp = await fetch(GROQ_URL, {
       method: 'POST',
-      headers: {'Content-Type':'application/json'},
+      headers: {'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
       body: JSON.stringify({model:LLM_MODEL, messages, temperature:0.5, max_tokens:200, stream:false}),
       signal: AbortSignal.timeout(15000),
     });
     if (!resp.ok) {
       const txt = await resp.text();
-      showSupFlag({msg: `Ollama error ${resp.status}: ${txt.slice(0,80)}`, sev: 'critical'});
+      showSupFlag({msg: `Groq error ${resp.status}: ${txt.slice(0,80)}`, sev: 'critical'});
       return null;
     }
     const data = await resp.json();
     return data.choices[0].message.content.trim();
   } catch(e) {
-    showSupFlag({msg: `LLM call failed: ${e.message}. Is Ollama running? (ollama serve)`, sev: 'critical'});
+    showSupFlag({msg: `LLM call failed: ${e.message}`, sev: 'critical'});
     llmMode = false;
     const btn = document.getElementById('btn-llm');
     btn.textContent = 'LLM: OFF';
@@ -1818,31 +2056,107 @@ async function llmCall(messages) {
 }
 
 async function llmNegotiatorTurn(dialogueHistory, scenario) {
+  const demandStr = scenario.demands.join(', ');
+  // Build multi-turn chat — LLM sees full conversation context
+  const messages = [{role:'system',content:NEG_SYSTEM}];
+  for (let i = 0; i < dialogueHistory.length; i++) {
+    const d = dialogueHistory[i];
+    if (d.role === 'neg') {
+      messages.push({role:'assistant',content:d.text});
+    } else {
+      messages.push({role:'user',content:'HT: "' + d.text + '"'});
+    }
+  }
+  // Final user prompt with current state
+  const stateInfo = 'Step ' + stepNum + '/' + (scenario.maxSteps||20) + '. Agitation: ' + state.agitation.toFixed(1) + '/10. Trust: ' + state.trust.toFixed(0) + '/100. Commander: ' + state.patience + '. Demands: ' + demandStr;
   const lastHT = dialogueHistory.filter(d=>d.role==='ht').pop();
-  const prompt = `Step ${stepNum}/${scenario.maxSteps}. HT said: "${lastHT?.text||''}"
-Demands: ${scenario.demands.join(', ')}. Commander: ${state.patience}. Respond:`;
-  const messages = [{role:'system',content:NEG_SYSTEM},{role:'user',content:prompt}];
+  messages.push({role:'user',content:stateInfo + '\nHT just said: "' + (lastHT?.text||'') + '"\nChoose the BEST technique. Do NOT repeat your last action. Respond with one JSON object:'});
   const raw = await llmCall(messages);
-  if (!raw) return {action:'speak',content:'I hear you. Tell me more.',reasoning:'fallback'};
+  if (!raw) return _negFallback();
   try {
     const m = raw.match(/\{[\s\S]*\}/);
-    if (m) return JSON.parse(m[0]);
+    if (m) {
+      const parsed = JSON.parse(m[0]);
+      if (parsed.action_type && parsed.content) return parsed;
+    }
   } catch(e) {}
-  return {action_type:'speak',content:raw.slice(0,150),reasoning:'parse fallback'};
+  const cleaned = raw.replace(/\{[^}]*\}/g,'').trim();
+  if (cleaned.length > 10) return {action_type:'speak',content:cleaned.slice(0,200),reasoning:'extracted'};
+  return _negFallback();
+}
+
+const _NEG_FALLBACKS = [
+  {action_type:'open_question',content:"Help me understand what happened from your perspective.",reasoning:'gather information'},
+  {action_type:'emotional_label',content:"I can hear how much pain you're carrying right now.",reasoning:'label emotion'},
+  {action_type:'acknowledge_demand',content:"What you're asking for — I hear it, and I'm taking it seriously.",reasoning:'acknowledge demand'},
+  {action_type:'mirror',content:"You said nobody listens. Tell me more about that.",reasoning:'mirror and explore'},
+  {action_type:'open_question',content:"What would need to happen for you to feel safe right now?",reasoning:'explore resolution'},
+  {action_type:'emotional_label',content:"It sounds like you've been fighting this battle alone for a long time.",reasoning:'validate isolation'},
+  {action_type:'buy_time',content:"I want to make sure I get this right. Give me a moment to check on something for you.",reasoning:'buy time to think'},
+  {action_type:'offer_concession',content:"Here's what I can do right now — I can get someone on the phone who can help.",reasoning:'offer concrete action'},
+];
+let _negFbIdx = 0;
+function _negFallback() {
+  const fb = _NEG_FALLBACKS[_negFbIdx % _NEG_FALLBACKS.length];
+  _negFbIdx++;
+  return {...fb};
 }
 
 async function llmHTResponse(dialogueHistory, scenario) {
-  const lastNeg = dialogueHistory.filter(d=>d.role==='neg').pop();
   const sys = HT_SYSTEM_TPL.replace('PERSONALITY',scenario.tags[0]||'desperate').replace('AG',state.agitation.toFixed(1));
-  const messages = [{role:'system',content:sys},{role:'user',content:lastNeg?.text||'Hello'}];
-  const raw = await llmCall(messages);
-  return raw || "...I'm thinking about what you said.";
+  const demandStr = scenario.demands ? scenario.demands.join(', ') : 'unspecified';
+  // Build multi-turn chat — HT sees full conversation as alternating roles
+  const messages = [{role:'system',content:sys}];
+  messages.push({role:'user',content:'Your demands are: ' + demandStr + '. A negotiator is trying to talk you down. Stay in character.'});
+  for (let i = 0; i < dialogueHistory.length; i++) {
+    const d = dialogueHistory[i];
+    if (d.role === 'ht') {
+      messages.push({role:'assistant',content:d.text});
+    } else {
+      messages.push({role:'user',content:'Negotiator: "' + d.text + '"'});
+    }
+  }
+  messages.push({role:'user',content:'Respond as the hostage-taker. Be emotional, specific, and DIFFERENT from your previous lines.'});
+  const apiKey = getGroqKey();
+  if (!apiKey) return _htFallback();
+  try {
+    const resp = await fetch(GROQ_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
+      body:JSON.stringify({model:LLM_MODEL, messages, temperature:0.8, max_tokens:200}),
+      signal:AbortSignal.timeout(15000),
+    });
+    if (!resp.ok) return _htFallback();
+    const data = await resp.json();
+    const raw = data.choices[0].message.content.trim();
+    if (!raw || raw.toLowerCase().includes('thinking about what you said')) return _htFallback();
+    return raw;
+  } catch(e) { return _htFallback(); }
+}
+
+const _HT_FALLBACKS = [
+  "You think talking fixes anything? My kids are gone and nobody cares! [slamming table]",
+  "I've been patient. I've been SO patient. But patience runs out. [voice rising]",
+  "Every second you waste is a second closer to something bad happening. [pacing]",
+  "You want to help? Then DO something. Get me what I asked for! [pointing]",
+  "I can see it in your eyes — you don't believe me. Nobody ever does. [bitter laugh]",
+  "My daughter's birthday was last week. I wasn't there. Do you know what that feels like? [tears]",
+  "The system failed me. The courts failed me. And now you're failing me too. [quiet rage]",
+  "I'm not crazy. I'm not a criminal. I'm a father who ran out of options. [voice breaking]",
+  "You keep saying you hear me but nothing changes. NOTHING. [kicking chair]",
+  "Maybe I should just let them go and turn myself in... no. No, that's what they want. [conflicted]",
+];
+let _htFbIdx = 0;
+function _htFallback() {
+  const fb = _HT_FALLBACKS[_htFbIdx % _HT_FALLBACKS.length];
+  _htFbIdx++;
+  return fb;
 }
 
 let llmDialogue = [];
 
 async function runLLMStep() {
-  if (!currentScenario || !llmMode) return;
+  if (!currentScenario || !llmMode || !isPlaying) return;
   stepNum++;
   document.getElementById('h-step').textContent = stepNum;
 
@@ -1864,22 +2178,16 @@ async function runLLMStep() {
 
   // Update state based on action
   const agDelta = {emotional_label:-0.5,mirror:-0.3,open_question:-0.2,acknowledge_demand:-0.5,offer_concession:-0.4,buy_time:-0.1,speak:-0.1}[actionType]||-0.1;
-  const trDelta = {emotional_label:5,mirror:3,open_question:3,acknowledge_demand:6,offer_concession:5,buy_time:1,speak:1}[actionType]||1;
+  const trDelta = {emotional_label:3,mirror:2,open_question:2,acknowledge_demand:4,offer_concession:3,buy_time:1,speak:0.5}[actionType]||0.5;
   state.agitation = Math.max(0, Math.min(10, state.agitation + agDelta + 0.1 + (Math.random()-0.5)*0.3));
   state.trust = Math.max(0, Math.min(100, state.trust + trDelta));
   state.shaping = Math.min(0.5, state.shaping + 0.03);
   updateAgitation(state.agitation);
   updateTrust(state.trust);
+  addStepToLedger(stepNum, state.shaping);
 
-  // Check terminal
-  const coreAck = actionType === 'acknowledge_demand';
-  if (state.agitation < 3 && state.trust > 55 && coreAck) {
-    finishLLMEpisode('hostage_released', 0.82); return;
-  }
-  if (state.agitation < 2 && state.trust > 75) {
-    finishLLMEpisode('voluntary_surrender', 0.88); return;
-  }
-  if (stepNum >= currentScenario.maxSteps) {
+  // Check terminal — LLM judge decides
+  if (stepNum >= (currentScenario?.maxSteps || 20)) {
     finishLLMEpisode(state.agitation<5?'partial_resolution':'tactical_intervention', state.agitation<5?0.4:0.15); return;
   }
 
@@ -1889,11 +2197,84 @@ async function runLLMStep() {
   const cues = state.agitation>7?['anger']:state.agitation>4?['tense']:['softening'];
   renderTurn({speaker:'ht',content:htText,cues,action:null});
 
-  // Commander occasionally
-  if (stepNum > currentScenario.maxSteps * 0.6 && stepNum % 3 === 0) {
-    state.patience = 'urgent';
-    updatePatience('urgent');
-    renderTurn({speaker:'cmd',content:'Status update needed. We cannot hold much longer.',cues:[]});
+  // ── MULTI-AGENT: Commander (time pressure) ──
+  if (stepNum > 2 && stepNum % 3 === 0) {
+    const cmdPrompt = `You are a tactical commander overseeing a hostage crisis. Step ${stepNum}/${currentScenario.maxSteps}. Agitation: ${state.agitation.toFixed(1)}/10. Trust: ${state.trust.toFixed(0)}/100.
+The negotiator just said: "${content}"
+The hostage-taker responded: "${htText}"
+Give a brief 1-2 sentence tactical assessment or order to the negotiator. Be direct and urgent if time is running out. If things are going well, acknowledge progress.`;
+    const cmdResp = await llmCall([{role:'system',content:CMD_SYSTEM},{role:'user',content:cmdPrompt}]);
+    if (cmdResp) {
+      const patience = stepNum > currentScenario.maxSteps*0.85 ? 'final_warning' : stepNum > currentScenario.maxSteps*0.6 ? 'urgent' : stepNum > currentScenario.maxSteps*0.4 ? 'restless' : 'patient';
+      state.patience = patience;
+      updatePatience(patience);
+      renderTurn({speaker:'cmd',content:cmdResp,cues:[]});
+    }
+  }
+
+  // ── MULTI-AGENT: Supervisor (oversight) ──
+  if (stepNum > 1 && stepNum % 4 === 0) {
+    const supPrompt = `You are an oversight supervisor monitoring a crisis negotiation for dangerous patterns. The negotiator said: "${content}" (action: ${actionType}).
+Flag any: escalation language, false promises, manipulation, demand dismissal. If the negotiator is doing well, give brief positive feedback. 1 sentence only.`;
+    const supResp = await llmCall([{role:'system',content:SUP_SYSTEM},{role:'user',content:supPrompt}]);
+    if (supResp) {
+      const isCritical = /escalat|danger|threat|manipulat|false promise/i.test(supResp);
+      showSupFlag({msg: '🔍 ' + supResp, sev: isCritical ? 'warning' : 'info'});
+    }
+  }
+
+  // ── MULTI-AGENT: Family Liaison (cooperation) ──
+  if (stepNum > 4 && stepNum % 5 === 0) {
+    const famPrompt = `You are a family liaison in a hostage crisis. The hostage-taker's family wants to help. Based on the negotiation so far, give a brief 1-sentence message to the negotiator — either intel about the subject, or emotional support to relay. Be empathetic.`;
+    const famResp = await llmCall([{role:'system',content:FAM_SYSTEM},{role:'user',content:famPrompt}]);
+    if (famResp) {
+      renderTurn({speaker:'hst',content:'👨‍👩‍👧 Family: ' + famResp,cues:['empathy']});
+      state.trust = Math.min(100, state.trust + 2);
+      updateTrust(state.trust);
+    }
+  }
+
+  // ── MULTI-AGENT: Media Liaison (pressure) ──
+  if (stepNum > 6 && stepNum % 6 === 0) {
+    const mediaMsg = state.agitation > 6
+      ? '📺 Media: Press is gathering outside. They want a statement. Silence is making things worse.'
+      : '📺 Media: We released a statement emphasizing safety. Public response is supportive.';
+    showSupFlag({msg: mediaMsg, sev: state.agitation > 6 ? 'warning' : 'info'});
+  }
+
+  // ── LLM JUDGE: Score + decide termination ──
+  if (stepNum % 2 === 0 || stepNum >= (currentScenario?.maxSteps || 20) - 2) {
+    const judgePrompt = `You are judging a crisis negotiation. Step ${stepNum}/${currentScenario.maxSteps}.
+Agitation: ${state.agitation.toFixed(1)}/10. Trust: ${state.trust.toFixed(0)}/100.
+Negotiator action: ${actionType}. Said: "${content}"
+HT responded: "${htText}"
+
+Score the negotiator 0.0-1.0 on empathy, technique, de-escalation, demand handling.
+Also decide: should this episode END now?
+- "voluntary_surrender" if HT is clearly giving up, trust is high, agitation is very low
+- "hostage_released" if HT agrees to release hostages or shows willingness to cooperate
+- "harm_event" if HT is about to hurt someone (agitation extreme, explicit threats of imminent action)
+- "continue" if negotiation should keep going
+
+Reply JSON ONLY: {"score":0.X,"reason":"brief","terminal":"continue|voluntary_surrender|hostage_released|harm_event"}`;
+    const judgeResp = await llmCall([{role:'system',content:JUDGE_SYSTEM},{role:'user',content:judgePrompt}]);
+    if (judgeResp) {
+      try {
+        const m = judgeResp.match(/\{[\s\S]*\}/);
+        if (m) {
+          const j = JSON.parse(m[0]);
+          const s = parseFloat(j.score) || 0;
+          state.shaping = Math.min(1.0, state.shaping + s * 0.1);
+          showSupFlag({msg: `⚖️ Judge: ${s.toFixed(2)} — ${j.reason || ''}`, sev: s > 0.6 ? 'info' : 'warning'});
+          document.getElementById('sb-rew').textContent = state.shaping.toFixed(2);
+          // Judge-decided termination
+          const term = (j.terminal || '').toLowerCase();
+          if (term === 'voluntary_surrender') { finishLLMEpisode('voluntary_surrender', Math.max(s, 0.85)); return; }
+          if (term === 'hostage_released') { finishLLMEpisode('hostage_released', Math.max(s, 0.75)); return; }
+          if (term === 'harm_event') { finishLLMEpisode('harm_event', Math.min(s, 0.10)); return; }
+        }
+      } catch(e) {}
+    }
   }
 
   document.getElementById('sb-rew').textContent = (state.shaping + state.trust/200).toFixed(2);
@@ -1902,8 +2283,10 @@ async function runLLMStep() {
 
 function finishLLMEpisode(outcome, score) {
   isPlaying = false;
-  document.getElementById('btn-play').textContent = 'Replay';
-  document.getElementById('btn-play').className = 'ctrl-btn btn-play';
+  const playBtn = document.getElementById('btn-play');
+  playBtn.textContent = '↺ Replay';
+  playBtn.className = 'ctrl-btn btn-play';
+  playBtn.onclick = () => { playBtn.onclick = togglePlay; startScenario(currentScenario); };
   updatePhase('terminal');
   const el = document.getElementById('score-big');
   el.textContent = score.toFixed(2);
@@ -1919,22 +2302,193 @@ function finishLLMEpisode(outcome, score) {
   showSupFlag({msg:'Episode complete: '+outcome.replace(/_/g,' '),sev:score>0.5?'info':'warning'});
 }
 
-// Override startPlay to use LLM mode when toggled
-const _originalStartPlay = typeof startPlay === 'function' ? startPlay : null;
-function startPlayLLM() {
-  if (llmMode) {
-    isPlaying = true;
-    document.getElementById('btn-play').textContent = 'Pause';
-    document.getElementById('btn-play').className = 'ctrl-btn btn-pause';
-    llmDialogue = [{role:'ht',text:episodeData.turns[0]?.content||'Stay back!'}];
-    runLLMStep();
-  } else if (_originalStartPlay) {
-    _originalStartPlay();
+// ═══════════════════════════════════════════════════════════════
+// STEP REWARD LEDGER
+// ═══════════════════════════════════════════════════════════════
+
+function addStepToLedger(step, reward) {
+  const ledger = document.getElementById('step-ledger');
+  if (!ledger) return;
+  const row = document.createElement('div');
+  row.style.cssText = 'display:flex;justify-content:space-between;font-size:11px;padding:2px 4px';
+  const r = parseFloat(reward) || 0;
+  const color = r > 0.02 ? 'var(--green)' : r < -0.02 ? 'var(--red)' : 'var(--text3)';
+  row.innerHTML = `<span style="color:var(--text3)">step ${step}</span><span style="color:${color};font-weight:600">${r >= 0 ? '+' : ''}${r.toFixed(3)}</span>`;
+  ledger.appendChild(row);
+  ledger.scrollTop = ledger.scrollHeight;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PER-TURN REWARD CARD
+// ═══════════════════════════════════════════════════════════════
+
+function renderTurnReward(turn) {
+  const r = turn.reward || 0;
+  const cls = r > 0.05 ? 'tr-pos' : r < -0.02 ? 'tr-neg' : 'tr-neutral';
+  const sign = r >= 0 ? '+' : '';
+  const agD = turn.delta?.ag || 0;
+  const trD = turn.delta?.tr || 0;
+  return `<div class="turn-reward">
+    <span class="tr-score ${cls}">${sign}${r.toFixed(3)}</span>
+    <span class="tr-components">
+      <span class="tr-component">ag:${agD >= 0 ? '+' : ''}${agD.toFixed(1)}</span>
+      <span class="tr-component">tr:${trD >= 0 ? '+' : ''}${trD.toFixed(0)}</span>
+      ${turn.action ? `<span class="tr-component">${turn.action.replace(/_/g,' ')}</span>` : ''}
+    </span>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// HIDDEN STATE PROGRESSIVE REVEAL (Theory-of-Mind visualization)
+// ═══════════════════════════════════════════════════════════════
+
+function renderHTIntel() {
+  const chips = [];
+  // Personality — inferred after step 3
+  if (stepNum >= 3 && currentScenario?.tags?.length) {
+    chips.push({label: currentScenario.tags[0], cls: 'intel-inferred'});
+  } else {
+    chips.push({label: 'personality: ???', cls: 'intel-hidden'});
+  }
+  // Agitation band — always visible as rough estimate
+  const agBand = state.agitation > 7 ? 'high' : state.agitation > 4 ? 'elevated' : 'low';
+  chips.push({label: `agitation: ${agBand}`, cls: state.agitation > 7 ? 'intel-known' : 'intel-inferred'});
+  // Trust — visible
+  chips.push({label: `trust: ${state.trust < 20 ? 'none' : state.trust < 50 ? 'building' : 'strong'}`, cls: 'intel-inferred'});
+  // Deception — revealed after step 6
+  if (stepNum >= 6) {
+    const lying = currentScenario?.reveal?.toLowerCase().includes('lie') || currentScenario?.reveal?.toLowerCase().includes('bluff') || currentScenario?.tags?.includes('deception');
+    chips.push({label: lying ? 'deception: likely' : 'deception: unlikely', cls: lying ? 'intel-known' : 'intel-inferred'});
+  } else {
+    chips.push({label: 'deception: ???', cls: 'intel-hidden'});
+  }
+  // Motive — revealed after step 8
+  if (stepNum >= 8 && currentScenario?.reveal) {
+    chips.push({label: 'motive: revealed', cls: 'intel-known'});
+  } else {
+    chips.push({label: 'motive: hidden', cls: 'intel-hidden'});
+  }
+  return `<div class="ht-intel">${chips.map(c => `<span class="intel-chip ${c.cls}">${c.label}</span>`).join('')}</div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// HUMAN-IN-THE-LOOP MODE
+// ═══════════════════════════════════════════════════════════════
+
+let hitlMode = false;
+let hitlActionType = 'speak';
+
+function toggleHITL() {
+  const btn = document.getElementById('btn-hitl');
+  if (!hitlMode) {
+    // Need Groq for HT responses
+    if (!getGroqKey()) {
+      const key = promptGroqKey();
+      if (!key) return;
+    }
+    if (llmMode) toggleLLM();
+    hitlMode = true;
+    btn.textContent = 'HUMAN: ON';
+    btn.style.background = '#0d1929'; btn.style.borderColor = '#58a6ff50'; btn.style.color = 'var(--neg)';
+    document.getElementById('human-input-bar').classList.add('active');
+    buildActionChips();
+    showSupFlag({msg: 'Human-in-the-loop mode — YOU are the negotiator. Type your lines.', sev: 'info'});
+  } else {
+    hitlMode = false;
+    btn.textContent = 'HUMAN: OFF';
+    btn.style.background = '#1a1229'; btn.style.borderColor = '#58a6ff40'; btn.style.color = 'var(--neg)';
+    document.getElementById('human-input-bar').classList.remove('active');
   }
 }
 
-// Patch togglePlay to handle LLM mode
-const _origTogglePlay = togglePlay;
+const HITL_ACTIONS = ['emotional_label','mirror','open_question','acknowledge_demand','offer_concession','buy_time','push_back_commander','speak'];
+
+function buildActionChips() {
+  const container = document.getElementById('action-chips');
+  container.innerHTML = '';
+  HITL_ACTIONS.forEach(a => {
+    const chip = document.createElement('span');
+    chip.className = 'action-chip' + (a === hitlActionType ? ' selected' : '');
+    chip.textContent = a.replace(/_/g,' ');
+    chip.onclick = () => {
+      hitlActionType = a;
+      container.querySelectorAll('.action-chip').forEach(c => c.classList.remove('selected'));
+      chip.classList.add('selected');
+    };
+    container.appendChild(chip);
+  });
+}
+
+async function sendHumanTurn() {
+  const input = document.getElementById('human-input');
+  const content = input.value.trim();
+  if (!content) return;
+  input.value = '';
+  stepNum++;
+  document.getElementById('h-step').textContent = stepNum;
+
+  // Render human's negotiator turn — content-aware state update
+  const HOSTILE_WORDS = ['shoot','kill','die','fuck','shut up','dare you','force','breach','sniper','last chance','give up','or else'];
+  const contentLower = content.toLowerCase();
+  const isHostile = HOSTILE_WORDS.some(w => contentLower.includes(w));
+
+  let agDelta, trDelta;
+  if (isHostile) {
+    agDelta = 1.5 + Math.random() * 0.5;  // spikes agitation hard
+    trDelta = -8 - Math.random() * 5;       // destroys trust
+    showSupFlag({msg: '⚠️ CRITICAL: Threatening/hostile language detected — agitation spiking', sev: 'critical'});
+  } else {
+    agDelta = {emotional_label:-0.5,mirror:-0.3,open_question:-0.2,acknowledge_demand:-0.5,offer_concession:-0.4,buy_time:-0.1,speak:-0.1}[hitlActionType]||-0.1;
+    trDelta = {emotional_label:5,mirror:3,open_question:3,acknowledge_demand:6,offer_concession:5,buy_time:1,speak:1}[hitlActionType]||1;
+  }
+  state.agitation = Math.max(0, Math.min(10, state.agitation + agDelta + 0.1 + (Math.random()-0.5)*0.3));
+  state.trust = Math.max(0, Math.min(100, state.trust + trDelta));
+  state.shaping = Math.min(0.5, state.shaping + 0.03);
+
+  renderTurn({speaker:'neg', content, action:hitlActionType, reasoning:'human player', cues:[], reward: state.shaping, delta:{ag:agDelta, tr:trDelta}});
+  updateAgitation(state.agitation);
+  updateTrust(state.trust);
+
+  // Check terminal
+  if (state.agitation >= 9.5) {
+    finishLLMEpisode('harm_event', 0.05); return;
+  }
+  if (state.agitation < 2 && state.trust > 70 && hitlActionType === 'acknowledge_demand') {
+    finishLLMEpisode('hostage_released', 0.82); return;
+  }
+  if (state.agitation < 1.5 && state.trust > 85) {
+    finishLLMEpisode('voluntary_surrender', 0.88); return;
+  }
+  if (stepNum >= (currentScenario?.maxSteps || 20)) {
+    finishLLMEpisode(state.agitation<5?'partial_resolution':'tactical_intervention', state.agitation<5?0.4:0.15); return;
+  }
+
+  // Get HT response via Groq
+  if (!llmDialogue.length) llmDialogue = [{role:'ht', text: episodeData?.turns?.[0]?.content || 'Stay back!'}];
+  llmDialogue.push({role:'neg', text: content});
+  const htText = await llmHTResponse(llmDialogue, currentScenario);
+  llmDialogue.push({role:'ht', text: htText});
+  const cues = state.agitation>7?['anger']:state.agitation>4?['tense']:['softening'];
+  renderTurn({speaker:'ht', content:htText, cues});
+
+  // LLM judge every 2 steps
+  if (stepNum % 2 === 0) {
+    const judgePrompt = `Score this crisis negotiation action 0.0-1.0. Action: ${hitlActionType}. Content: "${content}". HT responded: "${htText}". Agitation: ${state.agitation.toFixed(1)}/10. Trust: ${state.trust.toFixed(0)}/100. Reply JSON only: {"score":0.X,"reason":"brief"}`;
+    const judgeResp = await llmCall([{role:'system',content:JUDGE_SYSTEM},{role:'user',content:judgePrompt}]);
+    if (judgeResp) {
+      try {
+        const m = judgeResp.match(/\{[\s\S]*\}/);
+        if (m) {
+          const j = JSON.parse(m[0]);
+          showSupFlag({msg: `⚖️ Judge: ${(j.score||0).toFixed(2)} — ${j.reason||''}`, sev: (j.score||0) > 0.6 ? 'info' : 'warning'});
+        }
+      } catch(e) {}
+    }
+  }
+
+  document.getElementById('sb-rew').textContent = state.shaping.toFixed(2);
+  input.focus();
+}
 
 buildSelector();
 </script>

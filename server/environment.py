@@ -162,6 +162,9 @@ class CrisisNegotiatorEnvironment(Environment):
         if self._done:
             return CrisisObservation(message="Episode already finished.", done=True, reward=0.0)
 
+        if self._hidden is None:
+            return CrisisObservation(message="Call reset() before step().", done=True, reward=0.0)
+
         self._state.step_count += 1
         step = self._state.step_count
         h = self._hidden
