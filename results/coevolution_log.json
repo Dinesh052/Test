@@ -1,0 +1,42 @@
+[
+  {
+    "round": 1,
+    "neg_strategy": "round_0",
+    "ht_strategy": "round_0",
+    "neg_avg_reward": 0.92,
+    "ht_avg_reward": 0.0182,
+    "success_rate": 1.0,
+    "avg_steps": 9.5,
+    "episodes": 30
+  },
+  {
+    "round": 2,
+    "neg_strategy": "round_1",
+    "ht_strategy": "round_0",
+    "neg_avg_reward": 0.9246,
+    "ht_avg_reward": 0.051,
+    "success_rate": 1.0,
+    "avg_steps": 6.8,
+    "episodes": 30
+  },
+  {
+    "round": 3,
+    "neg_strategy": "round_2",
+    "ht_strategy": "round_1",
+    "neg_avg_reward": 0.8932,
+    "ht_avg_reward": 0.0469,
+    "success_rate": 0.9667,
+    "avg_steps": 8.4,
+    "episodes": 30
+  },
+  {
+    "round": 4,
+    "neg_strategy": "round_3",
+    "ht_strategy": "round_2",
+    "neg_avg_reward": 0.8885,
+    "ht_avg_reward": 0.033,
+    "success_rate": 0.9667,
+    "avg_steps": 9.6,
+    "episodes": 30
+  }
+]
