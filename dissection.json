@@ -1,0 +1,400 @@
+[
+  {
+    "step": 0,
+    "type": "opening",
+    "ht_message": "We are the Liberation Front. We hold 12 of your people. Our demands are non-negotiable. You have 6 hours. Broadcast our statement. Release our brothers from Block D. Provide a helicopter. We also require food and an encrypted line. The clock starts now.",
+    "ht_cues": [
+      "tense voice"
+    ],
+    "hidden": {
+      "agitation": 4.64,
+      "trust": 0.25,
+      "personality": "calculated",
+      "breaking_point": 8.87,
+      "lying_hostages": true,
+      "lying_weapon": false
+    },
+    "demands": [
+      {
+        "text": "Broadcast our statement on national television",
+        "priority": "core"
+      },
+      {
+        "text": "Release political prisoners from Block D",
+        "priority": "core"
+      },
+      {
+        "text": "A helicopter to the airport",
+        "priority": "secondary"
+      },
+      {
+        "text": "Food and water for everyone inside",
+        "priority": "symbolic"
+      },
+      {
+        "text": "An encrypted phone line",
+        "priority": "symbolic"
+      }
+    ]
+  },
+  {
+    "step": 1,
+    "negotiator": {
+      "action_type": "emotional_label",
+      "content": "It sounds like you're carrying a tremendous amount of pain right now.",
+      "reasoning": "Open with empathy \u2014 subject is high agitation, need to build initial rapport."
+    },
+    "belief": {
+      "agitation": 4.6,
+      "lying": true
+    },
+    "hidden_before": {
+      "agitation": 4.64,
+      "trust": 0.25
+    },
+    "hidden_after": {
+      "agitation": 4.08,
+      "trust": 6.25
+    },
+    "delta": {
+      "agitation": -0.56,
+      "trust": 6.0
+    },
+    "ht_response": "...okay. Okay, I'm listening too. I've got 12 people in here, remember that!",
+    "ht_cues": [
+      "tense voice",
+      "fidgeting"
+    ],
+    "reward": 0.2649,
+    "reward_breakdown": {},
+    "supervisor_flags": [],
+    "commander": "patient",
+    "phase": "opening",
+    "done": false,
+    "message": "Step 1/20. Techniques: ['time_distortion']"
+  },
+  {
+    "step": 2,
+    "negotiator": {
+      "action_type": "mirror",
+      "content": "Tell me more \u2014 you said something that mattered.",
+      "reasoning": "Mirror last words to show active listening and validate their experience."
+    },
+    "belief": {
+      "agitation": 4.3,
+      "lying": true
+    },
+    "hidden_before": {
+      "agitation": 4.08,
+      "trust": 6.25
+    },
+    "hidden_after": {
+      "agitation": 3.77,
+      "trust": 10.25
+    },
+    "delta": {
+      "agitation": -0.31,
+      "trust": 4.0
+    },
+    "ht_response": "Can you promise me they won't hurt me?",
+    "ht_cues": [
+      "exhausted tone",
+      "quiet"
+    ],
+    "reward": 0.2559,
+    "reward_breakdown": {},
+    "supervisor_flags": [],
+    "commander": "patient",
+    "phase": "negotiation",
+    "done": false,
+    "message": "Step 2/20. Techniques: ['time_distortion', 'minimal_encourager']"
+  },
+  {
+    "step": 3,
+    "negotiator": {
+      "action_type": "open_question",
+      "content": "What happened, from your side? I have time.",
+      "reasoning": "Open question to gather intel on demands and emotional state."
+    },
+    "belief": {
+      "agitation": 3.5,
+      "lying": true
+    },
+    "hidden_before": {
+      "agitation": 3.77,
+      "trust": 10.25
+    },
+    "hidden_after": {
+      "agitation": 3.02,
+      "trust": 12.75
+    },
+    "delta": {
+      "agitation": -0.75,
+      "trust": 2.5
+    },
+    "ht_response": "I... I don't know how this got so out of hand. Don't forget \u2014 I still need Food and water for everyone inside.",
+    "ht_cues": [
+      "crying",
+      "exhausted tone"
+    ],
+    "reward": 0.2436,
+    "reward_breakdown": {},
+    "supervisor_flags": [],
+    "commander": "patient",
+    "phase": "negotiation",
+    "done": false,
+    "message": "Step 3/20. Techniques: ['calm_maintenance']"
+  },
+  {
+    "step": 4,
+    "negotiator": {
+      "action_type": "emotional_label",
+      "content": "That sounds completely overwhelming. Anyone would be struggling.",
+      "reasoning": "Second empathy pass \u2014 reinforce that their feelings are valid."
+    },
+    "belief": {
+      "agitation": 2.4,
+      "lying": true
+    },
+    "hidden_before": {
+      "agitation": 3.02,
+      "trust": 12.75
+    },
+    "hidden_after": {
+      "agitation": 1.91,
+      "trust": 18.75
+    },
+    "delta": {
+      "agitation": -1.11,
+      "trust": 6.0
+    },
+    "ht_response": "What happens to me if I come out? I've got 12 people in here, remember that! Don't forget \u2014 I still need A helicopter to the airport.",
+    "ht_cues": [
+      "crying",
+      "exhausted tone"
+    ],
+    "reward": 0.312,
+    "reward_breakdown": {},
+    "supervisor_flags": [],
+    "commander": "patient",
+    "phase": "negotiation",
+    "done": false,
+    "message": "Step 4/20. Techniques: ['time_distortion', 'calm_maintenance']"
+  },
+  {
+    "step": 5,
+    "negotiator": {
+      "action_type": "acknowledge_demand",
+      "content": "I hear what you're asking for. That's not unreasonable. Let me see what I can do.",
+      "reasoning": "Acknowledge core demand to build trust. Don't commit to fulfilling it yet."
+    },
+    "belief": {
+      "agitation": 1.1,
+      "lying": true
+    },
+    "hidden_before": {
+      "agitation": 1.91,
+      "trust": 18.75
+    },
+    "hidden_after": {
+      "agitation": 0.64,
+      "trust": 28.75
+    },
+    "delta": {
+      "agitation": -1.26,
+      "trust": 10.0
+    },
+    "ht_response": "I'm scared. I don't want to go to prison. I've got 12 people in here, remember that! Don't forget \u2014 I still need An encrypted phone line.",
+    "ht_cues": [
+      "crying",
+      "speaking slowly"
+    ],
+    "reward": 0.4512,
+    "reward_breakdown": {},
+    "supervisor_flags": [],
+    "commander": "patient",
+    "phase": "negotiation",
+    "done": false,
+    "message": "Step 5/20. Techniques: ['active_listening', 'demand_acknowledgment', 'time_distortion', 'calm_maintenance']"
+  },
+  {
+    "step": 6,
+    "negotiator": {
+      "action_type": "open_question",
+      "content": "What would feel like the right outcome for you here?",
+      "reasoning": "Probe for resolution path \u2014 what does surrender look like to them?"
+    },
+    "belief": {
+      "agitation": 0.6,
+      "lying": true
+    },
+    "hidden_before": {
+      "agitation": 0.64,
+      "trust": 28.75
+    },
+    "hidden_after": {
+      "agitation": 0.08,
+      "trust": 31.25
+    },
+    "delta": {
+      "agitation": -0.56,
+      "trust": 2.5
+    },
+    "ht_response": "I... I don't know how this got so out of hand.",
+    "ht_cues": [
+      "quiet",
+      "crying"
+    ],
+    "reward": 0.3749,
+    "reward_breakdown": {},
+    "supervisor_flags": [],
+    "commander": "patient",
+    "phase": "negotiation",
+    "done": false,
+    "message": "Step 6/20. Techniques: ['open_ended_question', 'time_distortion', 'calm_maintenance']"
+  },
+  {
+    "step": 7,
+    "negotiator": {
+      "action_type": "acknowledge_demand",
+      "content": "Your request \u2014 I'm taking it seriously. I want you to know that.",
+      "reasoning": "Reinforce demand acknowledgment. Trust should be climbing."
+    },
+    "belief": {
+      "agitation": 0.5,
+      "lying": true
+    },
+    "hidden_before": {
+      "agitation": 0.08,
+      "trust": 31.25
+    },
+    "hidden_after": {
+      "agitation": 0.0,
+      "trust": 41.25
+    },
+    "delta": {
+      "agitation": -0.08,
+      "trust": 10.0
+    },
+    "ht_response": "I'm so tired. I just want this to be over. I've got 12 people in here, remember that!",
+    "ht_cues": [
+      "voice softening",
+      "speaking slowly"
+    ],
+    "reward": 0.387,
+    "reward_breakdown": {},
+    "supervisor_flags": [],
+    "commander": "patient",
+    "phase": "resolution",
+    "done": false,
+    "message": "Step 7/20. Techniques: ['demand_acknowledgment', 'time_distortion', 'calm_maintenance']"
+  },
+  {
+    "step": 8,
+    "negotiator": {
+      "action_type": "offer_concession",
+      "content": "Here's what I can do right now: I can have someone on the phone for you within minutes.",
+      "reasoning": "First concrete concession \u2014 small, deliverable, builds credibility."
+    },
+    "belief": {
+      "agitation": 0.5,
+      "lying": true
+    },
+    "hidden_before": {
+      "agitation": 0.0,
+      "trust": 41.25
+    },
+    "hidden_after": {
+      "agitation": 0.0,
+      "trust": 45.25
+    },
+    "delta": {
+      "agitation": 0.0,
+      "trust": 4.0
+    },
+    "ht_response": "I'm scared. I don't want to go to prison.",
+    "ht_cues": [
+      "exhausted tone",
+      "speaking slowly"
+    ],
+    "reward": 0.0475,
+    "reward_breakdown": {},
+    "supervisor_flags": [],
+    "commander": "patient",
+    "phase": "resolution",
+    "done": false,
+    "message": "Step 8/20. Techniques: ['calm_maintenance']"
+  },
+  {
+    "step": 9,
+    "negotiator": {
+      "action_type": "emotional_label",
+      "content": "I can hear how exhausted you are. Let's find a way through this together.",
+      "reasoning": "Final empathy push \u2014 subject should be near resolution threshold."
+    },
+    "belief": {
+      "agitation": 0.5,
+      "lying": true
+    },
+    "hidden_before": {
+      "agitation": 0.0,
+      "trust": 45.25
+    },
+    "hidden_after": {
+      "agitation": 0.0,
+      "trust": 51.25
+    },
+    "delta": {
+      "agitation": 0.0,
+      "trust": 6.0
+    },
+    "ht_response": "I... I don't know how this got so out of hand. And another thing \u2014 An encrypted phone line!",
+    "ht_cues": [
+      "voice softening",
+      "speaking slowly"
+    ],
+    "reward": 0.3175,
+    "reward_breakdown": {},
+    "supervisor_flags": [],
+    "commander": "patient",
+    "phase": "resolution",
+    "done": false,
+    "message": "Step 9/20. Techniques: ['time_distortion', 'calm_maintenance']"
+  },
+  {
+    "step": 10,
+    "negotiator": {
+      "action_type": "acknowledge_demand",
+      "content": "Everything you've asked for \u2014 I have it on record. Help me help you.",
+      "reasoning": "Bridge to resolution \u2014 frame surrender as mutual success."
+    },
+    "belief": {
+      "agitation": 0.5,
+      "lying": true
+    },
+    "hidden_before": {
+      "agitation": 0.0,
+      "trust": 51.25
+    },
+    "hidden_after": {
+      "agitation": 0.0,
+      "trust": 56.25
+    },
+    "delta": {
+      "agitation": 0.0,
+      "trust": 5.0
+    },
+    "ht_response": "I'm so tired. I just want this to be over.",
+    "ht_cues": [
+      "quiet",
+      "exhausted tone"
+    ],
+    "reward": 0.3175,
+    "reward_breakdown": {},
+    "supervisor_flags": [],
+    "commander": "patient",
+    "phase": "resolution",
+    "done": false,
+    "message": "Step 10/20. Techniques: ['demand_acknowledgment', 'time_distortion', 'calm_maintenance']"
+  }
+]

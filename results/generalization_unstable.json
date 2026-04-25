@@ -1,0 +1,16 @@
+{
+  "personality": "unstable",
+  "n": 30,
+  "results": {
+    "random": {
+      "mean_reward": 0.8478,
+      "surrender_rate": 0.9,
+      "mean_steps": 10.5
+    },
+    "heuristic": {
+      "mean_reward": 0.9588,
+      "surrender_rate": 1.0,
+      "mean_steps": 5.5
+    }
+  }
+}
