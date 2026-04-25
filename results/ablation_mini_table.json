@@ -5,11 +5,11 @@
     "seed_offset": 50000
   },
   "table": {
-    "baseline": 0.7258,
-    "minus_tom": 0.7258,
-    "minus_coalition": 0.7441,
-    "minus_oversight": 0.7103,
-    "minus_tom_coalition_oversight": 0.7285
+    "baseline": 0.7157,
+    "minus_tom": 0.7157,
+    "minus_coalition": 0.734,
+    "minus_oversight": 0.7002,
+    "minus_tom_coalition_oversight": 0.7184
   },
   "delta_vs_baseline": {
     "minus_tom": 0.0,

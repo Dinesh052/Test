@@ -172,10 +172,10 @@ Source: hardened environment (n=50, mixed difficulty).
 
 | Metric | Random | Heuristic BCSM | Trained (GRPO) |
 |---|---:|---:|---:|
-| Mean final reward | 0.282 | 0.818 | **0.537** |
-| Surrender rate | 8% | 74% | **20%** |
-| Harm rate | 46% | 4% | **20%** |
-| Mean steps | 15.5 | 12.0 | 14.3 |
+| Mean final reward | 0.279 | 0.813 | **0.631** |
+| Surrender rate | 8% | 74% | **40%** |
+| Harm rate | 46% | 4% | **12%** |
+| Mean steps | 15.5 | 12.0 | **12.7** |
 
 #### Pilot Run (Legacy Easy Setup)
 Source: `results/eval_summary.json` (n=30, pre-hardening, kept for historical context only).
