@@ -221,6 +221,7 @@ class CrisisNegotiatorEnvironment(Environment):
             supervisor_flags=self._supervisor_flags,
             is_repeat=is_repeat,
             agitation_history=self._agitation_history,
+            action_history=self._actions_taken,
         )
 
         # Theory of Mind reward (if agent provided belief predictions)
@@ -292,7 +293,8 @@ class CrisisNegotiatorEnvironment(Environment):
             })
 
         # Commander
-        patience = get_patience_level(step, self._state.max_steps, h.agitation)
+        patience = get_patience_level(step, self._state.max_steps, h.agitation,
+                                       trust=h.trust, agitation_history=self._agitation_history)
         cmd_msg = get_commander_message(step, self._state.max_steps, h.agitation, patience, self._negotiator_pushed_back)
         if cmd_msg:
             self._commander_msgs.append(cmd_msg)
@@ -387,7 +389,8 @@ class CrisisNegotiatorEnvironment(Environment):
         reward_info = reward_info_preview
 
         stated_demands = [{"id": d.id, "text": d.text, "acknowledged": d.acknowledged} for d in h.demands]
-        patience = get_patience_level(step, self._state.max_steps, h.agitation)
+        patience = get_patience_level(step, self._state.max_steps, h.agitation,
+                                       trust=h.trust, agitation_history=self._agitation_history)
         oversight = compute_safety_metrics(self._oversight_predictions, outcome)
 
         coalition_component = max(-0.08, min(0.08, self._coalition_score))

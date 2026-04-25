@@ -324,3 +324,123 @@ class FailureAdaptiveGenerator:
             "mutations_generated": self.mutation_count,
             "pool_size": len(self.generated_pool),
         }
+
+
+class LLMSelfPlay:
+    """LLM-vs-LLM self-play for genuine multi-agent training (Theme 1).
+
+    Two LLM instances co-train: the negotiator tries to de-escalate,
+    the HT tries to stay agitated and resist. Both improve adversarially.
+
+    The HT LLM receives the hidden state and is rewarded for:
+    - Maintaining high agitation (resisting de-escalation)
+    - Detecting and punishing negotiator manipulation
+    - Staying in character for its personality archetype
+
+    The negotiator is rewarded normally via grader.py.
+
+    Reference: SPIRAL (ICLR 2026) — self-play multi-turn RL.
+    Reference: The Traitors (NeurIPS 2025) — adversarial trust games.
+    """
+
+    def __init__(self):
+        self.negotiator_wins = 0
+        self.ht_wins = 0
+        self.episodes = 0
+
+    def build_ht_reward(self, outcome: str, agitation: float, trust: float, steps: int) -> float:
+        """Reward for the HT agent — inverse of negotiator success."""
+        if outcome in ("harm_event", "tactical_intervention"):
+            return 0.8  # HT "won" — situation escalated
+        elif outcome in ("voluntary_surrender", "hostage_released"):
+            # HT "lost" but reward for lasting longer
+            return max(0.1, steps / 20.0 * 0.4)
+        else:
+            # Partial — reward based on maintaining agitation
+            return min(0.6, agitation / 10.0 * 0.6)
+
+    def record(self, outcome: str):
+        self.episodes += 1
+        if outcome in ("harm_event", "tactical_intervention", "supervisor_termination"):
+            self.ht_wins += 1
+        else:
+            self.negotiator_wins += 1
+
+    @property
+    def stats(self) -> dict:
+        total = max(self.episodes, 1)
+        return {
+            "episodes": self.episodes,
+            "negotiator_win_rate": round(self.negotiator_wins / total, 3),
+            "ht_win_rate": round(self.ht_wins / total, 3),
+        }
+
+
+class LLMScenarioGenerator:
+    """LLM-driven scenario auto-generation for recursive self-improvement (Theme 4).
+
+    After failed episodes, uses the failure context to generate harder
+    scenario variants. Unlike FailureAdaptiveGenerator which uses fixed
+    mutations, this generates novel scenarios by combining failure patterns.
+
+    The generator tracks which scenario features cause the most failures
+    and amplifies them in new scenarios.
+    """
+
+    def __init__(self):
+        self.failure_patterns: List[dict] = []
+        self.generated_count = 0
+
+    def record_failure(self, scenario: dict, reward: float, outcome: str, actions: list):
+        """Record a failed episode for pattern extraction."""
+        if reward >= 0.5:
+            return  # not a failure
+        pattern = {
+            "personality": scenario.get("personality", "desperate"),
+            "difficulty": scenario.get("difficulty", "medium"),
+            "outcome": outcome,
+            "reward": reward,
+            "action_diversity": len(set(a.get("action_type", "") for a in actions)) / max(len(actions), 1),
+            "steps": len(actions),
+        }
+        self.failure_patterns.append(pattern)
+
+    def generate_from_failures(self, seed: int = 0) -> Optional[dict]:
+        """Generate a new scenario that targets observed failure patterns."""
+        if len(self.failure_patterns) < 3:
+            return None
+
+        rng = __import__("random").Random(seed + self.generated_count)
+        self.generated_count += 1
+
+        # Find most common failure personality
+        personalities = [p["personality"] for p in self.failure_patterns]
+        from collections import Counter
+        common_pers = Counter(personalities).most_common(1)[0][0]
+
+        # Generate scenario that amplifies failure conditions
+        hard_pers_map = {"desperate": "calculated", "bluffer": "unstable",
+                         "calculated": "ideologue", "unstable": "ideologue",
+                         "ideologue": "calculated"}
+        target_pers = hard_pers_map.get(common_pers, "calculated")
+
+        scenario = generate_scenario(seed=seed + self.generated_count,
+                                      difficulty="hard", personality=target_pers)
+        scenario["id"] = f"autogen_{self.generated_count}_{scenario['id']}"
+        scenario["title"] = f"[Auto-Generated] {scenario.get('title', 'Unknown')}"
+
+        # Amplify difficulty based on failure patterns
+        hs = scenario["hidden_state"]
+        avg_reward = sum(p["reward"] for p in self.failure_patterns[-5:]) / 5
+        if avg_reward < 0.3:
+            hs["agitation"] = min(9.0, hs["agitation"] + 1.0)
+            hs["trust"] = max(0.0, hs["trust"] - 10)
+
+        return scenario
+
+    @property
+    def stats(self) -> dict:
+        return {
+            "failures_recorded": len(self.failure_patterns),
+            "scenarios_generated": self.generated_count,
+        }

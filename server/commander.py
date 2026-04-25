@@ -3,14 +3,33 @@ from __future__ import annotations
 from typing import Optional, Tuple
 
 
-def get_patience_level(step: int, max_steps: int, agitation: float) -> str:
-    """Determine commander's patience based on time and situation."""
+def get_patience_level(step: int, max_steps: int, agitation: float,
+                       trust: float = 0.0, agitation_history: list = None) -> str:
+    """Determine commander's patience based on time, situation, AND negotiator progress.
+    
+    Dynamic commander: if trust is rising and agitation falling, commander
+    stays patient longer. If negotiator is stagnating, commander gets restless faster.
+    """
     ratio = step / max_steps
+    
+    # Check if negotiator is making progress (dynamic behavior)
+    progress_bonus = 0.0
+    if agitation_history and len(agitation_history) >= 3:
+        recent_trend = agitation_history[-1] - agitation_history[-3]
+        if recent_trend < -1.0:
+            progress_bonus = 0.15  # good progress — commander stays patient longer
+        elif recent_trend > 0.5:
+            progress_bonus = -0.10  # getting worse — commander loses patience faster
+    if trust > 40:
+        progress_bonus += 0.10  # trust is building — give more time
+    
+    adjusted_ratio = ratio - progress_bonus
+    
     if agitation > 9.0:
         return "final_warning"
-    if ratio > 0.85 or agitation > 8.0:
+    if adjusted_ratio > 0.85 or agitation > 8.0:
         return "urgent"
-    if ratio > 0.6 or agitation > 7.0:
+    if adjusted_ratio > 0.6 or agitation > 7.0:
         return "restless"
     return "patient"
 

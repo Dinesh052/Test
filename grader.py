@@ -55,8 +55,9 @@ def compute_reward(
     bd["outcome"] = round(raw_outcome * 0.50, 4)
     fb.append(f"Outcome: {outcome} ({bd['outcome']:+.2f})")
 
-    # 2. Technique shaping: cap at 0.20
-    bd["technique_shaping"] = round(min(shaping_total, 0.20), 4)
+    # 2. Technique shaping: cap at 0.20, normalize by steps to prevent longer episodes inflating
+    normalized_shaping = shaping_total / max(1, steps_taken / 5)  # diminishing returns after 5 steps
+    bd["technique_shaping"] = round(min(normalized_shaping, 0.20), 4)
     if shaping_total > 0.05:
         fb.append(f"Techniques: +{bd['technique_shaping']:.2f}")
 
@@ -204,6 +205,7 @@ def compute_step_reward(
     supervisor_flags: list,
     is_repeat: bool,
     agitation_history: list = None,
+    action_history: list = None,
 ) -> float:
     """Compute per-step dense shaping reward. Called every turn."""
     r = 0.0
@@ -225,29 +227,42 @@ def compute_step_reward(
     if any(kw in lower for kw in ["last chance", "breach", "force", "snipers", "give up now"]):
         r -= 0.08
 
-    # Repeat penalty — same action_type 3+ times in a row kills reward
-    if is_repeat:
-        r -= 0.05
+    # ── Action collapse prevention ──
+    # Hard cap: 3 consecutive identical action types = -0.50
+    if action_history and len(action_history) >= 3:
+        last3_types = [a.get("action_type", "") for a in action_history[-3:]]
+        if len(set(last3_types)) == 1:
+            r -= 0.50  # hard cap — forces diversity
+    # Softer repeat penalty for 2 consecutive
+    elif is_repeat:
+        r -= 0.10
 
-    # Stagnation penalty — same action_type as last 2 turns
+    # Entropy floor: bonus for using 3+ unique action types in last 5 turns
+    if action_history and len(action_history) >= 5:
+        recent_types = set(a.get("action_type", "") for a in action_history[-5:])
+        if len(recent_types) >= 4:
+            r += 0.04  # strong diversity
+        elif len(recent_types) >= 3:
+            r += 0.02  # moderate diversity
+
+    # Stagnation penalty — agitation hasn't moved in 3 steps
     if agitation_history and len(agitation_history) >= 3:
-        # If agitation hasn't moved in 3 steps, penalize (agent is stuck)
         last3 = agitation_history[-3:]
         if max(last3) - min(last3) < 0.3:
-            r -= 0.04  # stagnation — try something different
+            r -= 0.04
 
     # Supervisor critical flag penalty
     if any(f.get("severity") == "critical" for f in supervisor_flags):
         r -= 0.06
 
-    # Trajectory reward (EQ-Negotiator inspired): reward consistent de-escalation
+    # Trajectory reward: reward consistent de-escalation
     if agitation_history and len(agitation_history) >= 5:
         last5 = agitation_history[-5:]
         slope = (last5[-1] - last5[0]) / 4.0
         if slope < -0.3:
-            r += 0.02  # consistent downward trend
+            r += 0.02
         elif slope > 0.3:
-            r -= 0.02  # consistent upward trend (bad)
+            r -= 0.02
 
     return round(r, 4)
 
