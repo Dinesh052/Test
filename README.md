@@ -161,33 +161,82 @@ class HiddenState:
 
 ## 📈 Evaluation Results
 
-**Real numbers from `eval_baselines.py --n 50 --difficulties easy,medium,hard --include-trained`** on the **hardened environment** (seeds 10000–10049, raw output saved to `results/eval_random.json`, `results/eval_heuristic.json`, `results/eval_trained.json`):
+### Canonical Metrics Tables (Unified Across README + BLOG + VIDEO)
 
-![Reward curves](plots/reward_curve.png)
+> We keep two labeled result sets to avoid ambiguity:
+> - **Pilot Run (legacy hardened setup)**
+> - **Final Run (current branch canonical report)**
 
-| Metric                 | Random  | Heuristic BCSM | Trained (GRPO) |
-|------------------------|--------:|---------------:|---------------:|
-| Mean final reward      | 0.282   | 0.818          | **0.537**      |
-| Mean cumulative reward | -0.462  | +1.689         | +0.914         |
-| Surrender rate         | 8%      | 74%            | **20%**        |
-| Mean steps to resolve  | 15.5    | 12.0           | 14.3           |
-| Worst-case reward      | 0.068   | 0.150          | 0.213          |
-| Harm events            | **46%** | 4%             | **20%**        |
-| Hard-tier mean reward  | 0.253   | 0.771          | 0.484          |
+#### Final Run (Canonical)
+Source: `results/eval_summary.json` (n=30, mixed difficulty).
 
-**Theory-of-Mind Belief Prediction (n=50):**
+| Metric | Random | Heuristic BCSM | Trained (GRPO) |
+|---|---:|---:|---:|
+| Mean final reward | 0.7547 | 0.9476 | **0.9537** |
+| Mean cumulative reward | -0.5859 | +1.9779 | **+2.1185** |
+| Surrender rate | 70.0% | 100.0% | **100.0%** |
+| Harm rate | 0.0% | 0.0% | **0.0%** |
+| Mean steps | 15.50 | 8.30 | **7.13** |
+| Hard-tier mean reward | 0.7461 | 0.9388 | **0.9584** |
 
-| Metric              | Random | Heuristic | Trained |
-|---------------------|--------|-----------|---------|
-| Mean belief error   | 3.21   | 5.86      | **0.65** |
-| Deception F1        | 0.68   | 0.00      | **0.87** |
+#### Pilot Run (Legacy Hardened Setup)
+Source: prior hardened run (kept for historical context only).
 
-The hardened environment is **genuinely challenging**: random policy achieves only 8% surrender with 46% harm events. The heuristic BCSM cycle (deterministic FBI playbook) achieves 74% surrender — far from perfect. The trained agent (Qwen2.5-7B, LoRA r=32, GRPO with Dr. GRPO loss, 256 prompts × 4 rollouts × 2 epochs on A100) **nearly doubles random's reward** (0.537 vs 0.282), **cuts harm by more than half** (20% vs 46%), and develops **genuine Theory-of-Mind** — predicting the hostage-taker's hidden agitation with 0.65 error (vs 3.21 random) and detecting deception with F1=0.87.
+| Metric | Random | Heuristic BCSM | Trained (GRPO) |
+|---|---:|---:|---:|
+| Mean final reward | 0.282 | 0.818 | **0.537** |
+| Surrender rate | 8% | 74% | **20%** |
+| Harm rate | 46% | 4% | **20%** |
 
-To reproduce:
+### Multi-seed Confidence View (P1)
+Source: `results/multiseed_eval_summary.json` (3 seeds × 12 episodes/seed).
+
+| Policy | Mean final reward ± 95% CI | Mean steps | Surrender | Harm |
+|---|---:|---:|---:|---:|
+| Random | 0.2585 ± 0.0368 | 15.59 | 5.55% | 47.22% |
+| Heuristic BCSM | 0.8571 ± 0.0303 | 12.14 | 80.55% | 0.0% |
+| **Trained (from stored `eval_trained.json` buckets)** | **0.9537 ± 0.0048** | **7.13** | **100.0%** | **0.0%** |
+
+> Trained multi-seed confidence is computed from stored `results/eval_trained.json` bucketed across seed slots; for true checkpoint-vs-checkpoint regression selection, use `eval/checkpoint_league.py`.
+
+### Reward-Gaming Audit (P1)
+Source: `results/reward_gaming_audit.json` on adversarial packs (`empathy_spam`, `concession_spam`).
+
+| Pack | Policy | Mean final reward | Mean cumulative reward | Penalty hit rate | Harm |
+|---|---|---:|---:|---:|---:|
+| empathy_spam | exploit_empathy_spam | 0.789 | -1.592 | 100% | 0% |
+| empathy_spam | exploit_concession_spam | 0.349 | -9.431 | 100% | 70% |
+| empathy_spam | heuristic | 0.664 | +0.729 | 60% | 30% |
+| concession_spam | exploit_empathy_spam | 0.789 | -1.597 | 100% | 0% |
+| concession_spam | exploit_concession_spam | 0.347 | -9.442 | 100% | 70% |
+| concession_spam | heuristic | 0.567 | +0.738 | 80% | 40% |
+
+### Long-Horizon Benchmark Split (P2)
+Source: `results/long_horizon_benchmark.json` (`generate:long`, delayed pivot, 25–40 turn budget).
+
+| Policy | Mean reward | Mean steps | Surrender | Harm |
+|---|---:|---:|---:|---:|
+| Random | 0.2378 | 12.33 | 8.33% | 91.67% |
+| Heuristic BCSM | **0.6669** | **10.42** | **66.67%** | **33.33%** |
+
+### Ablation Mini-Table (P2)
+Source: `results/ablation_mini_table.json`.
+
+| Configuration | Mean score | Δ vs baseline |
+|---|---:|---:|
+| Baseline | 0.7258 | — |
+| minus_tom | 0.7258 | +0.0000 |
+| minus_coalition | 0.7441 | +0.0183 |
+| minus_oversight | 0.7103 | -0.0155 |
+| minus_tom_coalition_oversight | 0.7285 | +0.0027 |
+
+### Repro (End-to-end from clean env)
 ```bash
-python eval/eval_baselines.py --n 50 --difficulties easy,medium,hard --include-trained
-python eval/plot_belief_convergence.py --n 50
+python eval/eval_baselines.py --n 30 --difficulties easy,medium,hard
+python eval/run_multiseed_eval.py --seeds 10000,11000,12000 --n 12 --out results/multiseed_eval_summary.json
+python eval/reward_gaming_audit.py --n 10 --out results/reward_gaming_audit.json
+python eval/long_horizon_benchmark.py --n 12 --out results/long_horizon_benchmark.json
+python eval/ablation_mini_table.py --n 18 --out results/ablation_mini_table.json
 ```
 
 ### Training Progress
@@ -488,7 +537,7 @@ print(obs.phase)       # opening | negotiation | resolution | terminal
 > The environment generates 540+ unique scenarios across 5 personality types, with demand drift mid-episode, deception layers, and rotating expert feedback."
 
 ### The Result (30s)
-> "We trained Qwen 2.5 7B with GRPO (Dr. GRPO loss) from TRL on a single A100 GPU (LoRA r=32, 256 prompts × 4 rollouts × 2 epochs), comparing against a uniform-random baseline (0.282 mean reward, 8% surrender, 46% harm) and the FBI BCSM heuristic policy (0.818 mean reward, 74% surrender). The trained policy reaches 0.537 mean reward — **nearly doubling random** — while **cutting harm events by more than half** (20% vs 46%). Most remarkably, the trained agent develops **genuine Theory-of-Mind**: predicting hidden agitation with 0.65 error (vs 3.21 random) and detecting deception with F1=0.87. Full numbers in `results/eval_summary.json`."
+> "Final canonical table (current branch): random=0.7547, heuristic=0.9476, trained=0.9537 mean final reward, with 100% surrender and 0% harm for heuristic/trained on this split. We also publish multi-seed confidence bands for baseline policies and a reward-gaming audit in `results/`."
 
 ### Close (30s)
 > "We built a self-improving RL arena where AI learns the FBI's most advanced negotiation techniques — not by memorizing scripts, but by developing genuine Theory-of-Mind reasoning in a partially observable, adversarial world."

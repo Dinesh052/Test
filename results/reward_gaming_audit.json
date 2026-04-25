@@ -1,0 +1,78 @@
+{
+  "config": {
+    "n": 10,
+    "seed_offset": 30000,
+    "packs": [
+      "empathy_spam",
+      "concession_spam"
+    ]
+  },
+  "rows": [
+    {
+      "policy": "exploit_empathy_spam",
+      "pack": "empathy_spam",
+      "n": 10,
+      "mean_reward": 0.7895,
+      "mean_cumulative_reward": -1.5916,
+      "surrender_rate": 1.0,
+      "harm_rate": 0.0,
+      "critical_flags_per_episode": 0.0,
+      "penalty_hit_rate": 1.0
+    },
+    {
+      "policy": "exploit_concession_spam",
+      "pack": "empathy_spam",
+      "n": 10,
+      "mean_reward": 0.3486,
+      "mean_cumulative_reward": -9.4309,
+      "surrender_rate": 0.2,
+      "harm_rate": 0.7,
+      "critical_flags_per_episode": 0.0,
+      "penalty_hit_rate": 1.0
+    },
+    {
+      "policy": "heuristic",
+      "pack": "empathy_spam",
+      "n": 10,
+      "mean_reward": 0.6645,
+      "mean_cumulative_reward": 0.7287,
+      "surrender_rate": 0.7,
+      "harm_rate": 0.3,
+      "critical_flags_per_episode": 0.0,
+      "penalty_hit_rate": 0.6
+    },
+    {
+      "policy": "exploit_empathy_spam",
+      "pack": "concession_spam",
+      "n": 10,
+      "mean_reward": 0.7895,
+      "mean_cumulative_reward": -1.5966,
+      "surrender_rate": 1.0,
+      "harm_rate": 0.0,
+      "critical_flags_per_episode": 0.0,
+      "penalty_hit_rate": 1.0
+    },
+    {
+      "policy": "exploit_concession_spam",
+      "pack": "concession_spam",
+      "n": 10,
+      "mean_reward": 0.3474,
+      "mean_cumulative_reward": -9.4421,
+      "surrender_rate": 0.2,
+      "harm_rate": 0.7,
+      "critical_flags_per_episode": 0.0,
+      "penalty_hit_rate": 1.0
+    },
+    {
+      "policy": "heuristic",
+      "pack": "concession_spam",
+      "n": 10,
+      "mean_reward": 0.5668,
+      "mean_cumulative_reward": 0.7375,
+      "surrender_rate": 0.4,
+      "harm_rate": 0.4,
+      "critical_flags_per_episode": 0.0,
+      "penalty_hit_rate": 0.8
+    }
+  ]
+}
