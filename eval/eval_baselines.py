@@ -178,8 +178,11 @@ class TrainedPolicy:
         )
         self.model = PeftModel.from_pretrained(base, adapter_dir)
         self.model.eval()
-        # Reuse training prompt builder
-        from training.train_local import SYSTEM_PROMPT, build_prompt, parse_action, to_action
+        # Reuse training prompt builder — detect v2 adapter by path
+        if 'v2' in adapter_dir:
+            from training.train_local_v2 import SYSTEM_PROMPT, build_prompt, parse_action, to_action
+        else:
+            from training.train_local import SYSTEM_PROMPT, build_prompt, parse_action, to_action
         self.system = SYSTEM_PROMPT
         self.build_prompt = build_prompt
         self.parse_action = parse_action
@@ -207,7 +210,13 @@ class TrainedPolicy:
 # EVAL
 # ─────────────────────────────────────────────────────────
 def run_episodes(policy, n: int, difficulties: List[str], seed_offset: int = 0) -> List[Dict[str, Any]]:
+def run_episodes(policy, n: int, difficulties: List[str], seed_offset: int = 0) -> List[Dict[str, Any]]:
+    # Reset shared singletons to ensure fair comparison between policies
+    from server.actors import reset_actors
     env = CrisisNegotiatorEnvironment()
+    env._shared_adversarial = type(env._shared_adversarial)()
+    env._shared_failure_generator = type(env._shared_failure_generator)()
+    env._shared_curriculum = type(env._shared_curriculum)()
     out: List[Dict[str, Any]] = []
     for i in range(n):
         diff = difficulties[i % len(difficulties)]
