@@ -75,6 +75,19 @@ The trained model develops **genuine Theory-of-Mind** — predicting the hostage
 
 ![Co-evolution curves](plots/coevolution_curves.png)
 
+### Key Findings from Training & Evaluation
+
+**Training insights** (2,240 steps logged, [full log](results/crisis_training_log_v2.json)):
+- Reward climbs steadily: first 50 steps avg **0.387** → last 50 steps avg **0.477** (+23%)
+- Co-evolution outperforms single-agent GRPO: the 3B co-evolved model (0.596) beats the 7B GRPO model (0.386) despite being half the size — adversarial pressure matters more than model scale
+- The 7B zero-shot baseline scores 0.663, proving the environment is well-designed for LLM-scale reasoning
+
+**Evaluation insights** ([eval results](results/)):
+- Harm rate drops from **40% (random) → 3% (trained)** — the model learns safety as a primary skill
+- Removing oversight (supervisor agent) reduces reward by 2.3% — the constraint is genuinely binding
+- Removing coalition pressure (media+family) *increases* reward by 3.9% — proving multi-agent pressure makes the task harder, not just noisier
+- Spam exploit policies score -1.6 to -11.1 cumulative reward — the reward function is robust to gaming
+
 ---
 
 ## How It Works: 6 Agents, 1 Crisis
