@@ -267,9 +267,9 @@ python run_all.py --a100  # 8 steps: GRPO + co-evolution + Q-network + all evals
 ## Links
 
 - 🤗 **HF Space (Live Demo)**: [huggingface.co/spaces/Dinesh-052/crisis-negotiator-openenv](https://huggingface.co/spaces/Dinesh-052/crisis-negotiator-openenv)
+- 🐙 **GitHub Repo**: [github.com/Dinesh052/crisis-negotiator-openenv](https://github.com/Dinesh052/crisis-negotiator-openenv)
 - 📝 **Blog Post**: [BLOG.md](BLOG.md)
-- 🎓 **Training Notebook (Colab)**: [train_grpo.ipynb](train_grpo.ipynb)
-- 📊 **Training Notebook (A100 with outputs)**: [notebooks/train_a100.ipynb](notebooks/train_a100.ipynb)
+- 🎓 **Training Notebook (Kaggle)**: [kaggle.com/code/dinesh025/coevolve-gpro](https://www.kaggle.com/code/dinesh025/coevolve-gpro)
 - 🏗️ **OpenEnv Manifest**: [openenv.yaml](openenv.yaml)
 
 ---

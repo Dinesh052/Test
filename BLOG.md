@@ -242,16 +242,21 @@ Model and integrates four sponsor sub-themes:
 
 ```bash
 # Run the environment server
-uvicorn server.app:app --port 8000
-# Open http://localhost:8000/ui — click "LIVE: ON" → pick a scenario
+pip install -r requirements.txt
+uvicorn server.app:app --port 7860
+# Open http://localhost:7860/ui — click "LIVE: ON" → pick a scenario
 
-# Reproduce the training (RTX 4090 / Colab T4, ~2 hours)
-uv venv --python 3.11 .venv-train
-uv pip install --python .venv-train/Scripts/python.exe -r requirements-train.txt
-.venv-train/Scripts/python.exe train_local.py
+# Reproduce the training
+python training/train_coevolve_grpo.py --rounds 4 --prompts-per-round 64
 
 # Reproduce the eval comparison
-.venv-train/Scripts/python.exe eval_baselines.py --n 30 --include-trained
+python eval/eval_baselines.py --n 30 --include-trained --adapter-dir ./coevolve-negotiator --base-model Qwen/Qwen2.5-3B-Instruct
 ```
 
-— *Built for the OpenEnv India Hackathon 2026.*
+## Links
+
+- 🤗 **HF Space**: [huggingface.co/spaces/Dinesh-052/crisis-negotiator-openenv](https://huggingface.co/spaces/Dinesh-052/crisis-negotiator-openenv)
+- 🐙 **GitHub**: [github.com/Dinesh052/crisis-negotiator-openenv](https://github.com/Dinesh052/crisis-negotiator-openenv)
+- 🎓 **Training Notebook (Kaggle)**: [kaggle.com/code/dinesh025/coevolve-gpro](https://www.kaggle.com/code/dinesh025/coevolve-gpro)
+
+— *Built for the OpenEnv India Hackathon 2026 by Dinesh052*
