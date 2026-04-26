@@ -257,6 +257,6 @@ python eval/eval_baselines.py --n 30 --include-trained --adapter-dir ./coevolve-
 
 - 🤗 **HF Space**: [huggingface.co/spaces/Dinesh-052/crisis-negotiator-openenv](https://huggingface.co/spaces/Dinesh-052/crisis-negotiator-openenv)
 - 🐙 **GitHub**: [github.com/Dinesh052/crisis-negotiator-openenv](https://github.com/Dinesh052/crisis-negotiator-openenv)
-- 🎓 **Training Notebook (Kaggle)**: [kaggle.com/code/dinesh025/coevolve-gpro](https://www.kaggle.com/code/dinesh025/coevolve-gpro)
+- 🎓 **Training Notebook (Colab)**: [Open in Colab](https://colab.research.google.com/drive/1OmQrGtpEQqGSpiq8ZSv06CPVeUuaMQdL?usp=sharing)
 
 — *Built for the OpenEnv India Hackathon 2026 by Dinesh052*

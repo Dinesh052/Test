@@ -155,7 +155,7 @@ obs = env.step(action)
 - 🤗 **HF Space (Live Demo)**: [huggingface.co/spaces/Dinesh-052/crisis-negotiator-openenv](https://huggingface.co/spaces/Dinesh-052/crisis-negotiator-openenv)
 - 🐙 **GitHub Repo**: [github.com/Dinesh052/crisis-negotiator-openenv](https://github.com/Dinesh052/crisis-negotiator-openenv)
 - 📝 **Blog Post**: [BLOG.md](BLOG.md)
-- 🎓 **Training Notebook (Kaggle)**: [kaggle.com/code/dinesh025/coevolve-gpro](https://www.kaggle.com/code/dinesh025/coevolve-gpro)
+- 🎓 **Training Notebook (Colab)**: [Open in Colab](https://colab.research.google.com/drive/1OmQrGtpEQqGSpiq8ZSv06CPVeUuaMQdL?usp=sharing)
 - 🏗️ **OpenEnv Manifest**: [openenv.yaml](openenv.yaml)
 
 ## References
