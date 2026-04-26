@@ -12,7 +12,7 @@ if _env_path.exists():
             k, v = line.split("=", 1)
             os.environ.setdefault(k.strip(), v.strip())
 
-from fastapi import HTTPException, Query
+from fastapi import HTTPException, Query, Request
 from fastapi.responses import FileResponse, Response
 from sse_starlette.sse import EventSourceResponse
 
@@ -48,15 +48,22 @@ _HEURISTIC = [
 
 @app.get("/")
 def root():
+    ui_path = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+        "ui", "index.html",
+    )
+    return FileResponse(ui_path, media_type="text/html")
+
+
+@app.get("/status")
+def status():
     return {
         "status": "ok",
         "env": "crisis_negotiator",
         "endpoints": [
             "POST /reset", "POST /step", "GET /state",
             "GET /autoplay", "GET /episodes", "GET /episodes/{id}",
-            "GET /ui",
         ],
-        "ui": "/ui",
     }
 
 
@@ -80,6 +87,97 @@ def groq_key():
     if key:
         return {"key": key}
     return {"key": ""}
+
+
+# ── /llm-proxy — server-side Groq proxy (avoids CORS & exposes HF Secret key) ──
+_GROQ_MODELS = ["llama-3.1-8b-instant", "llama-3.3-70b-versatile"]
+_GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
+_groq_rate_limit_model_idx = 0  # index into _GROQ_MODELS, advances on 429
+
+@app.post("/llm-proxy")
+async def llm_proxy(request: Request):
+    """Proxy LLM calls through the server using the GROQ_API_KEY secret.
+    Body: {"messages": [...], "max_tokens": 200, "temperature": 0.5}
+    Falls back to the next model in _GROQ_MODELS on 429.
+    """
+    import httpx
+    global _groq_rate_limit_model_idx
+
+    api_key = os.environ.get("GROQ_API_KEY", "")
+    if not api_key:
+        raise HTTPException(status_code=503, detail="GROQ_API_KEY not configured on server")
+
+    body = await request.json()
+    messages = body.get("messages", [])
+    max_tokens = min(int(body.get("max_tokens", 200)), 400)
+    temperature = float(body.get("temperature", 0.5))
+
+    last_error = None
+    for attempt in range(len(_GROQ_MODELS) * 2):
+        model = _GROQ_MODELS[_groq_rate_limit_model_idx % len(_GROQ_MODELS)]
+        payload = {"model": model, "messages": messages,
+                   "max_tokens": max_tokens, "temperature": temperature}
+        try:
+            async with httpx.AsyncClient(timeout=20.0) as client:
+                resp = await client.post(
+                    _GROQ_URL,
+                    headers={"Authorization": f"Bearer {api_key}",
+                             "Content-Type": "application/json"},
+                    json=payload,
+                )
+            if resp.status_code == 429:
+                retry_after = int(resp.headers.get("retry-after", 2))
+                _groq_rate_limit_model_idx += 1  # rotate to next model
+                await __import__("asyncio").sleep(min(retry_after, 4))
+                last_error = f"429 on {model}"
+                continue
+            if not resp.is_success:
+                raise HTTPException(status_code=resp.status_code, detail=resp.text[:200])
+            return resp.json()
+        except httpx.TimeoutException:
+            last_error = "timeout"
+            continue
+
+    raise HTTPException(status_code=429, detail=f"All Groq models rate-limited: {last_error}")
+
+
+# ── Persistent environment for stateful REST interactions ──────────
+_persistent_env: CrisisNegotiatorEnvironment | None = None
+
+@app.post("/api/reset")
+async def api_reset(request: Request):
+    """Stateful reset — creates a persistent env that survives between calls."""
+    global _persistent_env
+    raw = await request.body()
+    body = json.loads(raw) if raw else {}
+    _persistent_env = CrisisNegotiatorEnvironment()
+    obs = _persistent_env.reset(**body)
+    d = obs.model_dump() if hasattr(obs, "model_dump") else vars(obs)
+    return {"observation": d, "episode_id": d.get("episode_id"), "done": False}
+
+@app.post("/api/step")
+async def api_step(request: Request):
+    """Stateful step — reuses the persistent env from the last /api/reset."""
+    global _persistent_env
+    if _persistent_env is None or _persistent_env._hidden is None:
+        raise HTTPException(400, "Call /api/reset before /api/step")
+    body = await request.json()
+    action_data = body.get("action", body)
+    try:
+        obs = _persistent_env.step(action_data)
+    except Exception as e:
+        raise HTTPException(500, f"step error: {e}")
+    d = obs.model_dump() if hasattr(obs, "model_dump") else vars(obs)
+    return {"observation": d, "reward": getattr(obs, "reward", 0), "done": getattr(obs, "done", False)}
+
+@app.get("/api/state")
+def api_state():
+    """Return the persistent env's current state."""
+    global _persistent_env
+    if _persistent_env is None:
+        raise HTTPException(400, "No active session — call /api/reset first")
+    st = _persistent_env.state
+    return st.model_dump() if hasattr(st, "model_dump") else vars(st)
 
 
 # ── /autoplay SSE — runs a full episode, streams each step ──
@@ -131,6 +229,8 @@ async def autoplay(
                 "stated_demands": getattr(obs, "stated_demands", []),
                 "done": done,
                 "message": getattr(obs, "message", ""),
+                "hidden_agitation": round(env._hidden.agitation, 2) if env._hidden else None,
+                "hidden_trust": round(env._hidden.trust, 1) if env._hidden else None,
             }
             trajectory.append(step_data)
             yield {"event": "step", "data": json.dumps(step_data)}

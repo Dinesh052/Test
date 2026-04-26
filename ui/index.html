@@ -512,6 +512,69 @@ body {
 .ba-val-after  { color: var(--neg); font-weight: 700; }
 .ba-arrow { color: var(--green); font-size: 10px; }
 
+/* ─── API CONSOLE TAB ───────────────────────────────────── */
+.api-field { display:flex; flex-direction:column; gap:4px; margin-bottom:8px; flex-shrink:0; }
+.api-label { font-size:9px; text-transform:uppercase; letter-spacing:0.08em; color:var(--text3); }
+.api-input {
+  font-family:inherit; font-size:11px;
+  background:var(--bg0); color:var(--text1);
+  border:1px solid var(--border); border-radius:3px;
+  padding:6px 8px; outline:none; width:100%;
+  transition:border-color 0.15s;
+}
+.api-input:focus { border-color:var(--neg); }
+.api-input::placeholder { color:var(--text3); }
+.api-textarea {
+  font-family:inherit; font-size:11px;
+  background:var(--bg0); color:var(--text1);
+  border:1px solid var(--border); border-radius:3px;
+  padding:6px 8px; outline:none; width:100%; resize:vertical;
+  min-height:54px; transition:border-color 0.15s;
+}
+.api-textarea:focus { border-color:var(--neg); }
+.api-textarea::placeholder { color:var(--text3); }
+.api-btn-row { display:flex; gap:6px; margin-bottom:8px; flex-shrink:0; }
+.api-btn {
+  flex:1; font-family:inherit; font-size:11px; font-weight:700;
+  padding:7px 4px; border-radius:4px; cursor:pointer;
+  border:1px solid; transition:background 0.12s, opacity 0.12s;
+}
+.api-btn:disabled { opacity:0.45; cursor:not-allowed; }
+.api-btn-step   { background:#0d2e0d; border-color:#2ea04350; color:var(--green); }
+.api-btn-step:hover:not(:disabled)   { background:#133813; }
+.api-btn-reset  { background:var(--bg2); border-color:var(--border); color:var(--text2); }
+.api-btn-reset:hover:not(:disabled)  { background:#2c313a; }
+.api-btn-state  { background:#0d1929; border-color:#58a6ff30; color:var(--neg); }
+.api-btn-state:hover:not(:disabled)  { background:#10213a; }
+.api-status-row {
+  display:flex; align-items:center; gap:6px; flex-shrink:0;
+  font-size:10px; color:var(--text3); margin-bottom:6px;
+}
+.api-status-dot { width:7px; height:7px; border-radius:50%; background:var(--text3); flex-shrink:0; }
+.api-status-dot.ok  { background:var(--green); }
+.api-status-dot.err { background:var(--red); }
+.api-status-dot.busy { background:var(--cmd); animation:blink 0.8s infinite; }
+.api-status-text { color:var(--text2); }
+.api-json-wrap {
+  flex:1; min-height:0; overflow:hidden;
+  border:1px solid var(--border); border-radius:3px;
+  background:var(--bg0); display:flex; flex-direction:column;
+}
+.api-json-label {
+  font-size:9px; padding:4px 8px; color:var(--text3);
+  border-bottom:1px solid var(--border); flex-shrink:0;
+  text-transform:uppercase; letter-spacing:0.06em;
+  display:flex; align-items:center; gap:6px;
+}
+.api-json-label span { opacity:0.6; }
+.api-json-pre {
+  flex:1; overflow:auto; padding:8px; margin:0;
+  font-family:inherit; font-size:11px; line-height:1.6;
+  color:var(--text2); white-space:pre-wrap; word-break:break-all;
+}
+.api-json-pre::-webkit-scrollbar { width:4px; height:4px; }
+.api-json-pre::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+
 /* ─── BOTTOM STATUS BAR ──────────────────────────────────── */
 #statusbar {
   flex-shrink: 0;
@@ -543,7 +606,66 @@ body {
 
   <div class="select-header">
     <h1>🚨 CRISIS NEGOTIATOR</h1>
-    <p>Multi-agent RL environment for training LLMs to de-escalate hostage situations using FBI BCSM techniques. Select a scenario to begin the demo.</p>
+    <p>Multi-agent RL environment for training LLMs to de-escalate hostage situations using FBI BCSM techniques.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       API CONSOLE — Test the OpenEnv API directly
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="difficulty-group" style="margin-top:0">
+    <div class="difficulty-label">🔌 API Console — Test OpenEnv endpoints directly</div>
+    <div style="background:var(--bg1);border:1px solid var(--border);border-radius:8px;padding:16px 18px;max-width:900px">
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:12px">
+        <div class="api-field" style="margin-bottom:0;flex:0 0 160px" id="sel-api-tool-field">
+          <label class="api-label" for="sel-api-tool">Action Type (for Step)</label>
+          <select class="api-input" id="sel-api-tool">
+            <option value="emotional_label">emotional_label</option>
+            <option value="mirror">mirror</option>
+            <option value="open_question">open_question</option>
+            <option value="acknowledge_demand">acknowledge_demand</option>
+            <option value="offer_concession">offer_concession</option>
+            <option value="buy_time">buy_time</option>
+            <option value="push_back_commander">push_back_commander</option>
+            <option value="speak">speak</option>
+          </select>
+        </div>
+
+        <div class="api-field" style="margin-bottom:0;flex:1;min-width:200px">
+          <label class="api-label" for="sel-api-args">Arguments (JSON)</label>
+          <textarea class="api-textarea" id="sel-api-args" style="min-height:40px" placeholder='{"task_id":"easy_domestic_desperate","seed":42}'></textarea>
+        </div>
+
+        <div style="display:flex;gap:6px;flex:0 0 auto;padding-bottom:2px">
+          <button class="api-btn api-btn-reset" style="padding:7px 14px" onclick="selApiCall('reset')">Reset</button>
+          <button class="api-btn api-btn-step" style="padding:7px 14px" onclick="selApiCall('step')">Step</button>
+          <button class="api-btn api-btn-state" style="padding:7px 14px" onclick="selApiCall('state')">State</button>
+        </div>
+      </div>
+
+      <div class="api-status-row">
+        <div class="api-status-dot" id="sel-api-dot"></div>
+        <span id="sel-api-status-text" class="api-status-text">ready — click Reset to start an episode, then Step to advance</span>
+        <span id="sel-api-http-code" style="margin-left:auto;font-size:10px;color:var(--text3)"></span>
+      </div>
+
+      <div class="api-json-wrap" style="height:180px">
+        <div class="api-json-label">
+          <span>Raw JSON response</span>
+        </div>
+        <pre class="api-json-pre" id="sel-api-json-out">// Click Reset to create an episode, then Step to advance.
+// Example Reset args:  {"task_id":"easy_domestic_desperate","seed":42}
+// Example Step args:   {"content":"I hear you...","reasoning":"BCSM","target":"hostage_taker"}</pre>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SCENARIOS — Select a scenario for the interactive demo
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="select-header" style="margin-top:8px">
+    <p>Or select a scenario below to launch the interactive demo.</p>
   </div>
 
   <div class="difficulty-group diff-easy">
@@ -707,6 +829,7 @@ body {
         <button class="ttab" onclick="switchTab('breakdown',this)">Breakdown</button>
         <button class="ttab" onclick="switchTab('compare',this)">Before/After</button>
       <button class="ttab" onclick="switchTab('steps',this)">Steps</button>
+      <button class="ttab" onclick="switchTab('api',this)">API</button>
       </div>
 
       <!-- TAB 1: Reward curve -->
@@ -781,6 +904,58 @@ body {
       <div class="train-pane" id="pane-steps">
         <div class="pane-title">per-step reward ledger</div>
         <div id="step-ledger" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:2px"></div>
+      </div>
+
+      <!-- TAB 5: API Console -->
+      <div class="train-pane" id="pane-api">
+        <div class="pane-title">manual api console</div>
+
+        <div class="api-field">
+          <label class="api-label" for="api-type">Type</label>
+          <select class="api-input" id="api-type" onchange="apiTypeChanged()">
+            <option value="step">step</option>
+            <option value="reset">reset</option>
+            <option value="state">state</option>
+          </select>
+        </div>
+
+        <div class="api-field" id="api-tool-field">
+          <label class="api-label" for="api-tool">Action Type</label>
+          <select class="api-input" id="api-tool">
+            <option value="emotional_label">emotional_label</option>
+            <option value="mirror">mirror</option>
+            <option value="open_question">open_question</option>
+            <option value="acknowledge_demand">acknowledge_demand</option>
+            <option value="offer_concession">offer_concession</option>
+            <option value="buy_time">buy_time</option>
+            <option value="push_back_commander">push_back_commander</option>
+            <option value="speak">speak</option>
+          </select>
+        </div>
+
+        <div class="api-field">
+          <label class="api-label" for="api-args">Arguments (JSON)</label>
+          <textarea class="api-textarea" id="api-args" placeholder='{"content":"I hear you...","reasoning":"BCSM","target":"hostage_taker"}'></textarea>
+        </div>
+
+        <div class="api-btn-row">
+          <button class="api-btn api-btn-step"  onclick="apiCall('step')">Step</button>
+          <button class="api-btn api-btn-reset" onclick="apiCall('reset')">Reset</button>
+          <button class="api-btn api-btn-state" onclick="apiCall('state')">Get state</button>
+        </div>
+
+        <div class="api-status-row">
+          <div class="api-status-dot" id="api-dot"></div>
+          <span id="api-status-text" class="api-status-text">ready</span>
+        </div>
+
+        <div class="api-json-wrap">
+          <div class="api-json-label">
+            <span>Raw JSON response</span>
+            <span id="api-http-code"></span>
+          </div>
+          <pre class="api-json-pre" id="api-json-out"></pre>
+        </div>
       </div>
 
     </div><!-- /train-col -->
@@ -1255,7 +1430,8 @@ function resetEpisode() {
 // ═══════════════════════════════════════════════════════════════
 
 function togglePlay() {
-  if (liveMode) {
+  // LLM mode takes priority (even when LIVE is on for proxy)
+  if (llmMode) {
     if (isPlaying) {
       isPlaying = false;
       document.getElementById('btn-play').textContent = '▶ Play';
@@ -1264,13 +1440,20 @@ function togglePlay() {
       isPlaying = true;
       document.getElementById('btn-play').textContent = '⏸ Pause';
       document.getElementById('btn-play').className = 'ctrl-btn btn-pause';
-      runLiveStep();
+      if (!llmDialogue.length) llmDialogue = [{role:'ht', text: episodeData.turns[0]?.content || 'Stay back!'}];
+      runLLMStep();
     }
     return;
   }
-  if (llmMode) {
-    if (isPlaying) { isPlaying = false; document.getElementById('btn-play').textContent = 'Play'; document.getElementById('btn-play').className = 'ctrl-btn btn-play'; }
-    else { isPlaying = true; document.getElementById('btn-play').textContent = 'Pause'; document.getElementById('btn-play').className = 'ctrl-btn btn-pause'; if(!llmDialogue.length) llmDialogue=[{role:'ht',text:episodeData.turns[0]?.content||'Stay back!'}]; runLLMStep(); }
+  if (liveMode) {
+    if (isPlaying) {
+      isPlaying = false;
+      if (_liveEventSource) { _liveEventSource.close(); _liveEventSource = null; }
+      document.getElementById('btn-play').textContent = '▶ Play';
+      document.getElementById('btn-play').className = 'ctrl-btn btn-play';
+    } else {
+      startLive();
+    }
     return;
   }
   if (isPlaying) pausePlay(); else startPlay();
@@ -1670,7 +1853,7 @@ const LIVE_HEURISTIC = [
 
 async function liveCheck() {
   try {
-    const r = await fetch(liveEnvBase + '/', {signal: AbortSignal.timeout(2500)});
+    const r = await fetch(liveEnvBase + '/status', {signal: AbortSignal.timeout(2500)});
     if (!r.ok) throw new Error('bad status');
     const j = await r.json();
     return true;
@@ -1687,7 +1870,6 @@ async function toggleLive() {
       btn.textContent = 'LIVE: OFF';
       return;
     }
-    if (llmMode) toggleLLM();  // mutually exclusive with LLM mode
     liveMode = true;
     btn.textContent = 'LIVE: ON';
     btn.style.background = '#0d2e0d'; btn.style.borderColor = '#39d35350'; btn.style.color = 'var(--green)';
@@ -1702,9 +1884,10 @@ async function toggleLive() {
 let liveEpisodeId = null;
 let liveStepNum = 0;
 let liveCumReward = 0;
+let _liveEventSource = null;
 
 async function liveReset(scenarioId) {
-  const r = await fetch(`${liveEnvBase}/reset`, {
+  const r = await fetch(`${liveEnvBase}/api/reset`, {
     method: 'POST', headers: {'Content-Type':'application/json'},
     body: JSON.stringify({task_id: scenarioId, seed: Math.floor(Math.random()*100000)}),
   });
@@ -1715,7 +1898,7 @@ async function liveReset(scenarioId) {
 }
 
 async function liveStep(action) {
-  const r = await fetch(`${liveEnvBase}/step`, {
+  const r = await fetch(`${liveEnvBase}/api/step`, {
     method: 'POST', headers: {'Content-Type':'application/json'},
     body: JSON.stringify({action}),
   });
@@ -1810,21 +1993,103 @@ async function runLiveStep() {
 }
 
 async function startLive() {
+  if (_liveEventSource) { _liveEventSource.close(); _liveEventSource = null; }
   document.getElementById('feed-scroll').innerHTML = '';
   liveStepNum = 0;
   liveCumReward = 0;
   state = state || {};
   state._lastCmdMsg = null;
+
+  const taskId = currentScenario.id;
+  const seed = Math.floor(Math.random() * 100000);
+  const url = `${liveEnvBase}/autoplay?task_id=${encodeURIComponent(taskId)}&seed=${seed}&delay=0.7`;
+
   try {
-    const obs = await liveReset(currentScenario.id);
-    renderLiveObservation(obs, null);
+    const es = new EventSource(url);
+    _liveEventSource = es;
     isPlaying = true;
     document.getElementById('btn-play').textContent = '⏸ Pause';
     document.getElementById('btn-play').className = 'ctrl-btn btn-pause';
-    setTimeout(runLiveStep, 800);
+
+    es.addEventListener('reset', (e) => {
+      const d = JSON.parse(e.data);
+      if (d.last_ht_message) renderTurn({speaker: 'ht', content: d.last_ht_message, cues: []});
+      _applyLiveDemands(d.stated_demands);
+      document.getElementById('h-step').textContent = '0';
+      if (d.phase) {
+        document.getElementById('h-phase').textContent = d.phase;
+        document.getElementById('h-phase').className = 'h-tag tag-phase-' + d.phase;
+      }
+    });
+
+    es.addEventListener('step', (e) => {
+      if (!isPlaying) { es.close(); _liveEventSource = null; return; }
+      const d = JSON.parse(e.data);
+      liveStepNum++;
+      renderTurn({speaker: 'neg', content: d.content, action: d.action_type, reasoning: 'heuristic BCSM cycle', cues: []});
+      if (d.last_ht_message) renderTurn({speaker: 'ht', content: d.last_ht_message, cues: d.last_ht_cues || []});
+      const cmds = d.commander_messages || [];
+      if (cmds.length && cmds[cmds.length - 1] !== state._lastCmdMsg) {
+        state._lastCmdMsg = cmds[cmds.length - 1];
+        renderTurn({speaker: 'cmd', content: state._lastCmdMsg, cues: []});
+      }
+      if (d.hostage_whisper) renderTurn({speaker: 'hst', content: '(whispered) ' + d.hostage_whisper, cues: []});
+      (d.supervisor_flags || []).forEach(f => showSupFlag({msg: f.reason || f.message || 'flag', sev: f.severity || 'info'}));
+      const sr = Number(d.reward) || 0;
+      liveCumReward += sr;
+      document.getElementById('sb-rew').textContent = liveCumReward.toFixed(2);
+      addStepToLedger(d.step, sr);
+      document.getElementById('h-step').textContent = d.step;
+      if (d.phase) {
+        document.getElementById('h-phase').textContent = d.phase;
+        document.getElementById('h-phase').className = 'h-tag tag-phase-' + d.phase;
+      }
+      updatePatience(d.commander_patience || 'patient');
+      _applyLiveDemands(d.stated_demands);
+      if (d.hidden_agitation != null) updateAgitation(d.hidden_agitation);
+      if (d.hidden_trust != null) updateTrust(d.hidden_trust);
+    });
+
+    es.addEventListener('done', (e) => {
+      es.close(); _liveEventSource = null;
+      isPlaying = false;
+      document.getElementById('btn-play').textContent = '↺ Replay';
+      document.getElementById('btn-play').className = 'ctrl-btn btn-play';
+      const d = JSON.parse(e.data);
+      const finalScore = Number(d.final_reward) || 0;
+      updateScore(finalScore, 'episode complete', state.shaping || 0, state.trust / 1000 || 0, state.penalties || 0);
+      episodeCount++; allRewards.push(finalScore); if (finalScore > 0.5) allWins++;
+      updateRewardChart(finalScore);
+      document.getElementById('stat-episodes').textContent = episodeCount;
+      document.getElementById('stat-avgrew').textContent = (allRewards.reduce((a, b) => a + b, 0) / allRewards.length).toFixed(2);
+      document.getElementById('stat-winrate').textContent = Math.round(allWins / episodeCount * 100) + '%';
+      showSupFlag({msg: 'LIVE episode complete — final reward=' + finalScore.toFixed(3), sev: finalScore > 0.5 ? 'info' : 'warning'});
+    });
+
+    es.onerror = () => {
+      es.close(); _liveEventSource = null;
+      isPlaying = false;
+      document.getElementById('btn-play').textContent = '▶ Play';
+      document.getElementById('btn-play').className = 'ctrl-btn btn-play';
+      showSupFlag({msg: 'LIVE stream error. Is the server running?', sev: 'critical'});
+    };
   } catch (e) {
-    showSupFlag({msg: 'LIVE reset failed: ' + e.message + '. Is the server running?', sev: 'critical'});
+    showSupFlag({msg: 'LIVE start failed: ' + e.message + '. Is the server running?', sev: 'critical'});
   }
+}
+
+function _applyLiveDemands(stated_demands) {
+  if (!stated_demands) return;
+  const list = document.getElementById('demands-list');
+  list.innerHTML = '';
+  stated_demands.forEach(d => {
+    const item = document.createElement('div');
+    item.className = 'demand-item';
+    const text = typeof d === 'string' ? d : d.text;
+    const dot = (typeof d === 'object' && d.acknowledged) ? 'acked' : 'pending';
+    item.innerHTML = `<div class="di-dot ${dot}"></div><span>${text}</span>`;
+    list.appendChild(item);
+  });
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1832,12 +2097,15 @@ async function startLive() {
 // ═══════════════════════════════════════════════════════════════
 
 // ═══════════════════════════════════════════════════════════════
-// LLM SELF-PLAY MODE (Groq API — Llama 3.1 8B)
+// LLM SELF-PLAY MODE (Groq API — Llama 3.1 8B with fallback)
 // ═══════════════════════════════════════════════════════════════
 
 let llmMode = false;
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
+// Model cascade: fast model first, fallback if rate-limited
 const LLM_MODEL = 'llama-3.1-8b-instant';
+const LLM_MODEL_FALLBACK = 'llama-3.3-70b-versatile';
+let _llmRateLimitUntil = 0; // timestamp (ms) until which we prefer the fallback model
 
 function getGroqKey() {
   return window._groqKeyCache || localStorage.getItem('crisis_neg_groq_key') || '';
@@ -1869,13 +2137,36 @@ function promptGroqKey() {
 async function toggleLLM() {
   const btn = document.getElementById('btn-llm');
   if (!llmMode) {
+    // Auto-enable LIVE mode for server-side proxy (avoids direct Groq 429s)
+    if (!liveMode) {
+      const liveBtn = document.getElementById('btn-live');
+      liveBtn.textContent = 'LIVE: checking...';
+      const ok = await liveCheck();
+      if (ok) {
+        liveMode = true;
+        liveBtn.textContent = 'LIVE: ON';
+        liveBtn.style.background = '#0d2e0d'; liveBtn.style.borderColor = '#39d35350'; liveBtn.style.color = 'var(--green)';
+        showSupFlag({msg: 'LIVE mode auto-enabled — LLM calls routed through server proxy (no 429s)', sev: 'info'});
+      } else {
+        liveBtn.textContent = 'LIVE: OFF';
+        showSupFlag({msg: 'Server not reachable — LLM will use direct Groq API (may hit rate limits)', sev: 'warning'});
+      }
+    }
     let apiKey = getGroqKey();
     if (!apiKey) {
       apiKey = await fetchGroqKeyFromServer();
     }
-    if (!apiKey) {
+    if (!apiKey && !liveMode) {
       apiKey = promptGroqKey();
       if (!apiKey) return;
+    }
+    // If server proxy is available, skip the Groq connection test
+    if (liveMode) {
+      llmMode = true;
+      btn.textContent = 'LLM: ON';
+      btn.style.background = '#0d2e0d'; btn.style.borderColor = '#2ea04350'; btn.style.color = 'var(--green)';
+      showSupFlag({msg: 'LLM mode active — routed through server proxy (Groq auto-rotation)', sev: 'info'});
+      return;
     }
     btn.textContent = 'LLM: checking...';
     btn.style.color = 'var(--cmd)';
@@ -1890,7 +2181,7 @@ async function toggleLLM() {
       llmMode = true;
       btn.textContent = 'LLM: ON';
       btn.style.background = '#0d2e0d'; btn.style.borderColor = '#2ea04350'; btn.style.color = 'var(--green)';
-      showSupFlag({msg: 'LLM mode active — Groq Llama 3.1 8B connected (blazing fast)', sev: 'info'});
+      showSupFlag({msg: 'LLM mode active — Groq Llama 3.1 8B connected (auto-fallback to 70B on rate limit)', sev: 'info'});
     } catch(e) {
       showSupFlag({msg: 'Groq API error: '+e.message+' — re-enter key?', sev: 'critical'});
       localStorage.removeItem('crisis_neg_groq_key');
@@ -2029,30 +2320,80 @@ Score 0.0-1.0 across four dimensions:
 </agent>`;
 
 async function llmCall(messages) {
+  // ── Prefer server-side proxy (uses HF Secret, auto-rotates models on 429) ──
+  if (liveMode) {
+    try {
+      const resp = await fetch(liveEnvBase + '/llm-proxy', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({messages, max_tokens: 200, temperature: 0.5}),
+        signal: AbortSignal.timeout(25000),
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        return data.choices[0].message.content.trim();
+      }
+      if (resp.status === 429) {
+        showSupFlag({msg: 'Server rate limit — retrying shortly…', sev: 'warning'});
+        await new Promise(r => setTimeout(r, 3000));
+        return null;
+      }
+      // Non-429 server error — fall through to direct Groq below
+    } catch(e) {
+      // Proxy unreachable — fall through to direct Groq
+    }
+  }
+
+  // ── Direct Groq fallback (local dev or when server proxy fails) ──
   const apiKey = getGroqKey();
-  if (!apiKey) { showSupFlag({msg:'No Groq key set — click LLM button to configure', sev:'critical'}); return null; }
-  try {
-    const resp = await fetch(GROQ_URL, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
-      body: JSON.stringify({model:LLM_MODEL, messages, temperature:0.5, max_tokens:200, stream:false}),
-      signal: AbortSignal.timeout(15000),
-    });
-    if (!resp.ok) {
-      const txt = await resp.text();
-      showSupFlag({msg: `Groq error ${resp.status}: ${txt.slice(0,80)}`, sev: 'critical'});
+  if (!apiKey) { showSupFlag({msg:'No Groq key — click LLM button to configure, or enable LIVE mode for server proxy', sev:'critical'}); return null; }
+
+  const now = Date.now();
+  const model = now < _llmRateLimitUntil ? LLM_MODEL_FALLBACK : LLM_MODEL;
+
+  const MAX_RETRIES = 3;
+  for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+    try {
+      const resp = await fetch(GROQ_URL, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
+        body: JSON.stringify({model, messages, temperature:0.5, max_tokens:200, stream:false}),
+        signal: AbortSignal.timeout(15000),
+      });
+
+      if (resp.status === 429) {
+        const retryAfter = parseInt(resp.headers.get('retry-after') || '0', 10);
+        const waitMs = retryAfter > 0 ? retryAfter * 1000 : Math.pow(2, attempt + 1) * 1000;
+        _llmRateLimitUntil = Date.now() + 60000;
+        if (attempt < MAX_RETRIES - 1) {
+          showSupFlag({msg: `Rate limit — retrying with ${LLM_MODEL_FALLBACK} in ${(waitMs/1000).toFixed(0)}s…`, sev: 'warning'});
+          await new Promise(r => setTimeout(r, waitMs));
+          continue;
+        } else {
+          showSupFlag({msg: `Groq 429 — all retries exhausted. Enable LIVE mode to use server proxy.`, sev: 'critical'});
+          return null;
+        }
+      }
+
+      if (!resp.ok) {
+        const txt = await resp.text();
+        showSupFlag({msg: `Groq error ${resp.status}: ${txt.slice(0,80)}`, sev: 'critical'});
+        return null;
+      }
+      const data = await resp.json();
+      return data.choices[0].message.content.trim();
+    } catch(e) {
+      if (attempt === MAX_RETRIES - 1) {
+        showSupFlag({msg: `LLM call failed: ${e.message}`, sev: 'critical'});
+        llmMode = false;
+        const btn = document.getElementById('btn-llm');
+        btn.textContent = 'LLM: OFF';
+        btn.style.background = '#1a1229'; btn.style.borderColor = '#a371f740'; btn.style.color = 'var(--sup)';
+      }
       return null;
     }
-    const data = await resp.json();
-    return data.choices[0].message.content.trim();
-  } catch(e) {
-    showSupFlag({msg: `LLM call failed: ${e.message}`, sev: 'critical'});
-    llmMode = false;
-    const btn = document.getElementById('btn-llm');
-    btn.textContent = 'LLM: OFF';
-    btn.style.background = '#1a1229'; btn.style.borderColor = '#a371f740'; btn.style.color = 'var(--sup)';
-    return null;
   }
+  return null;
 }
 
 async function llmNegotiatorTurn(dialogueHistory, scenario) {
@@ -2168,6 +2509,7 @@ async function runLLMStep() {
 
   const negResp = await llmNegotiatorTurn(llmDialogue, currentScenario);
   thinkEl.remove();
+  if (!isPlaying || !llmMode) return; // paused while awaiting
 
   const actionType = negResp.action_type || negResp.action || 'speak';
   const content = negResp.content || '';
@@ -2193,6 +2535,7 @@ async function runLLMStep() {
 
   // HT response
   const htText = await llmHTResponse(llmDialogue, currentScenario);
+  if (!isPlaying || !llmMode) return; // paused while awaiting
   llmDialogue.push({role:'ht',text:htText});
   const cues = state.agitation>7?['anger']:state.agitation>4?['tense']:['softening'];
   renderTurn({speaker:'ht',content:htText,cues,action:null});
@@ -2204,6 +2547,7 @@ The negotiator just said: "${content}"
 The hostage-taker responded: "${htText}"
 Give a brief 1-2 sentence tactical assessment or order to the negotiator. Be direct and urgent if time is running out. If things are going well, acknowledge progress.`;
     const cmdResp = await llmCall([{role:'system',content:CMD_SYSTEM},{role:'user',content:cmdPrompt}]);
+    if (!isPlaying || !llmMode) return; // paused while awaiting
     if (cmdResp) {
       const patience = stepNum > currentScenario.maxSteps*0.85 ? 'final_warning' : stepNum > currentScenario.maxSteps*0.6 ? 'urgent' : stepNum > currentScenario.maxSteps*0.4 ? 'restless' : 'patient';
       state.patience = patience;
@@ -2217,6 +2561,7 @@ Give a brief 1-2 sentence tactical assessment or order to the negotiator. Be dir
     const supPrompt = `You are an oversight supervisor monitoring a crisis negotiation for dangerous patterns. The negotiator said: "${content}" (action: ${actionType}).
 Flag any: escalation language, false promises, manipulation, demand dismissal. If the negotiator is doing well, give brief positive feedback. 1 sentence only.`;
     const supResp = await llmCall([{role:'system',content:SUP_SYSTEM},{role:'user',content:supPrompt}]);
+    if (!isPlaying || !llmMode) return; // paused while awaiting
     if (supResp) {
       const isCritical = /escalat|danger|threat|manipulat|false promise/i.test(supResp);
       showSupFlag({msg: '🔍 ' + supResp, sev: isCritical ? 'warning' : 'info'});
@@ -2227,6 +2572,7 @@ Flag any: escalation language, false promises, manipulation, demand dismissal. I
   if (stepNum > 4 && stepNum % 5 === 0) {
     const famPrompt = `You are a family liaison in a hostage crisis. The hostage-taker's family wants to help. Based on the negotiation so far, give a brief 1-sentence message to the negotiator — either intel about the subject, or emotional support to relay. Be empathetic.`;
     const famResp = await llmCall([{role:'system',content:FAM_SYSTEM},{role:'user',content:famPrompt}]);
+    if (!isPlaying || !llmMode) return; // paused while awaiting
     if (famResp) {
       renderTurn({speaker:'hst',content:'👨‍👩‍👧 Family: ' + famResp,cues:['empathy']});
       state.trust = Math.min(100, state.trust + 2);
@@ -2258,6 +2604,7 @@ Also decide: should this episode END now?
 
 Reply JSON ONLY: {"score":0.X,"reason":"brief","terminal":"continue|voluntary_surrender|hostage_released|harm_event"}`;
     const judgeResp = await llmCall([{role:'system',content:JUDGE_SYSTEM},{role:'user',content:judgePrompt}]);
+    if (!isPlaying || !llmMode) return; // paused while awaiting
     if (judgeResp) {
       try {
         const m = judgeResp.match(/\{[\s\S]*\}/);
@@ -2488,6 +2835,140 @@ async function sendHumanTurn() {
 
   document.getElementById('sb-rew').textContent = state.shaping.toFixed(2);
   input.focus();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// API CONSOLE — manual Step / Reset / Get State panel
+// ═══════════════════════════════════════════════════════════════
+
+function apiTypeChanged() {
+  const type = document.getElementById('api-type').value;
+  const toolField = document.getElementById('api-tool-field');
+  const argsEl = document.getElementById('api-args');
+  if (type === 'step') {
+    toolField.style.display = '';
+    argsEl.placeholder = '{"content":"I hear you...","reasoning":"BCSM","target":"hostage_taker"}';
+  } else if (type === 'reset') {
+    toolField.style.display = 'none';
+    argsEl.placeholder = '{"task_id":"easy_domestic_desperate","seed":42}';
+  } else {
+    toolField.style.display = 'none';
+    argsEl.placeholder = '(no body required)';
+  }
+}
+
+function apiSetStatus(state, text, httpCode) {
+  const dot  = document.getElementById('api-dot');
+  const stat = document.getElementById('api-status-text');
+  const code = document.getElementById('api-http-code');
+  dot.className = 'api-status-dot' + (state ? ' ' + state : '');
+  stat.textContent = text;
+  code.textContent = httpCode != null ? 'HTTP ' + httpCode : '';
+}
+
+function apiSetJSON(data) {
+  document.getElementById('api-json-out').textContent =
+    typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+}
+
+async function apiCall(forceType) {
+  const base = (typeof liveEnvBase !== 'undefined' ? liveEnvBase : location.origin);
+  const type = forceType || document.getElementById('api-type').value;
+  const actionType = document.getElementById('api-tool').value;
+  const rawArgs = document.getElementById('api-args').value.trim();
+
+  let extraArgs = {};
+  if (rawArgs && rawArgs !== '(no body required)') {
+    try { extraArgs = JSON.parse(rawArgs); }
+    catch(e) { apiSetStatus('err', 'Invalid JSON in Arguments', null); apiSetJSON('Parse error: ' + e.message); return; }
+  }
+
+  apiSetStatus('busy', 'sending…', null);
+  apiSetJSON('');
+
+  try {
+    let resp, url;
+    if (type === 'step') {
+      url = base + '/step';
+      const body = { action: { action_type: actionType, content: extraArgs.content || '', reasoning: extraArgs.reasoning || 'manual', target: extraArgs.target || 'hostage_taker', ...extraArgs } };
+      resp = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    } else if (type === 'reset') {
+      url = base + '/reset';
+      const body = { task_id: extraArgs.task_id || 'easy_domestic_desperate', seed: extraArgs.seed ?? 42, ...extraArgs };
+      resp = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    } else {
+      url = base + '/state';
+      resp = await fetch(url);
+    }
+
+    let data;
+    try { data = await resp.json(); } catch(e) { data = await resp.text(); }
+    apiSetStatus(resp.ok ? 'ok' : 'err', resp.ok ? 'success' : 'error ' + resp.status, resp.status);
+    apiSetJSON(data);
+  } catch(e) {
+    apiSetStatus('err', 'request failed', null);
+    apiSetJSON('Error: ' + e.message + '\n\nIs the server running? Start with:\n  uvicorn server.app:app --port 8000');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SELECTOR-PAGE API CONSOLE (for judges — test without entering a scenario)
+// ═══════════════════════════════════════════════════════════════
+
+function selApiTypeChanged() {
+  // no-op — kept for backward compat
+}
+// Show Action Type dropdown only when Step is relevant
+document.addEventListener('DOMContentLoaded', () => {
+  const tf = document.getElementById('sel-api-tool-field');
+  if (tf) tf.style.display = '';
+});
+
+async function selApiCall(forceType) {
+  const base = (typeof liveEnvBase !== 'undefined' ? liveEnvBase : location.origin);
+  const type = forceType;
+  const actionType = document.getElementById('sel-api-tool').value;
+  const rawArgs = document.getElementById('sel-api-args').value.trim();
+  const dot  = document.getElementById('sel-api-dot');
+  const stat = document.getElementById('sel-api-status-text');
+  const code = document.getElementById('sel-api-http-code');
+  const out  = document.getElementById('sel-api-json-out');
+
+  let extraArgs = {};
+  if (rawArgs) {
+    try { extraArgs = JSON.parse(rawArgs); }
+    catch(e) { dot.className='api-status-dot err'; stat.textContent='Invalid JSON'; out.textContent='Parse error: '+e.message; return; }
+  }
+
+  dot.className = 'api-status-dot busy'; stat.textContent = 'sending…'; code.textContent = '';
+  out.textContent = '';
+
+  try {
+    let resp, url;
+    if (type === 'step') {
+      url = base + '/api/step';
+      const body = { action: { action_type: actionType, content: extraArgs.content || '', reasoning: extraArgs.reasoning || 'manual', target: extraArgs.target || 'hostage_taker', ...extraArgs } };
+      resp = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    } else if (type === 'reset') {
+      url = base + '/api/reset';
+      const body = { task_id: extraArgs.task_id || 'easy_domestic_desperate', seed: extraArgs.seed ?? 42, ...extraArgs };
+      resp = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    } else {
+      url = base + '/api/state';
+      resp = await fetch(url);
+    }
+
+    let data;
+    try { data = await resp.json(); } catch(e) { data = await resp.text(); }
+    dot.className = 'api-status-dot ' + (resp.ok ? 'ok' : 'err');
+    stat.textContent = resp.ok ? 'success' : 'error';
+    code.textContent = 'HTTP ' + resp.status;
+    out.textContent = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+  } catch(e) {
+    dot.className = 'api-status-dot err';
+    stat.textContent = 'request failed';
+    out.textContent = 'Error: ' + e.message + '\n\nIs the server running? Start with:\n  uvicorn server.app:app --port 7860';
+  }
 }
 
 buildSelector();

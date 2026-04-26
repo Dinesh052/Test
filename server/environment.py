@@ -49,7 +49,7 @@ SCENARIOS = _load_scenarios()
 
 
 class CrisisNegotiatorEnvironment(Environment):
-    SUPPORTS_CONCURRENT_SESSIONS = False
+    SUPPORTS_CONCURRENT_SESSIONS = True
 
     # Class-level singletons — persist across environment re-instantiations during training
     _shared_expert_injector = ExpertFeedbackInjector()

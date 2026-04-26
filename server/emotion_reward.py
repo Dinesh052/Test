@@ -16,6 +16,13 @@ def _load_model():
     global _model, _anchors, _mode
     if _mode != "pending":
         return
+    # On some Windows installs pyarrow has a broken C extension that causes
+    # an access-violation (hard crash) when sentence-transformers is imported.
+    # Use keyword fallback by default; set EMOTION_USE_TRANSFORMER=1 to try.
+    import os
+    if os.environ.get("EMOTION_USE_TRANSFORMER") != "1":
+        _mode = "keyword"
+        return
     try:
         from sentence_transformers import SentenceTransformer
         _model = SentenceTransformer("sentence-transformers/paraphrase-MiniLM-L6-v2")

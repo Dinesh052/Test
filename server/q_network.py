@@ -26,6 +26,12 @@ def _load_encoder():
     global _encoder
     if _encoder is not None:
         return
+    # sentence_transformers triggers pyarrow C extension crash on some Windows
+    # installs. Default to unavailable; set EMOTION_USE_TRANSFORMER=1 to try.
+    import os
+    if os.environ.get("EMOTION_USE_TRANSFORMER") != "1":
+        _encoder = "unavailable"
+        return
     try:
         from sentence_transformers import SentenceTransformer
         _encoder = SentenceTransformer("sentence-transformers/paraphrase-MiniLM-L6-v2")
