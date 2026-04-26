@@ -3,6 +3,7 @@ __pycache__/
 *.pyc
 *.pyo
 .venv/
+venv/
 
 # Environment
 .env
@@ -15,8 +16,14 @@ crisis-negotiator-trained/
 crisis-negotiator-trained-v2/
 coevolve-negotiator/
 coevolve-ht/
+crisis-negotiator-7b/
 *.zip
 
 # Logs (keep results/ JSONs, ignore raw logs)
 *.log
+logs/
+training_logs/
 .DS_Store
+
+# Tool working directories
+.claude/
