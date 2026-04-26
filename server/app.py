@@ -28,6 +28,17 @@ app = create_app(
     max_concurrent_envs=1,
 )
 
+# Override OpenEnv's default root route with our custom UI
+app.routes[:] = [r for r in app.routes if getattr(r, 'path', None) != '/']
+
+@app.get("/")
+def root():
+    ui_path = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+        "ui", "index.html",
+    )
+    return FileResponse(ui_path, media_type="text/html")
+
 # ── Episode storage ──────────────────────────────────────
 _episodes: dict[str, dict] = {}
 
@@ -44,15 +55,6 @@ _HEURISTIC = [
     ("emotional_label", "I can hear how exhausted you are. Let's find a way through this together."),
     ("acknowledge_demand", "Your request — I'm advocating for it on my end. That's real."),
 ]
-
-
-@app.get("/")
-def root():
-    ui_path = os.path.join(
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-        "ui", "index.html",
-    )
-    return FileResponse(ui_path, media_type="text/html")
 
 
 @app.get("/status")
