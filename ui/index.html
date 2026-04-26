@@ -1486,7 +1486,15 @@ function togglePlay() {
       document.getElementById('btn-play').textContent = '▶ Play';
       document.getElementById('btn-play').className = 'ctrl-btn btn-play';
     } else {
-      startLive();
+      // Resume: if we already have steps, continue step-by-step; otherwise start fresh
+      if (liveStepNum > 0) {
+        isPlaying = true;
+        document.getElementById('btn-play').textContent = '⏸ Pause';
+        document.getElementById('btn-play').className = 'ctrl-btn btn-pause';
+        setTimeout(runLiveStep, 700);
+      } else {
+        startLive();
+      }
     }
     return;
   }
@@ -1504,6 +1512,8 @@ function startPlay() {
 function pausePlay() {
   isPlaying = false;
   clearTimeout(timer);
+  // Stop LLM mode loop
+  if (_liveEventSource) { _liveEventSource.close(); _liveEventSource = null; }
   document.getElementById('btn-play').textContent = '▶ Play';
   document.getElementById('btn-play').className = 'ctrl-btn btn-play';
 }
@@ -2768,6 +2778,7 @@ function toggleHITL() {
       if (!key) return;
     }
     if (llmMode) toggleLLM();
+    if (isPlaying) pausePlay();
     hitlMode = true;
     btn.textContent = 'HUMAN: ON';
     btn.style.background = '#0d1929'; btn.style.borderColor = '#58a6ff50'; btn.style.color = 'var(--neg)';
