@@ -14,7 +14,7 @@ license: mit
 > **Train AI agents to negotiate hostage crises using FBI techniques, Theory-of-Mind reasoning, and adversarial self-play.**
 
 [![OpenEnv](https://img.shields.io/badge/OpenEnv-compatible-blue)](https://github.com/meta-pytorch/OpenEnv)
-[![HuggingFace Spaces](https://img.shields.io/badge/🤗-HuggingFace_Spaces-yellow)](https://huggingface.co/spaces/Dinesh052/crisis-negotiator-openenv)
+[![HuggingFace Spaces](https://img.shields.io/badge/🤗-HuggingFace_Spaces-yellow)](https://huggingface.co/spaces/Dinesh-052/crisis-negotiator-openenv)
 [![Training Notebook](https://img.shields.io/badge/Colab-Training_Notebook-orange)](train_grpo.ipynb)
 [![Blog Post](https://img.shields.io/badge/📝-Blog_Post-green)](BLOG.md)
 
@@ -266,7 +266,7 @@ python run_all.py --a100  # 8 steps: GRPO + co-evolution + Q-network + all evals
 
 ## Links
 
-- 🤗 **HF Space (Live Demo)**: [huggingface.co/spaces/Dinesh052/crisis-negotiator-openenv](https://huggingface.co/spaces/Dinesh052/crisis-negotiator-openenv)
+- 🤗 **HF Space (Live Demo)**: [huggingface.co/spaces/Dinesh-052/crisis-negotiator-openenv](https://huggingface.co/spaces/Dinesh-052/crisis-negotiator-openenv)
 - 📝 **Blog Post**: [BLOG.md](BLOG.md)
 - 🎓 **Training Notebook (Colab)**: [train_grpo.ipynb](train_grpo.ipynb)
 - 📊 **Training Notebook (A100 with outputs)**: [notebooks/train_a100.ipynb](notebooks/train_a100.ipynb)

@@ -32,7 +32,7 @@ harm rate with the hand-coded FBI heuristic** (3%). Theory-of-Mind belief
 prediction error drops to **2.97** (vs 3.20 random, 6.14 heuristic) with
 **0.68 deception detection F1**.
 
-🤗 **HF Space**: <https://huggingface.co/spaces/Dinesh052/crisis-negotiator-openenv>
+🤗 **HF Space**: <https://huggingface.co/spaces/Dinesh-052/crisis-negotiator-openenv>
 💾 **Repo**: included in the Space
 
 ---
