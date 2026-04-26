@@ -58,7 +58,7 @@ class TrainConfig:
     multi_turn_steps: int = 4  # steps per trajectory
     difficulty_mix: List[str] = field(default_factory=lambda: ["easy", "medium", "hard"])
     late_difficulty_mix: List[str] = field(default_factory=lambda: ["easy", "medium", "hard", "hard", "hard"])
-    hard_bias_after_frac: float = 0.50
+    hard_bias_after_frac: float = 0.30
 
 CFG = TrainConfig()
 random.seed(CFG.seed)
