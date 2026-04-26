@@ -111,6 +111,19 @@ The negotiator must **simultaneously**:
 
 **Ignoring any stakeholder has escalating costs.** This creates a genuine multi-objective optimization problem.
 
+### Why This Is Real Multi-Agent (Theme 1)
+
+This isn't "two agents take turns." The negotiator faces **6 simultaneous agents with competing incentives**:
+
+- The **commander** pressures for speed — but rushing causes harm events
+- The **supervisor** enforces ethics — but being too cautious loses time
+- The **media** demands transparency — but revealing too much endangers hostages
+- The **family** rewards empathy — but emotional manipulation gets flagged
+- The **hostage-taker** has hidden state — agitation, trust, deception layers
+- The **hostages** whisper intel — but 30% of it is unreliable panic
+
+The agent must learn **coalition coordination**: when to push back on the commander, when to address media pressure, when to leverage family rapport — all while de-escalating someone who may be lying about having a weapon. This is negotiation, not just dialogue.
+
 ---
 
 ## What Makes This Environment Novel
