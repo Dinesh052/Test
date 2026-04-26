@@ -310,15 +310,15 @@ def compute_tom_reward(
 
     Returns: 0.0 to 0.10 reward
     """
-    # Agitation prediction accuracy: 0 to 0.05
+    # Agitation prediction accuracy: 0 to 0.15
     ag_error = abs(predicted_agitation - actual_agitation) / 10.0
-    ag_reward = 0.05 * (1.0 - ag_error)
+    ag_reward = 0.15 * (1.0 - ag_error)
 
-    # Demand prediction accuracy: 0 or 0.03
-    demand_match = 0.03 if (predicted_demand.lower() in actual_top_demand.lower()
+    # Demand prediction accuracy: 0 or 0.05
+    demand_match = 0.05 if (predicted_demand.lower() in actual_top_demand.lower()
                             or actual_top_demand.lower() in predicted_demand.lower()) else 0.0
 
-    # Deception detection accuracy: 0 or 0.02
-    lying_match = 0.02 if (predicted_lying == actually_lying) else 0.0
+    # Deception detection accuracy: 0 or 0.05
+    lying_match = 0.05 if (predicted_lying == actually_lying) else 0.0
 
     return round(ag_reward + demand_match + lying_match, 4)
