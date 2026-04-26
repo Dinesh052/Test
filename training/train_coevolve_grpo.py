@@ -128,15 +128,14 @@ def neg_reward_fn(completion: str) -> float:
     at = parsed.get("action_type", "speak")
     content = parsed.get("content", "")
     score = 0.0
-    # Phase alignment
-    phase = getattr(obs, "phase", "opening")
-    if phase == "opening" and at in ("emotional_label", "mirror", "open_question"):
+    # Action quality scoring (no obs needed)
+    if at in ("emotional_label", "mirror", "open_question"):
         score += 0.15
-    elif phase in ("negotiation", "resolution") and at in ("acknowledge_demand", "offer_concession"):
-        score += 0.15
-    # Demand ack
-    if at == "acknowledge_demand" and obs.stated_demands:
+    elif at in ("acknowledge_demand", "offer_concession"):
         score += 0.10
+    # Demand ack
+    if at == "acknowledge_demand":
+        score += 0.05
     # Banned words
     if any(w in content.lower() for w in ["kill", "force", "breach", "ultimatum"]):
         score -= 0.20
