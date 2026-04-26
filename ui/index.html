@@ -908,50 +908,84 @@ body {
 
       <!-- TAB 5: API Console -->
       <div class="train-pane" id="pane-api">
-        <div class="pane-title">manual api console</div>
+        <div class="pane-title">🔌 Multi-Agent API Console</div>
+
+        <!-- Agent selector cards -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;">
+          <div onclick="apiSelectAgent('hostage_taker')" id="agent-ht" class="api-agent-card" style="background:#2a1a1a;border:1px solid #c0392b;border-radius:6px;padding:8px;cursor:pointer;text-align:center;">
+            <div style="font-size:18px">🔴</div>
+            <div style="font-size:11px;color:#e74c3c;font-weight:bold">Hostage-Taker</div>
+            <div style="font-size:9px;color:#888">Hidden state</div>
+          </div>
+          <div onclick="apiSelectAgent('commander')" id="agent-cmd" class="api-agent-card" style="background:#1a1a2a;border:1px solid #2980b9;border-radius:6px;padding:8px;cursor:pointer;text-align:center;">
+            <div style="font-size:18px">⚡</div>
+            <div style="font-size:11px;color:#3498db;font-weight:bold">Commander</div>
+            <div style="font-size:9px;color:#888">Time pressure</div>
+          </div>
+          <div onclick="apiSelectAgent('supervisor')" id="agent-sup" class="api-agent-card" style="background:#1a2a1a;border:1px solid #27ae60;border-radius:6px;padding:8px;cursor:pointer;text-align:center;">
+            <div style="font-size:18px">🛡️</div>
+            <div style="font-size:11px;color:#2ecc71;font-weight:bold">Supervisor</div>
+            <div style="font-size:9px;color:#888">Ethics oversight</div>
+          </div>
+          <div onclick="apiSelectAgent('media')" id="agent-med" class="api-agent-card" style="background:#2a2a1a;border:1px solid #f39c12;border-radius:6px;padding:8px;cursor:pointer;text-align:center;">
+            <div style="font-size:18px">📰</div>
+            <div style="font-size:11px;color:#f1c40f;font-weight:bold">Media</div>
+            <div style="font-size:9px;color:#888">Transparency</div>
+          </div>
+          <div onclick="apiSelectAgent('family')" id="agent-fam" class="api-agent-card" style="background:#2a1a2a;border:1px solid #8e44ad;border-radius:6px;padding:8px;cursor:pointer;text-align:center;">
+            <div style="font-size:18px">💜</div>
+            <div style="font-size:11px;color:#9b59b6;font-weight:bold">Family</div>
+            <div style="font-size:9px;color:#888">Empathy</div>
+          </div>
+          <div onclick="apiSelectAgent('hostages')" id="agent-hos" class="api-agent-card" style="background:#1a2a2a;border:1px solid #1abc9c;border-radius:6px;padding:8px;cursor:pointer;text-align:center;">
+            <div style="font-size:18px">👥</div>
+            <div style="font-size:11px;color:#1abc9c;font-weight:bold">Hostages</div>
+            <div style="font-size:9px;color:#888">Intel (70%)</div>
+          </div>
+        </div>
 
         <div class="api-field">
-          <label class="api-label" for="api-type">Type</label>
+          <label class="api-label" for="api-type">Endpoint</label>
           <select class="api-input" id="api-type" onchange="apiTypeChanged()">
-            <option value="step">step</option>
-            <option value="reset">reset</option>
-            <option value="state">state</option>
+            <option value="step">POST /step — Send negotiator action</option>
+            <option value="reset">POST /reset — New episode</option>
+            <option value="state">GET /state — Full environment state</option>
           </select>
         </div>
 
         <div class="api-field" id="api-tool-field">
-          <label class="api-label" for="api-tool">Action Type</label>
+          <label class="api-label" for="api-tool">FBI BCSM Technique</label>
           <select class="api-input" id="api-tool">
-            <option value="emotional_label">emotional_label</option>
-            <option value="mirror">mirror</option>
-            <option value="open_question">open_question</option>
-            <option value="acknowledge_demand">acknowledge_demand</option>
-            <option value="offer_concession">offer_concession</option>
-            <option value="buy_time">buy_time</option>
-            <option value="push_back_commander">push_back_commander</option>
-            <option value="speak">speak</option>
+            <option value="emotional_label">🎯 emotional_label — "It sounds like you're feeling..."</option>
+            <option value="mirror">🪞 mirror — Repeat their last words</option>
+            <option value="open_question">❓ open_question — "Tell me more about..."</option>
+            <option value="acknowledge_demand">✅ acknowledge_demand — Validate without committing</option>
+            <option value="offer_concession">🤝 offer_concession — Small concrete offer</option>
+            <option value="buy_time">⏳ buy_time — Keep talking, slow the clock</option>
+            <option value="push_back_commander">🛑 push_back_commander — "I need more time"</option>
+            <option value="speak">💬 speak — Free-form dialogue</option>
           </select>
         </div>
 
         <div class="api-field">
-          <label class="api-label" for="api-args">Arguments (JSON)</label>
-          <textarea class="api-textarea" id="api-args" placeholder='{"content":"I hear you...","reasoning":"BCSM","target":"hostage_taker"}'></textarea>
+          <label class="api-label" for="api-args">Action JSON</label>
+          <textarea class="api-textarea" id="api-args" placeholder='{"content":"I hear how frustrated you are...","reasoning":"Build rapport via empathy","target":"hostage_taker","belief_agitation":7.5,"belief_lying":false}'></textarea>
         </div>
 
         <div class="api-btn-row">
-          <button class="api-btn api-btn-step"  onclick="apiCall('step')">Step</button>
-          <button class="api-btn api-btn-reset" onclick="apiCall('reset')">Reset</button>
-          <button class="api-btn api-btn-state" onclick="apiCall('state')">Get state</button>
+          <button class="api-btn api-btn-step"  onclick="apiCall('step')">▶ Step</button>
+          <button class="api-btn api-btn-reset" onclick="apiCall('reset')">🔄 Reset</button>
+          <button class="api-btn api-btn-state" onclick="apiCall('state')">📊 State</button>
         </div>
 
         <div class="api-status-row">
           <div class="api-status-dot" id="api-dot"></div>
-          <span id="api-status-text" class="api-status-text">ready</span>
+          <span id="api-status-text" class="api-status-text">ready — select a technique and step</span>
         </div>
 
         <div class="api-json-wrap">
           <div class="api-json-label">
-            <span>Raw JSON response</span>
+            <span>Response</span>
             <span id="api-http-code"></span>
           </div>
           <pre class="api-json-pre" id="api-json-out"></pre>
@@ -2840,6 +2874,23 @@ async function sendHumanTurn() {
 // ═══════════════════════════════════════════════════════════════
 // API CONSOLE — manual Step / Reset / Get State panel
 // ═══════════════════════════════════════════════════════════════
+
+function apiSelectAgent(agent) {
+  // Highlight selected agent card
+  document.querySelectorAll('.api-agent-card').forEach(c => c.style.opacity = '0.5');
+  const ids = {hostage_taker:'agent-ht',commander:'agent-cmd',supervisor:'agent-sup',media:'agent-med',family:'agent-fam',hostages:'agent-hos'};
+  const el = document.getElementById(ids[agent]);
+  if (el) el.style.opacity = '1';
+  // Pre-fill target
+  const args = document.getElementById('api-args');
+  try {
+    const j = JSON.parse(args.value || '{}');
+    j.target = agent;
+    args.value = JSON.stringify(j, null, 2);
+  } catch(e) {
+    args.value = JSON.stringify({content: "", reasoning: "", target: agent, belief_agitation: 7, belief_lying: false}, null, 2);
+  }
+}
 
 function apiTypeChanged() {
   const type = document.getElementById('api-type').value;
