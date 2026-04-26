@@ -33,7 +33,21 @@ prediction error drops to **2.97** (vs 3.20 random, 6.14 heuristic) with
 **0.68 deception detection F1**.
 
 🤗 **HF Space**: <https://huggingface.co/spaces/Dinesh-052/crisis-negotiator-openenv>
-💾 **Repo**: included in the Space
+🐙 **GitHub**: <https://github.com/Dinesh052/crisis-negotiator-openenv>
+
+---
+
+## The Dashboard
+
+The HF Space isn't just an API — it's a live negotiation dashboard. When you open it:
+
+1. **Pick a scenario** (easy domestic dispute → hard embassy siege) from the left panel
+2. **Hit Play** — watch a negotiation unfold turn-by-turn. The dialogue appears on the left; the right panel shows agitation (red), trust (blue), and per-step reward (green) updating in real-time
+3. **Toggle LIVE:ON** — switches from scripted demo to the real environment API. A heuristic FBI policy plays against the actual state machine with real rewards
+4. **Toggle HUMAN:ON** — you become the negotiator. Type your lines, pick an FBI technique, and the LLM hostage-taker responds. Your performance is scored on the same metrics the RL agent trains on
+5. **API Console tab** — call `/reset`, `/step`, `/state` directly. Click any of the 6 agent cards (hostage-taker, commander, supervisor, media, family, hostages) to set the action target
+
+This lets judges see the environment in action without running any code.
 
 ---
 

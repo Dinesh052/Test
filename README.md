@@ -138,6 +138,18 @@ Spam policies get caught and penalized. The reward requires genuine negotiation 
 
 ---
 
+## Live Dashboard
+
+The HF Space serves an interactive dashboard with 3 play modes:
+
+- **▶ Demo Mode** — Watch a pre-scripted negotiation unfold turn-by-turn. The left panel shows the dialogue, the right panel tracks agitation (red line), trust (blue line), and reward (green bars) in real-time. Pick any of the 11 scenarios from easy to hard.
+- **🔴 LIVE Mode** — Connects to the real environment API. A heuristic BCSM policy plays against the actual state machine. You see real rewards, real agitation changes, and real outcomes (surrender/harm/timeout). Toggle LIVE:ON in the control bar.
+- **👤 HUMAN Mode** — You become the negotiator. Type your lines, pick an FBI technique (emotional_label, mirror, open_question, etc.), and the LLM hostage-taker responds. The dashboard tracks your performance against the same metrics the RL agent is scored on.
+
+The **API Console** tab lets you call `/reset`, `/step`, and `/state` directly — useful for judges who want to inspect the raw OpenEnv interface. Click any of the 6 agent cards to set the action target.
+
+---
+
 ## Quick Start
 
 ```bash
