@@ -400,7 +400,7 @@ def score_trajectory(prompt_idx: int, completion: str) -> tuple[float, dict]:
         if getattr(step_obs, "done", False):
             msg = (getattr(step_obs, "message", "") or "").lower()
             if any(kw in msg for kw in ["surrender", "released"]):
-                bd["outcome_bonus"] = 0.25
+                bd["outcome_bonus"] = 0.30
             elif any(kw in msg for kw in ["harm", "tactical_intervention", "supervisor"]):
                 bd["outcome_bonus"] = -0.25
         del env_copy
