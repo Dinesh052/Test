@@ -9,9 +9,13 @@
 
 ---
 
-## The Problem
+## Why This Problem Matters
 
-Every year, the FBI handles 800 hostage crises. Training a single negotiator takes 2 years and costs hundreds of thousands of dollars. Crisis negotiation is the hardest communication task on Earth — you're talking to someone holding lives in their hands, you can't see their emotional state, they might be lying about how many hostages they have, your commander is screaming to breach, and one wrong word could get someone killed.
+In 2005, an untrained civilian talked a fugitive murderer into surrendering — just by treating him as a human being. In 1993, FBI negotiator Chris Voss resolved a Brooklyn bank hostage crisis in 3 hours using a single technique — mirroring — without another shot fired. In 1996, Gary Noesner ended an 81-day militia standoff with zero casualties by listening without agreeing.
+
+These outcomes aren't luck. They follow a learned protocol — the FBI's Behavioral Change Stairway Model (BCSM). The problem: it takes 2 years and hundreds of thousands of dollars to train a single negotiator. **This project teaches it to an LLM.**
+
+## The Environment
 
 **We built an RL environment that captures this complexity and trains LLMs to learn negotiation skills through reinforcement learning.** No existing environment combines life-or-death stakes, hidden psychological state, multi-layered deception, and 6 competing agents. Formally, the environment is a **Constrained MDP**: the negotiator optimizes de-escalation reward subject to safety constraints (supervisor: 3 violations = termination), time constraints (commander patience), and transparency constraints (media pressure).
 
