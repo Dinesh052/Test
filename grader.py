@@ -308,7 +308,7 @@ def compute_tom_reward(
     accuracy and used directly as reward signal. Addresses the "Small LLMs
     don't learn ToM via RL alone" critique by making ToM explicit and rewarded.
 
-    Returns: 0.0 to 0.10 reward
+    Returns: 0.0 to 0.25 reward
     """
     # Agitation prediction accuracy: 0 to 0.15
     ag_error = abs(predicted_agitation - actual_agitation) / 10.0
