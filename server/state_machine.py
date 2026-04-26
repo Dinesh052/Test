@@ -45,9 +45,9 @@ class HiddenState:
 ACTION_DELTAS = {
     # (agitation_delta, trust_delta)
     "emotional_label": (-1.0, +10),
-    "mirror": (-0.6, +6),
-    "open_question": (-0.3, +4),
-    "acknowledge_demand": (-0.7, +8),
+    "mirror": (-0.6, +8),
+    "open_question": (-0.3, +6),
+    "acknowledge_demand": (-0.7, +5),
     "offer_concession": (-1.2, +6),
     "ask_proof_of_life": (+0.5, -4),
     "buy_time": (-0.1, +1),
@@ -172,11 +172,11 @@ def update_state(
 
     # Demand acknowledgment bonus
     if action_type == "acknowledge_demand":
-        # Extra trust if a core demand is acknowledged
+        # Extra trust if a core demand is acknowledged (diminishing after first)
         for d in state.demands:
             if not d.acknowledged and d.priority == "core":
                 d.acknowledged = True
-                tr_delta += 5
+                tr_delta += 2
                 break
         else:
             for d in state.demands:

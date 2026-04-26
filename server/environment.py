@@ -395,8 +395,13 @@ class CrisisNegotiatorEnvironment(Environment):
         if whisper:
             self._dialogue.append({"speaker": "hostage", "content": whisper, "step": step, "emotional_cues": ["whispered"]})
 
-        # Check terminal
+        # Check terminal (with action diversity gate)
         outcome = check_terminal(h, step, self._state.max_steps)
+        if outcome in ("hostage_released", "voluntary_surrender") and step >= 3:
+            # Require minimum action diversity for positive outcomes
+            recent = [a.get("action_type", "") for a in self._actions_taken[-min(6, len(self._actions_taken)):]]
+            if len(set(recent)) < 3:
+                outcome = None  # block early surrender from single-action spam
         if outcome:
             return self._end_episode(outcome, step)
 

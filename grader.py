@@ -190,14 +190,14 @@ def compute_reward(
         if type_counts:
             dominant_type, dominant_count = max(type_counts.items(), key=lambda kv: kv[1])
             dominance = dominant_count / max(1, len(actions_taken))
-            if dominance > 0.60:
-                # base dominance penalty
-                dom_pen = min(0.14, (dominance - 0.60) * 0.35)
+            if dominance > 0.50:
+                # base dominance penalty (triggers earlier, scales harder)
+                dom_pen = min(0.18, (dominance - 0.50) * 0.36)
                 pen -= dom_pen
-                # stronger penalty for empathy-only collapse patterns
-                if dominant_type in ("emotional_label", "mirror"):
+                # stronger penalty for single-action collapse patterns
+                if dominant_type in ("emotional_label", "mirror", "acknowledge_demand"):
                     pen -= 0.06
-                fb.append(f"Action collapse: {dominant_type} {dominance:.0%} ({-(dom_pen + (0.06 if dominant_type in ('emotional_label','mirror') else 0)):+.2f})")
+                fb.append(f"Action collapse: {dominant_type} {dominance:.0%} ({-(dom_pen + (0.06 if dominant_type in ('emotional_label','mirror','acknowledge_demand') else 0)):+.2f})")
 
     bd["penalties"] = round(max(-0.30, pen), 4)
 
