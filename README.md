@@ -247,6 +247,16 @@ python run_all.py --a100  # 8 steps: GRPO + co-evolution + Q-network + all evals
 
 ---
 
+## Links
+
+- 🤗 **HF Space (Live Demo)**: [huggingface.co/spaces/Dinesh052/crisis-negotiator-openenv](https://huggingface.co/spaces/Dinesh052/crisis-negotiator-openenv)
+- 📝 **Blog Post**: [BLOG.md](BLOG.md)
+- 🎓 **Training Notebook (Colab)**: [train_grpo.ipynb](train_grpo.ipynb)
+- 📊 **Training Notebook (A100 with outputs)**: [notebooks/train_a100.ipynb](notebooks/train_a100.ipynb)
+- 🏗️ **OpenEnv Manifest**: [openenv.yaml](openenv.yaml)
+
+---
+
 ## References
 
 - **RLVER** (arXiv:2507.03112) — Verifiable emotion rewards for empathetic agents
