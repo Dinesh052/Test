@@ -206,10 +206,47 @@ class TrainedPolicy:
         return action
 
 
+class ZeroShotLLMPolicy:
+    """Base LLM with no RL training — just prompted with the system prompt."""
+    name = "zero_shot_llm"
+    def __init__(self, base_model: str = "Qwen/Qwen2.5-7B-Instruct"):
+        import torch
+        from transformers import AutoTokenizer, AutoModelForCausalLM
+        self.tokenizer = AutoTokenizer.from_pretrained(base_model, trust_remote_code=True)
+        if self.tokenizer.pad_token is None:
+            self.tokenizer.pad_token = self.tokenizer.eos_token
+        self.model = AutoModelForCausalLM.from_pretrained(
+            base_model, device_map="auto",
+            trust_remote_code=True, torch_dtype=torch.bfloat16,
+        )
+        self.model.eval()
+        from training.train_local_v2 import SYSTEM_PROMPT, build_prompt, parse_action, to_action
+        self.system = SYSTEM_PROMPT
+        self.build_prompt = build_prompt
+        self.parse_action = parse_action
+        self.to_action = to_action
+
+    def act(self, obs, step: int) -> NegotiatorAction:
+        import torch
+        msgs = [
+            {"role": "system", "content": self.system},
+            {"role": "user", "content": self.build_prompt(obs)},
+        ]
+        text = self.tokenizer.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True)
+        ids = self.tokenizer(text, return_tensors="pt").to(self.model.device)
+        with torch.no_grad():
+            out = self.model.generate(**ids, max_new_tokens=192, do_sample=True,
+                                      temperature=0.7, top_p=0.9,
+                                      pad_token_id=self.tokenizer.pad_token_id)
+        gen = self.tokenizer.decode(out[0][ids.input_ids.shape[1]:], skip_special_tokens=True)
+        parsed = self.parse_action(gen)
+        action, _ = self.to_action(parsed, gen)
+        return action
+
+
 # ─────────────────────────────────────────────────────────
 # EVAL
 # ─────────────────────────────────────────────────────────
-def run_episodes(policy, n: int, difficulties: List[str], seed_offset: int = 0) -> List[Dict[str, Any]]:
 def run_episodes(policy, n: int, difficulties: List[str], seed_offset: int = 0) -> List[Dict[str, Any]]:
     # Reset shared singletons to ensure fair comparison between policies
     from server.actors import reset_actors
@@ -304,7 +341,7 @@ def make_plots(results: Dict[str, List[Dict[str, Any]]], out_path: str = "reward
         print("[plot] matplotlib not installed; skipping.")
         return
     plt.figure(figsize=(10, 6))
-    colours = {"random": "#888888", "heuristic": "#e3b341", "trained": "#58a6ff"}
+    colours = {"random": "#888888", "heuristic": "#e3b341", "trained": "#58a6ff", "zero_shot_llm": "#da3633"}
     for name, records in results.items():
         if not records:
             continue
@@ -334,6 +371,8 @@ def main():
     p.add_argument("--difficulties", default="easy,medium,hard")
     p.add_argument("--include-trained", action="store_true",
                    help="also evaluate ./crisis-negotiator-trained adapter")
+    p.add_argument("--include-zero-shot", action="store_true",
+                   help="also evaluate base LLM with no RL training")
     p.add_argument("--adapter-dir", default="./crisis-negotiator-trained")
     p.add_argument("--base-model", default="Qwen/Qwen2.5-3B-Instruct")
     args = p.parse_args()
@@ -348,6 +387,15 @@ def main():
     print("\n=== Evaluating HEURISTIC policy ===")
     results["heuristic"] = run_episodes(HeuristicPolicy(), args.n, diffs, seed_offset=10_000)
     Path("eval_heuristic.json").write_text(json.dumps(results["heuristic"], indent=2))
+
+    if args.include_zero_shot:
+        print("\n=== Evaluating ZERO-SHOT LLM policy ===")
+        try:
+            zs = ZeroShotLLMPolicy(args.base_model)
+            results["zero_shot_llm"] = run_episodes(zs, args.n, diffs, seed_offset=10_000)
+            Path("eval_zero_shot.json").write_text(json.dumps(results["zero_shot_llm"], indent=2))
+        except Exception as e:
+            print(f"[!] zero-shot eval failed: {e}")
 
     if args.include_trained:
         if not Path(args.adapter_dir).exists():
