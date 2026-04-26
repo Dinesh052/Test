@@ -3,7 +3,7 @@ name: crisis_negotiator
 type: space
 runtime: fastapi
 app: server.app:app
-port: 8000
+port: 7860
 version: "2.0.0"
 description: >
   Multi-agent hostage de-escalation arena. A negotiator agent must model
