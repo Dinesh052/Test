@@ -322,3 +322,49 @@ def compute_tom_reward(
     lying_match = 0.05 if (predicted_lying == actually_lying) else 0.0
 
     return round(ag_reward + demand_match + lying_match, 4)
+
+
+# ── OpenEnv Rubric Wrapper ──────────────────────────────────
+
+try:
+    from openenv.core.rubrics import Rubric, WeightedSum
+
+    class OutcomeRubric(Rubric):
+        """Terminal outcome scoring."""
+        def forward(self, action, observation) -> float:
+            msg = getattr(observation, "message", "") or ""
+            if "surrender" in msg.lower() or "released" in msg.lower():
+                return 1.0
+            elif "harm" in msg.lower():
+                return -1.0
+            elif "partial" in msg.lower():
+                return 0.3
+            return -0.3
+
+    class TechniqueRubric(Rubric):
+        """FBI BCSM technique usage scoring."""
+        def forward(self, action, observation) -> float:
+            at = getattr(action, "action_type", "speak")
+            scores = {"emotional_label": 0.8, "mirror": 0.6, "open_question": 0.5,
+                      "acknowledge_demand": 0.7, "offer_concession": 0.6, "buy_time": 0.3}
+            return scores.get(at, 0.1)
+
+    class TheoryOfMindRubric(Rubric):
+        """Belief prediction accuracy scoring."""
+        def forward(self, action, observation) -> float:
+            if getattr(action, "belief_agitation", None) is None:
+                return 0.0
+            return 0.5  # actual scoring done in compute_tom_reward with hidden state
+
+    class DiversityRubric(Rubric):
+        """Action diversity scoring."""
+        def forward(self, action, observation) -> float:
+            return 0.5  # actual scoring done in compute_step_reward with action history
+
+    CrisisNegotiatorRubric = WeightedSum(
+        [OutcomeRubric(), TechniqueRubric(), TheoryOfMindRubric(), DiversityRubric()],
+        weights=[0.50, 0.20, 0.15, 0.15],
+    )
+
+except ImportError:
+    CrisisNegotiatorRubric = None  # OpenEnv not installed — use compute_reward directly

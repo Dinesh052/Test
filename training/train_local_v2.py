@@ -43,7 +43,8 @@ class TrainConfig:
     model_name: str = "Qwen/Qwen2.5-3B-Instruct"
     fallback_model: str = "Qwen/Qwen2.5-1.5B-Instruct"
     output_dir: str = "./crisis-negotiator-trained-v2"
-    log_path: str = "crisis_training_log_v2.json"
+    log_path: str = "crisis_training_log_v2.jsonl"
+    resume_from_checkpoint: str = None  # "latest" or path to checkpoint dir
     num_episodes: int = 256
     num_generations: int = 8
     max_new_tokens: int = 192
@@ -432,9 +433,18 @@ def advance_env_with_best(prompt_idx: int, completion: str, reward: float):
 # ─── TRAINING LOG ─────────────────────────────────────────
 TRAIN_LOG: List[Dict[str, Any]] = []
 
+def _flush_log():
+    """Write remaining TRAIN_LOG entries as JSONL."""
+    try:
+        with open(CFG.log_path, "a") as f:
+            for entry in TRAIN_LOG:
+                f.write(json.dumps(entry) + "\n")
+    except OSError as e:
+        print(f"[log] Warning: could not flush log: {e}")
+
 def log_step(global_step: int, prompt_idx: int, completion: str, reward: float, breakdown: dict):
     st = _episode_state.get(prompt_idx, {})
-    TRAIN_LOG.append({
+    entry = {
         "global_step": global_step,
         "prompt_idx": prompt_idx,
         "completion_preview": completion[:200],
@@ -446,9 +456,15 @@ def log_step(global_step: int, prompt_idx: int, completion: str, reward: float, 
         "obs_phase": getattr(st.get("obs"), "phase", None),
         "obs_done": getattr(st.get("obs"), "done", False),
         "ts": time.time(),
-    })
+    }
+    TRAIN_LOG.append(entry)
+    # Append as JSONL (one line per step) — avoids rewriting entire file
     if len(TRAIN_LOG) % 4 == 0:
-        Path(CFG.log_path).write_text(json.dumps(TRAIN_LOG, indent=2))
+        try:
+            with open(CFG.log_path, "a") as f:
+                f.write(json.dumps(entry) + "\n")
+        except OSError:
+            pass  # disk full / I/O error — don't kill training
 
 
 # ─── MODEL LOADING ────────────────────────────────────────
@@ -594,17 +610,26 @@ def main():
           f"Epochs: {CFG.num_epochs}, Multi-turn: {CFG.multi_turn_steps} steps")
     t0 = time.time()
     try:
-        trainer.train()
+        ckpt = CFG.resume_from_checkpoint
+        if ckpt == "latest":
+            import glob
+            ckpts = sorted(glob.glob(f"{CFG.output_dir}/checkpoint-*"), key=os.path.getmtime)
+            ckpt = ckpts[-1] if ckpts else None
+            print(f"[train] Resuming from {ckpt}")
+        trainer.train(resume_from_checkpoint=ckpt)
     except torch.cuda.OutOfMemoryError as e:
         print(f"[train] OOM: {e}")
-        Path(CFG.log_path).write_text(json.dumps(TRAIN_LOG, indent=2))
+        try:
+            _flush_log()
+        except OSError:
+            pass
         raise
     elapsed = (time.time() - t0) / 60
     print(f"[train] Done in {elapsed:.1f} min")
 
     model.save_pretrained(CFG.output_dir)
     tokenizer.save_pretrained(CFG.output_dir)
-    Path(CFG.log_path).write_text(json.dumps(TRAIN_LOG, indent=2))
+    _flush_log()
     print(f"[train] Adapter saved to {CFG.output_dir}")
     print(f"[train] Log: {CFG.log_path} ({len(TRAIN_LOG)} entries)")
 
