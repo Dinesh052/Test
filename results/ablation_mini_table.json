@@ -5,16 +5,16 @@
     "seed_offset": 50000
   },
   "table": {
-    "baseline": 0.7157,
-    "minus_tom": 0.7157,
-    "minus_coalition": 0.734,
-    "minus_oversight": 0.7002,
-    "minus_tom_coalition_oversight": 0.7184
+    "baseline": 0.6675,
+    "minus_tom": 0.6675,
+    "minus_coalition": 0.7068,
+    "minus_oversight": 0.6525,
+    "minus_tom_coalition_oversight": 0.6918
   },
   "delta_vs_baseline": {
     "minus_tom": 0.0,
-    "minus_coalition": 0.0183,
-    "minus_oversight": -0.0155,
-    "minus_tom_coalition_oversight": 0.0027
+    "minus_coalition": 0.0393,
+    "minus_oversight": -0.015,
+    "minus_tom_coalition_oversight": 0.0243
   }
 }

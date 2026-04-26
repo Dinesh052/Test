@@ -1,82 +1,117 @@
 {
   "random": {
     "n": 30,
-    "mean_final_reward": 0.7547,
-    "mean_cumulative_reward": -0.5859,
-    "min_reward": 0.3453,
-    "max_reward": 0.8792,
-    "mean_steps": 15.5,
-    "surrender_rate": 0.7,
-    "harm_rate": 0.0,
+    "mean_final_reward": 0.289,
+    "std_final_reward": 0.1842,
+    "ci95_final_reward": 0.0659,
+    "mean_cumulative_reward": -0.5911,
+    "min_reward": 0.085,
+    "max_reward": 0.7831,
+    "mean_steps": 16.37,
+    "surrender_rate": 0.0667,
+    "harm_rate": 0.4,
     "by_difficulty": {
       "easy": {
         "n": 10,
-        "mean_reward": 0.7489,
-        "surrender_rate": 0.6
-      },
-      "hard": {
-        "n": 10,
-        "mean_reward": 0.7461,
-        "surrender_rate": 0.8
+        "mean_reward": 0.3032,
+        "surrender_rate": 0.0
       },
       "medium": {
         "n": 10,
-        "mean_reward": 0.7692,
-        "surrender_rate": 0.7
+        "mean_reward": 0.3319,
+        "surrender_rate": 0.2
+      },
+      "hard": {
+        "n": 10,
+        "mean_reward": 0.2318,
+        "surrender_rate": 0.0
       }
     }
   },
   "heuristic": {
     "n": 30,
-    "mean_final_reward": 0.9476,
-    "mean_cumulative_reward": 1.9779,
-    "min_reward": 0.8925,
-    "max_reward": 0.99,
-    "mean_steps": 8.3,
-    "surrender_rate": 1.0,
+    "mean_final_reward": 0.6805,
+    "std_final_reward": 0.2186,
+    "ci95_final_reward": 0.0782,
+    "mean_cumulative_reward": 1.1974,
+    "min_reward": 0.0841,
+    "max_reward": 0.9628,
+    "mean_steps": 15.13,
+    "surrender_rate": 0.4,
+    "harm_rate": 0.0333,
+    "by_difficulty": {
+      "easy": {
+        "n": 10,
+        "mean_reward": 0.7263,
+        "surrender_rate": 0.5
+      },
+      "medium": {
+        "n": 10,
+        "mean_reward": 0.7238,
+        "surrender_rate": 0.5
+      },
+      "hard": {
+        "n": 10,
+        "mean_reward": 0.5914,
+        "surrender_rate": 0.2
+      }
+    }
+  },
+  "zero_shot_llm": {
+    "n": 30,
+    "mean_final_reward": 0.326,
+    "std_final_reward": 0.3938,
+    "ci95_final_reward": 0.1409,
+    "mean_cumulative_reward": -1.0223,
+    "min_reward": -0.4557,
+    "max_reward": 0.8352,
+    "mean_steps": 19.57,
+    "surrender_rate": 0.2,
     "harm_rate": 0.0,
     "by_difficulty": {
       "easy": {
         "n": 10,
-        "mean_reward": 0.9518,
-        "surrender_rate": 1.0
-      },
-      "hard": {
-        "n": 10,
-        "mean_reward": 0.9388,
-        "surrender_rate": 1.0
+        "mean_reward": 0.4562,
+        "surrender_rate": 0.2
       },
       "medium": {
         "n": 10,
-        "mean_reward": 0.9523,
-        "surrender_rate": 1.0
+        "mean_reward": 0.3293,
+        "surrender_rate": 0.2
+      },
+      "hard": {
+        "n": 10,
+        "mean_reward": 0.2464,
+        "surrender_rate": 0.2
       }
     }
   },
   "trained": {
     "n": 30,
-    "mean_final_reward": 0.9537,
-    "mean_cumulative_reward": 2.1185,
-    "min_reward": 0.9224,
-    "max_reward": 0.9898,
-    "mean_steps": 7.13,
-    "surrender_rate": 1.0,
-    "harm_rate": 0.0,
+    "mean_final_reward": 0.5961,
+    "std_final_reward": 0.205,
+    "ci95_final_reward": 0.0734,
+    "mean_cumulative_reward": -1.9534,
+    "min_reward": 0.2164,
+    "max_reward": 0.938,
+    "mean_steps": 16.5,
+    "surrender_rate": 0.3667,
+    "harm_rate": 0.0333,
     "by_difficulty": {
       "easy": {
         "n": 10,
-        "mean_reward": 0.9524,
-        "surrender_rate": 1.0
-      },
-      "hard": {
-        "n": 10,
-        "mean_reward": 0.9584,
-        "surrender_rate": 1.0
+        "mean_reward": 0.6626,
+        "surrender_rate": 0.4
       },
       "medium": {
         "n": 10,
-        "mean_reward": 0.9503,
-        "surrender_rate": 1.0
+        "mean_reward": 0.6342,
+        "surrender_rate": 0.5
+      },
+      "hard": {
+        "n": 10,
+        "mean_reward": 0.4914,
+        "surrender_rate": 0.2
       }
     }
   }
