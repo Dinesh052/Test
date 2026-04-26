@@ -146,11 +146,11 @@ def compute_reward(
         ack_idx = next((i for i, t in enumerate(types) if t == "acknowledge_demand"), 99)
         concession_idx = next((i for i, t in enumerate(types) if t == "offer_concession"), 99)
         if empathy_idx < ack_idx <= concession_idx:
-            phase_score = 0.03  # perfect sequencing
+            phase_score = 0.04  # perfect sequencing
         elif empathy_idx < concession_idx:
-            phase_score = 0.02  # partial
+            phase_score = 0.03  # partial
         elif empathy_idx < 99:
-            phase_score = 0.01  # at least used empathy
+            phase_score = 0.02  # at least used empathy
         bd["procedural_compliance"] = phase_score
     else:
         bd["promise_integrity"] = 0.0

@@ -55,9 +55,9 @@ class TrainConfig:
     lora_alpha: int = 32
     save_steps: int = 32
     seed: int = 42
-    multi_turn_steps: int = 4  # steps per trajectory
+    multi_turn_steps: int = 6  # steps per trajectory (was 4)
     difficulty_mix: List[str] = field(default_factory=lambda: ["easy", "medium", "hard"])
-    late_difficulty_mix: List[str] = field(default_factory=lambda: ["easy", "medium", "hard", "hard", "hard"])
+    late_difficulty_mix: List[str] = field(default_factory=lambda: ["medium", "hard", "hard", "hard", "hard"])
     hard_bias_after_frac: float = 0.30
 
 CFG = TrainConfig()
@@ -400,9 +400,9 @@ def score_trajectory(prompt_idx: int, completion: str) -> tuple[float, dict]:
         if getattr(step_obs, "done", False):
             msg = (getattr(step_obs, "message", "") or "").lower()
             if any(kw in msg for kw in ["surrender", "released"]):
-                bd["outcome_bonus"] = 0.40
+                bd["outcome_bonus"] = 0.25
             elif any(kw in msg for kw in ["harm", "tactical_intervention", "supervisor"]):
-                bd["outcome_bonus"] = -0.30
+                bd["outcome_bonus"] = -0.25
         del env_copy
     except Exception:
         pass
