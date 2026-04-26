@@ -13,10 +13,34 @@ Usage:
     python train_coevolve_grpo.py --rounds 4 --prompts-per-round 64
 """
 from __future__ import annotations
-import argparse, copy, gc, json, os, random, re, sys, time, shutil
+import argparse, copy, gc, json, os, random, re, sys, time, shutil, glob, site
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+
+# ── Auto-patch TRL dependencies before any TRL import ────
+def _patch_trl():
+    sp = site.getsitepackages()[0]
+    # Patch callbacks.py (weave/mergekit/llm_blender)
+    cb = os.path.join(sp, 'trl', 'trainer', 'callbacks.py')
+    if os.path.exists(cb):
+        src = open(cb).read()
+        changed = False
+        for old, new in [('import weave', 'weave = None'),
+                         ('from weave.trace.context', '# from weave.trace.context'),
+                         ('import llm_blender', 'llm_blender = None')]:
+            if old in src:
+                src = src.replace(old, new)
+                changed = True
+        if changed:
+            open(cb, 'w').write(src)
+    # Patch llm_blender TRANSFORMERS_CACHE
+    for f in glob.glob(os.path.join(sp, 'llm_blender', '**', '*.py'), recursive=True):
+        s = open(f).read()
+        if 'TRANSFORMERS_CACHE' in s:
+            open(f, 'w').write(s.replace('from transformers.utils.hub import TRANSFORMERS_CACHE', 'TRANSFORMERS_CACHE = None'))
+
+_patch_trl()
 
 # Clear Unsloth compiled cache to prevent monkey-patch interference
 _cache = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "unsloth_compiled_cache")
@@ -283,9 +307,12 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--rounds", type=int, default=4)
     p.add_argument("--prompts-per-round", type=int, default=64)
+    p.add_argument("--model", type=str, default=None, help="Base model (e.g. Qwen/Qwen2.5-7B-Instruct)")
     args = p.parse_args()
     CFG.rounds = args.rounds
     CFG.prompts_per_round = args.prompts_per_round
+    if args.model:
+        CFG.base_model = args.model
     
     selfplay = LLMSelfPlay()
     log = []
