@@ -409,6 +409,8 @@ def score_trajectory(prompt_idx: int, completion: str) -> tuple[float, dict]:
         pass
 
     # Blend: 40% heuristic + 40% env trajectory + 20% outcome
+    # Intentionally exceeds 1.0 before clamp: outcome_bonus is an additive
+    # signal so terminal success/failure dominates the reward landscape.
     blended = (0.40 * heuristic_score
                + 0.40 * bd["env_trajectory"]
                + bd["outcome_bonus"])
