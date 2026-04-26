@@ -25,15 +25,19 @@ def _patch_trl():
     cb = os.path.join(sp, 'trl', 'trainer', 'callbacks.py')
     if os.path.exists(cb):
         src = open(cb).read()
-        changed = False
         for old, new in [('import weave', 'weave = None'),
                          ('from weave.trace.context', '# from weave.trace.context'),
                          ('import llm_blender', 'llm_blender = None')]:
-            if old in src:
-                src = src.replace(old, new)
-                changed = True
-        if changed:
-            open(cb, 'w').write(src)
+            src = src.replace(old, new)
+        open(cb, 'w').write(src)
+    # Patch mergekit_utils.py
+    mk = os.path.join(sp, 'trl', 'mergekit_utils.py')
+    if os.path.exists(mk):
+        src = open(mk).read()
+        if 'from mergekit' in src:
+            src = src.replace('from mergekit.config import MergeConfiguration', 'MergeConfiguration = None')
+            src = src.replace('from mergekit', '# from mergekit')
+            open(mk, 'w').write(src)
     # Patch llm_blender TRANSFORMERS_CACHE
     for f in glob.glob(os.path.join(sp, 'llm_blender', '**', '*.py'), recursive=True):
         s = open(f).read()
