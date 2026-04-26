@@ -1,0 +1,14 @@
+.git
+.venv
+__pycache__
+*.pyc
+.DS_Store
+experiments/
+notebooks/
+archive/
+*.ipynb
+crisis-negotiator-trained*
+coevolve-*
+unsloth_compiled_cache/
+*.jsonl
+contextTotal.json

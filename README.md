@@ -1,3 +1,14 @@
+---
+title: Crisis Negotiator OpenEnv
+emoji: 🚨
+colorFrom: red
+colorTo: blue
+sdk: docker
+app_port: 7860
+pinned: true
+license: mit
+---
+
 # 🚨 Crisis Negotiator — Multi-Agent De-escalation RL Environment
 
 > **Train AI agents to negotiate hostage crises using FBI techniques, Theory-of-Mind reasoning, and adversarial self-play.**

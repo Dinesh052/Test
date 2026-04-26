@@ -7,6 +7,11 @@ COPY scenarios/ scenarios/
 COPY ui/ ui/
 COPY models.py grader.py client.py inference.py openenv.yaml q_network.pt ./
 COPY __init__.py .
+COPY README.md BLOG.md ./
+COPY plots/ plots/
+COPY results/ results/
+COPY training/ training/
+COPY eval/ eval/
 EXPOSE 7860
 ENV ENABLE_WEB_INTERFACE=true
 HEALTHCHECK --interval=30s --timeout=5s CMD curl -f http://localhost:7860/ || exit 1
