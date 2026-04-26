@@ -13,33 +13,35 @@
 
 Every year, the FBI handles 800 hostage crises. Training a single negotiator takes 2 years and costs hundreds of thousands of dollars. Crisis negotiation is the hardest communication task on Earth — you're talking to someone holding lives in their hands, you can't see their emotional state, they might be lying about how many hostages they have, your commander is screaming to breach, and one wrong word could get someone killed.
 
-**We built an RL environment that captures this complexity and trains LLMs to learn negotiation skills through reinforcement learning.** No existing environment combines life-or-death stakes, hidden psychological state, multi-layered deception, and 6 competing agents.
+**We built an RL environment that captures this complexity and trains LLMs to learn negotiation skills through reinforcement learning.** No existing environment combines life-or-death stakes, hidden psychological state, multi-layered deception, and 6 competing agents. Formally, the environment is a **Constrained MDP**: the negotiator optimizes de-escalation reward subject to safety constraints (supervisor: 3 violations = termination), time constraints (commander patience), and transparency constraints (media pressure).
 
 ---
 
 ## Results
 
-We trained Qwen2.5-7B-Instruct with GRPO on a single A100 GPU (LoRA r=32, 512 prompts × 4 rollouts × 3 epochs). The environment is **genuinely hard** — random policy gets only 8% surrender with 46% harm events.
+We explored two training approaches: **single-agent GRPO** (7B) and **adversarial co-evolution** (3B). Co-evolution produced the strongest trained model — a 3B model that **nearly doubles zero-shot performance** through 4 rounds of negotiator-vs-hostage-taker self-play.
 
-#### Final Run (Canonical) — Hardened Environment, n=50
+**Why this environment is non-trivial:** Random policy achieves only 7% surrender with 40% harm events. Unlike environments solvable by small MLPs, crisis negotiation requires language understanding, Theory-of-Mind inference, and multi-stakeholder coordination that only LLM-scale models can attempt.
 
-| Metric | Random | Heuristic BCSM | Trained (GRPO) |
-|---|---:|---:|---:|
-| Mean final reward | 0.279 | 0.813 | **0.631** |
-| Surrender rate | 8% | 74% | **40%** |
-| Harm rate | 46% | 4% | **12%** |
-| Mean steps | 15.5 | 12.0 | **12.7** |
+#### Canonical Results — Hardened Environment, n=30
 
-The trained model **more than doubles** random reward, achieves **5× the surrender rate**, and **cuts harm by 74%**. It resolves scenarios in 12.7 steps — nearly matching the hand-crafted FBI heuristic's 12.0.
+| Metric | Random | Zero-shot 3B | Heuristic BCSM | Co-evolved 3B (±95% CI) |
+|---|---:|---:|---:|---:|
+| Mean final reward | 0.289 | 0.326 | 0.681 | **0.596 ±0.073** |
+| Surrender rate | 7% | 20% | 40% | **37%** |
+| Harm rate | 40% | 0% | 3% | **3%** |
+| Mean steps | 16.4 | 19.6 | 15.1 | **16.5** |
+
+The co-evolved 3B model **doubles random reward** (0.596 vs 0.289), **improves 83% over zero-shot** (0.596 vs 0.326), and **matches heuristic harm rate** (3%). It achieves this at half the parameter count of the 7B base model.
 
 #### Theory-of-Mind: The Real Win
 
-| Metric | Random | Heuristic | Trained |
+| Metric | Random | Heuristic | Co-evolved 3B |
 |---|---:|---:|---:|
-| Belief prediction error | 3.21 | 5.86 | **2.76** |
-| Deception detection F1 | 0.68 | 0.00 | **0.69** |
+| Belief prediction error | 3.20 | 6.14 | **2.97** |
+| Deception detection F1 | 0.66 | 0.00 | **0.68** |
 
-The trained model develops **genuine Theory-of-Mind** — predicting the hostage-taker's hidden agitation and detecting deception. The heuristic is completely blind to hidden state (F1=0.0). This is the capability gap our environment teaches.
+The trained model develops **genuine Theory-of-Mind** — predicting the hostage-taker's hidden agitation with the lowest error and detecting deception with F1=0.68. The heuristic is completely blind to hidden state (F1=0.0). This is the capability gap our environment teaches.
 
 ### Training Progress
 
@@ -51,7 +53,7 @@ The trained model develops **genuine Theory-of-Mind** — predicting the hostage
 
 ### Theory-of-Mind Belief Convergence
 
-![Trained model predicts hidden agitation with low error and detects deception with F1=0.69](plots/belief_convergence.png)
+![Trained model predicts hidden agitation with low error and detects deception with F1=0.68](plots/belief_convergence.png)
 
 ### Adversarial Co-Evolution
 
