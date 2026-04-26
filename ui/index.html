@@ -2571,6 +2571,7 @@ async function runLLMStep() {
   updateAgitation(state.agitation);
   updateTrust(state.trust);
   addStepToLedger(stepNum, state.shaping);
+  updateScore(null, 'in progress', state.shaping, state.trust / 1000, state.penalties || 0);
 
   // Check terminal — LLM judge decides
   if (stepNum >= (currentScenario?.maxSteps || 20)) {
@@ -2679,10 +2680,7 @@ function finishLLMEpisode(outcome, score) {
   playBtn.className = 'ctrl-btn btn-play';
   playBtn.onclick = () => { playBtn.onclick = togglePlay; startScenario(currentScenario); };
   updatePhase('terminal');
-  const el = document.getElementById('score-big');
-  el.textContent = score.toFixed(2);
-  el.style.color = score > 0.6 ? 'var(--green)' : 'var(--red)';
-  document.getElementById('score-outcome').textContent = outcome.replace(/_/g,' ');
+  updateScore(score, outcome.replace(/_/g,' '), state.shaping || 0, state.trust / 1000 || 0, state.penalties || 0);
   document.getElementById('sb-outcome').textContent = outcome.replace(/_/g,' ').toUpperCase();
   document.getElementById('sb-outcome').className = 'sb-outcome ' + (score>0.5?'outcome-good':'outcome-bad');
   episodeCount++; allRewards.push(score); if(score>0.5)allWins++;
@@ -2778,6 +2776,7 @@ function toggleHITL() {
       if (!key) return;
     }
     if (llmMode) toggleLLM();
+    if (liveMode) { isPlaying = false; if (_liveEventSource) { _liveEventSource.close(); _liveEventSource = null; } }
     if (isPlaying) pausePlay();
     hitlMode = true;
     btn.textContent = 'HUMAN: ON';
@@ -2840,6 +2839,8 @@ async function sendHumanTurn() {
   renderTurn({speaker:'neg', content, action:hitlActionType, reasoning:'human player', cues:[], reward: state.shaping, delta:{ag:agDelta, tr:trDelta}});
   updateAgitation(state.agitation);
   updateTrust(state.trust);
+  updateScore(null, 'in progress', state.shaping, state.trust / 1000, state.penalties || 0);
+  updateScore(null, 'in progress', state.shaping, state.trust / 1000, state.penalties || 0);
 
   // Check terminal
   if (state.agitation >= 9.5) {
