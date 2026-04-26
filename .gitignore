@@ -27,3 +27,11 @@ training_logs/
 
 # Tool working directories
 .claude/
+
+# Generated local plots and visualizations (not for commit)
+plots/policy_comparison.png
+plots/reward_breakdown.png
+plots/reward_by_difficulty.png
+plots/training_curve.png
+visualizations/generate_reward_breakdown.py
+visualizations/generate_training_curve.py
